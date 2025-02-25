@@ -12,18 +12,15 @@
 <?php echo $this->Html->script('salma'); ?>
 
 <?php
-//$add = "";
-//$edit = "";
-//$delete = "";
-$add = 1;
-$edit = 1;
-$delete = 1;
+$add = "";
+$edit = "";
+$delete = "";
 $view = "";
 $session = $this->request->getSession();
 $abrv = $session->read('abrvv');
 $lien = $session->read('lien_parametrage' . $abrv);
 foreach ($lien as $k => $liens) {
-    if (@$liens['lien'] == 'typecontacts') {
+    if (@$liens['lien'] == 'societes') {
     
         $add = $liens['ajout'];
         $edit = $liens['modif'];
