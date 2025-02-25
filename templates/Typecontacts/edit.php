@@ -8,7 +8,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script> 
   <section class="content-header">
     <h1>
-   Modification  Type Contact
+   Modification Type Contact
       <small><?php echo __(''); ?></small>
     </h1>
     <ol class="breadcrumb">
