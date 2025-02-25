@@ -4,29 +4,45 @@
  * @var \App\Model\Entity\Typecontact $typecontact
  */
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Typecontact'), ['action' => 'edit', $typecontact->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Typecontact'), ['action' => 'delete', $typecontact->id], ['confirm' => __('Are you sure you want to delete # {0}?', $typecontact->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Typecontacts'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New Typecontact'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script> 
+  <section class="content-header">
+    <h1>
+   Consultation Type Contact
+      <small><?php echo __(''); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="<?php echo $this->Url->build(['action' => 'index']); ?>"><i class="fa fa-reply"></i> <?php echo __('Retour'); ?></a></li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+    <div class="row">
+      <div class="col-md-12">
+        <!-- general form elements -->
+        <div class="box ">
+          
+          <!-- /.box-header -->
+          <!-- form start -->
+          <?php echo $this->Form->create($typecontact, ['role' => 'form']); ?>
+            <div class="box-body">
+                    <div style=" margin: 0 auto;  margin-left: 20px; margin-right: 20px; position: static; ">
+                                <div class="col-xs-6">
+              <?php
+                echo $this->Form->control('libelle',['readonly'=>'readonly','label'=>'Libelle']);
+              ?>
+                 </div>
+                          </div>
+          <?php echo $this->Form->end(); ?>
+            </div>
+            <!-- /.box-body -->
+
+         
         </div>
-    </aside>
-    <div class="column-responsive column-80">
-        <div class="typecontacts view content">
-            <h3><?= h($typecontact->id) ?></h3>
-            <table>
-                <tr>
-                    <th><?= __('Libelle') ?></th>
-                    <td><?= h($typecontact->libelle) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($typecontact->id) ?></td>
-                </tr>
-            </table>
-        </div>
-    </div>
-</div>
+        <!-- /.box -->
+      </div>
+  </div>
+  <!-- /.row -->
+</section>
+<?php echo $this->Html->script('alert'); ?>
