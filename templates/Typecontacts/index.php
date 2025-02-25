@@ -12,9 +12,12 @@
 <?php echo $this->Html->script('salma'); ?>
 
 <?php
-$add = "";
-$edit = "";
-$delete = "";
+//$add = "";
+//$edit = "";
+//$delete = "";
+$add = 1;
+$edit = 1;
+$delete = 1;
 $view = "";
 $session = $this->request->getSession();
 $abrv = $session->read('abrvv');
