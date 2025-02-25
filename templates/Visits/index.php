@@ -41,9 +41,6 @@ if ($add == 1) { ?>
 Visites Techniques
 </h1>
 
-
-
-
 <section class="content">
   <div class="row">
     <div class="col-xs-12">
@@ -52,7 +49,7 @@ Visites Techniques
           <table id="example1" class="table table-bordered table-striped">
             <thead>
               <tr>
-                <th width="10%" align="center"><?= ('Numero') ?></th>
+                <th width="5%" align="center"><?= ('Numero') ?></th>
                 <th width="10%" align="center"><?= ('Date Demande') ?></th>
                 <th width="10%" align="center"><?= ('Type Contact') ?></th>
                 <th width="10%" align="center"><?= ('Client') ?></th>
@@ -62,7 +59,7 @@ Visites Techniques
                 <th width="10%" align="center"><?= ('Visiteur') ?></th>
                 <th width="10%" align="center"><?= ('Date visite') ?></th>
                 <th width="10%" align="center"><?= ('Commentaire') ?></th>
-                <th width="50%" scope="col" class="actions text-center"><?= __('Actions') ?></th>
+                <th width="5%" scope="col" class="actions text-center"><?= __('Actions') ?></th>
               </tr>
             </thead>
             <tbody>

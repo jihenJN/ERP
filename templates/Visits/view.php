@@ -4,65 +4,64 @@
  * @var \App\Model\Entity\Visit $visit
  */
 ?>
-<div class="row">
-    <aside class="column">
-        <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
-            <?= $this->Html->link(__('Edit Visit'), ['action' => 'edit', $visit->id], ['class' => 'side-nav-item']) ?>
-            <?= $this->Form->postLink(__('Delete Visit'), ['action' => 'delete', $visit->id], ['confirm' => __('Are you sure you want to delete # {0}?', $visit->id), 'class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('List Visits'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
-            <?= $this->Html->link(__('New Visit'), ['action' => 'add'], ['class' => 'side-nav-item']) ?>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script> 
+  <section class="content-header">
+    <h1>
+   Consultation Visite Technique
+      <small><?php echo __(''); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+      <li><a href="<?php echo $this->Url->build(['action' => 'index']); ?>"><i class="fa fa-reply"></i> <?php echo __('Retour'); ?></a></li>
+    </ol>
+  </section>
+
+  <!-- Main content -->
+  <secton class="content">
+    <div class="box">
+        <div class="box-body">
+            <div class="row">
+            <?php echo $this->Form->create($visit, ['role' => 'form']); ?>
+            <div class="box-body">
+                <div class="row">
+                    <div class="col-xs-6">
+                    <?php echo $this->Form->control('numero', ['readonly' => 'readonly' ,'label'=>'Numéro']); ?>
+                    </div>
+                    <div class="col-xs-6">
+                    <?php echo $this->Form->control('date_demande', ['readonly' => 'readonly','label'=>'Date Demande']); ?> 
+                    </div>
+                    <div class="col-xs-6">
+                    <?php echo $this->Form->control('type_contact.libelle', ['readonly' => 'readonly' ,'label'=>'Type Contact']); ?> 
+                    </div>
+                    <div class="col-xs-6">
+                    <?php echo $this->Form->control('client.Raison_Sociale', ['readonly' => 'readonly','label'=>'Client']); ?> 
+                    </div>
+                    <div class="col-xs-6">
+                    <?php echo $this->Form->control('lieu', ['readonly' => 'readonly','label'=>'Lieu']); ?> 
+                    </div>
+                    <div class="col-xs-6">
+                    <?php echo $this->Form->control('localisation', ['readonly' => 'readonly','label'=>'Localisation']); ?> 
+                    </div>
+                    <div class="col-xs-6">
+                    <?php echo $this->Form->control('date_prevu', ['readonly' => 'readonly','label'=>'Date Prévu']); ?> 
+                    </div>
+                    <div class="col-xs-6">
+                    <?php echo $this->Form->control('visiteur.nom', ['readonly' => 'readonly','label'=>'Visiteur']); ?> 
+                    </div>
+                    <div class="col-xs-6">
+                    <?php echo $this->Form->control('date_visite', ['readonly' => 'readonly','label'=>'Date Visite']); ?> 
+                    </div>
+                    <div class="col-xs-6">
+                    <?php echo $this->Form->control('commentaire', ['readonly' => 'readonly','label'=>'Commentaire']); ?> 
+                    </div>
+                    <?php echo $this->Form->end(); ?>
+                </div>
+            </div>
         </div>
-    </aside>
-    <div class="column-responsive column-80">
-        <div class="visits view content">
-            <h3><?= h($visit->id) ?></h3>
-            <table>
-                <tr>
-                    <th><?= __('Type Contact') ?></th>
-                    <td><?= $visit->has('type_contact') ? $this->Html->link($visit->type_contact->id, ['controller' => 'Typecontacts', 'action' => 'view', $visit->type_contact->id]) : '' ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Client') ?></th>
-                    <td><?= $visit->has('client') ? $this->Html->link($visit->client->name, ['controller' => 'Clients', 'action' => 'view', $visit->client->id]) : '' ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Lieu') ?></th>
-                    <td><?= h($visit->lieu) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Localisation') ?></th>
-                    <td><?= h($visit->localisation) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Visiteur') ?></th>
-                    <td><?= $visit->has('visiteur') ? $this->Html->link($visit->visiteur->id, ['controller' => 'Visiteurs', 'action' => 'view', $visit->visiteur->id]) : '' ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Commentaire') ?></th>
-                    <td><?= h($visit->commentaire) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Id') ?></th>
-                    <td><?= $this->Number->format($visit->id) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Numero') ?></th>
-                    <td><?= $this->Number->format($visit->numero) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Date Demande') ?></th>
-                    <td><?= h($visit->date_demande) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Date Prevu') ?></th>
-                    <td><?= h($visit->date_prevu) ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Date Visite') ?></th>
-                    <td><?= h($visit->date_visite) ?></td>
-                </tr>
-            </table>
         </div>
     </div>
-</div>
+   
+  </div>
+  <!-- /.row -->
+</section>
+<?php echo $this->Html->script('alert'); ?>
