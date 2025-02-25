@@ -1,0 +1,60 @@
+DELIMITER $$
+CREATE DEFINER=`isoft_codifaerp`@`localhost` FUNCTION `stockbassem`(`art` DOUBLE, `terikh` DATETIME, `interv` DOUBLE, `depot` DOUBLE) RETURNS text CHARSET utf8
+BEGIN
+declare dateop datetime;
+declare retour double;
+set dateop=(SELECT date_add(terikh,interval interv second) FROM DUAL);
+set retour= (select sum(s.qte)  from
+(select id as id_art,0 as qte from articles where id=art
+union all
+select art as id_art,if((SELECT count(*) FROM inventaires i,ligneinventaires l
+where i.id=l.inventaire_id and article_id=art and i.date<=dateop and if(depot=0,1=1,i.depot_id=depot)
+order by i.date desc)>0,(SELECT  ifnull(l.quantite,0) as qte FROM inventaires i,ligneinventaires l
+where i.id=l.inventaire_id and article_id=art
+and i.date<=dateop and if(depot=0,1=1,i.depot_id=depot) and i.date=(SELECT ifnull(date,'1983-12-27') FROM `inventaires`  where id=(select max(i.id) from inventaires i,ligneinventaires l,articles a
+where i.id=l.inventaire_id and a.id=l.article_id and a.id=art and if(depot=0,1=1,i.depot_id=depot)  )) order by i.date desc,l.id desc limit 1),0)
+ union all
+SELECT art as id_art,ifnull(sum(l.qte),0) FROM bonreceptionstocks b,lignebonreceptionstocks l
+where b.id=l.bonreceptionstock_id and l.article_id=art
+and b.date<=dateop and if(depot=0,1=1,b.depot_id=depot)
+and b.date>(select ifnull(max(i.date),'1983-12-27') from inventaires i,ligneinventaires l,articles a
+        where i.id=l.inventaire_id and a.id=l.article_id and a.id=art and if(depot=0,1=1,i.depot_id=depot))
+ union all
+SELECT art as id_art,ifnull(sum(l.qte),0) FROM livraisons b,lignelivraisons l
+where b.id=l.livraison_id and b.facture_id=0 and l.article_id=art and b.date<=dateop and if(depot=0,1=1,b.depot_id=depot)
+and b.date>(select ifnull(max(i.date),'1983-12-27') from inventaires i,ligneinventaires l,articles a
+                         where i.id=l.inventaire_id and a.id=l.article_id and a.id=art and if(depot=0,1=1,i.depot_id=depot))
+union all
+    SELECT art as id_art,ifnull(sum(l.qte),0) FROM factures b,lignefactures l
+where b.id=l.facture_id  and l.article_id=art and b.date<=dateop and if(depot=0,1=1,b.depot_id=depot)
+and b.date>(select ifnull(max(i.date),'1983-12-27') from inventaires i,ligneinventaires l,articles a
+                         where i.id=l.inventaire_id and a.id=l.article_id and a.id=art and if(depot=0,1=1,i.depot_id=depot))
+   union all
+SELECT art as id_art,ifnull(sum(l.qte*-1),0) FROM bonlivraisons b,lignebonlivraisons l
+where b.id=l.bonlivraison_id  and l.article_id=art and b.date<=dateop and if(depot=0,1=1,b.depot_id=depot)
+and b.date>(select ifnull(max(i.date),'1983-12-27') from inventaires i,ligneinventaires l,articles a
+                         where i.id=l.inventaire_id and a.id=l.article_id and a.id=art and if(depot=0,1=1,i.depot_id=depot))
+union all
+SELECT art as id_art,ifnull(sum(l.qte*-1),0) FROM factureclients b,lignefactureclients l
+where b.id=l.factureclient_id  and l.article_id=art and b.date<=dateop and if(depot=0,1=1,b.depot_id=depot)
+and b.date>(select ifnull(max(i.date),'1983-12-27') from inventaires i,ligneinventaires l,articles a
+                         where i.id=l.inventaire_id and a.id=l.article_id and a.id=art and if(depot=0,1=1,i.depot_id=depot))
+union all
+SELECT art as id_art,ifnull(sum(l.qte*-1),0) FROM bonsortiestocks b,lignebonsortiestocks l
+where b.id=l.bonsortiestock_id  and l.article_id=art and b.date<=dateop and if(depot=0,1=1,b.depot_id=depot)
+and b.date>(select ifnull(max(i.date),'1983-12-27') from inventaires i,ligneinventaires l,articles a
+                         where i.id=l.inventaire_id and a.id=l.article_id and a.id=art and if(depot=0,1=1,i.depot_id=depot))
+union all
+SELECT art as id_art,ifnull(sum(l.qte),0) FROM bonsortiestocks b,lignebonsortiestocks l
+where b.id=l.bonsortiestock_id  and l.article_id=art and b.date<=dateop and if(depot=0,1=1,b.depot_id=depot)
+and b.date>(select ifnull(max(i.date),'1983-12-27') from inventaires i,ligneinventaires l,articles a
+                         where i.id=l.inventaire_id and a.id=l.article_id and a.id=art and if(depot=0,1=1,i.depot_id=depot))
+union all
+SELECT art as id_art,if(depot<>0,(SELECT ifnull(sum(l.qte*-1),0) FROM bondetransferts t,lignebondetransferts l where t.id=l.bondetransfert_id and t.depotsortie_id=depot and l.article_id=art and t.date<=dateop   and t.date>(select ifnull(max(i.date),'1983-12-27') from inventaires i,ligneinventaires l,articles a
+                         where i.id=l.inventaire_id and a.id=l.article_id and a.id=art and if(depot=0,1=1,i.depot_id=depot))),0)
+union all
+SELECT art as id_art,if(depot<>0,(SELECT ifnull(sum(l.qte),0) FROM bondetransferts t,lignebondetransferts l where t.id=l.bondetransfert_id and t.depotarrive_id=depot and l.article_id=art and t.date<=dateop   and t.date>(select ifnull(max(i.date),'1983-12-27') from inventaires i,ligneinventaires l,articles a
+                         where i.id=l.inventaire_id and a.id=l.article_id and a.id=art and if(depot=0,1=1,i.depot_id=depot))),0)
+ ) s,articles a where a.id=art and  a.id=s.id_art group by a.id);
+return round(retour,3); END$$
+DELIMITER ;
