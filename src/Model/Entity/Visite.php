@@ -9,6 +9,7 @@ use Cake\ORM\Entity;
  * Visite Entity
  *
  * @property int $id
+ * @property string|null $numero
  * @property int|null $client_id
  * @property int|null $demandeclient_id
  * @property \Cake\I18n\FrozenTime|null $datecontact
@@ -16,12 +17,17 @@ use Cake\ORM\Entity;
  * @property string|null $trdemande
  * @property string|null $description
  * @property string|null $piece
- * @property string|null $schema
+ *  @property string|null $schema
+ * @property string|null $descriptif
  * @property \Cake\I18n\FrozenTime|null $datecptrendu
  * @property string|null $visiteur
  * @property string|null $responsable
  * @property int|null $tel
  * @property string|null $adresse
+ * @property int $type_contact_id
+ * @property int $visiteur_id
+ * @property \Cake\I18n\FrozenTime $date_visite
+ * @property string $localisation
  *
  * @property \App\Model\Entity\Client $client
  * @property \App\Model\Entity\Demandeclient $demandeclient
@@ -38,6 +44,7 @@ class Visite extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
+        'numero' => true,
         'client_id' => true,
         'demandeclient_id' => true,
         'datecontact' => true,
@@ -51,9 +58,11 @@ class Visite extends Entity
         'responsable' => true,
         'tel' => true,
         'adresse' => true,
+        'type_contact_id' => true,
+        'visiteur_id' => true,
+        'date_visite' => true,
+        'localisation' => true,
         'client' => true,
         'demandeclient' => true,
-        'numero' => true,
-
     ];
 }

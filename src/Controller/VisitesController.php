@@ -54,7 +54,7 @@ class VisitesController extends AppController
             ->order(['Visites.id' => 'DESC']);
 
         $this->paginate = [
-            'contain' => ['Clients', 'Demandeclients'],
+            'contain' => ['Clients', 'Demandeclients','TypeContacts'],
         ];
         $visites = $this->paginate($query);
 
@@ -84,9 +84,14 @@ class VisitesController extends AppController
     }
     public function view($id = null)
     {
+
+        $listetypeIds = [];  // Initialize to avoid undefined variable error
+        $listetypecomteIds = []; 
+        $listetypedemandes = []; 
+        $typedemandes = [];
         // Configure::write('debug', false);
         $visite = $this->Visites->get($id, [
-            'contain' => ['Clients'],
+            'contain' => ['Clients', 'Demandeclients','TypeContacts'],
         ]);
         $client_id = $visite->client_id;
         if (!empty($client_id)) {
@@ -281,7 +286,13 @@ class VisitesController extends AppController
         $this->set(compact('visite', 'clients', 'demandeclients'));
     }
     public function edit($id = null)
+
     {
+        $listetypeIds = [];  // Initialize to avoid undefined variable error
+        $listetypecomteIds = []; 
+        $listetypedemandes = []; 
+        $typedemandes = [];
+       
         $this->loadModel('Listecompterendus');
         $this->loadModel('Compterendus');
         // Configure::write('debug', false);
@@ -417,6 +428,10 @@ class VisitesController extends AppController
         // debug($familles) ;
         // var_dump($listetypeIds);
         //, ['keyfield' => 'id', 'valueField' => 'Nom']);
+
+        $listetypedemandes = $this->fetchTable('Typedemandes')->find('list')->toArray();
+$typedemandes = $this->fetchTable('Typedemandes')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->toArray();
+
         $this->set(compact('visite', 'listecompterendus', 'compterendus', 'listebesoins', 'listetypeIds', 'clients', 'listebesoins', 'listetypecomteIds', 'typebesoins', 'listetypedemandes', 'typedemandes'));
     }
     /**

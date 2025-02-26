@@ -168,64 +168,35 @@ foreach ($lien as $k => $liens) {
                         <thead style='position: sticky;top: 0; background-color: #3c8dbc;'>
 
                             <tr style="font-size: 16px;">
-
-                                <th> Client</th>
+                                <th>Numéro</th>
                                 <th>Date contact</th>
+                                <th>Type Contact</th>
+                                <th>Client</th>
+                                <th>Lieu</th>
+                                <th>Localisation</th>
                                 <th>Délai palnifie</th>
                                 <th>Visiteur</th>
-
+                                <th>Date Visite</th>
+                                <th>Commentaire</th>
                                 <th> Actions</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            foreach ($visites as $i => $vv) :
-
-
-
-
-                                $connection = ConnectionManager::get('default');
-
-
-
-
-                            ?>
+                            <?php foreach ($visites as $i => $vv) :$connection = ConnectionManager::get('default');?>
                                 <tr style="font-size: 16px;">
-
+                                    <td><?= $vv->numero?></td>
+                                    <td><?= $this->Time->format($vv->datecontact, 'dd/MM/y' );?></td>
+                                    <td><?= h($vv->type_contact->libelle)  ?></td>
                                     <td><?= $vv->client->Code . ' ' . h($vv->client->Raison_Sociale) ?></td>
-                                    <td><?=
-                                        $this->Time->format(
-                                            $vv->datecontact,
-                                            'dd/MM/y'
-                                        );
-                                        ?>
-                                    </td>
-                                    <td><?=
-                                        $this->Time->format(
-                                            $vv->dateplanifie,
-                                            'dd/MM/y'
-                                        );
-                                        ?>
-                                    </td>
-
-
-
-                                    <td><?php
-
-                                        echo $vv->visiteur
-
-                                        ?>
-                                    </td>
-
-
-
-
+                                    <td><?= h($vv->addresse) ?></td>
+                                    <td><?= h($vv->localisation) ?></td>
+                                    <td><?= $this->Time->format($vv->dateplanifie, 'dd/MM/y' );?></td>
+                                    <td><?= h($vv->visiteur) ?></td>
+                                    <td> <?= $vv->date_visite ? $vv->date_visite->format('d/m/Y') : 'N/A' ?></td>
+                                    <td><?= h($vv->description) ?></td>
                                     <td>
-
-
-
-                                        <?php //if ($imp == 1) { ?>
+                                    <?php //if ($imp == 1) { ?>
                                             <!-- <?php echo $this->Html->Link(
                                                         "<button class='btn btn-xs' style='background-color: #800080; color: white; border: 1px solid #800080;'>
                                                        <i class='fa fa-print'></i>
@@ -234,11 +205,10 @@ foreach ($lien as $k => $liens) {
                                                         array('escape' => false)
                                                     ); ?> -->
 
-
-
-
-
                                         <?php //} ?>
+
+
+                                 
                                         <?php //if ($edit == 1 && $facture->client_id != 12) {
                                         echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $vv->id), array('escape' => false));
                                         //} 

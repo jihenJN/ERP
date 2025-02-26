@@ -19,6 +19,7 @@
             <fieldset>
                 <legend><?= __('Add Visite') ?></legend>
                 <?php
+                    echo $this->Form->control('numero');
                     echo $this->Form->control('client_id', ['options' => $clients, 'empty' => true]);
                     echo $this->Form->control('demandeclient_id', ['options' => $demandeclients, 'empty' => true]);
                     echo $this->Form->control('datecontact', ['empty' => true]);
@@ -32,6 +33,10 @@
                     echo $this->Form->control('responsable');
                     echo $this->Form->control('tel');
                     echo $this->Form->control('adresse');
+                    echo $this->Form->control('type_contact_id');
+                    echo $this->Form->control('visiteur_id');
+                    echo $this->Form->control('date_visite');
+                    echo $this->Form->control('localisation');
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

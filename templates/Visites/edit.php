@@ -134,13 +134,14 @@
                                                     <?php endforeach; ?>
                                                 </div>
                                             </div>
+                                            <?php $display = 'display: none;'; // Default to hidden ?>
                                             <?php foreach ($listebesoins as $b): ?>
                                                 <?php
                                                 // Determine display style based on typebesoin_id
                                                 $display = ($b->typebesoin_id == 1) ? 'display: block;' : 'display: none;';
                                                 ?>
                                             <?php endforeach; ?>
-
+                                        
                                             <div class="col-xs-12" id="piece" style="<?php echo $display; ?>">
                                                 <!-- <?php $url = $_SERVER['HTTP_HOST']; ?>
                                                 <?php $this->Form->control('piece', ['name' => 'piece', 'id' => 'pie', 'type' => 'file', 'label' => false]); ?>
