@@ -21,6 +21,15 @@ use Cake\Datasource\ConnectionManager;
     </header>
 </section>
 
+
+<section class="content-header">
+    <h1>
+        Rapport Visites 
+    </h1>
+</section>
+
+
+
 <?php
 /*$add = "";
 $edit = "";
@@ -183,7 +192,7 @@ foreach ($lien as $k => $liens) {
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($visites as $i => $vv) :$connection = ConnectionManager::get('default');?>
+                            <?php foreach ($visites as $i => $vv)  : $connection = ConnectionManager::get('default');?>
                                 <tr style="font-size: 16px;">
                                     <td><?= $vv->numero?></td>
                                     <td><?= $this->Time->format($vv->datecontact, 'dd/MM/y' );?></td>
@@ -192,7 +201,7 @@ foreach ($lien as $k => $liens) {
                                     <td><?= h($vv->addresse) ?></td>
                                     <td><?= h($vv->localisation) ?></td>
                                     <td><?= $this->Time->format($vv->dateplanifie, 'dd/MM/y' );?></td>
-                                    <td><?= h($vv->visiteur) ?></td>
+                                    <td><?= h($vv->commercial->name) ?></td>
                                     <td> <?= $vv->date_visite ? $vv->date_visite->format('d/m/Y') : 'N/A' ?></td>
                                     <td><?= h($vv->description) ?></td>
                                     <td>

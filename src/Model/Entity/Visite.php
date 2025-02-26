@@ -16,21 +16,24 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $dateplanifie
  * @property string|null $trdemande
  * @property string|null $description
- * @property string|null $piece
- *  @property string|null $schema
+ * @property string|null $piece 
+ * @property string|null $schema
  * @property string|null $descriptif
  * @property \Cake\I18n\FrozenTime|null $datecptrendu
- * @property string|null $visiteur
  * @property string|null $responsable
  * @property int|null $tel
  * @property string|null $adresse
  * @property int $type_contact_id
- * @property int $visiteur_id
  * @property \Cake\I18n\FrozenTime $date_visite
  * @property string $localisation
+ * @property int $commercial_id
  *
+ * @property \App\Model\Entity\Visiteur $visiteur
  * @property \App\Model\Entity\Client $client
  * @property \App\Model\Entity\Demandeclient $demandeclient
+ * @property \App\Model\Entity\Typecontact $type_contact
+ * @property \App\Model\Entity\Listecompterendus[] $listecompterendus
+ * @property \App\Model\Entity\Listetypebesoin[] $listetypebesoins
  */
 class Visite extends Entity
 {
@@ -59,10 +62,13 @@ class Visite extends Entity
         'tel' => true,
         'adresse' => true,
         'type_contact_id' => true,
-        'visiteur_id' => true,
         'date_visite' => true,
         'localisation' => true,
+        'commercial_id' => true,
         'client' => true,
         'demandeclient' => true,
+        'type_contact' => true,
+        'listecompterendus' => true,
+        'listetypebesoins' => true,
     ];
 }

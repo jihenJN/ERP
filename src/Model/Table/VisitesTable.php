@@ -13,6 +13,9 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\ClientsTable&\Cake\ORM\Association\BelongsTo $Clients
  * @property \App\Model\Table\DemandeclientsTable&\Cake\ORM\Association\BelongsTo $Demandeclients
+ * @property \App\Model\Table\TypecontactsTable&\Cake\ORM\Association\BelongsTo $TypeContacts
+ * @property \App\Model\Table\ListecompterendusTable&\Cake\ORM\Association\HasMany $Listecompterendus
+ * @property \App\Model\Table\ListetypebesoinsTable&\Cake\ORM\Association\HasMany $Listetypebesoins
  *
  * @method \App\Model\Entity\Visite newEmptyEntity()
  * @method \App\Model\Entity\Visite newEntity(array $data, array $options = [])
@@ -54,8 +57,8 @@ class VisitesTable extends Table
             'foreignKey' => 'type_contact_id',
             'joinType' => 'INNER',
         ]);
-        $this->belongsTo('Visiteurs', [
-            'foreignKey' => 'visiteur_id',
+        $this->belongsTo('Commercials', [
+            'foreignKey' => 'commercial_id',
             'joinType' => 'INNER',
         ]);
         $this->hasMany('Listecompterendus', [
@@ -141,10 +144,6 @@ class VisitesTable extends Table
             ->notEmptyString('type_contact_id');
 
         $validator
-            ->integer('visiteur_id')
-            ->notEmptyString('visiteur_id');
-
-        $validator
             ->dateTime('date_visite')
             ->requirePresence('date_visite', 'create')
             ->notEmptyDateTime('date_visite');
@@ -154,6 +153,10 @@ class VisitesTable extends Table
             ->maxLength('localisation', 255)
             ->requirePresence('localisation', 'create')
             ->notEmptyString('localisation');
+
+        $validator
+            ->integer('commercial_id')
+            ->notEmptyString('commercial_id');
 
         return $validator;
     }
@@ -171,7 +174,7 @@ class VisitesTable extends Table
         $rules->add($rules->existsIn('client_id', 'Clients'), ['errorField' => 'client_id']);
         $rules->add($rules->existsIn('demandeclient_id', 'Demandeclients'), ['errorField' => 'demandeclient_id']);
         $rules->add($rules->existsIn('type_contact_id', 'TypeContacts'), ['errorField' => 'type_contact_id']);
-        $rules->add($rules->existsIn('visiteur_id', 'Visiteurs'), ['errorField' => 'visiteur_id']);
+        $rules->add($rules->existsIn('commercial_id', 'Commercials'), ['errorField' => 'commercial_id']);
 
         return $rules;
     }

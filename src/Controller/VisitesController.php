@@ -54,7 +54,7 @@ class VisitesController extends AppController
             ->order(['Visites.id' => 'DESC']);
 
         $this->paginate = [
-            'contain' => ['Clients', 'Demandeclients','TypeContacts'],
+            'contain' => ['Clients', 'Demandeclients','TypeContacts','Commercials'],
         ];
         $visites = $this->paginate($query);
 
