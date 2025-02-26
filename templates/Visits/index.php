@@ -11,22 +11,28 @@
 echo $this->Html->script('salma');
 ?>
 <?php
-$add = "";
+/*$add = "";
 $edit = "";
 $delete = "";
-$view = "";
+$view = "";*/
+$add = 1;
+$edit = 1;
+$delete = 1;
+$view = 1;
+
+
 $session = $this->request->getSession();
 $abrv = $session->read('abrvv');
 $lien = $session->read('lien_parametrage' . $abrv);
 //debug($lien);die;
-foreach ($lien as $k => $liens) {
-  if (@$liens['lien'] == 'banques') {
+/*foreach ($lien as $k => $liens) {
+  if (@$liens['lien'] == 'Visits') {
     $add = $liens['ajout'];
     $edit = $liens['modif'];
     $delete = $liens['supp'];
   }
   //debug($liens);die;
-}
+}*/
 
 if ($add == 1) { ?>
 <div class="pull-left" style="margin-left:25px;margin-top: 20px">
@@ -80,8 +86,7 @@ Visites Techniques
                   <td class="actions text" align="center">
                     <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $visit->id), array('escape' => false)); ?>
                     <?php if ($edit == 1) { echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $visit->id), array('escape' => false)); }?>
-                    <?php if ($delete == 1) {//echo $this->Form->postLink("<button class='btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $visit->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $visit->id)); ?>
-                    <button index='<?php echo $i?>' class='verifierbanque btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>
+                    <?php if ($delete == 1) {echo $this->Form->postLink("<button class='btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $visit->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $visit->id)); ?>
                     <?php } ?>
                   </td>
                   
@@ -119,36 +124,6 @@ Visites Techniques
 <?php $this->end(); ?>
 
 
-<script type="text/javascript">
-
-$(function() {
-    $('.verifierbanque').on('click', function() {
-      let ind = $(this).attr('index');
-      let id = $('#id' + ind).val();
-
-      $.ajax({
-        method: "GET",
-        url: "<?= $this->Url->build(['controller' => 'Banques', 'action' => 'verifbanquesup']) ?>",
-        dataType: "json",
-        data: {
-          id: id
-        },
-        headers: {
-          'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
-        },
-        success: function(data, status, settings) {
-          if (data.Comptes != 0) {
-            alert('existe dans un document');
-          } else {
-            if (confirm('Voulez-vous supprimer cet enregistrement')) {
-              document.location = wr+"Banques/delete/" + id;
-            }
-          }
-        }
-      });
-    });
-  });
-</script>
 
 
 
