@@ -65,7 +65,66 @@ class VisitesController extends AppController
 
         $clients = $this->Visites->Clients->find('all'); //->where(["Clients.etat" => 'TRUE']);
 
-        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut'));
+         // Calculate total visits
+         $totalVisites = $this->Visites->find()->count();
+
+        // Calculate completed visits (where date_visite is not null)
+        $completedVisites = $this->Visites->find()
+        ->where(['date_visite IS NOT' => null])
+        ->count();
+
+        // Calculate pending visits (where date_visite is null)
+        $pendingVisites = $totalVisites - $completedVisites;
+
+         // Calculate delayed visits (where date_visite is later than date_prevu)
+         $delayedVisites = $this->Visites->find()
+         ->where(['date_visite > dateplanifie'])
+         ->count();
+
+        // Calculate Taux de retard
+        $tauxRetard = ($totalVisites > 0) ? ($delayedVisites / $totalVisites) * 100 : 0;
+
+         // Calculate Taux de reponse
+         $tauxReponse = ($totalVisites > 0 )? ($completedVisites / $totalVisites) * 100 : 0;
+
+
+          // Fetch the list of TypeContacts
+         // $typeContacts = $this->Visites->TypeContacts->find('list', ['limit' => 200])->all();
+
+          $typeContacts = $this->Visites->TypeContacts->find()
+            ->select(['id', 'libelle']) // Select id and libelle
+            ->all()
+            ->combine('id', 'libelle') // Convert to associative array [id => libelle]
+            ->toArray();
+ 
+
+          // Prepare data: Get visit counts grouped by type_contact_id
+          $typeContactsCounts = $this->Visites->find()
+              ->select([
+              'type_contact_id', 
+              'nbre_visites' => $this->Visites->find()->func()->count('*')])
+              ->group('type_contact_id')
+              ->toArray();
+  
+          // Convert counts to an associative array [type_contact_id => nbre_visites]
+          $typeContactsCountsMap = [];
+          foreach ($typeContactsCounts as $row) {
+              $typeContactsCountsMap[$row->type_contact_id] = $row->nbre_visites;
+          }
+
+      
+  
+          // Prepare data array
+          $typeContactsData = [];
+          foreach ($typeContacts as $id => $name) {
+              $typeContactsData[] = [
+                  'type_contact' => $name,
+                  'nbre_visites' => isset($typeContactsCountsMap[$id]) ? $typeContactsCountsMap[$id] : 0
+              ];
+          }
+  
+
+        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut','totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard','tauxReponse','typeContactsData'));
     }
     /**
      * View method
