@@ -53,11 +53,8 @@ class VisitsController extends AppController
         if ($this->request->is('post')) {
             $visit = $this->Visits->patchEntity($visit, $this->request->getData());
             if ($this->Visits->save($visit)) {
-                $this->Flash->success(__('The visit has been saved.'));
-
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The visit could not be saved. Please, try again.'));
         }
         $typeContacts = $this->Visits->TypeContacts->find('list', ['limit' => 200])->all();
         $clients = $this->Visits->Clients->find('list', ['limit' => 200])->all();
@@ -80,11 +77,11 @@ class VisitsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $visit = $this->Visits->patchEntity($visit, $this->request->getData());
             if ($this->Visits->save($visit)) {
-                $this->Flash->success(__('The visit has been saved.'));
+              
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The visit could not be saved. Please, try again.'));
+          
         }
         $typeContacts = $this->Visits->TypeContacts->find('list', ['limit' => 200])->all();
         $clients = $this->Visits->Clients->find('list', ['limit' => 200])->all();
@@ -103,12 +100,6 @@ class VisitsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $visit = $this->Visits->get($id);
-        if ($this->Visits->delete($visit)) {
-            $this->Flash->success(__('The visit has been deleted.'));
-        } else {
-            $this->Flash->error(__('The visit could not be deleted. Please, try again.'));
-        }
-
         return $this->redirect(['action' => 'index']);
     }
 }

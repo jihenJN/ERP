@@ -5,40 +5,16 @@
  */
 ?>
 
-<!-- Content Header (Page header) -->
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script>
 <?php
 echo $this->Html->script('salma');
 ?>
-<?php
-/*$add = "";
-$edit = "";
-$delete = "";
-$view = "";*/
-$add = 1;
-$edit = 1;
-$delete = 1;
-$view = 1;
 
-
-$session = $this->request->getSession();
-$abrv = $session->read('abrvv');
-$lien = $session->read('lien_parametrage' . $abrv);
-//debug($lien);die;
-/*foreach ($lien as $k => $liens) {
-  if (@$liens['lien'] == 'Visits') {
-    $add = $liens['ajout'];
-    $edit = $liens['modif'];
-    $delete = $liens['supp'];
-  }
-  //debug($liens);die;
-}*/
-
-if ($add == 1) { ?>
 <div class="pull-left" style="margin-left:25px;margin-top: 20px">
   <?php echo $this->Html->link(__('Ajouter'), ['action' => 'Add'], ['class' => 'btn btn-success btn-sm']) ?>
 </div>
-<?php } ?>
+<?php?>
 <br><br><br>
 <section class="content-header">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script>
@@ -85,9 +61,9 @@ Visites Techniques
                 <td><?= h($visit->commentaire) ?></td>
                   <td class="actions text" align="center">
                     <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $visit->id), array('escape' => false)); ?>
-                    <?php if ($edit == 1) { echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $visit->id), array('escape' => false)); }?>
-                    <?php if ($delete == 1) {echo $this->Form->postLink("<button class='btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $visit->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $visit->id)); ?>
-                    <?php } ?>
+                    <?php echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $visit->id), array('escape' => false)); ?>
+                    <?php echo $this->Form->postLink("<button class='btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $visit->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $visit->id)); ?>
+                    <?php ?>
                   </td>
                   
                 </tr>
@@ -95,9 +71,7 @@ Visites Techniques
             </tbody>
           </table>
         </div>
-        <!-- /.box-body -->
       </div>
-      <!-- /.box -->
     </div>
   </div>
 </section>
