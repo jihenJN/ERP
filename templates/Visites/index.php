@@ -33,19 +33,45 @@ use Cake\Datasource\ConnectionManager;
         </div>
         <div class="box-body">
       <div class="row">
-        <div class="col-xs-6">
+        <div class="col-xs-3">
           <!-- Statistics Section -->
             <div >
                 <p><strong>Total des visites :</strong> <?= $totalVisites ?></p>
                 <p><strong>Visites Effectuées :</strong> <?= $completedVisites ?></p>
                 <p><strong>Visites Non Effectuées :</strong> <?= $pendingVisites ?></p>
+    
+            </div>
+        </div>
+     
+        <div class="col-xs-4">
+          <!-- Statistics Section -->
+            <div >
+            <?= $this->Form->create(null, ['type' => 'get']) ?>
+         
+            <div class="row g-1"> <!-- Bootstrap row with gutter spacing -->
+    <div class="col-md-10"> <!-- Input takes up most of the space -->
+        <?= $this->Form->control('numero', [
+            'value' => $this->request->getQuery('numero'),
+            'placeholder' => __('Rechercher par Numéro'),
+            'class' =>'form-control ', // Bootstrap form control
+            'label' => false, // Hide label
+        ]) ?>
+    </div>
+    <div class="col-md-2 d-grid"> <!-- Button in a separate column with full height -->
+        <button type="submit" class="btn btn-default custom-width-button">
+            <i class="fa fa-search"></i>
+        </button>
+    </div>
+</div>
+
+        <?= $this->Form->end() ?>
                 <p><strong>Taux de Retard :</strong> <?= number_format($tauxRetard, 2) ?>%</p>
                 <p><strong>Taux de Réponse :</strong> <?= number_format($tauxReponse, 2) ?>%</p>
             </div>
         </div>
-        <div class="col-xs-6">
+        <div class="col-xs-5">
             <div >
-            <div class="table-responsive" style="max-width: 80%; margin: auto;">
+            <div class="table-responsive" style="max-width: 100%; margin: auto;">
            
            <table class="table table-striped table-hover w-auto">
                <thead class="bg-primary text-white">
@@ -63,15 +89,15 @@ use Cake\Datasource\ConnectionManager;
                    <?php endforeach; ?>
                </tbody>
            </table>
-       </div>   
+        </div>   
             </div>
         </div>
 
       </div>  
  
- </div>
+      </div>
 
-</div>
+    </div>
 </section>
 
 
