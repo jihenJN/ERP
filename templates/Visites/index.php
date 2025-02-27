@@ -30,35 +30,38 @@ use Cake\Datasource\ConnectionManager;
 <section class="content" style="width: 99%">
     <div class="box">
         <div class="box-header">
-
         </div>
         <div class="box-body">
+        
+  <!-- Statistics Section -->
+  <div style="flex: 1; min-width: 250px; background: #ffffff; margin:15px 10px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
         <p><strong>Total des visites :</strong> <?= $totalVisites ?></p>
         <p><strong>Visites Effectuées :</strong> <?= $completedVisites ?></p>
         <p><strong>Visites Non Effectuées :</strong> <?= $pendingVisites ?></p>
         <p><strong>Taux de Retard :</strong> <?= number_format($tauxRetard, 2) ?>%</p>
         <p><strong>Taux de Réponse :</strong> <?= number_format($tauxReponse, 2) ?>%</p>
-        </div>
-
-        <div style="flex: 2; min-width: 400px;background: #ffffff;margin:15px 10px; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-        <table style="width: 100%; border-collapse: collapse;">
-            <thead>
-                <tr style="background:#3c8dbc; color: white;">
-                    <th style="padding: 8px; text-align: left;">Type de Contact</th>
-                    <th style="padding: 8px; text-align: left;">Nbre Visites</th>
+    </div>
+ </div>
+ <div class="table-responsive" style="max-width: 50%; margin: auto;">
+    <table class="table table-striped table-hover w-auto">
+        <thead class="bg-primary text-white">
+            <tr>
+                <th class="p-2" style="min-width: 150px;"><i class="fas fa-user"></i> Type de Contact</th>
+                <th class="p-2 text-center" style="min-width: 120px;"><i class="fas fa-calendar-alt"></i> Nbre Visites</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach ($typeContactsData as $row): ?>
+                <tr>
+                    <td class="p-2"><?= h($row['type_contact']) ?></td>
+                    <td class="p-2 text-center font-weight-bold"><?= h($row['nbre_visites']) ?></td>
                 </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($typeContactsData as $row):?>
-                    <tr style="border-bottom: 1px solid #ddd;">
-                        <td style="padding: 8px;"><?= h($row['type_contact']) ?></td>
-                        <td style="padding: 8px;"><?= h($row['nbre_visites']) ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-    </div>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+
+</div>
 </section>
 
 
@@ -486,4 +489,6 @@ foreach ($lien as $k => $liens) {
         format: 'MM/DD/YYYY h:mm A'
     })
 </script>
+<!-- FontAwesome Icons -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 <?php $this->end(); ?>
