@@ -65,6 +65,9 @@ use Cake\Datasource\ConnectionManager;
 </div>
 
         <?= $this->Form->end() ?>
+        <?php if (isset($nbreJoursRestant)): ?>
+    <p><strong>Nbre jour(s) Reste pour la visites :</strong> <?= h($nbreJoursRestant) ?></p>
+<?php endif; ?>
                 <p><strong>Taux de Retard :</strong> <?= number_format($tauxRetard, 2) ?>%</p>
                 <p><strong>Taux de Réponse :</strong> <?= number_format($tauxReponse, 2) ?>%</p>
             </div>

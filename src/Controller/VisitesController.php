@@ -61,7 +61,7 @@ class VisitesController extends AppController
 
             if ($visite) {
                 $currentDate = new \DateTime();
-                $datePrevu = $visite->date_prevu ? new \DateTime($visite->date_prevu->toDateString()) : null;
+                $datePrevu = $visite->dateplanifie ? new \DateTime($visite->dateplanifie->toDateString()) : null;
                 $dateVisite = $visite->date_visite ? new \DateTime($visite->date_visite->toDateString()) : null;
 
                 if ($datePrevu && $datePrevu > $currentDate && !$dateVisite) {
@@ -104,7 +104,7 @@ class VisitesController extends AppController
         // Calculate pending visits (where date_visite is null)
         $pendingVisites = $totalVisites - $completedVisites;
 
-         // Calculate delayed visits (where date_visite is later than date_prevu)
+         // Calculate delayed visits (where date_visite is later than dateplanifie)
          $delayedVisites = $this->Visites->find()
          ->where(['date_visite > dateplanifie'])
          ->count();
