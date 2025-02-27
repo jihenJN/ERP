@@ -31,12 +31,15 @@ class VisitesController extends AppController
         $cond2 = '';
         $cond3 = '';
         $cond4 = '';
+        $nbreJoursRestant =0;
 
         $datedebut = $this->request->getQuery('datedebut');
         // debug($datedebut);
         $datefin = $this->request->getQuery('datefin');
         // debug($datefin);
         $client_id = $this->request->getQuery('client_id');
+        $numero = $this->request->getQuery('numero');
+
 
         if ($datedebut) {
             $cond2 = "date(Visites.datecontact)   >= '" . $datedebut . "' ";
@@ -47,11 +50,36 @@ class VisitesController extends AppController
         if ($client_id) {
             $cond4 = "Visites.client_id = '" . $client_id . "' ";
         }
+        
+        // Check if filtering by 'numero'
+        if ($numero) {
+            $query = $this->Visites->find()
+                ->contain(['Clients', 'Commercials', 'TypeContacts'])
+                ->where(['Visites.numero' => $numero]);
 
-        $query = $this->Visites->find('all')->where([$cond2, $cond3, $cond4])
+            $visite = $query->first();
 
+            if ($visite) {
+                $currentDate = new \DateTime();
+                $datePrevu = $visite->date_prevu ? new \DateTime($visite->date_prevu->toDateString()) : null;
+                $dateVisite = $visite->date_visite ? new \DateTime($visite->date_visite->toDateString()) : null;
 
-            ->order(['Visites.id' => 'DESC']);
+                if ($datePrevu && $datePrevu > $currentDate && !$dateVisite) {
+                    $interval = $datePrevu->diff($currentDate);
+                    $nbreJoursRestant = $interval->days;
+                }
+            }
+
+            if ($query->isEmpty()) {
+                $this->Flash->error(__('There is no visit with number {0}', h($numero)));
+            } else {
+                $title = 'Nbre jour(s) Reste pour la visite N° ' . h($numero);
+            }
+        } else {
+            $query = $this->Visites->find('all')
+                ->where([$cond2, $cond3, $cond4])
+                ->order(['Visites.id' => 'DESC']);
+        }
 
         $this->paginate = [
             'contain' => ['Clients', 'Demandeclients','TypeContacts','Commercials'],
@@ -89,8 +117,6 @@ class VisitesController extends AppController
 
 
           // Fetch the list of TypeContacts
-         // $typeContacts = $this->Visites->TypeContacts->find('list', ['limit' => 200])->all();
-
           $typeContacts = $this->Visites->TypeContacts->find()
             ->select(['id', 'libelle']) // Select id and libelle
             ->all()
@@ -124,7 +150,7 @@ class VisitesController extends AppController
           }
   
 
-        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut','totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard','tauxReponse','typeContactsData'));
+        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut','totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard','tauxReponse','typeContactsData','nbreJoursRestant'));
     }
     /**
      * View method

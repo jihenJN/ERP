@@ -48,16 +48,16 @@ use Cake\Datasource\ConnectionManager;
             <div >
             <?= $this->Form->create(null, ['type' => 'get']) ?>
          
-            <div class="row g-1"> <!-- Bootstrap row with gutter spacing -->
-    <div class="col-md-10"> <!-- Input takes up most of the space -->
+            <div class="row g-1"> 
+    <div class="col-md-10">
         <?= $this->Form->control('numero', [
             'value' => $this->request->getQuery('numero'),
             'placeholder' => __('Rechercher par Numéro'),
-            'class' =>'form-control ', // Bootstrap form control
-            'label' => false, // Hide label
+            'class' =>'form-control ', 
+            'label' => false, 
         ]) ?>
     </div>
-    <div class="col-md-2 d-grid"> <!-- Button in a separate column with full height -->
+    <div class="col-md-2 d-grid"> 
         <button type="submit" class="btn btn-default custom-width-button">
             <i class="fa fa-search"></i>
         </button>
