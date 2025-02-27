@@ -31,6 +31,7 @@ class VisitesController extends AppController
         $cond2 = '';
         $cond3 = '';
         $cond4 = '';
+        $visite='';
         $nbreJoursRestant =0;
 
         $datedebut = $this->request->getQuery('datedebut');
@@ -149,8 +150,7 @@ class VisitesController extends AppController
               ];
           }
   
-
-        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut','totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard','tauxReponse','typeContactsData','nbreJoursRestant'));
+        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut','totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard','tauxReponse','typeContactsData','nbreJoursRestant','visite'));
     }
     /**
      * View method

@@ -64,10 +64,12 @@ use Cake\Datasource\ConnectionManager;
     </div>
 </div>
 
-        <?= $this->Form->end() ?>
-        <?php if (isset($nbreJoursRestant)): ?>
-    <p><strong>Nbre jour(s) Reste pour la visites :</strong> <?= h($nbreJoursRestant) ?></p>
-<?php endif; ?>
+                <?= $this->Form->end() ?>
+                <?php if (isset($nbreJoursRestant) && isset($visite->id)): ?>
+                <p><strong>Nbre jour(s) Reste pour la visites :</strong> <?= h($nbreJoursRestant) ?></p>
+                <p><strong>Lien Visite :</strong> <?= $this->Html->link('Clique ici', ['controller' => 'Visites', 'action' => 'view', $visite->id], ['escape' => false]) ?></p>
+                <?php endif; ?>
+
                 <p><strong>Taux de Retard :</strong> <?= number_format($tauxRetard, 2) ?>%</p>
                 <p><strong>Taux de Réponse :</strong> <?= number_format($tauxReponse, 2) ?>%</p>
             </div>
