@@ -145,13 +145,11 @@ class VisitesTable extends Table
 
         $validator
             ->dateTime('date_visite')
-            ->requirePresence('date_visite', 'create')
             ->notEmptyDateTime('date_visite');
 
         $validator
             ->scalar('localisation')
             ->maxLength('localisation', 255)
-            ->requirePresence('localisation', 'create')
             ->notEmptyString('localisation');
 
         $validator
