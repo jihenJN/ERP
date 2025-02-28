@@ -15,10 +15,14 @@ use Cake\ORM\Entity;
  * @property \Cake\I18n\FrozenTime|null $delaivoulu
  * @property \Cake\I18n\FrozenTime|null $delaiapprov
  * @property int|null $typedemande_id
+ * @property int|null $type_contact_id
+ * @property int|null $commercial_id
  *
  * @property \App\Model\Entity\Client $client
  * @property \App\Model\Entity\Typedemande $typedemande
  * @property \App\Model\Entity\Lignedemandeclient[] $lignedemandeclients
+ * @property \App\Model\Entity\TypeContacts[] $typeContacts
+ * @property \App\Model\Entity\Commercials[] $commercials
  */
 class Demandeclient extends Entity
 {
@@ -41,5 +45,7 @@ class Demandeclient extends Entity
         'client' => true,
         'typedemande' => true,
         'lignedemandeclients' => true,
+        'type_contact_id' => true,
+        'commercial_id' => true,
     ];
 }

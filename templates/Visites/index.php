@@ -201,8 +201,7 @@ foreach ($lien as $k => $liens) {
                         <?php foreach ($clients as $id => $client) {
                         ?>
 
-                            <option <?php if ($this->request->getQuery('client_id') == $client->id) echo 'selected="selected"' ?> value="<?php echo $client->id; ?>"><?php
-                                                                                                                                                                        echo $client->Raison_Sociale ?></option>
+                            <option <?php if ($this->request->getQuery('client_id') == $client->id) echo 'selected="selected"' ?> value="<?php echo $client->id; ?>"><?php echo $client->Raison_Sociale ?></option>
                         <?php } ?>
                     </select>
                 </div>

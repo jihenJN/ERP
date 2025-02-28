@@ -97,9 +97,23 @@
                                             <div class="col-xs-3" style="margin-bottom: 20px;">
                                                 <?php echo $this->Form->control('delaiapprov', ['type' => 'datetime', 'label' => 'Délai d`approvisionnement']); ?>
                                             </div>
+                                            <!--------JN changes ---------->
+                                            <div class="col-xs-3" style="margin-bottom: 20px;">
+                                            <?php  echo $this->Form->control('type_contact_id', [
+                                                'label' => 'Type Contact',
+                                                'options' => $typeContacts,
+                                                'empty' => 'Veuillez choisir !!',
+                                                'class' => 'form-control'
+                                            ]);?>
+                                            </div>
 
                                             <div class="col-xs-3" style="margin-bottom: 20px;">
-                                                <?php echo $this->Form->control('typeContact', ['type' => 'options', 'label' => 'Type Contact']); ?>
+                                            <?php  echo $this->Form->control('commercial_id', [
+                                                'label' => 'Visiteurs',
+                                                'options' => $commercials,
+                                                'empty' => 'Veuillez choisir !!',
+                                                'class' => 'form-control'
+                                            ]);?>
                                             </div>
 
                                             <div class="col-xs-12">

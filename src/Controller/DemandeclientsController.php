@@ -120,6 +120,9 @@ class DemandeclientsController extends AppController
     public function add()
     {
         $this->loadModel('Clients');
+        $this->loadModel('TypeContacts');
+        $this->loadModel('Commercials');
+        
         $datacl = $this->Clients->newEmptyEntity();
         $prefix = "4113";
         $maxLimit = $prefix . "9999"; // Limite supérieure 41199999
@@ -178,12 +181,14 @@ class DemandeclientsController extends AppController
                 $demande->delaivoulu = $this->request->getData('delaivoulu');
                 $demande->delaireponse = $this->request->getData('delaireponse');
                 $demande->delaiapprov = $this->request->getData('delaiapprov');
+                $demande->type_contact_id = (int) $this->request->getData('type_contact_id');
+                $demande->commercial_id = (int) $this->request->getData('commercial_id');
                 $demande->client_id = $client_id;
-
+                debug($demande);
+   
                 $this->Demandeclients->save($demande);
-
-
-
+                debug($demande);
+   
                 $this->loadModel('Listetypedemandes');
                 $demandeIds = $this->request->getData('typedemandes');
                 $filteredemandeIds = array_filter($demandeIds);
@@ -241,9 +246,11 @@ class DemandeclientsController extends AppController
         $typedemandes = $this->fetchTable('Typedemandes')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $sousfamille1s = $this->fetchTable('Sousfamille1s')->find('all'); //, ['keyfield' => 'id', 'valueField' => 'name']);
         $unites = $this->fetchTable('Unites')->find('all'); //, ['keyfield' => 'id', 'valueField' => 'name']);
-
         $familles = $this->fetchTable('Familles')->find('all'); //, ['keyfield' => 'id', 'valueField' => 'Nom']);
-        $this->set(compact('familles', 'demande', 'code', 'sousfamille1s', 'unites', 'articles', 'typedemandes'));
+        $typeContacts = $this->TypeContacts->find('list',['keyfield' => 'id', 'valueField' => 'libelle'])->toArray();
+        $commercials = $this->Commercials->find('list',['keyfield' => 'id', 'valueField' => 'name'])->toArray(); 
+  
+        $this->set(compact('familles', 'demande', 'code', 'sousfamille1s', 'unites', 'articles', 'typedemandes','typeContacts','commercials'));
     }
     /**
      * View method

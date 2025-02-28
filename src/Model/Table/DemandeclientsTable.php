@@ -12,6 +12,8 @@ use Cake\Validation\Validator;
  * Demandeclients Model
  *
  * @property \App\Model\Table\ClientsTable&\Cake\ORM\Association\BelongsTo $Clients
+ * @property \App\Model\Table\TypeContacts&\Cake\ORM\Association\BelongsTo $TypeContacts
+ * @property \App\Model\Table\Commercials&\Cake\ORM\Association\BelongsTo $Commercials
  * @property \App\Model\Table\TypedemandesTable&\Cake\ORM\Association\BelongsTo $Typedemandes
  * @property \App\Model\Table\LignedemandeclientsTable&\Cake\ORM\Association\HasMany $Lignedemandeclients
  *
@@ -54,6 +56,17 @@ class DemandeclientsTable extends Table
         $this->hasMany('Lignedemandeclients', [
             'foreignKey' => 'demandeclient_id',
         ]);
+
+        $this->belongsTo('TypeContacts', [
+            'foreignKey' => 'type_contact_id',
+         
+        ]);
+        
+        $this->belongsTo('Commercials', [
+            'foreignKey' => 'commercial_id',
+         
+        ]);
+        
     }
 
     /**
@@ -80,6 +93,8 @@ class DemandeclientsTable extends Table
     {
         $rules->add($rules->existsIn('client_id', 'Clients'), ['errorField' => 'client_id']);
         $rules->add($rules->existsIn('typedemande_id', 'Typedemandes'), ['errorField' => 'typedemande_id']);
+        $rules->add($rules->existsIn('type_contact_id', 'TypeContacts'), ['errorField' => 'type_contact_id']);
+        $rules->add($rules->existsIn('commercial_id', 'Commercials'), ['errorField' => 'commercial_id']);
 
         return $rules;
     }
