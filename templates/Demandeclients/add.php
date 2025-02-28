@@ -9,6 +9,7 @@
 
 <section class="content">
 
+
     <div class="row">
         <div class="col-md-12">
             <!-- general form elements -->
@@ -28,6 +29,11 @@
                 <!-- /.box-header -->
                 <!-- form start -->
                 <?php echo $this->Form->create(null, ['role' => 'form','id'=>'testform', 'onkeypress' => "return event.keyCode!=13"]); ?>
+               
+         
+               
+               
+               
                 <div class="box box-primary">
                     <section class="content-header">
                         <h1 class="box-title"><strong><?php echo __('Civilité'); ?></strong></h1>
@@ -73,7 +79,7 @@
                                 <h3 class="box-title"><strong><?php echo __('Demande Client'); ?></strong></h3><br>
                                 <div class="row">
 
-
+                                    
                                     <div class="row" style="gap: 20px; display: flex; flex-wrap: wrap;">
                                         <div style="margin: 0 auto; margin-left: 20px; margin-right: 20px; position: static; width: 100%;">
                                             <div class="col-xs-3" style="margin-bottom: 20px;">
@@ -90,6 +96,10 @@
 
                                             <div class="col-xs-3" style="margin-bottom: 20px;">
                                                 <?php echo $this->Form->control('delaiapprov', ['type' => 'datetime', 'label' => 'Délai d`approvisionnement']); ?>
+                                            </div>
+
+                                            <div class="col-xs-3" style="margin-bottom: 20px;">
+                                                <?php echo $this->Form->control('typeContact', ['type' => 'options', 'label' => 'Type Contact']); ?>
                                             </div>
 
                                             <div class="col-xs-12">
