@@ -184,11 +184,7 @@ class DemandeclientsController extends AppController
                 $demande->type_contact_id = (int) $this->request->getData('type_contact_id');
                 $demande->commercial_id = (int) $this->request->getData('commercial_id');
                 $demande->client_id = $client_id;
-                debug($demande);
-   
                 $this->Demandeclients->save($demande);
-                debug($demande);
-   
                 $this->loadModel('Listetypedemandes');
                 $demandeIds = $this->request->getData('typedemandes');
                 $filteredemandeIds = array_filter($demandeIds);

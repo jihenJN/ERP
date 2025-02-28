@@ -82,10 +82,10 @@ class VisitesController extends AppController
                 ->order(['Visites.id' => 'DESC']);
         }
 
-      /*  $this->paginate = [
+        $this->paginate = [
             'contain' => ['Clients', 'Demandeclients','TypeContacts','Commercials'],
         ];
-     */
+     
         $visites = $this->paginate($query);
 
         $this->set(compact('visites'));
@@ -257,9 +257,21 @@ class VisitesController extends AppController
             'contain' => [],
         ]);
         $client_id = $demandeclient->client_id;
+        $type_contact_id = $demandeclient->type_contact_id;
+        $commercial_id = $demandeclient->commercial_id;
         if (!empty($client_id)) {
             $clients = $this->fetchTable('Clients')->find('all')->where(['Clients.id' => $client_id])->first();
             // debug($clients);
+        }
+
+        if (!empty($type_contact_id)) {
+            $typeContacts = $this->fetchTable('TypeContacts')->find('all')->where(['TypeContacts.id' => $type_contact_id])->first();
+            // debug($typeContacts);
+        }
+
+        if (!empty($type_contact_id)) {
+            $commercials = $this->fetchTable('Commercials')->find('all')->where(['Commercials.id' => $commercial_id ])->first();
+            // debug($commercials);
         }
         if ($this->request->is('post')) {
             // debug($this->request->getData());die;
@@ -286,6 +298,9 @@ class VisitesController extends AppController
             $data['trdemande'] = $this->request->getData('trdemande');
             $data['description'] = $this->request->getData('description');
             $data['client_id'] = $this->request->getData('client_id');
+            $data['commercial_id'] = $this->request->getData('commercial_id');
+            $data['type_contact_id'] = $this->request->getData('type_contact_id');
+
             // $data['commercial_id'] = $this->request->getData('commercial_id');
             // $data['adresselivraisonclient_id'] = $this->request->getData('adresse');
             $data['descriptif'] = !empty($this->request->getData('descriptif')) ? $this->request->getData('descriptif') : null;
@@ -344,7 +359,7 @@ class VisitesController extends AppController
         $typebesoins = $this->fetchTable('Typebesoins')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
 
         $compterendus = $this->fetchTable('Compterendus')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
-        $this->set(compact('mm', 'typebesoins', 'visite', 'clients', 'compterendus'));
+        $this->set(compact('mm', 'typebesoins', 'visite', 'clients', 'compterendus','typeContacts','commercials'));
     }
     /**
      * Edit method
