@@ -48,7 +48,7 @@ class DemandeclientsController extends AppController
             ->order(['Demandeclients.id' => 'DESC']);
 
         $this->paginate = [
-            'contain' => ['Clients', 'Typedemandes'],
+            'contain' => ['Clients', 'Typedemandes','TypeContacts','Commercials'],
         ];
         $demandeclients = $this->paginate($query);
 

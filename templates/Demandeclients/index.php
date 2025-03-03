@@ -172,12 +172,11 @@ foreach ($lien as $k => $liens) {
                                 <th>Date consultation</th>
                                 <th>Délai voulu</th>
                                 <th>Délai de réponse</th>
-
                                 <th>Délai d`appreovisionnement</th>
+                                <th>Type Contact</th>
+                                <th>Visiteur</th>
                                 <th>Visite</th>
-
-
-                                <th> Actions</th>
+                                <th>Actions</th>
 
                             </tr>
                         </thead>
@@ -247,7 +246,8 @@ foreach ($lien as $k => $liens) {
                                         );
                                         ?>
                                     </td>
-
+                                    <td><?= $demande->type_contact?->libelle ?? 'N/A' ?></td>
+                                    <td><?= $demande->commercial?->name ?? 'N/A' ?></td>
 
                                     <td align="center">
                                         <?php 
@@ -269,16 +269,15 @@ foreach ($lien as $k => $liens) {
                                         } ?>
                                     </td>
 
-
-
+                           
 
                                     <td align="center">
-                                        <?php if ($imp == 1) { ?>
+                                        <?php if ( !empty($imp) && $imp == 1) { ?>
                                             <!-- <?php echo $this->Html->Link(
                                                         "<button class='btn btn-xs' style='background-color: #800080; color: white; border: 1px solid #800080;'>
                                                        <i class='fa fa-print'></i>
                                                                  </button>",
-                                                        array('action' => 'imprimeviewsmbm', $facture->id),
+                                                        array('action' => 'imprimeviewsmbm', $facture->id ?? 0),// Avoid null error
                                                         array('escape' => false)
                                                     ); ?> -->
 
@@ -295,7 +294,7 @@ foreach ($lien as $k => $liens) {
                                         <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $demande->id), array('escape' => false)); ?>
 
                                         <?php //if ($delete == 1 && $testregler == 0 && $BLTotQte == 0) {
-                                        echo $this->Form->postLink("<button class='deleteConfirm btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $demande->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $facture->id));
+                                        echo $this->Form->postLink("<button class='deleteConfirm btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $demande->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $facture->id ?? 0));
                                         //} 
                                         ?>
 
