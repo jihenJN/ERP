@@ -656,25 +656,79 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $("#toggleAddType").click(function() {
-            let select = $("#type_contact_select");
-            let input = $("#new_type_contact");
-            let button = $("#toggleAddType");
+   $(document).ready(function() {
+    $("#toggleAddType").click(function() {
+        let select = $("#type_contact_select");
+        let input = $("#new_type_contact");
+        let button = $("#toggleAddType");
 
-            if (input.is(":visible")) {
-                // Hide input, enable select, reset button
-                input.hide().val(""); 
-                select.prop("disabled", false);
-                button.removeClass("fa-times-circle btn-danger")
-                      .addClass("fa-plus-circle btn-primary");
-            } else {
-                // Show input, disable select, change button to "cancel"
-                input.show().focus();
-                select.prop("disabled", true);
-                button.removeClass("fa-plus-circle btn-primary")
-                      .addClass("fa-times-circle btn-danger");
-            }
-        });
+        if (input.length === 0) {
+            console.log("hi");
+            // Create input dynamically
+            input = $("<input>", {
+                type: "text",
+                id: "new_type_contact",
+                class: "form-control",
+                placeholder: "Enter new type contact"
+            }).insertAfter(select).focus();
+
+            select.prop("disabled", true);
+            button.removeClass("fa-plus-circle btn-primary")
+                  .addClass("fa-times-circle btn-danger");
+
+            // Listen for Enter key to add new type contact
+            input.on("keydown", function(e) {
+                console.log("hii");
+                console.log(e);
+                if (e.key === "Enter") { // Enter key pressed
+
+                    console.log("hiii");
+                    let newType = $(this).val().trim();
+                    console.log('*********',newType);
+                    if (newType !== "") {
+
+
+                      const csrfToken = $('meta[name="csrfToken"]').attr('content');
+
+
+                       console.log(csrfToken )
+
+                        $.ajax({
+                            url: "<?= $this->Url->build(['controller' => 'TypeContacts', 'action' => 'addFromDemandeClient']) ?>",
+                            type: "POST",
+                            data: { libelle: newType },
+                            headers: { 'X-CSRF-Token': csrfToken },
+                            success: function(response) {
+                                if (response.success) {
+                                    let newOption = $("<option>", {
+                                        value: response.id,
+                                        text: newType,
+                                        selected: true
+                                    });
+                                    select.append(newOption);
+                                    input.remove();
+                                    select.prop("disabled", false);
+                                    button.removeClass("fa-times-circle btn-danger")
+                                          .addClass("fa-plus-circle btn-primary");
+                                } else {
+                                    alert("Error: " + response.message);
+                                }
+                            }
+                        });
+                    }
+                }
+            });
+
+        } else {
+            // Remove input, enable select, reset button
+            input.remove();
+            select.prop("disabled", false);
+            button.removeClass("fa-times-circle btn-danger")
+                  .addClass("fa-plus-circle btn-primary");
+        }
     });
+});
+
 </script>
+
+

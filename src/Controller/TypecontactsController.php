@@ -102,4 +102,23 @@ class TypecontactsController extends AppController
 
         return $this->redirect(['action' => 'index']);
     }
+
+
+    public function addFromDemandeClient()
+    {
+        $this->autoRender = false;
+        $this->request->allowMethod(['post']);
+           // DEBUG CSRF
+    debug($this->request->getAttribute('csrfToken'));
+    debug($this->request->getData());
+        $typeContact = $this->TypeContacts->newEmptyEntity();
+        $typeContact->libelle = $this->request->getData('libelle');
+        
+        if ($this->TypeContacts->save($typeContact)) {
+            echo json_encode(['success' => true, 'id' => $typeContact->id]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Could not save Type Contact.']);
+        }
+    }
+
 }
