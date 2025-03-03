@@ -99,12 +99,22 @@
                                             </div>
                                             <!--------JN changes ---------->
                                             <div class="col-xs-3" style="margin-bottom: 20px;">
-                                            <?php  echo $this->Form->control('type_contact_id', [
-                                                'label' => 'Type Contact',
-                                                'options' => $typeContacts,
-                                                'empty' => 'Veuillez choisir !!',
-                                                'class' => 'form-control'
-                                            ]);?>
+                                                <div class="row d-flex align-items justify-content-start">
+                                                    <div class="col-xs-12">
+                                                        <label> Type Contact </label>
+                                                    </div>
+                                                    <div class="col-xs-9">
+                                                        <?php echo $this->Form->control('type_contact_id', [
+                                                            'label' => false,
+                                                            'options' => $typeContacts,
+                                                            'empty' => 'Veuillez choisir !!',
+                                                            'class' => 'form-control'
+                                                        ]); ?>
+                                                    </div>
+                                                    <div class="col-xs-3">
+                                                        <button type="button" class="btn btn-primary" style="margin-right:20px; height:34px" data-bs-toggle="modal" data-bs-target="#addClientModal">+</button>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div class="col-xs-3" style="margin-bottom: 20px;">
@@ -287,6 +297,12 @@
         </div>
     </div>
 </section>
+
+
+
+
+
+
 <?php echo $this->Html->css('AdminLTE./bower_components/select2/dist/css/select2.min', ['block' => 'css']); ?>
 <?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
 <?php $this->start('scriptBottom'); ?>
@@ -630,3 +646,4 @@
     }
 </script>
 <?php $this->end(); ?>
+

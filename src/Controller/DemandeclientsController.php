@@ -171,7 +171,7 @@ class DemandeclientsController extends AppController
             $datacl->Adresse = $this->request->getData('Adresse');
             $datacl->Contact = $this->request->getData('portable');
             $datacl->Email = $this->request->getData('mail');
-           $datacl->responsable = $this->request->getData('responsable');
+            $datacl->responsable = $this->request->getData('responsable');
 
             if ($this->Clients->save($datacl)) {
                 $client_id = $datacl->id;
@@ -184,9 +184,10 @@ class DemandeclientsController extends AppController
                 $demande->type_contact_id = (int) $this->request->getData('type_contact_id');
                 $demande->commercial_id = (int) $this->request->getData('commercial_id');
                 $demande->client_id = $client_id;
+                
                 $this->Demandeclients->save($demande);
                 $this->loadModel('Listetypedemandes');
-                $demandeIds = $this->request->getData('typedemandes');
+                $demandeIds = $this->request->getData('typedemandes')??[];
                 $filteredemandeIds = array_filter($demandeIds);
 
                 if (!empty($filteredemandeIds)) {

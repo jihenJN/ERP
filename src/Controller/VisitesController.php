@@ -285,11 +285,11 @@ class VisitesController extends AppController
 
 
             $num = $this->Visites->find()->select(["num" => 'MAX(Visites.numero)'])->first();
-            // debug($num);
+             
             $n = $num->num;
             $in = intval($n) + 1;
             $mm = str_pad("$in", 5, "0", STR_PAD_LEFT);
-
+          
             $data['numero'] = $mm;
 
             $data['demandeclient_id'] = $id;
@@ -313,6 +313,23 @@ class VisitesController extends AppController
             $data['tel'] = $this->request->getData('Tel');
             $data['adresse'] = $this->request->getData('Adresse');
             $visite = $this->Visites->patchEntity($visite, $data);
+
+            debug($data);
+            debug($visite);
+            if ($this->Visites->save($visite)) {
+                $this->Flash->success(__('The visit has been saved successfully.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('The visit could not be saved. Please, try again.'));
+            }
+
+            if (!$this->Visites->save($visite)) {
+                debug($visite->getErrors());
+                die();
+            }
+
+
+
 
             if ($this->Visites->save($visite)) {
                 $this->loadModel('Listetypebesoins');
