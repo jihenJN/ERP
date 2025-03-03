@@ -29,7 +29,6 @@
                     echo $this->Form->control('piece');
                     echo $this->Form->control('schema');
                     echo $this->Form->control('datecptrendu', ['empty' => true]);
-                    echo $this->Form->control('visiteur');
                     echo $this->Form->control('responsable');
                     echo $this->Form->control('tel');
                     echo $this->Form->control('adresse');

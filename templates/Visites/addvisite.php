@@ -142,11 +142,7 @@
                                                 <?php echo $this->Form->input('piece', ['type' => 'file', 'id' => 'pie', 'label' => false]); ?>
                                             </div>
                                             <br>
-                                            <div class="col-xs-12" style="margin-bottom: 20px;">
-
-                                                <label>Visiteur :</label>
-                                                <?php echo $this->Form->control('visiteur', ['type' => 'text', 'label' => false]); ?>
-                                            </div>
+                                    
                                             <br><br>
 
                                             <div class="col-xs-12" style="margin-bottom: 20px;">
@@ -278,7 +274,7 @@
         let descriptif = $("#descriptif").val();
         let datecptrendu = $("#datecptrendu").val();
         let pie = $("#pie").val();
-        let visiteur = $("#visiteur").val();
+    
 
         $("#testformulaire").prop('disabled', false);
 
@@ -321,11 +317,7 @@
             return false;
 
         }
-        if (!visiteur) {
-            alert("Saisissez le visiteur");
-            $("#testformulaire").prop('disabled', true); // Désactivation du bouton
-            return false;
-        }
+     
         if ($(".compterendu-checkbox:checked").length === 0) {
             alert("Veuillez choisir le Compte rendu à qui ?");
             $("#testformulaire").prop('disabled', true); // Désactivation du bouton

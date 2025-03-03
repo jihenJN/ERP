@@ -291,7 +291,6 @@ class VisitesController extends AppController
             $mm = str_pad("$in", 5, "0", STR_PAD_LEFT);
           
             $data['numero'] = $mm;
-
             $data['demandeclient_id'] = $id;
             $data['datecontact'] = $this->request->getData('datecontact');
             $data['dateplanifie'] = $this->request->getData('dateplanifie');
@@ -300,16 +299,12 @@ class VisitesController extends AppController
             $data['client_id'] = $this->request->getData('client_id');
             $data['commercial_id'] = $this->request->getData('commercial_id');
             $data['type_contact_id'] = $this->request->getData('type_contact_id');
-
-            // $data['commercial_id'] = $this->request->getData('commercial_id');
-            // $data['adresselivraisonclient_id'] = $this->request->getData('adresse');
             $data['descriptif'] = !empty($this->request->getData('descriptif')) ? $this->request->getData('descriptif') : null;
             if ($this->request->getData('datecptrendu')) {
                 $data['datecptrendu'] = date('Y-m-d H:i:s', strtotime($this->request->getData('datecptrendu')));
             }
 
             $data['responsable'] = !empty($this->request->getData('responsable')) ? $this->request->getData('responsable') : null;
-            $data['visiteur'] = $this->request->getData('visiteur');
             $data['tel'] = $this->request->getData('Tel');
             $data['adresse'] = $this->request->getData('Adresse');
             $visite = $this->Visites->patchEntity($visite, $data);

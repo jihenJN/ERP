@@ -57,7 +57,6 @@ class Visite extends Entity
         'piece' => true,
         'descriptif' => true,
         'datecptrendu' => true,
-        'visiteur' => true,
         'responsable' => true,
         'tel' => true,
         'adresse' => true,

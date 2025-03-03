@@ -120,10 +120,6 @@ class VisitesTable extends Table
             ->dateTime('datecptrendu')
             ->allowEmptyDateTime('datecptrendu');
 
-        $validator
-            ->scalar('visiteur')
-            ->maxLength('visiteur', 255)
-            ->allowEmptyString('visiteur');
 
         $validator
             ->scalar('responsable')
