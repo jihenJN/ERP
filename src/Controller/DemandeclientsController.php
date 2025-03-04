@@ -124,6 +124,8 @@ class DemandeclientsController extends AppController
         $this->loadModel('Commercials');
         
         $datacl = $this->Clients->newEmptyEntity();
+       
+
         $prefix = "4113";
         $maxLimit = $prefix . "9999"; // Limite supérieure 41199999
 
@@ -172,16 +174,29 @@ class DemandeclientsController extends AppController
             $datacl->Contact = $this->request->getData('portable');
             $datacl->Email = $this->request->getData('mail');
             $datacl->responsable = $this->request->getData('responsable');
+            
 
             if ($this->Clients->save($datacl)) {
                 $client_id = $datacl->id;
+
+
+                // Handling TypeContact (Checking if exists or creating a new one)
+                $type_contact_id = (int) $this->request->getData('type_contact_id');
+                if (!$type_contact_id) {
+                    // If no type_contact_id is selected, create a new TypeContact
+                    $dataTypeContact = $this->TypeContacts->newEmptyEntity();
+                    $dataTypeContact->libelle = $this->request->getData('libelle'); // Assuming 'libelle' input
+                    if ($this->TypeContacts->save($dataTypeContact)) {
+                        $type_contact_id = $dataTypeContact->id;
+                    }
+                }
 
                 $demande = $this->Demandeclients->newEmptyEntity();
                 $demande->dateconsulation = $this->request->getData('dateconsulation');
                 $demande->delaivoulu = $this->request->getData('delaivoulu');
                 $demande->delaireponse = $this->request->getData('delaireponse');
                 $demande->delaiapprov = $this->request->getData('delaiapprov');
-                $demande->type_contact_id = (int) $this->request->getData('type_contact_id');
+                $demande->type_contact_id = $type_contact_id; // Assigning the created or selected TypeContact
                 $demande->commercial_id = (int) $this->request->getData('commercial_id');
                 $demande->client_id = $client_id;
                 $this->Demandeclients->save($demande);
@@ -237,6 +252,11 @@ class DemandeclientsController extends AppController
 
                 return $this->redirect(['action' => 'index']);
             }
+
+           
+
+
+
         }
 
         $typedemandes = $this->fetchTable('Typedemandes')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);

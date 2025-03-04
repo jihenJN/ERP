@@ -114,6 +114,7 @@
                                                     <input type="text" id="new_type_contact" class="form-control" 
                                                         placeholder="Ajouter un type contact" 
                                                         style="display: none; margin-top: 5px;">
+                                                        <input type="hidden" name="libelle" id="hidden_new_type_contact">
                                                 </div>
                                                 <div class="col-xs-3">
                                                     <button id="toggleAddType" style="height:35px;width:35" type="button" 
@@ -678,16 +679,18 @@ $(document).ready(function() {
             // Listen for Enter key to add new type contact
             input.on("keydown", function(e) {
                 if (e.key === "Enter") { // Enter key pressed
+                    e.preventDefault(); // Prevent form submission
+                    
                     let newType = $(this).val().trim();
-
                     if (newType !== "") {
                         let newOption = $("<option>", {
-                            value: newType, // Keeping value same as text
+                            value: "new_" + newType, // Unique identifier for new type
                             text: newType,
                             selected: true
                         });
 
                         select.append(newOption);
+                        $("#hidden_new_type_contact").val(newType); // Set hidden field value
                         input.remove();
                         select.prop("disabled", false);
                         button.removeClass("fa-times-circle btn-danger")
