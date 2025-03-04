@@ -31,6 +31,7 @@ class VisitesController extends AppController
         $cond2 = '';
         $cond3 = '';
         $cond4 = '';
+        $cond5 = '';
 
         $datedebut = $this->request->getQuery('datedebut');
         $datefin = $this->request->getQuery('datefin');
@@ -47,11 +48,20 @@ class VisitesController extends AppController
         if ($client_id) {
             $cond4 = "Visites.client_id = '" . $client_id . "' ";
         }
+
+        if ($numero) {
+            $cond5 = "Visites.numero = '" . $numero . "' ";  
+        }
         
-     
+        // Fetch all distinct 'numero' values
+        $numeros = $this->Visites->find()
+        ->select(['numero']) 
+        ->distinct('numero') 
+        ->toArray();
+
         $query = $this->Visites->find('all')
         ->contain(['Clients', 'Commercials', 'TypeContacts'])
-        ->where([$cond2, $cond3, $cond4])
+        ->where([$cond2, $cond3, $cond4, $cond5])
         ->order(['Visites.id' => 'DESC']);
     
         $this->paginate = [
@@ -122,7 +132,7 @@ class VisitesController extends AppController
               ];
           }
   
-        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut','totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard','tauxReponse','typeContactsData'));
+        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut','totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard','tauxReponse','typeContactsData','numeros'));
     }
     /**
      * View method

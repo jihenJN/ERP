@@ -166,19 +166,32 @@ foreach ($lien as $k => $liens) {
 
 
                 <div class="col-xs-2">
-
-
                     <label class="control-label" for="name">Nom Client
                     </label>
                     <select class="form-control select2" id="idclient1" name="client_id1">
                         <option value="" selected="selected" disabled>Veuillez choisir !!</option>
                         <?php foreach ($clients as $id => $client) {
                         ?>
-
                             <option <?php if ($this->request->getQuery('client_id') == $client->id) echo 'selected="selected"' ?> value="<?php echo $client->id; ?>"><?php echo $client->Raison_Sociale ?></option>
                         <?php } ?>
                     </select>
                 </div>
+
+                <div class="col-xs-2">
+                    <label class="control-label" for="name">Numéro Visites</label>
+                    <select class="form-control select2" id="numero" name="numero">
+                        <option value="" selected="selected" disabled>Veuillez choisir !!</option>
+                        <?php foreach ($numeros as $numero): ?>
+                            <option 
+                                value="<?php echo $numero['numero']; ?>" 
+                                <?php if ($this->request->getQuery('numero') == $numero['numero']) echo 'selected="selected"'; ?>
+                            >
+                                <?php echo $numero['numero']; ?> <!-- Option label should be the numero -->
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+
 
                 <div class="col-xs-1">
                     <button type="submit" style="margin-top: 25px;" class="btn btn-default custom-width-button">
