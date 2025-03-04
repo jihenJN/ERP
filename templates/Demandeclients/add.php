@@ -111,10 +111,10 @@
                                                         'class' => 'form-control',
                                                         'id' => 'type_contact_select'
                                                     ]); ?>
-                                                    <input type="text" id="new_type_contact" class="form-control" 
+                                                    <input type="text" id="new_type_contact"  name="libelle"  class="form-control" 
                                                         placeholder="Ajouter un type contact" 
                                                         style="display: none; margin-top: 5px;">
-                                                        <input type="hidden" name="libelle" id="hidden_new_type_contact">
+                                                      
                                                 </div>
                                                 <div class="col-xs-3">
                                                     <button id="toggleAddType" style="height:35px;width:35" type="button" 
@@ -663,48 +663,55 @@ $(document).ready(function() {
         let input = $("#new_type_contact");
         let button = $("#toggleAddType");
 
-        if (input.length === 0) {
-            // Create input dynamically
-            input = $("<input>", {
-                type: "text",
-                id: "new_type_contact",
-                class: "form-control",
-                placeholder: "Enter new type contact"
-            }).insertAfter(select).focus();
-
+        if (input.is(":visible")) {
+            // Hide input and reset value
+            input.hide().val("");
+            select.prop("disabled", false);
+            button.removeClass("fa-times-circle btn-danger")
+                  .addClass("fa-plus-circle btn-primary");
+        } else {
+            // Show input and disable select
+            input.show().focus();
             select.prop("disabled", true);
             button.removeClass("fa-plus-circle btn-primary")
                   .addClass("fa-times-circle btn-danger");
 
-            // Listen for Enter key to add new type contact
-            input.on("keydown", function(e) {
-                if (e.key === "Enter") { // Enter key pressed
+            // Listen for Enter key to add new type
+            input.off("keydown").on("keydown", function(e) {
+                if (e.key === "Enter") {
                     e.preventDefault(); // Prevent form submission
-                    
                     let newType = $(this).val().trim();
+
                     if (newType !== "") {
                         let newOption = $("<option>", {
-                            value: "new_" + newType, // Unique identifier for new type
+                            value: newType,
                             text: newType,
                             selected: true
                         });
 
                         select.append(newOption);
-                        $("#hidden_new_type_contact").val(newType); // Set hidden field value
-                        input.remove();
+                        input.hide();
                         select.prop("disabled", false);
                         button.removeClass("fa-times-circle btn-danger")
                               .addClass("fa-plus-circle btn-primary");
                     }
                 }
             });
+        }
+    });
 
-        } else {
-            // Remove input, enable select, reset button
-            input.remove();
-            select.prop("disabled", false);
-            button.removeClass("fa-times-circle btn-danger")
-                  .addClass("fa-plus-circle btn-primary");
+    // Ensure input is correctly submitted
+    $("form").submit(function() {
+        let input = $("#new_type_contact");
+        let select = $("#type_contact_select");
+
+        if (input.is(":visible") && input.val().trim() !== "") {
+            select.append($("<option>", {
+                value: input.val().trim(),
+                text: input.val().trim(),
+                selected: true
+            }));
+            input.hide();
         }
     });
 });

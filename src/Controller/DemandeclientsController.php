@@ -179,13 +179,16 @@ class DemandeclientsController extends AppController
             if ($this->Clients->save($datacl)) {
                 $client_id = $datacl->id;
 
+               
 
-                // Handling TypeContact (Checking if exists or creating a new one)
                 $type_contact_id = (int) $this->request->getData('type_contact_id');
-                if (!$type_contact_id) {
-                    // If no type_contact_id is selected, create a new TypeContact
+                $newTypeContact = $this->request->getData('libelle'); // Now correctly captured
+                
+                if (!$type_contact_id && !empty($newTypeContact)) {
+                    // Create new TypeContact if it doesn't exist
                     $dataTypeContact = $this->TypeContacts->newEmptyEntity();
-                    $dataTypeContact->libelle = $this->request->getData('libelle'); // Assuming 'libelle' input
+                    $dataTypeContact->libelle = $newTypeContact;
+                
                     if ($this->TypeContacts->save($dataTypeContact)) {
                         $type_contact_id = $dataTypeContact->id;
                     }
