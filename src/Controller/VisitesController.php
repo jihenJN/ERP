@@ -35,9 +35,7 @@ class VisitesController extends AppController
         $nbreJoursRestant =0;
 
         $datedebut = $this->request->getQuery('datedebut');
-        // debug($datedebut);
         $datefin = $this->request->getQuery('datefin');
-        // debug($datefin);
         $client_id = $this->request->getQuery('client_id');
         $numero = $this->request->getQuery('numero');
 
@@ -52,46 +50,42 @@ class VisitesController extends AppController
             $cond4 = "Visites.client_id = '" . $client_id . "' ";
         }
         
-        // Check if filtering by 'numero'
-        if ($numero) {
-            $query = $this->Visites->find()
-                ->contain(['Clients', 'Commercials', 'TypeContacts'])
-                ->where(['Visites.numero' => $numero]);
-
-            $visite = $query->first();
-
-            if ($visite) {
-                $currentDate = new \DateTime();
-                $datePrevu = $visite->dateplanifie ? new \DateTime($visite->dateplanifie->toDateString()) : null;
-                $dateVisite = $visite->date_visite ? new \DateTime($visite->date_visite->toDateString()) : null;
-
-                if ($datePrevu && $datePrevu > $currentDate && !$dateVisite) {
-                    $interval = $datePrevu->diff($currentDate);
-                    $nbreJoursRestant = $interval->days;
-                }
-            }
-
-            if ($query->isEmpty()) {
-                $this->Flash->error(__('There is no visit with number {0}', h($numero)));
-            } else {
-                $title = 'Nbre jour(s) Reste pour la visite N° ' . h($numero);
-            }
-        } else {
-            $query = $this->Visites->find('all')
-                ->where([$cond2, $cond3, $cond4])
-                ->order(['Visites.id' => 'DESC']);
-        }
-
+     
+        $query = $this->Visites->find('all')
+        ->contain(['Clients', 'Commercials', 'TypeContacts'])
+        ->where([$cond2, $cond3, $cond4])
+        ->order(['Visites.id' => 'DESC']);
+    
         $this->paginate = [
             'contain' => ['Clients', 'Demandeclients','TypeContacts','Commercials'],
         ];
      
         $visites = $this->paginate($query);
 
+
+         // Calculate "Nombre de jours restant" for each visit
+        foreach ($visites as $visite) {
+            $currentDate = new \DateTime();
+            $datePrevu = $visite->dateplanifie ? new \DateTime($visite->dateplanifie->toDateString()) : null;
+            $dateVisite = $visite->date_visite ? new \DateTime($visite->date_visite->toDateString()) : null;
+            $nbreJoursRestant = 0;
+                if ($datePrevu && $datePrevu > $currentDate && !$dateVisite) {
+                    $interval = $datePrevu->diff($currentDate);
+                    $nbreJoursRestant = $interval->days;
+                    debug($nbreJoursRestant);
+                }
+               // Add the remaining days as a custom field in the data
+            $visitesData[] = [
+                'visite' => $visite,
+                'nbreJoursRestant' => $nbreJoursRestant
+            ];
+
+        }
+
+
         $this->set(compact('visites'));
-        // debug($factureclients);
         $count = $query->count();
-        ///debug($count);
+
 
         $clients = $this->Visites->Clients->find('all'); //->where(["Clients.etat" => 'TRUE']);
 
@@ -151,7 +145,7 @@ class VisitesController extends AppController
               ];
           }
   
-        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut','totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard','tauxReponse','typeContactsData','nbreJoursRestant','visite'));
+        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut','totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard','tauxReponse','typeContactsData','visitesData','visite'));
     }
     /**
      * View method

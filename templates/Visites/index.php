@@ -221,16 +221,17 @@ foreach ($lien as $k => $liens) {
 
                             <tr style="font-size: 16px;">
                                 <th>Numéro</th>
-                                <th>Date contact</th>
+                                <th>Date Contact</th>
                                 <th>Type Contact</th>
                                 <th>Client</th>
                                 <th>Lieu</th>
                                 <th>Localisation</th>
-                                <th>Délai palnifie</th>
+                                <th>Délai Palnifie</th>
+                                <th>Jours Restants </th>
                                 <th>Visiteur</th>
                                 <th>Date Visite</th>
                                 <th>Commentaire</th>
-                                <th> Actions</th>
+                                <th>Actions</th>
 
                             </tr>
                         </thead>
@@ -244,8 +245,24 @@ foreach ($lien as $k => $liens) {
                                     <td><?= h($vv->addresse) ?></td>
                                     <td><?= h($vv->localisation) ?></td>
                                     <td><?= $this->Time->format($vv->dateplanifie, 'dd/MM/y' );?></td>
+                                    
+
+                                    <?php
+                                    // Calculate remaining days directly in the view
+                                    $currentDate = new \DateTime();
+                                    $datePrevu = $vv->dateplanifie ? new \DateTime($vv->dateplanifie->toDateString()) : null;
+                                    $dateVisite = $vv->date_visite ? new \DateTime($vv->date_visite->toDateString()) : null;
+                                    $nbreJoursRestant = 0;
+
+                                    if ($datePrevu && $datePrevu > $currentDate && !$dateVisite) {
+                                        $interval = $datePrevu->diff($currentDate);
+                                        $nbreJoursRestant = $interval->days;
+                                    }
+                                   ?>
+                                <td><?= $nbreJoursRestant ?></td>
+
                                     <td><?= h($vv->commercial->name) ?></td>
-                                    <td> <?= $vv->date_visite ? $vv->date_visite->format('d/m/Y') : 'N/A' ?></td>
+                                    <td> <?= $vv->date_visite ? $vv->date_visite->format('d/m/Y') : null ?></td>
                                     <td><?= h($vv->description) ?></td>
                                     <td>
                                     <?php //if ($imp == 1) { ?>
