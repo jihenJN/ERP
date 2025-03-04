@@ -42,34 +42,8 @@ use Cake\Datasource\ConnectionManager;
     
             </div>
         </div>
-     
         <div class="col-xs-4">
-          <!-- Statistics Section -->
             <div >
-            <?= $this->Form->create(null, ['type' => 'get']) ?>
-         
-            <div class="row g-1"> 
-    <div class="col-md-10">
-        <?= $this->Form->control('numero', [
-            'value' => $this->request->getQuery('numero'),
-            'placeholder' => __('Rechercher par Numéro'),
-            'class' =>'form-control ', 
-            'label' => false, 
-        ]) ?>
-    </div>
-    <div class="col-md-2 d-grid"> 
-        <button type="submit" class="btn btn-default custom-width-button">
-            <i class="fa fa-search"></i>
-        </button>
-    </div>
-</div>
-
-                <?= $this->Form->end() ?>
-                <?php if (isset($nbreJoursRestant) && isset($visite->id)): ?>
-                <p><strong>Nbre jour(s) Reste pour la visites :</strong> <?= h($nbreJoursRestant) ?></p>
-                <p><strong>Lien Visite :</strong> <?= $this->Html->link('Clique ici', ['controller' => 'Visites', 'action' => 'view', $visite->id], ['escape' => false]) ?></p>
-                <?php endif; ?>
-
                 <p><strong>Taux de Retard :</strong> <?= number_format($tauxRetard, 2) ?>%</p>
                 <p><strong>Taux de Réponse :</strong> <?= number_format($tauxReponse, 2) ?>%</p>
             </div>
@@ -205,14 +179,6 @@ foreach ($lien as $k => $liens) {
                         <?php } ?>
                     </select>
                 </div>
-
-
-
-
-
-
-
-
 
                 <div class="col-xs-1">
                     <button type="submit" style="margin-top: 25px;" class="btn btn-default custom-width-button">
