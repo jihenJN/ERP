@@ -50,11 +50,11 @@ class TypecontactsController extends AppController
         if ($this->request->is('post')) {
             $typecontact = $this->Typecontacts->patchEntity($typecontact, $this->request->getData());
             if ($this->Typecontacts->save($typecontact)) {
-                $this->Flash->success(__('The typecontact has been saved.'));
+              //  $this->Flash->success(__('The typecontact has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The typecontact could not be saved. Please, try again.'));
+            // $this->Flash->error(__('The typecontact could not be saved. Please, try again.'));
         }
         $this->set(compact('typecontact'));
     }
@@ -74,11 +74,11 @@ class TypecontactsController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $typecontact = $this->Typecontacts->patchEntity($typecontact, $this->request->getData());
             if ($this->Typecontacts->save($typecontact)) {
-                $this->Flash->success(__('The typecontact has been saved.'));
+             //   $this->Flash->success(__('The typecontact has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The typecontact could not be saved. Please, try again.'));
+          //  $this->Flash->error(__('The typecontact could not be saved. Please, try again.'));
         }
         $this->set(compact('typecontact'));
     }
@@ -95,30 +95,13 @@ class TypecontactsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $typecontact = $this->Typecontacts->get($id);
         if ($this->Typecontacts->delete($typecontact)) {
-            $this->Flash->success(__('The typecontact has been deleted.'));
+          //  $this->Flash->success(__('The typecontact has been deleted.'));
         } else {
-            $this->Flash->error(__('The typecontact could not be deleted. Please, try again.'));
+           // $this->Flash->error(__('The typecontact could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
     }
 
-
-    public function addFromDemandeClient()
-    {
-        $this->autoRender = false;
-        $this->request->allowMethod(['post']);
-           // DEBUG CSRF
-    debug($this->request->getAttribute('csrfToken'));
-    debug($this->request->getData());
-        $typeContact = $this->TypeContacts->newEmptyEntity();
-        $typeContact->libelle = $this->request->getData('libelle');
-        
-        if ($this->TypeContacts->save($typeContact)) {
-            echo json_encode(['success' => true, 'id' => $typeContact->id]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Could not save Type Contact.']);
-        }
-    }
 
 }

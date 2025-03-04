@@ -64,7 +64,7 @@ foreach ($lien as $k => $liens) {
                                         <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $typecontact->id), array('escape' => false)); ?>
                                         <?php if ($edit == 1) { echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $typecontact->id), array('escape' => false)); }?>
                                         <?php if ($delete == 1) { ?>
-                                            <button index='<?php echo $i?>' class='verifiertypecontact btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>
+                                            <?php echo $this->Form->postLink("<button class='btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete',  $typecontact->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?',  $typecontact->id)); ?>
                                         <?php } ?>
                                     </td>
                                 </tr>
