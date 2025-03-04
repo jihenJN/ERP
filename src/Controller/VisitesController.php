@@ -31,8 +31,6 @@ class VisitesController extends AppController
         $cond2 = '';
         $cond3 = '';
         $cond4 = '';
-        $visite='';
-        $nbreJoursRestant =0;
 
         $datedebut = $this->request->getQuery('datedebut');
         $datefin = $this->request->getQuery('datefin');
@@ -61,27 +59,6 @@ class VisitesController extends AppController
         ];
      
         $visites = $this->paginate($query);
-
-
-         // Calculate "Nombre de jours restant" for each visit
-        foreach ($visites as $visite) {
-            $currentDate = new \DateTime();
-            $datePrevu = $visite->dateplanifie ? new \DateTime($visite->dateplanifie->toDateString()) : null;
-            $dateVisite = $visite->date_visite ? new \DateTime($visite->date_visite->toDateString()) : null;
-            $nbreJoursRestant = 0;
-                if ($datePrevu && $datePrevu > $currentDate && !$dateVisite) {
-                    $interval = $datePrevu->diff($currentDate);
-                    $nbreJoursRestant = $interval->days;
-                    debug($nbreJoursRestant);
-                }
-               // Add the remaining days as a custom field in the data
-            $visitesData[] = [
-                'visite' => $visite,
-                'nbreJoursRestant' => $nbreJoursRestant
-            ];
-
-        }
-
 
         $this->set(compact('visites'));
         $count = $query->count();
@@ -145,7 +122,7 @@ class VisitesController extends AppController
               ];
           }
   
-        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut','totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard','tauxReponse','typeContactsData','visitesData','visite'));
+        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut','totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard','tauxReponse','typeContactsData'));
     }
     /**
      * View method
