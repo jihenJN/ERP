@@ -301,11 +301,12 @@ class VisitesController extends AppController
             $data['dateplanifie'] = $this->request->getData('dateplanifie');
             $data['trdemande'] = $this->request->getData('trdemande');
             $data['description'] = $this->request->getData('description');
+            $data['date_visite'] = $this->request->getData('date_visite');
 
             // If no demandeclient_id (i.e., no $id), leave fields empty
-            $data['client_id'] = $client_id ? $client_id : null;
-            $data['commercial_id'] = $commercial_id ? $commercial_id : null;
-            $data['type_contact_id'] = $type_contact_id ? $type_contact_id : null;
+            $data['client_id'] = $client_id ?? $this->request->getData('client_id');
+            $data['commercial_id'] = $commercial_id ?? $this->request->getData('commercial_id');
+            $data['type_contact_id'] = $type_contact_id ?? $this->request->getData('type_contact_id');
 
             $data['descriptif'] = !empty($this->request->getData('descriptif')) ? $this->request->getData('descriptif') : null;
             if ($this->request->getData('datecptrendu')) {
@@ -316,6 +317,8 @@ class VisitesController extends AppController
             $data['tel'] = $this->request->getData('Tel');
             $data['adresse'] = $this->request->getData('Adresse');
             $visite = $this->Visites->patchEntity($visite, $data);
+           
+
 
             if ($this->Visites->save($visite)) {
                 $this->Flash->success(__('The visit has been saved successfully.'));
