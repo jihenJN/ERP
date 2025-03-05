@@ -24,7 +24,7 @@ use Cake\Datasource\ConnectionManager;
 
 <section class="content-header">
     <h1>
-        Rapport Visites 
+        Rapport Visites
     </h1>
 </section>
 <section class="content" style="width: 99%">
@@ -32,49 +32,51 @@ use Cake\Datasource\ConnectionManager;
         <div class="box-header">
         </div>
         <div class="box-body">
-      <div class="row">
-        <div class="col-xs-3">
-          <!-- Statistics Section -->
-            <div >
-                <p><strong>Total des visites :</strong> <?= $totalVisites ?></p>
-                <p><strong>Visites Effectuées :</strong> <?= $completedVisites ?></p>
-                <p><strong>Visites Non Effectuées :</strong> <?= $pendingVisites ?></p>
-    
-            </div>
-        </div>
-        <div class="col-xs-4">
-            <div >
-                <p><strong>Taux de Retard :</strong> <?= number_format($tauxRetard, 2) ?>%</p>
-                <p><strong>Taux de Réponse :</strong> <?= number_format($tauxReponse, 2) ?>%</p>
-            </div>
-        </div>
-        <div class="col-xs-5">
-            <div >
-            <div class="table-responsive" style="max-width: 100%; margin: auto;">
-           
-           <table class="table table-striped table-hover w-auto">
-               <thead class="bg-primary text-white">
-                   <tr>
-                       <th class="p-2" style="min-width: 150px;"><i class="fas fa-user"></i> Type de Contact</th>
-                       <th class="p-2 text-center" style="min-width: 120px;"><i class="fas fa-calendar-alt"></i> Nbre Visites</th>
-                   </tr>
-               </thead>
-               <tbody>
-                   <?php foreach ($typeContactsData as $row): ?>
-                       <tr>
-                           <td class="p-2"><?= h($row['type_contact']) ?></td>
-                           <td class="p-2 text-center font-weight-bold"><?= h($row['nbre_visites']) ?></td>
-                       </tr>
-                   <?php endforeach; ?>
-               </tbody>
-           </table>
-        </div>   
-            </div>
-        </div>
+            <div class="row">
+                <div class="col-xs-3">
+                    <!-- Statistics Section -->
+                    <div>
+                        <p><strong>Total des visites :</strong> <?= $totalVisites ?></p>
+                        <p><strong>Visites Effectuées :</strong> <?= $completedVisites ?></p>
+                        <p><strong>Visites Non Effectuées :</strong> <?= $pendingVisites ?></p>
 
-      </div>  
- 
-      </div>
+                    </div>
+                </div>
+                <div class="col-xs-4">
+                    <div>
+                        <p><strong>Taux de Retard :</strong> <?= number_format($tauxRetard, 2) ?>%</p>
+                        <p><strong>Taux de Réponse :</strong> <?= number_format($tauxReponse, 2) ?>%</p>
+                    </div>
+                </div>
+                <div class="col-xs-5">
+                    <div>
+                        <div class="table-responsive" style="max-width: 100%; margin: auto;">
+
+                            <table class="table table-striped table-hover w-auto">
+                                <thead class="bg-primary text-white">
+                                    <tr>
+                                        <th class="p-2" style="min-width: 150px;"><i class="fas fa-user"></i> Type de
+                                            Contact</th>
+                                        <th class="p-2 text-center" style="min-width: 120px;"><i
+                                                class="fas fa-calendar-alt"></i> Nbre Visites</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($typeContactsData as $row): ?>
+                                        <tr>
+                                            <td class="p-2"><?= h($row['type_contact']) ?></td>
+                                            <td class="p-2 text-center font-weight-bold"><?= h($row['nbre_visites']) ?></td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
 
     </div>
 </section>
@@ -100,108 +102,93 @@ foreach ($lien as $k => $liens) {
     //debug($liens);die;
 }*/
 
-// if ($add == 1) { 
+// if ($add == 1) {
 ?>
 <div class="pull-left" style="margin-left:25px;margin-top: 20px">
-    <?php //echo $this->Html->link(__('Ajouter'), ['action' => 'add'], ['class' => 'btn btn-success btn-sm']) 
+    <?php //echo $this->Html->link(__('Ajouter'), ['action' => 'add'], ['class' => 'btn btn-success btn-sm'])
     ?>
 </div>
-<?php //} 
+<?php //}
 ?>
 <br><br>
-
-
 <section class="content-header">
     <h1>
         Recherche
     </h1>
 </section>
-
 <section class="content" style="width: 99%">
     <div class="box">
         <div class="box-header">
         </div>
-
         <div class="box-body">
-
             <?php echo $this->Form->create($visites, ['id' => 'searchForm', 'type' => 'get']); ?>
             <div class="row">
-
-
-                <div class="col-xs-3">
+                <div class="col-xs-6">
                     <label class="control-label" for="name">Date début contact
                     </label>
                     <?php
                     echo $this->Form->input('datedebut', array('required' => 'off', 'label' => 'Date début', 'value' => $this->request->getQuery('datedebut'), 'id' => 'datedebut', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control ', 'type' => 'date'));
                     ?>
                 </div>
-
-
-                <div class="col-xs-3">
+                <div class="col-xs-6">
                     <label class="control-label" for="name">Date fin contact
                     </label>
                     <?php
                     echo $this->Form->input('datefin', array('required' => 'off', 'label' => 'Date fin', 'value' => $this->request->getQuery('datefin'), 'id' => 'datefin', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control ', 'type' => 'date'));
                     ?>
-
                 </div>
-
-
-
-                <div class="col-xs-2">
-
-
+            </div>
+            <br>
+            <div class="row">
+                <div class="col-xs-3">
                     <label class="control-label" for="name">Code Client
                     </label>
                     <select class="form-control select2" id="idclient" name="client_id">
                         <option value="" selected="selected" disabled>Veuillez choisir !!</option>
                         <?php foreach ($clients as $id => $client) {
                         ?>
-
-                            <option <?php if ($this->request->getQuery('client_id') == $client->id) echo 'selected="selected"' ?> value="<?php echo $client->id; ?>"><?php
-                                                                                                                                                                        echo $client->Code ?></option>
+                            <option
+                                <?php if ($this->request->getQuery('client_id') == $client->id) echo 'selected="selected"' ?>
+                                value="<?php echo $client->id; ?>">
+                                <?php
+                                echo $client->Code ?>
+                            </option>
                         <?php } ?>
                     </select>
                 </div>
-
-
-                <div class="col-xs-2">
+                <div class="col-xs-3">
                     <label class="control-label" for="name">Nom Client
                     </label>
                     <select class="form-control select2" id="idclient1" name="client_id1">
                         <option value="" selected="selected" disabled>Veuillez choisir !!</option>
                         <?php foreach ($clients as $id => $client) {
                         ?>
-                            <option <?php if ($this->request->getQuery('client_id') == $client->id) echo 'selected="selected"' ?> value="<?php echo $client->id; ?>"><?php echo $client->Raison_Sociale ?></option>
+                            <option
+                                <?php if ($this->request->getQuery('client_id') == $client->id) echo 'selected="selected"' ?>
+                                value="<?php echo $client->id; ?>"><?php echo $client->Raison_Sociale ?></option>
                         <?php } ?>
                     </select>
                 </div>
-
-                <div class="col-xs-2">
+                <div class="col-xs-4">
                     <label class="control-label" for="name">Numéro Visites</label>
                     <select class="form-control select2" id="numero" name="numero">
                         <option value="" selected="selected" disabled>Veuillez choisir !!</option>
                         <?php foreach ($numeros as $numero): ?>
-                            <option 
-                                value="<?php echo $numero['numero']; ?>" 
-                                <?php if ($this->request->getQuery('numero') == $numero['numero']) echo 'selected="selected"'; ?>
-                            >
-                                <?php echo $numero['numero']; ?> <!-- Option label should be the numero -->
+                            <option value="<?php echo $numero['numero']; ?>"
+                                <?php if ($this->request->getQuery('numero') == $numero['numero']) echo 'selected="selected"'; ?>>
+                                <?php echo $numero['numero']; ?>
+                                <!-- Option label should be the numero -->
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-
-
                 <div class="col-xs-1">
                     <button type="submit" style="margin-top: 25px;" class="btn btn-default custom-width-button">
                         <i class="fa fa-search"></i>
                     </button>
-
                 </div>
                 <?php if ($count != 0) { ?>
                     <div class="col-xs-1">
-
                         <!-- <button onclick="openWindow(1000, 1000, wr+'factureclients/imprimelistefactureclient?datedebut=<?php echo @$datedebut; ?>&datefin=<?php echo @$datefin; ?>&client_id=<?php echo @$client_id; ?>&numdeb=<?php echo @$numdeb; ?>&numfin=<?php echo @$numfin; ?>&reglee=<?php echo @$reglee; ?>')" class="btn btn-primary" style="margin-top: 25px;">
                             <i class="fa fa-print"></i>
                         </button> -->
@@ -211,13 +198,9 @@ foreach ($lien as $k => $liens) {
                 <div class="col-xs-1" style="text-align: center; margin-top: 25px;">
                     <?php echo $this->Html->link(__(''), ['action' => 'index'], ['class' => 'btn btn-default btn-large fa fa-remove', 'style' => 'width: 37px; height: 35px; display: flex; justify-content: center; align-items: center;']) ?>
                 </div>
-
-                <?php echo $this->Form->end(); ?>
             </div>
-
+            <?php echo $this->Form->end(); ?>
         </div>
-
-
     </div>
     <br>
     <div class="row">
@@ -228,10 +211,8 @@ foreach ($lien as $k => $liens) {
                 </div>
                 <div class="box-body">
                     <table width="100%" id="example2" class="table table-bordered table-striped">
-
                         <!-- <table id="example1" class="table-fixed table table-bordered table-striped" style=' display: block;overflow-x: auto;white-space: nowrap;height:500px'> -->
                         <thead style='position: sticky;top: 0; background-color: #3c8dbc;'>
-
                             <tr style="font-size: 16px;">
                                 <th>Numéro</th>
                                 <th>Date Contact</th>
@@ -245,21 +226,18 @@ foreach ($lien as $k => $liens) {
                                 <th>Date Visite</th>
                                 <th>Commentaire</th>
                                 <th>Actions</th>
-
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($visites as $i => $vv)  : $connection = ConnectionManager::get('default');?>
+                            <?php foreach ($visites as $i => $vv) : $connection = ConnectionManager::get('default'); ?>
                                 <tr style="font-size: 16px;">
-                                    <td><?= $vv->numero?></td>
-                                    <td><?= $this->Time->format($vv->datecontact, 'dd/MM/y' );?></td>
+                                    <td><?= $vv->numero ?></td>
+                                    <td><?= $this->Time->format($vv->datecontact, 'dd/MM/y'); ?></td>
                                     <td><?= h($vv->type_contact->libelle)  ?></td>
                                     <td><?= $vv->client->Code . ' ' . h($vv->client->Raison_Sociale) ?></td>
                                     <td><?= h($vv->addresse) ?></td>
                                     <td><?= h($vv->localisation) ?></td>
-                                    <td><?= $this->Time->format($vv->dateplanifie, 'dd/MM/y' );?></td>
-                                    
-
+                                    <td><?= $this->Time->format($vv->dateplanifie, 'dd/MM/y'); ?></td>
                                     <?php
                                     // Calculate remaining days directly in the view
                                     $currentDate = new \DateTime();
@@ -271,53 +249,41 @@ foreach ($lien as $k => $liens) {
                                         $interval = $datePrevu->diff($currentDate);
                                         $nbreJoursRestant = $interval->days;
                                     }
-                                   ?>
-                                <td><?= $nbreJoursRestant ?></td>
+                                    ?>
+                                    <td><?= $nbreJoursRestant ?></td>
 
                                     <td><?= h($vv->commercial->name) ?></td>
                                     <td> <?= $vv->date_visite ? $vv->date_visite->format('d/m/Y') : null ?></td>
                                     <td><?= h($vv->description) ?></td>
                                     <td>
-                                    <?php //if ($imp == 1) { ?>
-                                            <!-- <?php echo $this->Html->Link(
-                                                        "<button class='btn btn-xs' style='background-color: #800080; color: white; border: 1px solid #800080;'>
+                                        <?php //if ($imp == 1) { 
+                                        ?>
+                                        <!-- <?php echo $this->Html->Link(
+                                                    "<button class='btn btn-xs' style='background-color: #800080; color: white; border: 1px solid #800080;'>
                                                        <i class='fa fa-print'></i>
                                                                  </button>",
-                                                        array('action' => 'imprimeviewsmbm', $facture->id),
-                                                        array('escape' => false)
-                                                    ); ?> -->
+                                                    array('action' => 'imprimeviewsmbm', $facture->id),
+                                                    array('escape' => false)
+                                                ); ?> -->
 
-                                        <?php //} ?>
-
-
-                                 
+                                        <?php //} 
+                                        ?>
                                         <?php //if ($edit == 1 && $facture->client_id != 12) {
                                         echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $vv->id), array('escape' => false));
-                                        //} 
+                                        //}
                                         ?>
                                         <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $vv->id), array('escape' => false)); ?>
-
                                         <?php //if ($delete == 1 && $testregler == 0 && $BLTotQte == 0) {
                                         echo $this->Form->postLink("<button class='deleteConfirm btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $vv->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $vv->id));
-                                        //} 
+                                        //}
                                         ?>
-
                                     </td>
                                 </tr>
-
-
                                 <input type="hidden" value="<?php echo $i; ?>" id="index" />
                             <?php endforeach; ?>
                         </tbody>
-
                     </table>
-
                     <table>
-
-
-
-
-
                     </table>
                 </div>
             </div>
@@ -327,14 +293,11 @@ foreach ($lien as $k => $liens) {
     </div>
 </section>
 
-
-
 <?php echo $this->Html->css('AdminLTE./bower_components/datatables.net-bs/css/dataTables.bootstrap.min', ['block' => 'css']); ?>
 <?php echo $this->Html->script('AdminLTE./bower_components/datatables.net/js/jquery.dataTables.min', ['block' => 'script']); ?>
 <?php echo $this->Html->script('AdminLTE./bower_components/datatables.net-bs/js/dataTables.bootstrap.min', ['block' => 'script']); ?>
 <?php echo $this->Html->css('AdminLTE./bower_components/select2/dist/css/select2.min', ['block' => 'css']); ?>
 <?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
-
 <?php $this->start('scriptBottom'); ?>
 <script>
     // document.addEventListener('DOMContentLoaded', function() {
@@ -451,7 +414,8 @@ foreach ($lien as $k => $liens) {
     function openWindow(width, height, url) {
         var left = (screen.width - width) / 2;
         var top = (screen.height - height) / 2;
-        window.open(url, '_blank', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
+        window.open(url, '_blank', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=' +
+            width + ',height=' + height + ',top=' + top + ',left=' + left);
     }
     $(document).ready(function() {
 
@@ -491,7 +455,8 @@ foreach ($lien as $k => $liens) {
     function openWindow(h, w, url) {
         leftOffset = (screen.width / 2) - w / 2;
         topOffset = (screen.height / 2) - h / 2;
-        window.open(url, this.target, 'left=' + leftOffset + ',top=' + topOffset + ',width=' + w + ',height=' + h + ',resizable,scrollbars=yes');
+        window.open(url, this.target, 'left=' + leftOffset + ',top=' + topOffset + ',width=' + w + ',height=' + h +
+            ',resizable,scrollbars=yes');
     }
     $(function() {
         $('#example2').DataTable({
@@ -525,6 +490,7 @@ foreach ($lien as $k => $liens) {
         format: 'MM/DD/YYYY h:mm A'
     })
 </script>
+
 <!-- FontAwesome Icons -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 <?php $this->end(); ?>
