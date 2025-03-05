@@ -50,24 +50,24 @@ class VisitesController extends AppController
         }
 
         if ($numero) {
-            $cond5 = "Visites.numero = '" . $numero . "' ";  
+            $cond5 = "Visites.numero = '" . $numero . "' ";
         }
-        
+
         // Fetch all distinct 'numero' values
         $numeros = $this->Visites->find()
-        ->select(['numero']) 
-        ->distinct('numero') 
-        ->toArray();
+            ->select(['numero'])
+            ->distinct('numero')
+            ->toArray();
 
         $query = $this->Visites->find('all')
-        ->contain(['Clients', 'Commercials', 'TypeContacts'])
-        ->where([$cond2, $cond3, $cond4, $cond5])
-        ->order(['Visites.id' => 'DESC']);
-    
+            ->contain(['Clients', 'Commercials', 'TypeContacts'])
+            ->where([$cond2, $cond3, $cond4, $cond5])
+            ->order(['Visites.id' => 'DESC']);
+
         $this->paginate = [
-            'contain' => ['Clients', 'Demandeclients','TypeContacts','Commercials'],
+            'contain' => ['Clients', 'Demandeclients', 'TypeContacts', 'Commercials'],
         ];
-     
+
         $visites = $this->paginate($query);
 
         $this->set(compact('visites'));
@@ -76,63 +76,64 @@ class VisitesController extends AppController
 
         $clients = $this->Visites->Clients->find('all'); //->where(["Clients.etat" => 'TRUE']);
 
-         // Calculate total visits
-         $totalVisites = $this->Visites->find()->count();
+        // Calculate total visits
+        $totalVisites = $this->Visites->find()->count();
 
         // Calculate completed visits (where date_visite is not null)
         $completedVisites = $this->Visites->find()
-        ->where(['date_visite IS NOT' => null])
-        ->count();
+            ->where(['date_visite IS NOT' => null])
+            ->count();
 
         // Calculate pending visits (where date_visite is null)
         $pendingVisites = $totalVisites - $completedVisites;
 
-         // Calculate delayed visits (where date_visite is later than dateplanifie)
-         $delayedVisites = $this->Visites->find()
-         ->where(['date_visite > dateplanifie'])
-         ->count();
+        // Calculate delayed visits (where date_visite is later than dateplanifie)
+        $delayedVisites = $this->Visites->find()
+            ->where(['date_visite > dateplanifie'])
+            ->count();
 
         // Calculate Taux de retard
         $tauxRetard = ($totalVisites > 0) ? ($delayedVisites / $totalVisites) * 100 : 0;
 
-         // Calculate Taux de reponse
-         $tauxReponse = ($totalVisites > 0 )? ($completedVisites / $totalVisites) * 100 : 0;
+        // Calculate Taux de reponse
+        $tauxReponse = ($totalVisites > 0) ? ($completedVisites / $totalVisites) * 100 : 0;
 
 
-          // Fetch the list of TypeContacts
-          $typeContacts = $this->Visites->TypeContacts->find()
+        // Fetch the list of TypeContacts
+        $typeContacts = $this->Visites->TypeContacts->find()
             ->select(['id', 'libelle']) // Select id and libelle
             ->all()
             ->combine('id', 'libelle') // Convert to associative array [id => libelle]
             ->toArray();
- 
 
-          // Prepare data: Get visit counts grouped by type_contact_id
-          $typeContactsCounts = $this->Visites->find()
-              ->select([
-              'type_contact_id', 
-              'nbre_visites' => $this->Visites->find()->func()->count('*')])
-              ->group('type_contact_id')
-              ->toArray();
-  
-          // Convert counts to an associative array [type_contact_id => nbre_visites]
-          $typeContactsCountsMap = [];
-          foreach ($typeContactsCounts as $row) {
-              $typeContactsCountsMap[$row->type_contact_id] = $row->nbre_visites;
-          }
 
-      
-  
-          // Prepare data array
-          $typeContactsData = [];
-          foreach ($typeContacts as $id => $name) {
-              $typeContactsData[] = [
-                  'type_contact' => $name,
-                  'nbre_visites' => isset($typeContactsCountsMap[$id]) ? $typeContactsCountsMap[$id] : 0
-              ];
-          }
-  
-        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut','totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard','tauxReponse','typeContactsData','numeros'));
+        // Prepare data: Get visit counts grouped by type_contact_id
+        $typeContactsCounts = $this->Visites->find()
+            ->select([
+                'type_contact_id',
+                'nbre_visites' => $this->Visites->find()->func()->count('*')
+            ])
+            ->group('type_contact_id')
+            ->toArray();
+
+        // Convert counts to an associative array [type_contact_id => nbre_visites]
+        $typeContactsCountsMap = [];
+        foreach ($typeContactsCounts as $row) {
+            $typeContactsCountsMap[$row->type_contact_id] = $row->nbre_visites;
+        }
+
+
+
+        // Prepare data array
+        $typeContactsData = [];
+        foreach ($typeContacts as $id => $name) {
+            $typeContactsData[] = [
+                'type_contact' => $name,
+                'nbre_visites' => isset($typeContactsCountsMap[$id]) ? $typeContactsCountsMap[$id] : 0
+            ];
+        }
+
+        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut', 'totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard', 'tauxReponse', 'typeContactsData', 'numeros'));
     }
     /**
      * View method
@@ -153,12 +154,12 @@ class VisitesController extends AppController
     {
 
         $listetypeIds = [];  // Initialize to avoid undefined variable error
-        $listetypecomteIds = []; 
-        $listetypedemandes = []; 
+        $listetypecomteIds = [];
+        $listetypedemandes = [];
         $typedemandes = [];
         // Configure::write('debug', false);
         $visite = $this->Visites->get($id, [
-            'contain' => ['Clients', 'Demandeclients','TypeContacts'],
+            'contain' => ['Clients', 'Demandeclients', 'TypeContacts'],
         ]);
         $client_id = $visite->client_id;
         if (!empty($client_id)) {
@@ -250,8 +251,8 @@ class VisitesController extends AppController
             // debug($typeContacts);
         }
 
-        if (!empty($type_contact_id)) {
-            $commercials = $this->fetchTable('Commercials')->find('all')->where(['Commercials.id' => $commercial_id ])->first();
+        if (!empty($commercial_id)) {
+            $commercials = $this->fetchTable('Commercials')->find('all')->where(['Commercials.id' => $commercial_id])->first();
             // debug($commercials);
         }
         if ($this->request->is('post')) {
@@ -266,11 +267,11 @@ class VisitesController extends AppController
 
 
             $num = $this->Visites->find()->select(["num" => 'MAX(Visites.numero)'])->first();
-             
+
             $n = $num->num;
             $in = intval($n) + 1;
             $mm = str_pad("$in", 5, "0", STR_PAD_LEFT);
-          
+
             $data['numero'] = $mm;
             $data['demandeclient_id'] = $id;
             $data['datecontact'] = $this->request->getData('datecontact');
@@ -290,8 +291,6 @@ class VisitesController extends AppController
             $data['adresse'] = $this->request->getData('Adresse');
             $visite = $this->Visites->patchEntity($visite, $data);
 
-            debug($data);
-            debug($visite);
             if ($this->Visites->save($visite)) {
                 $this->Flash->success(__('The visit has been saved successfully.'));
                 return $this->redirect(['action' => 'index']);
@@ -352,7 +351,7 @@ class VisitesController extends AppController
         $typebesoins = $this->fetchTable('Typebesoins')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
 
         $compterendus = $this->fetchTable('Compterendus')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
-        $this->set(compact('mm', 'typebesoins', 'visite', 'clients', 'compterendus','typeContacts','commercials'));
+        $this->set(compact('mm', 'typebesoins', 'visite', 'clients', 'compterendus', 'typeContacts', 'commercials'));
     }
     /**
      * Edit method
@@ -383,21 +382,34 @@ class VisitesController extends AppController
 
     {
         $listetypeIds = [];  // Initialize to avoid undefined variable error
-        $listetypecomteIds = []; 
-        $listetypedemandes = []; 
+        $listetypecomteIds = [];
+        $listetypedemandes = [];
         $typedemandes = [];
-       
+
         $this->loadModel('Listecompterendus');
         $this->loadModel('Compterendus');
         // Configure::write('debug', false);
         $visite = $this->Visites->get($id, [
-            'contain' => ['Clients'],
+            'contain' => ['Clients', 'TypeContacts', 'Commercials'],
         ]);
         $client_id = $visite->client_id;
+        $type_contact_id = $visite->type_contact_id;
+        $commercial_id = $visite->commercial_id;
         if (!empty($client_id)) {
             $clients = $this->fetchTable('Clients')->find('all')->where(['Clients.id' => $client_id])->first();
             // debug($clients);
         }
+
+        if (!empty($type_contact_id)) {
+            $typeContacts = $this->fetchTable('TypeContacts')->find('all')->where(['TypeContacts.id' => $type_contact_id])->first();
+            // debug($typeContacts);
+        }
+
+        if (!empty($commercial_id)) {
+            $commercials = $this->fetchTable('Commercials')->find('all')->where(['Commercials.id' => $commercial_id])->first();
+            // debug($commercials);
+        }
+
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             $document = $this->request->getData('piece');
@@ -412,13 +424,15 @@ class VisitesController extends AppController
 
 
             $data['numero'] = $visite->numero;
-
             $data['demandeclient_id'] = $visite->demandeclient_id;
             $data['datecontact'] = $this->request->getData('datecontact');
             $data['dateplanifie'] = $this->request->getData('dateplanifie');
             $data['trdemande'] = $this->request->getData('trdemande');
             $data['description'] = $this->request->getData('description');
             $data['client_id'] = $this->request->getData('client_id');
+            $data['commercial_id'] = $this->request->getData('commercial_id');
+            $data['type_contact_id'] = $this->request->getData('type_contact_id');
+
             // $data['commercial_id'] = $this->request->getData('commercial_id');
             // $data['adresselivraisonclient_id'] = $this->request->getData('adresse');
             $data['descriptif'] = !empty($this->request->getData('descriptif')) ? $this->request->getData('descriptif') : null;
@@ -427,7 +441,6 @@ class VisitesController extends AppController
             }
 
             $data['responsable'] = !empty($this->request->getData('responsable')) ? $this->request->getData('responsable') : null;
-            $data['visiteur'] = $this->request->getData('visiteur');
             $data['tel'] = $this->request->getData('Tel');
             $data['adresse'] = $this->request->getData('Adresse');
             $visite = $this->Visites->patchEntity($visite, $data);
@@ -524,9 +537,9 @@ class VisitesController extends AppController
         //, ['keyfield' => 'id', 'valueField' => 'Nom']);
 
         $listetypedemandes = $this->fetchTable('Typedemandes')->find('list')->toArray();
-$typedemandes = $this->fetchTable('Typedemandes')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->toArray();
+        $typedemandes = $this->fetchTable('Typedemandes')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->toArray();
 
-        $this->set(compact('visite', 'listecompterendus', 'compterendus', 'listebesoins', 'listetypeIds', 'clients', 'listebesoins', 'listetypecomteIds', 'typebesoins', 'listetypedemandes', 'typedemandes'));
+        $this->set(compact('visite', 'listecompterendus', 'compterendus', 'listebesoins', 'listetypeIds', 'clients', 'listebesoins', 'listetypecomteIds', 'typebesoins', 'listetypedemandes', 'typedemandes', 'typeContacts', 'commercials'));
     }
     /**
      * Delete method

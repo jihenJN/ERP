@@ -8,7 +8,8 @@
 <section class="content-header">
 
     <ol class="breadcrumb">
-        <li><a href="<?php echo $this->Url->build(['action' => 'index']); ?>"><i class="fa fa-reply"></i> <?php echo __('Retour'); ?></a></li>
+        <li><a href="<?php echo $this->Url->build(['action' => 'index']); ?>"><i class="fa fa-reply"></i>
+                <?php echo __('Retour'); ?></a></li>
     </ol>
 </section><br>
 
@@ -24,7 +25,8 @@
                             <?php echo $this->Html->image('logoSMBM.png', array('width' => '250px', 'height' => '110px')); ?>
                         </div>
                         <div class="col-xs-6">
-                            <h1 class="box-title" style="color:#3C386E!important;margin-top:5%;"><strong>Modifier Visite sur site N° <?php echo $visite->numero; ?></strong></h1>
+                            <h1 class="box-title" style="color:#3C386E!important;margin-top:5%;"><strong>Modifier Visite
+                                    sur site N° <?php echo $visite->numero; ?></strong></h1>
 
                         </div>
                     </div>
@@ -67,7 +69,14 @@
                                 <div class="col-xs-6">
                                     <?php echo $this->Form->control('Tel', ['label' => 'Tel', 'readonly' => 'readonly', 'value' => $clients->Tel, 'name']); ?>
                                 </div>
-
+                                <div class="col-xs-6">
+                                    <?php echo $this->Form->control('libelle', ['label' => 'Type Contact', 'readonly' => 'readonly', 'value' => $typeContacts->libelle]) ?>
+                                    <?php echo $this->Form->control('type_contact_id', ['label' => 'Type Contact', 'type' => 'hidden', 'value' => $typeContacts->id]) ?>
+                                </div>
+                                <div class="col-xs-6">
+                                    <?php echo $this->Form->control('name', ['label' => 'Visiteur', 'readonly' => 'readonly', 'value' => $commercials->name]) ?>
+                                    <?php echo $this->Form->control('commercial_id', ['label' => 'Visiteur', 'type' => 'hidden', 'value' => $commercials->id]) ?>
+                                </div>
 
                             </div>
                         </div>
@@ -80,7 +89,8 @@
 
 
                                     <div class="row" style="gap: 20px; display: flex; flex-wrap: wrap;">
-                                        <div style="margin: 0 auto; margin-left: 20px; margin-right: 20px; position: static; width: 100%;">
+                                        <div
+                                            style="margin: 0 auto; margin-left: 20px; margin-right: 20px; position: static; width: 100%;">
 
 
                                             <div class="col-xs-6" style="margin-bottom: 20px;">
@@ -92,7 +102,9 @@
                                             <div class="col-xs-12" style="margin-bottom: 20px;">
                                                 <label>Description :</label>
 
-                                                <textarea id="editor-container1" name="description" class="form-control summernote" rows="100" cols="100" style="height: 900px;">
+                                                <textarea id="editor-container1" name="description"
+                                                    class="form-control summernote" rows="100" cols="100"
+                                                    style="height: 900px;">
                                                <?php echo h($visite->description) ?>
                                                </textarea>
 
@@ -123,25 +135,23 @@
                                                 <div style="display: flex; flex-wrap: wrap; gap: 20px;">
                                                     <?php foreach ($typebesoins as $id => $name): ?>
                                                         <label style="display: flex; align-items: center; gap: 5px;">
-                                                            <input
-                                                                type="checkbox"
-                                                                class="typebesoin-checkbox"
-                                                                name="typebesoins[]"
-                                                                value="<?= $id; ?>"
+                                                            <input type="checkbox" class="typebesoin-checkbox"
+                                                                name="typebesoins[]" value="<?= $id; ?>"
                                                                 <?= in_array($id, $listetypeIds) ? 'checked' : ''; ?>>
                                                             <?= h($name); ?>
                                                         </label>
                                                     <?php endforeach; ?>
                                                 </div>
                                             </div>
-                                            <?php $display = 'display: none;'; // Default to hidden ?>
+                                            <?php $display = 'display: none;'; // Default to hidden 
+                                            ?>
                                             <?php foreach ($listebesoins as $b): ?>
                                                 <?php
                                                 // Determine display style based on typebesoin_id
                                                 $display = ($b->typebesoin_id == 1) ? 'display: block;' : 'display: none;';
                                                 ?>
                                             <?php endforeach; ?>
-                                        
+
                                             <div class="col-xs-12" id="piece" style="<?php echo $display; ?>">
                                                 <!-- <?php $url = $_SERVER['HTTP_HOST']; ?>
                                                 <?php $this->Form->control('piece', ['name' => 'piece', 'id' => 'pie', 'type' => 'file', 'label' => false]); ?>
@@ -158,24 +168,18 @@
 
 
                                             <br>
-                                            <div class="col-xs-12" style="margin-bottom: 20px;">
 
-                                                <label>Visiteur :</label>
-                                                <?php echo $this->Form->control('visiteur', ['type' => 'text', 'label' => false]); ?>
-                                            </div>
                                             <br><br>
 
                                             <div class="col-xs-12" style="margin-bottom: 20px;">
                                                 <div style="display: flex; flex-wrap: wrap; gap: 20px;">
-                                                    <label>Compte rendu à qui ?:</label> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                                                    <label>Compte rendu à qui ?:</label> &nbsp; &nbsp; &nbsp; &nbsp;
+                                                    &nbsp; &nbsp;
 
                                                     <?php foreach ($compterendus as $id => $name): ?>
                                                         <label style="display: flex; align-items: center; gap: 5px;">
-                                                            <input
-                                                                type="checkbox"
-                                                                class="compterendu-checkbox"
-                                                                name="compterendus[]"
-                                                                value="<?= $id; ?>"
+                                                            <input type="checkbox" class="compterendu-checkbox"
+                                                                name="compterendus[]" value="<?= $id; ?>"
                                                                 <?= in_array($id, $listetypecomteIds) ? 'checked' : ''; ?>>
                                                             <?= h($name); ?>
                                                         </label>
@@ -185,33 +189,17 @@
                                             <div class="col-xs-6" style="margin-bottom: 20px;">
                                                 <?php echo $this->Form->control('datecptrendu', ['label' => 'Date compte rendu', 'type' => 'datetime', 'name']); ?>
                                             </div>
-
                                         </div>
-
-
                                     </div>
-
                                 </div>
                             </div>
-
-
                         </section>
-
-
-
-
-
-
-
                     </div>
-
-
-
-
                 </div>
 
                 <div align="center">
-                    <button type="submit" class="pull-right btn btn-primary btn-sm " id="testformulaire" style="margin-right:48%;margin-top: 20px;margin-bottom:20px; border-color:#3C386E!important;background-color:#3C386E!important;">Modifier</button>
+                    <button type="submit" class="pull-right btn btn-primary btn-sm " id="testformulaire"
+                        style="margin-right:48%;margin-top: 20px;margin-bottom:20px; border-color:#3C386E!important;background-color:#3C386E!important;">Modifier</button>
                 </div>
                 <?php echo $this->Form->end(); ?>
             </div>
@@ -304,7 +292,7 @@
         let descriptif = $("#descriptif").val();
         let datecptrendu = $("#datecptrendu").val();
         let pie = $("#pie").val();
-        let visiteur = $("#visiteur").val();
+
 
         $("#testformulaire").prop('disabled', false);
 
@@ -343,15 +331,11 @@
         }
         /*  if ($('.typebesoin-checkbox[value="1"]').is(':checked') && !pie) {
             alert("Veuillez choisir une piece jointe");
-              $("#testformulaire").prop('disabled', true); 
+              $("#testformulaire").prop('disabled', true);
               return false;
 
           }*/
-        if (!visiteur) {
-            alert("Saisissez le visiteur");
-            $("#testformulaire").prop('disabled', true); // Désactivation du bouton
-            return false;
-        }
+
         if ($(".compterendu-checkbox:checked").length === 0) {
             alert("Veuillez choisir le Compte rendu à qui ?");
             $("#testformulaire").prop('disabled', true); // Désactivation du bouton
