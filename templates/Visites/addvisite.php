@@ -40,46 +40,46 @@
                     </section> -->
                     <div class="row">
                         <div class="row">
-
-
                             <div style=" margin: 0 auto;  margin-left: 20px; margin-right: 20px; position: static; ">
                                 <div class="col-xs-6" style="margin-bottom: 20px;">
                                     <?php echo $this->Form->control('datecontact', ['label' => 'Date Contact', 'type' => 'datetime', 'name']); ?>
                                 </div>
-
                                 <div class="col-xs-6" style="margin-bottom: 20px;">
                                     <?php echo $this->Form->control('dateplanifie', ['label' => 'Date Planifiée pour la visite', 'type' => 'datetime']); ?>
                                 </div>
+                                <?php if (!empty($id) && isset($clients)): ?>
+                                    <div class="col-xs-6">
+                                        <?php echo $this->Form->control('Raison_Sociale', ['label' => 'Client', 'readonly' => 'readonly', 'value' => $clients->Raison_Sociale]) ?>
+                                        <?php echo $this->Form->control('client_id', ['label' => 'Client', 'type' => 'hidden', 'value' => $clients->id]) ?>
 
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <?php echo $this->Form->control('Adresse', ['label' => 'Adresse', 'readonly' => 'readonly', 'value' => $clients->Adresse]) ?>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <?php echo $this->Form->control('responsable', ['label' => 'Responsable', 'readonly' => 'readonly', 'value' => $clients->responsable]) ?>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <?php echo $this->Form->control('Tel', ['label' => 'Tel', 'readonly' => 'readonly', 'value' => $clients->Tel, 'name']); ?>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <?php echo $this->Form->control('libelle', ['label' => 'Type Contact', 'readonly' => 'readonly', 'value' => $typeContacts->libelle]) ?>
+                                        <?php echo $this->Form->control('type_contact_id', ['label' => 'Type Contact', 'type' => 'hidden', 'value' => $typeContacts->id]) ?>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <?php echo $this->Form->control('name', ['label' => 'Visiteur', 'readonly' => 'readonly', 'value' => $commercials->name]) ?>
+                                        <?php echo $this->Form->control('commercial_id', ['label' => 'Visiteur', 'type' => 'hidden', 'value' => $commercials->id]) ?>
+                                    </div>
+                                <?php else: ?>
+                                    <!-- If there is  no demandeclient id  -->
+                                    <p> ----client select----</p>
+                                    
 
-
-                                <div class="col-xs-6">
-                                    <?php echo $this->Form->control('Raison_Sociale', ['label' => 'Client', 'readonly' => 'readonly', 'value' => $clients->Raison_Sociale]) ?>
-                                    <?php echo $this->Form->control('client_id', ['label' => 'Client', 'type' => 'hidden', 'value' => $clients->id]) ?>
-
-                                </div>
-                                <div class="col-xs-6">
-                                    <?php echo $this->Form->control('Adresse', ['label' => 'Adresse', 'readonly' => 'readonly', 'value' => $clients->Adresse]) ?>
-                                </div>
-                                <div class="col-xs-6">
-                                    <?php echo $this->Form->control('responsable', ['label' => 'Responsable', 'readonly' => 'readonly', 'value' => $clients->responsable]) ?>
-                                </div>
-                                <div class="col-xs-6">
-                                    <?php echo $this->Form->control('Tel', ['label' => 'Tel', 'readonly' => 'readonly', 'value' => $clients->Tel, 'name']); ?>
-                                </div>
-                                <div class="col-xs-6">
-                                    <?php echo $this->Form->control('libelle', ['label' => 'Type Contact', 'readonly' => 'readonly', 'value' => $typeContacts->libelle]) ?>
-                                    <?php echo $this->Form->control('type_contact_id', ['label' => 'Type Contact', 'type' => 'hidden', 'value' => $typeContacts->id]) ?>
-                                </div>
-                                <div class="col-xs-6">
-                                    <?php echo $this->Form->control('name', ['label' => 'Visiteur', 'readonly' => 'readonly', 'value' => $commercials->name]) ?>
-                                    <?php echo $this->Form->control('commercial_id', ['label' => 'Visiteur', 'type' => 'hidden', 'value' => $commercials->id]) ?>
-                                </div>
-
+                                
+                                <?php endif; ?>
 
                             </div>
                         </div>
-
 
                         <section class="content-header">
                             <div class="box box-primary">
@@ -142,7 +142,7 @@
                                                 <?php echo $this->Form->input('piece', ['type' => 'file', 'id' => 'pie', 'label' => false]); ?>
                                             </div>
                                             <br>
-                                    
+
                                             <br><br>
 
                                             <div class="col-xs-12" style="margin-bottom: 20px;">
@@ -274,7 +274,7 @@
         let descriptif = $("#descriptif").val();
         let datecptrendu = $("#datecptrendu").val();
         let pie = $("#pie").val();
-    
+
 
         $("#testformulaire").prop('disabled', false);
 
@@ -317,7 +317,7 @@
             return false;
 
         }
-     
+
         if ($(".compterendu-checkbox:checked").length === 0) {
             alert("Veuillez choisir le Compte rendu à qui ?");
             $("#testformulaire").prop('disabled', true); // Désactivation du bouton

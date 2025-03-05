@@ -208,6 +208,16 @@ foreach ($lien as $k => $liens) {
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Visites</h3>
+                    <!-- Add Visite Button -->
+                    <div style="margin-bottom: 15px; text-align: center;">
+                        <a href="<?php echo $this->Url->build(['controller' => 'Visites', 'action' => 'addvisite']); ?>"
+                            target="_blank" class="btn"
+                            style="background-color: #c71585; color: white; padding: 7px 10px; text-decoration: none; border-radius: 5px; display: inline-flex; align-items: left;">
+                            Ajouter une Visite
+                        </a>
+                    </div>
+
+                    <!-- End of Add Visite Button -->
                 </div>
                 <div class="box-body">
                     <table width="100%" id="example2" class="table table-bordered table-striped">

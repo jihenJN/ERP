@@ -159,15 +159,22 @@ class VisitesController extends AppController
         $typedemandes = [];
         // Configure::write('debug', false);
         $visite = $this->Visites->get($id, [
-            'contain' => ['Clients', 'Demandeclients', 'TypeContacts'],
+            'contain' => ['Clients', 'Demandeclients', 'TypeContacts', 'Commercials'],
         ]);
         $client_id = $visite->client_id;
+        $type_contact_id = $visite->type_contact_id;
+        $commercial_id = $visite->commercial_id;
         if (!empty($client_id)) {
             $clients = $this->fetchTable('Clients')->find('all')->where(['Clients.id' => $client_id])->first();
-            // debug($clients);
         }
 
+        if (!empty($type_contact_id)) {
+            $typeContacts = $this->fetchTable('TypeContacts')->find('all')->where(['TypeContacts.id' => $type_contact_id])->first();
+        }
 
+        if (!empty($commercial_id)) {
+            $commercials = $this->fetchTable('Commercials')->find('all')->where(['Commercials.id' => $commercial_id])->first();
+        }
 
         // $typedemandes = $this->fetchTable('Typedemandes')->find('list', ['limit' => 200])->all();
         $compterendus = $this->fetchTable('Compterendus')->find('list')->toArray();
@@ -197,7 +204,7 @@ class VisitesController extends AppController
         // debug($familles) ;
         // var_dump($listetypeIds);
         //, ['keyfield' => 'id', 'valueField' => 'Nom']);
-        $this->set(compact('visite', 'listecompterendus', 'compterendus', 'listebesoins', 'listetypeIds', 'clients', 'listebesoins', 'listetypecomteIds', 'typebesoins', 'listetypedemandes', 'typedemandes'));
+        $this->set(compact('visite', 'listecompterendus', 'compterendus', 'listebesoins', 'listetypeIds', 'clients', 'listebesoins', 'listetypecomteIds', 'typebesoins', 'listetypedemandes', 'typedemandes', 'typeContacts', 'commercials'));
     }
 
     /**
@@ -229,18 +236,31 @@ class VisitesController extends AppController
         $visite = $this->Visites->newEmptyEntity();
 
         $num = $this->Visites->find()->select(["num" => 'MAX(Visites.numero)'])->first();
-        // debug($num);
         $n = $num->num;
         $in = intval($n) + 1;
         $mm = str_pad("$in", 3, "0", STR_PAD_LEFT);
 
-        // echo $mm;
-        $demandeclient = $this->fetchTable('Demandeclients')->get($id, [
-            'contain' => [],
-        ]);
-        $client_id = $demandeclient->client_id;
-        $type_contact_id = $demandeclient->type_contact_id;
-        $commercial_id = $demandeclient->commercial_id;
+        // Initialize default values
+        $client_id = null;
+        $type_contact_id = null;
+        $commercial_id = null;
+
+        if ($id) {
+            // When $id (demandeclient_id) is provided, fetch the Demandeclient details
+            $demandeclient = $this->fetchTable('Demandeclients')->find('all')->where(['Demandeclients.id' => $id])->first();
+
+            if ($demandeclient) {
+                // Use the Demandeclient values if available
+                $client_id = $demandeclient->client_id;
+                $type_contact_id = $demandeclient->type_contact_id;
+                $commercial_id = $demandeclient->commercial_id;
+            } else {
+                // Handle the case where the Demandeclient is not found
+                $this->Flash->error(__('Demandeclient not found.'));
+                return $this->redirect(['action' => 'index']);
+            }
+        }
+
         if (!empty($client_id)) {
             $clients = $this->fetchTable('Clients')->find('all')->where(['Clients.id' => $client_id])->first();
             // debug($clients);
@@ -271,16 +291,22 @@ class VisitesController extends AppController
             $n = $num->num;
             $in = intval($n) + 1;
             $mm = str_pad("$in", 5, "0", STR_PAD_LEFT);
-
             $data['numero'] = $mm;
-            $data['demandeclient_id'] = $id;
+
+            // Handle demandeclient_id (use $id if available)
+            $data['demandeclient_id'] = $id ? $id : null;
+
+            // Use values from Demandeclient or default empty values
             $data['datecontact'] = $this->request->getData('datecontact');
             $data['dateplanifie'] = $this->request->getData('dateplanifie');
             $data['trdemande'] = $this->request->getData('trdemande');
             $data['description'] = $this->request->getData('description');
-            $data['client_id'] = $this->request->getData('client_id');
-            $data['commercial_id'] = $this->request->getData('commercial_id');
-            $data['type_contact_id'] = $this->request->getData('type_contact_id');
+
+            // If no demandeclient_id (i.e., no $id), leave fields empty
+            $data['client_id'] = $client_id ? $client_id : null;
+            $data['commercial_id'] = $commercial_id ? $commercial_id : null;
+            $data['type_contact_id'] = $type_contact_id ? $type_contact_id : null;
+
             $data['descriptif'] = !empty($this->request->getData('descriptif')) ? $this->request->getData('descriptif') : null;
             if ($this->request->getData('datecptrendu')) {
                 $data['datecptrendu'] = date('Y-m-d H:i:s', strtotime($this->request->getData('datecptrendu')));
@@ -351,7 +377,7 @@ class VisitesController extends AppController
         $typebesoins = $this->fetchTable('Typebesoins')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
 
         $compterendus = $this->fetchTable('Compterendus')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
-        $this->set(compact('mm', 'typebesoins', 'visite', 'clients', 'compterendus', 'typeContacts', 'commercials'));
+        $this->set(compact('mm', 'typebesoins', 'visite', 'clients', 'compterendus', 'typeContacts', 'commercials','id'));
     }
     /**
      * Edit method
@@ -424,7 +450,9 @@ class VisitesController extends AppController
 
 
             $data['numero'] = $visite->numero;
-            $data['demandeclient_id'] = $visite->demandeclient_id;
+            $data['demandeclient_id'] = $visite->demandeclient_id ? $id : null;
+
+            // $data['demandeclient_id'] = $visite->demandeclient_id;
             $data['datecontact'] = $this->request->getData('datecontact');
             $data['dateplanifie'] = $this->request->getData('dateplanifie');
             $data['trdemande'] = $this->request->getData('trdemande');
