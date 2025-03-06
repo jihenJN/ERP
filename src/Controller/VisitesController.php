@@ -233,6 +233,7 @@ class VisitesController extends AppController
 
         $this->loadModel('Listecompterendus');
         $this->loadModel('Compterendus');
+        $this->loadModel('TypeContacts');
         $visite = $this->Visites->newEmptyEntity();
 
         $num = $this->Visites->find()->select(["num" => 'MAX(Visites.numero)'])->first();
@@ -292,6 +293,26 @@ class VisitesController extends AppController
             $in = intval($n) + 1;
             $mm = str_pad("$in", 5, "0", STR_PAD_LEFT);
             $data['numero'] = $mm;
+
+            
+            $type_contact_id = (int) $this->request->getData('type_contact_id');
+            $newTypeContact = $this->request->getData('libelle'); // Now correctly captured
+            
+            if (!$type_contact_id && !empty($newTypeContact)) {
+                // Create new TypeContact if it doesn't exist
+                $dataTypeContact = $this->TypeContacts->newEmptyEntity();
+                $dataTypeContact->libelle = $newTypeContact;
+            
+                if ($this->TypeContacts->save($dataTypeContact)) {
+                    $type_contact_id = $dataTypeContact->id;
+                }
+            }
+
+
+
+
+
+
 
             // Handle demandeclient_id (use $id if available)
             $data['demandeclient_id'] = $id ? $id : null;
