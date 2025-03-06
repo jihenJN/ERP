@@ -48,7 +48,7 @@ class DemandeclientsController extends AppController
             ->order(['Demandeclients.id' => 'DESC']);
 
         $this->paginate = [
-            'contain' => ['Clients', 'Typedemandes','TypeContacts','Commercials'],
+            'contain' => ['Clients', 'Typedemandes','Typecontacts','Commercials'],
         ];
         $demandeclients = $this->paginate($query);
 
@@ -120,7 +120,7 @@ class DemandeclientsController extends AppController
     public function add()
     {
         $this->loadModel('Clients');
-        $this->loadModel('TypeContacts');
+        $this->loadModel('Typecontacts');
         $this->loadModel('Commercials');
         
         $datacl = $this->Clients->newEmptyEntity();
@@ -186,10 +186,10 @@ class DemandeclientsController extends AppController
                 
                 if (!$type_contact_id && !empty($newTypeContact)) {
                     // Create new TypeContact if it doesn't exist
-                    $dataTypeContact = $this->TypeContacts->newEmptyEntity();
+                    $dataTypeContact = $this->Typecontacts->newEmptyEntity();
                     $dataTypeContact->libelle = $newTypeContact;
                 
-                    if ($this->TypeContacts->save($dataTypeContact)) {
+                    if ($this->Typecontacts->save($dataTypeContact)) {
                         $type_contact_id = $dataTypeContact->id;
                     }
                 }
@@ -266,7 +266,7 @@ class DemandeclientsController extends AppController
         $sousfamille1s = $this->fetchTable('Sousfamille1s')->find('all'); //, ['keyfield' => 'id', 'valueField' => 'name']);
         $unites = $this->fetchTable('Unites')->find('all'); //, ['keyfield' => 'id', 'valueField' => 'name']);
         $familles = $this->fetchTable('Familles')->find('all'); //, ['keyfield' => 'id', 'valueField' => 'Nom']);
-        $typeContacts = $this->TypeContacts->find('list',['keyfield' => 'id', 'valueField' => 'libelle'])->toArray();
+        $typeContacts = $this->Typecontacts->find('list',['keyfield' => 'id', 'valueField' => 'libelle'])->toArray();
         $commercials = $this->Commercials->find('list',['keyfield' => 'id', 'valueField' => 'name'])->toArray(); 
   
         $this->set(compact('familles', 'demande', 'code', 'sousfamille1s', 'unites', 'articles', 'typedemandes','typeContacts','commercials'));

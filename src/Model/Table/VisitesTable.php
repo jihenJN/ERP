@@ -13,7 +13,7 @@ use Cake\Validation\Validator;
  *
  * @property \App\Model\Table\ClientsTable&\Cake\ORM\Association\BelongsTo $Clients
  * @property \App\Model\Table\DemandeclientsTable&\Cake\ORM\Association\BelongsTo $Demandeclients
- * @property \App\Model\Table\TypecontactsTable&\Cake\ORM\Association\BelongsTo $TypeContacts
+ * @property \App\Model\Table\TypecontactsTable&\Cake\ORM\Association\BelongsTo $Typecontacts
  * @property \App\Model\Table\ListecompterendusTable&\Cake\ORM\Association\HasMany $Listecompterendus
  * @property \App\Model\Table\ListetypebesoinsTable&\Cake\ORM\Association\HasMany $Listetypebesoins
  *
@@ -53,7 +53,7 @@ class VisitesTable extends Table
         $this->belongsTo('Demandeclients', [
             'foreignKey' => 'demandeclient_id',
         ]);
-        $this->belongsTo('TypeContacts', [
+        $this->belongsTo('Typecontacts', [
             'foreignKey' => 'type_contact_id',
             'joinType' => 'INNER',
         ]);
@@ -167,7 +167,7 @@ class VisitesTable extends Table
         $rules->add($rules->isUnique(['numero'], ['allowMultipleNulls' => true]), ['errorField' => 'numero']);
         $rules->add($rules->existsIn('client_id', 'Clients'), ['errorField' => 'client_id']);
         $rules->add($rules->existsIn('demandeclient_id', 'Demandeclients'), ['errorField' => 'demandeclient_id']);
-        $rules->add($rules->existsIn('type_contact_id', 'TypeContacts'), ['errorField' => 'type_contact_id']);
+        $rules->add($rules->existsIn('type_contact_id', 'Typecontacts'), ['errorField' => 'type_contact_id']);
         $rules->add($rules->existsIn('commercial_id', 'Commercials'), ['errorField' => 'commercial_id']);
 
         return $rules;

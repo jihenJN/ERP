@@ -60,12 +60,12 @@ class VisitesController extends AppController
             ->toArray();
 
         $query = $this->Visites->find('all')
-            ->contain(['Clients', 'Commercials', 'TypeContacts'])
+            ->contain(['Clients', 'Commercials', 'Typecontacts'])
             ->where([$cond2, $cond3, $cond4, $cond5])
             ->order(['Visites.id' => 'DESC']);
 
         $this->paginate = [
-            'contain' => ['Clients', 'Demandeclients', 'TypeContacts', 'Commercials'],
+            'contain' => ['Clients', 'Demandeclients', 'Typecontacts', 'Commercials'],
         ];
 
         $visites = $this->paginate($query);
@@ -99,8 +99,8 @@ class VisitesController extends AppController
         $tauxReponse = ($totalVisites > 0) ? ($completedVisites / $totalVisites) * 100 : 0;
 
 
-        // Fetch the list of TypeContacts
-        $typeContacts = $this->Visites->TypeContacts->find()
+        // Fetch the list of Typecontacts
+        $typeContacts = $this->Visites->Typecontacts->find()
             ->select(['id', 'libelle']) // Select id and libelle
             ->all()
             ->combine('id', 'libelle') // Convert to associative array [id => libelle]
@@ -159,7 +159,7 @@ class VisitesController extends AppController
         $typedemandes = [];
         // Configure::write('debug', false);
         $visite = $this->Visites->get($id, [
-            'contain' => ['Clients', 'Demandeclients', 'TypeContacts', 'Commercials'],
+            'contain' => ['Clients', 'Demandeclients', 'Typecontacts', 'Commercials'],
         ]);
         $client_id = $visite->client_id;
         $type_contact_id = $visite->type_contact_id;
@@ -169,7 +169,7 @@ class VisitesController extends AppController
         }
 
         if (!empty($type_contact_id)) {
-            $typeContacts = $this->fetchTable('TypeContacts')->find('all')->where(['TypeContacts.id' => $type_contact_id])->first();
+            $typeContacts = $this->fetchTable('Typecontacts')->find('all')->where(['Typecontacts.id' => $type_contact_id])->first();
         }
 
         if (!empty($commercial_id)) {
@@ -233,7 +233,7 @@ class VisitesController extends AppController
 
         $this->loadModel('Listecompterendus');
         $this->loadModel('Compterendus');
-        $this->loadModel('TypeContacts');
+        $this->loadModel('Typecontacts');
         $visite = $this->Visites->newEmptyEntity();
 
         $num = $this->Visites->find()->select(["num" => 'MAX(Visites.numero)'])->first();
@@ -268,7 +268,7 @@ class VisitesController extends AppController
         }
 
         if (!empty($type_contact_id)) {
-            $typeContacts = $this->fetchTable('TypeContacts')->find('all')->where(['TypeContacts.id' => $type_contact_id])->first();
+            $typeContacts = $this->fetchTable('Typecontacts')->find('all')->where(['Typecontacts.id' => $type_contact_id])->first();
             // debug($typeContacts);
         }
 
@@ -299,9 +299,9 @@ class VisitesController extends AppController
             $newTypeContact = trim($this->request->getData('libelle')); // Now correctly captured
             if (!$type_contact_id && !empty($newTypeContact)) {
                 // Create new TypeContact if it doesn't exist
-                $dataTypeContact = $this->TypeContacts->newEmptyEntity();
+                $dataTypeContact = $this->Typecontacts->newEmptyEntity();
                 $dataTypeContact->libelle = $newTypeContact;
-                if ($this->TypeContacts->save($dataTypeContact)) {
+                if ($this->Typecontacts->save($dataTypeContact)) {
                     $type_contact_id = $dataTypeContact->id;
                 }
             }*/
@@ -402,7 +402,7 @@ class VisitesController extends AppController
         $compterendus = $this->fetchTable('Compterendus')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $commercialsList = $this->fetchTable('Commercials')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $clientsList = $this->fetchTable('Clients')->find('list', ['keyfield' => 'id', 'valueField' => 'Raison_Sociale']);
-        $typeContactsList = $this->fetchTable('TypeContacts')->find('list', ['keyfield' => 'id', 'valueField' => 'libelle']);
+        $typeContactsList = $this->fetchTable('Typecontacts')->find('list', ['keyfield' => 'id', 'valueField' => 'libelle']);
 
         
         $this->set(compact('mm', 'typebesoins', 'visite', 'clients', 'compterendus', 'typeContacts', 'commercials','id','commercialsList','clientsList','typeContactsList' ));
@@ -444,7 +444,7 @@ class VisitesController extends AppController
         $this->loadModel('Compterendus');
         // Configure::write('debug', false);
         $visite = $this->Visites->get($id, [
-            'contain' => ['Clients', 'TypeContacts', 'Commercials'],
+            'contain' => ['Clients', 'Typecontacts', 'Commercials'],
         ]);
         $client_id = $visite->client_id;
         $type_contact_id = $visite->type_contact_id;
@@ -455,7 +455,7 @@ class VisitesController extends AppController
         }
 
         if (!empty($type_contact_id)) {
-            $typeContacts = $this->fetchTable('TypeContacts')->find('all')->where(['TypeContacts.id' => $type_contact_id])->first();
+            $typeContacts = $this->fetchTable('Typecontacts')->find('all')->where(['Typecontacts.id' => $type_contact_id])->first();
             // debug($typeContacts);
         }
 

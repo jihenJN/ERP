@@ -246,7 +246,7 @@ foreach ($lien as $k => $liens) {
                                         );
                                         ?>
                                     </td>
-                                    <td><?= $demande->type_contact?->libelle ?? 'N/A' ?></td>
+                                    <td><?= $demande->typecontact?->libelle ?? 'N/A' ?></td>
                                     <td><?= $demande->commercial?->name ?? 'N/A' ?></td>
 
                                     <td align="center">

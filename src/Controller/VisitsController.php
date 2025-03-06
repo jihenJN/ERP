@@ -19,7 +19,7 @@ class VisitsController extends AppController
     public function index()
     {
         $this->paginate = [
-            'contain' => ['TypeContacts', 'Clients', 'Visiteurs'],
+            'contain' => ['Typecontacts', 'Clients', 'Visiteurs'],
         ];
         $visits = $this->paginate($this->Visits);
 
@@ -36,7 +36,7 @@ class VisitsController extends AppController
     public function view($id = null)
     {
         $visit = $this->Visits->get($id, [
-            'contain' => ['TypeContacts', 'Clients', 'Visiteurs'],
+            'contain' => ['Typecontacts', 'Clients', 'Visiteurs'],
         ]);
 
         $this->set(compact('visit'));
@@ -56,7 +56,7 @@ class VisitsController extends AppController
                 return $this->redirect(['action' => 'index']);
             }
         }
-        $typeContacts = $this->Visits->TypeContacts->find('list', ['limit' => 200])->all();
+        $typeContacts = $this->Visits->Typecontacts->find('list', ['limit' => 200])->all();
         $clients = $this->Visits->Clients->find('list', ['limit' => 200])->all();
         $visiteurs = $this->Visits->Visiteurs->find('list', ['limit' => 200])->all();
         $this->set(compact('visit', 'typeContacts', 'clients', 'visiteurs'));
@@ -83,7 +83,7 @@ class VisitsController extends AppController
             }
           
         }
-        $typeContacts = $this->Visits->TypeContacts->find('list', ['limit' => 200])->all();
+        $typeContacts = $this->Visits->Typecontacts->find('list', ['limit' => 200])->all();
         $clients = $this->Visits->Clients->find('list', ['limit' => 200])->all();
         $visiteurs = $this->Visits->Visiteurs->find('list', ['limit' => 200])->all();
         $this->set(compact('visit', 'typeContacts', 'clients', 'visiteurs'));

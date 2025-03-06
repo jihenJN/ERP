@@ -11,7 +11,7 @@ use Cake\Validation\Validator;
 /**
  * Visits Model
  *
- * @property \App\Model\Table\TypecontactsTable&\Cake\ORM\Association\BelongsTo $TypeContacts
+ * @property \App\Model\Table\TypecontactsTable&\Cake\ORM\Association\BelongsTo $Typecontacts
  * @property \App\Model\Table\ClientsTable&\Cake\ORM\Association\BelongsTo $Clients
  * @property \App\Model\Table\VisiteursTable&\Cake\ORM\Association\BelongsTo $Visiteurs
  *
@@ -45,7 +45,7 @@ class VisitsTable extends Table
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
 
-        $this->belongsTo('TypeContacts', [
+        $this->belongsTo('Typecontacts', [
             'foreignKey' => 'type_contact_id',
             'joinType' => 'INNER',
         ]);
@@ -128,7 +128,7 @@ class VisitsTable extends Table
     public function buildRules(RulesChecker $rules): RulesChecker
     {
         $rules->add($rules->isUnique(['numero']), ['errorField' => 'numero']);
-        $rules->add($rules->existsIn('type_contact_id', 'TypeContacts'), ['errorField' => 'type_contact_id']);
+        $rules->add($rules->existsIn('type_contact_id', 'Typecontacts'), ['errorField' => 'type_contact_id']);
         $rules->add($rules->existsIn('client_id', 'Clients'), ['errorField' => 'client_id']);
         $rules->add($rules->existsIn('visiteur_id', 'Visiteurs'), ['errorField' => 'visiteur_id']);
 
