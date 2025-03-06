@@ -85,7 +85,7 @@
                                     </div>
 
 
-                                    <div class="col-xs-6">
+                                    <div class="col-xs-6 addable-type-container">
                                         <div class="col-xs-12">
                                             <label>Type Contacts</label>
                                         </div>
@@ -94,19 +94,20 @@
                                                 'label' => false,
                                                 'options' => $typeContactsList,
                                                 'empty' => 'Veuillez choisir !!',
-                                                'class' => 'form-control',
-                                                'id' => 'type_contact_select'
+                                                'class' => 'form-control type-contact-select',
                                             ]); ?>
-                                            <input type="text" id="new_type_contact" class="form-control"
+                                            <input type="text" class="form-control new-type-contact"
                                                 placeholder="Ajouter un type contact"
                                                 style="display: none; margin-top: 5px;">
-                                            <input type="hidden" name="libelle" id="hidden_new_type_contact">
+                                            <input type="hidden" name="libelle" class="hidden-new-type-contact">
                                         </div>
                                         <div class="col-xs-1">
-                                            <button id="toggleAddType" style="height:35px;width:35" type="button"
-                                                class="btn btn-sm btn-primary fa fa-plus-circle"></button>
+                                            <button type="button"
+                                                class="btn btn-sm btn-primary fa fa-plus-circle toggle-add-type"
+                                                style="height:35px;width:35px;"></button>
                                         </div>
                                     </div>
+
 
                                     <div class="col-xs-6">
                                         <?php echo $this->Form->control('commercial_id', [
@@ -387,53 +388,46 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
     $(document).ready(function() {
-        $("#toggleAddType").click(function() {
-            let select = $("#type_contact_select");
-            let input = $("#new_type_contact");
-            let button = $("#toggleAddType");
+        $(".toggle-add-type").click(function() {
+            let button = $(this);
+            let container = button.closest(".addable-type-container");
+            let select = container.find(".type-contact-select");
+            let input = container.find(".new-type-contact");
+            let hiddenInput = container.find(".hidden-new-type-contact");
 
-            if (input.length === 0) {
-                // Create input dynamically
-                input = $("<input>", {
-                    type: "text",
-                    id: "new_type_contact",
-                    class: "form-control",
-                    placeholder: "Enter new type contact"
-                }).insertAfter(select).focus();
-
+            if (input.is(":visible")) {
+                // Hide input, enable select, reset button
+                input.hide().val("");
+                select.prop("disabled", false);
+                button.removeClass("fa-times-circle btn-danger").addClass("fa-plus-circle btn-primary");
+            } else {
+                // Show input, disable select
+                input.show().focus();
                 select.prop("disabled", true);
-                button.removeClass("fa-plus-circle btn-primary")
-                    .addClass("fa-times-circle btn-danger");
+                button.removeClass("fa-plus-circle btn-primary").addClass("fa-times-circle btn-danger");
 
-                // Listen for Enter key to add new type contact
-                input.on("keydown", function(e) {
-                    if (e.key === "Enter") { // Enter key pressed
-                        e.preventDefault(); // Prevent form submission
+                // Handle Enter key press
+                input.off("keydown").on("keydown", function(e) {
+                    if (e.key === "Enter") {
+                        e.preventDefault();
+                        let newType = input.val().trim();
 
-                        let newType = $(this).val().trim();
                         if (newType !== "") {
                             let newOption = $("<option>", {
-                                value: "new_" + newType, // Unique identifier for new type
+                                value: "new_" + newType,
                                 text: newType,
                                 selected: true
                             });
 
                             select.append(newOption);
-                            $("#hidden_new_type_contact").val(newType); // Set hidden field value
-                            input.remove();
+                            hiddenInput.val(newType); // Store new value
+                            input.hide().val("");
                             select.prop("disabled", false);
-                            button.removeClass("fa-times-circle btn-danger")
-                                .addClass("fa-plus-circle btn-primary");
+                            button.removeClass("fa-times-circle btn-danger").addClass(
+                                "fa-plus-circle btn-primary");
                         }
                     }
                 });
-
-            } else {
-                // Remove input, enable select, reset button
-                input.remove();
-                select.prop("disabled", false);
-                button.removeClass("fa-times-circle btn-danger")
-                    .addClass("fa-plus-circle btn-primary");
             }
         });
     });
