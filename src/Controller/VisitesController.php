@@ -295,28 +295,28 @@ class VisitesController extends AppController
             $data['numero'] = $mm;
 
             
-            $type_contact_id = (int) $this->request->getData('type_contact_id');
-            $newTypeContact = $this->request->getData('libelle'); // Now correctly captured
-            
+        /*    $type_contact_id = (int) $this->request->getData('type_contact_id');
+            $newTypeContact = trim($this->request->getData('libelle')); // Now correctly captured
             if (!$type_contact_id && !empty($newTypeContact)) {
                 // Create new TypeContact if it doesn't exist
                 $dataTypeContact = $this->TypeContacts->newEmptyEntity();
                 $dataTypeContact->libelle = $newTypeContact;
-            
                 if ($this->TypeContacts->save($dataTypeContact)) {
                     $type_contact_id = $dataTypeContact->id;
                 }
+            }*/
+
+            // Handling TypeContact
+            $type_contact_id = (int) $this->request->getData('type_contact_id');
+            $newTypeContact = trim($this->request->getData('libelle'));
+
+            if (empty($type_contact_id) && !empty($newTypeContact)) {
+                $type_contact_id = $this->findOrCreateEntity('Typecontacts', 'libelle', $newTypeContact);
             }
-
-
-
-
-
 
 
             // Handle demandeclient_id (use $id if available)
             $data['demandeclient_id'] = $id ? $id : null;
-
             // Use values from Demandeclient or default empty values
             $data['datecontact'] = $this->request->getData('datecontact');
             $data['dateplanifie'] = $this->request->getData('dateplanifie');
@@ -399,7 +399,6 @@ class VisitesController extends AppController
             }
         }
         $typebesoins = $this->fetchTable('Typebesoins')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
-
         $compterendus = $this->fetchTable('Compterendus')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $commercialsList = $this->fetchTable('Commercials')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $clientsList = $this->fetchTable('Clients')->find('list', ['keyfield' => 'id', 'valueField' => 'Raison_Sociale']);
@@ -633,5 +632,27 @@ class VisitesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+
+    // Function to find or create an entity
+    private function findOrCreateEntity($model, $field, $value) {
+        $existingEntity = $this->$model->find()
+            ->where([$field => $value])
+            ->first();
+
+        if ($existingEntity) {
+            return $existingEntity->id; // Return existing ID
+        } else {
+            $newEntity = $this->$model->newEmptyEntity();
+            $newEntity->$field = $value;
+
+            if ($this->$model->save($newEntity)) {
+                return $newEntity->id; // Return new ID
+            } else {
+                $this->Flash->error(__('Error saving ' . $model . '. Please try again.'));
+                return null;
+            }
+        }
     }
 }
