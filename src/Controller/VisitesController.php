@@ -294,17 +294,6 @@ class VisitesController extends AppController
             $mm = str_pad("$in", 5, "0", STR_PAD_LEFT);
             $data['numero'] = $mm;
 
-            
-        /*    $type_contact_id = (int) $this->request->getData('type_contact_id');
-            $newTypeContact = trim($this->request->getData('libelle')); // Now correctly captured
-            if (!$type_contact_id && !empty($newTypeContact)) {
-                // Create new TypeContact if it doesn't exist
-                $dataTypeContact = $this->Typecontacts->newEmptyEntity();
-                $dataTypeContact->libelle = $newTypeContact;
-                if ($this->Typecontacts->save($dataTypeContact)) {
-                    $type_contact_id = $dataTypeContact->id;
-                }
-            }*/
 
             // Handling TypeContact
             $type_contact_id = (int) $this->request->getData('type_contact_id');
