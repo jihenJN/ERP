@@ -74,7 +74,7 @@
                                 </div>
                                 <?php else: ?>
                                 <!-- If there is  no demandeclient id  -->
-                    
+
                                 <div class="col-xs-6">
                                     <?php  echo $this->Form->control('client_id', [
                                                 'label' => 'Clients',
@@ -83,15 +83,29 @@
                                                 'class' => 'form-control'
                                             ]);?>
                                 </div>
-                               
+
 
                                 <div class="col-xs-6">
-                                    <?php  echo $this->Form->control('type_contact_id', [
-                                                'label' => 'Type Contacts',
-                                                'options' => $typeContactsList,
-                                                'empty' => 'Veuillez choisir !!',
-                                                'class' => 'form-control'
-                                            ]);?>
+                                    <div class="col-xs-12">
+                                        <label>Type Contacts</label>
+                                    </div>
+                                    <div class="col-xs-11">
+                                        <?php  echo $this->Form->control('type_contact_id', [
+                                                    'label' => false,
+                                                    'options' => $typeContactsList,
+                                                    'empty' => 'Veuillez choisir !!',
+                                                    'class' => 'form-control',
+                                                    'id' => 'type_contact_select'
+                                                ]);?>
+                                        <input type="text" id="new_type_contact" class="form-control"
+                                            placeholder="Ajouter un type contact"
+                                            style="display: none; margin-top: 5px;">
+                                        <input type="hidden" name="libelle" id="hidden_new_type_contact">
+                                    </div>
+                                    <div class="col-xs-1">
+                                        <button id="toggleAddType" style="height:35px;width:35" type="button"
+                                            class="btn btn-sm btn-primary fa fa-plus-circle"></button>
+                                    </div>
                                 </div>
 
                                 <div class="col-xs-6">
@@ -103,7 +117,7 @@
                                             ]);?>
                                 </div>
 
-                                 
+
                                 <div class="col-xs-6" style="margin-bottom: 20px;">
                                     <?php echo $this->Form->control('date_visite', ['label' => 'Date de la visite', 'type' => 'datetime']); ?>
                                 </div>
@@ -366,4 +380,64 @@ $("#testformulaire").on("mouseover", function() {
     return true;
 });
 </script>
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $("#toggleAddType").click(function() {
+        let select = $("#type_contact_select");
+        let input = $("#new_type_contact");
+        let button = $("#toggleAddType");
+
+        if (input.length === 0) {
+            // Create input dynamically
+            input = $("<input>", {
+                type: "text",
+                id: "new_type_contact",
+                class: "form-control",
+                placeholder: "Enter new type contact"
+            }).insertAfter(select).focus();
+
+            select.prop("disabled", true);
+            button.removeClass("fa-plus-circle btn-primary")
+                  .addClass("fa-times-circle btn-danger");
+
+            // Listen for Enter key to add new type contact
+            input.on("keydown", function(e) {
+                if (e.key === "Enter") { // Enter key pressed
+                    e.preventDefault(); // Prevent form submission
+                    
+                    let newType = $(this).val().trim();
+                    if (newType !== "") {
+                        let newOption = $("<option>", {
+                            value: "new_" + newType, // Unique identifier for new type
+                            text: newType,
+                            selected: true
+                        });
+
+                        select.append(newOption);
+                        $("#hidden_new_type_contact").val(newType); // Set hidden field value
+                        input.remove();
+                        select.prop("disabled", false);
+                        button.removeClass("fa-times-circle btn-danger")
+                              .addClass("fa-plus-circle btn-primary");
+                    }
+                }
+            });
+
+        } else {
+            // Remove input, enable select, reset button
+            input.remove();
+            select.prop("disabled", false);
+            button.removeClass("fa-times-circle btn-danger")
+                  .addClass("fa-plus-circle btn-primary");
+        }
+    });
+});
+
+</script>
+
 <?php $this->end(); ?>
