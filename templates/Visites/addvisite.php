@@ -75,13 +75,30 @@
                                 <?php else: ?>
                                     <!-- If there is  no demandeclient id  -->
 
-                                    <div class="col-xs-6">
-                                        <?php echo $this->Form->control('client_id', [
-                                            'label' => 'Clients',
-                                            'options' => $clientsList,
-                                            'empty' => 'Veuillez choisir !!',
-                                            'class' => 'form-control'
-                                        ]); ?>
+                                    <div class="col-xs-6 addable-type-container">
+                                        <div class="col-xs-12">
+                                            <label>Clients</label>
+                                        </div>
+                                        <div class="col-xs-11">
+                                            <?php echo $this->Form->control('client_id', [
+                                                'label' => false,
+                                                'options' => $clientsList,
+                                                'empty' => 'Veuillez choisir !!',
+                                                'class' => 'form-control type-contact-select'
+                                            ]); ?>
+
+                                            <input type="text" class="form-control new-type-contact"
+                                                placeholder="Ajouter un type contact"
+                                                style="display: none; margin-top: 5px;">
+                                            <input type="hidden" name="Raison_Sociale" class="hidden-new-type-contact">
+                                        </div>
+
+                                        <div class="col-xs-1">
+                                            <button type="button"
+                                                class="btn btn-sm btn-primary fa fa-plus-circle toggle-add-type"
+                                                style="height:35px;width:35px;"></button>
+                                        </div>
+
                                     </div>
 
 
