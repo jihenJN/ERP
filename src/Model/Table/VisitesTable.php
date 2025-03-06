@@ -141,7 +141,7 @@ class VisitesTable extends Table
 
         $validator
             ->dateTime('date_visite')
-            ->notEmptyDateTime('date_visite');
+            ->allowEmptyDateTime('date_visite');
 
         $validator
             ->scalar('localisation')
