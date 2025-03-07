@@ -85,13 +85,13 @@
                                                 'label' => false,
                                                 'options' => $clientsList,
                                                 'empty' => 'Veuillez choisir !!',
-                                                'class' => 'form-control type-contact-select'
+                                                'class' => 'form-control select-with-add'
                                             ]); ?>
 
-                                            <input type="text" class="form-control new-type-contact"
-                                                placeholder="Ajouter un type contact"
+                                            <input type="text" class="form-control new-client"
+                                                placeholder="Ajouter un client"
                                                 style="display: none; margin-top: 5px;">
-                                            <input type="hidden" name="Raison_Sociale" class="hidden-new-type-contact">
+                                            <input type="hidden" name="Raison_Sociale" class="hidden-new-client">
                                         </div>
 
                                         <div class="col-xs-1">
@@ -112,7 +112,7 @@
                                                 'label' => false,
                                                 'options' => $typeContactsList,
                                                 'empty' => 'Veuillez choisir !!',
-                                                'class' => 'form-control type-contact-select',
+                                                'class' => 'form-control select-with-add',
                                             ]); ?>
                                             <input type="text" class="form-control new-type-contact"
                                                 placeholder="Ajouter un type contact"
@@ -408,9 +408,9 @@ $(document).ready(function() {
         $(".toggle-add-type").click(function() {
             let button = $(this);
             let container = button.closest(".addable-type-container");
-            let select = container.find(".type-contact-select");
-            let input = container.find(".new-type-contact");
-            let hiddenInput = container.find(".hidden-new-type-contact");
+            let select = container.find(".select-with-add");
+            let input = container.find(".new-type-contact,.new-client");
+            let hiddenInput = container.find(".hidden-new-type-contact,.hidden-new-client");
 
             if (input.is(":visible")) {
                 // Hide input, enable select, reset button
