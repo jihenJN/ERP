@@ -75,8 +75,7 @@
                                 <?php else: ?>
                                     
                                 <!-- If there is  no demandeclient id  -->
-
-                                <div class="col-xs-6 addable-type-container">
+                                <div class="col-xs-6">
                                         <div class="col-xs-12">
                                             <label>Clients</label>
                                         </div>
@@ -87,19 +86,12 @@
                                                 'empty' => 'Veuillez choisir !!',
                                                 'class' => 'form-control select-with-add'
                                             ]); ?>
-
-                                            <input type="text" class="form-control new-client"
-                                                placeholder="Ajouter un client"
-                                                style="display: none; margin-top: 5px;">
-                                            <input type="hidden" name="Raison_Sociale" class="hidden-new-client">
                                         </div>
-
                                         <div class="col-xs-1">
                                             <button type="button"
-                                                class="btn btn-sm btn-primary fa fa-plus-circle toggle-add-type"
+                                                class="btn btn-sm btn-primary fa fa-plus-circle"
                                                 style="height:35px;width:35px;"></button>
                                         </div>
-
                                     </div>
 
 
@@ -400,8 +392,6 @@ $("#testformulaire").on("mouseover", function() {
 </script>
 
 
-
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {
@@ -409,8 +399,8 @@ $(document).ready(function() {
             let button = $(this);
             let container = button.closest(".addable-type-container");
             let select = container.find(".select-with-add");
-            let input = container.find(".new-type-contact,.new-client");
-            let hiddenInput = container.find(".hidden-new-type-contact,.hidden-new-client");
+            let input = container.find(".new-type-contact");
+            let hiddenInput = container.find(".hidden-new-type-contact");
 
             if (input.is(":visible")) {
                 // Hide input, enable select, reset button
@@ -449,5 +439,8 @@ $(document).ready(function() {
         });
     });
 </script>
+
+
+
 
 <?php $this->end(); ?>
