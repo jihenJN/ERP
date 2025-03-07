@@ -296,14 +296,14 @@ class VisitesController extends AppController
             $data['numero'] = $mm;
 
 
-            // Handling TypeContact
+            // Handling TypeContact creation
             $type_contact_id = (int) $this->request->getData('type_contact_id');
             $newTypeContact = trim($this->request->getData('libelle'));
             if (empty($type_contact_id) && !empty($newTypeContact)) {
                 $type_contact_id = $this->findOrCreateEntity('Typecontacts', 'libelle', $newTypeContact);
             }
 
-            // Handling TypeContact
+            // Handling Client creation 
             $client_id = (int) $this->request->getData('client_id');
             $newClient = trim($this->request->getData('Raison_Sociale'));
             debug($newClient);
