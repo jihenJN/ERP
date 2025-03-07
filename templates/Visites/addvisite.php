@@ -50,32 +50,32 @@
                                     <?php echo $this->Form->control('dateplanifie', ['label' => 'Date Planifiée pour la visite', 'type' => 'datetime']); ?>
                                 </div>
                                 <?php if (!empty($id) && isset($clients)): ?>
-                                <div class="col-xs-6">
-                                    <?php echo $this->Form->control('Raison_Sociale', ['label' => 'Client', 'readonly' => 'readonly', 'value' => $clients->Raison_Sociale]) ?>
-                                    <?php echo $this->Form->control('client_id', ['label' => 'Client', 'type' => 'hidden', 'value' => $clients->id]) ?>
+                                    <div class="col-xs-6">
+                                        <?php echo $this->Form->control('Raison_Sociale', ['label' => 'Client', 'readonly' => 'readonly', 'value' => $clients->Raison_Sociale]) ?>
+                                        <?php echo $this->Form->control('client_id', ['label' => 'Client', 'type' => 'hidden', 'value' => $clients->id]) ?>
 
-                                </div>
-                                <div class="col-xs-6">
-                                    <?php echo $this->Form->control('Adresse', ['label' => 'Adresse', 'readonly' => 'readonly', 'value' => $clients->Adresse]) ?>
-                                </div>
-                                <div class="col-xs-6">
-                                    <?php echo $this->Form->control('responsable', ['label' => 'Responsable', 'readonly' => 'readonly', 'value' => $clients->responsable]) ?>
-                                </div>
-                                <div class="col-xs-6">
-                                    <?php echo $this->Form->control('Tel', ['label' => 'Tel', 'readonly' => 'readonly', 'value' => $clients->Tel, 'name']); ?>
-                                </div>
-                                <div class="col-xs-6">
-                                    <?php echo $this->Form->control('libelle', ['label' => 'Type Contact', 'readonly' => 'readonly', 'value' => $typeContacts->libelle]) ?>
-                                    <?php echo $this->Form->control('type_contact_id', ['label' => 'Type Contact', 'type' => 'hidden', 'value' => $typeContacts->id]) ?>
-                                </div>
-                                <div class="col-xs-6">
-                                    <?php echo $this->Form->control('name', ['label' => 'Visiteur', 'readonly' => 'readonly', 'value' => $commercials->name]) ?>
-                                    <?php echo $this->Form->control('commercial_id', ['label' => 'Visiteur', 'type' => 'hidden', 'value' => $commercials->id]) ?>
-                                </div>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <?php echo $this->Form->control('Adresse', ['label' => 'Adresse', 'readonly' => 'readonly', 'value' => $clients->Adresse]) ?>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <?php echo $this->Form->control('responsable', ['label' => 'Responsable', 'readonly' => 'readonly', 'value' => $clients->responsable]) ?>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <?php echo $this->Form->control('Tel', ['label' => 'Tel', 'readonly' => 'readonly', 'value' => $clients->Tel, 'name']); ?>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <?php echo $this->Form->control('libelle', ['label' => 'Type Contact', 'readonly' => 'readonly', 'value' => $typeContacts->libelle]) ?>
+                                        <?php echo $this->Form->control('type_contact_id', ['label' => 'Type Contact', 'type' => 'hidden', 'value' => $typeContacts->id]) ?>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <?php echo $this->Form->control('name', ['label' => 'Visiteur', 'readonly' => 'readonly', 'value' => $commercials->name]) ?>
+                                        <?php echo $this->Form->control('commercial_id', ['label' => 'Visiteur', 'type' => 'hidden', 'value' => $commercials->id]) ?>
+                                    </div>
                                 <?php else: ?>
-                                    
-                                <!-- If there is  no demandeclient id  -->
-                                <div class="col-xs-6 addable-type-container">
+
+                                    <!-- If there is  no demandeclient id  -->
+                                    <div class="col-xs-6 addable-type-container">
                                         <div class="col-xs-12">
                                             <label>Clients</label>
                                         </div>
@@ -88,20 +88,17 @@
                                             ]); ?>
 
                                             <input type="text" class="form-control new-client"
-                                                placeholder="Ajouter un client"
-                                                style="display: none; margin-top: 5px;">
+                                                placeholder="Ajouter un client" style="display: none; margin-top: 5px;">
                                             <input type="hidden" name="Raison_Sociale" class="hidden-new-client">
                                         </div>
 
                                         <div class="col-xs-1">
                                             <button type="button"
-                                                class="btn btn-sm btn-primary fa fa-plus-circle toggle-add-type"
+                                                class="btn btn-sm btn-primary fa fa-plus-circle toggle-add"
                                                 style="height:35px;width:35px;"></button>
                                         </div>
 
                                     </div>
-
-
 
                                     <div class="col-xs-6 addable-type-container">
                                         <div class="col-xs-12">
@@ -121,24 +118,40 @@
                                         </div>
                                         <div class="col-xs-1">
                                             <button type="button"
-                                                class="btn btn-sm btn-primary fa fa-plus-circle toggle-add-type"
+                                                class="btn btn-sm btn-primary fa fa-plus-circle toggle-add"
                                                 style="height:35px;width:35px;"></button>
                                         </div>
                                     </div>
 
-                                <div class="col-xs-6">
-                                    <?php echo $this->Form->control('commercial_id', [
-                                            'label' => 'Visiteurs',
-                                            'options' => $commercialsList,
-                                            'empty' => 'Veuillez choisir !!',
-                                            'class' => 'form-control'
-                                        ]); ?>
-                                </div>
+                                    <div class="col-xs-6 addable-type-container">
+                                        <div class="col-xs-12">
+                                            <label>Visiteurs</label>
+                                        </div>
+                                        <div class="col-xs-11">
+                                            <?php echo $this->Form->control('commercial_id', [
+                                                'label' => false,
+                                                'options' => $commercialsList,
+                                                'empty' => 'Veuillez choisir !!',
+                                                'class' => 'form-control select-with-add',
+                                            ]); ?>
+
+                                            <input type="text" class="form-control new-visiteur"
+                                                placeholder="Ajouter un type contact"
+                                                style="display: none; margin-top: 5px;">
+                                            <input type="hidden" name="name" class="hidden-new-visiteur">
+                                        </div>
+                                        <div class="col-xs-1">
+                                            <button type="button"
+                                                class="btn btn-sm btn-primary fa fa-plus-circle toggle-add"
+                                                style="height:35px;width:35px;"></button>
+                                        </div>
+
+                                    </div>
 
 
-                                <div class="col-xs-6" style="margin-bottom: 20px;">
-                                    <?php echo $this->Form->control('date_visite', ['label' => 'Date de la visite', 'type' => 'datetime']); ?>
-                                </div>
+                                    <div class="col-xs-6" style="margin-bottom: 20px;">
+                                        <?php echo $this->Form->control('date_visite', ['label' => 'Date de la visite', 'type' => 'datetime']); ?>
+                                    </div>
 
                                 <?php endif; ?>
 
@@ -196,11 +209,11 @@
                                             <div class="col-xs-12">
                                                 <div style="display: flex; flex-wrap: wrap; gap: 20px;">
                                                     <?php foreach ($typebesoins as $id => $name): ?>
-                                                    <label style="display: flex; align-items: center; gap: 5px;">
-                                                        <input type="checkbox" class="typebesoin-checkbox"
-                                                            name="typebesoins[]" value="<?= $id; ?>">
-                                                        <?= h($name); ?>
-                                                    </label>
+                                                        <label style="display: flex; align-items: center; gap: 5px;">
+                                                            <input type="checkbox" class="typebesoin-checkbox"
+                                                                name="typebesoins[]" value="<?= $id; ?>">
+                                                            <?= h($name); ?>
+                                                        </label>
                                                     <?php endforeach; ?>
                                                 </div>
                                             </div>
@@ -219,11 +232,11 @@
                                                     &nbsp; &nbsp;
 
                                                     <?php foreach ($compterendus as $id => $name): ?>
-                                                    <label style="display: flex; align-items: center; gap: 5px;">
-                                                        <input type="checkbox" class="compterendu-checkbox"
-                                                            name="compterendus[]" value="<?= $id; ?>">
-                                                        <?= h($name); ?>
-                                                    </label>
+                                                        <label style="display: flex; align-items: center; gap: 5px;">
+                                                            <input type="checkbox" class="compterendu-checkbox"
+                                                                name="compterendus[]" value="<?= $id; ?>">
+                                                            <?= h($name); ?>
+                                                        </label>
                                                     <?php endforeach; ?>
                                                 </div>
                                             </div>
@@ -268,147 +281,147 @@
 <?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
 <?php $this->start('scriptBottom'); ?>
 <script>
-$(document).ready(function() {
-    $('.typebesoin-checkbox').change(function() {
-        if ($('.typebesoin-checkbox[value="1"]').is(':checked')) {
-            $('#piece').show();
-        } else {
-            $('#piece').hide();
-        }
+    $(document).ready(function() {
+        $('.typebesoin-checkbox').change(function() {
+            if ($('.typebesoin-checkbox[value="1"]').is(':checked')) {
+                $('#piece').show();
+            } else {
+                $('#piece').hide();
+            }
+        });
     });
-});
 </script>
 <script>
-$(function() {
-    $('.summernote').summernote({
-        toolbar: [
-            ['style', ['bold', 'italic', 'underline', 'clear']],
-            ['fontsize', ['fontsize']],
-            ['fontname', ['fontname']],
-            ['color', ['color']],
-            ['para', ['ul', 'ol', 'paragraph']],
-            ['table', ['table']]
-        ],
-        fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Calibri',
-            'Calibri light',
-            'Sakkal Majalla',
-            'Aldhabi',
-            'Arabic typesetting',
-            'Algerian',
+    $(function() {
+        $('.summernote').summernote({
+            toolbar: [
+                ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+                ['fontname', ['fontname']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['table', ['table']]
+            ],
+            fontNames: ['Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Calibri',
+                'Calibri light',
+                'Sakkal Majalla',
+                'Aldhabi',
+                'Arabic typesetting',
+                'Algerian',
 
-            'Bell MT',
-            'Bodoni MT',
-            'Bookman Old Style',
-            'Bradley Hand ITC',
-            'Californian FB',
-            'Centaur',
-            'Century',
-            'Corbel light',
-            'Lucida Calligraphy',
-            'Leelawadee UI',
-            'Leelawadee UI Semilight',
-            'Ink free',
-            'Modern No. 20',
-            'Monotype Corsiva',
-            'Perpetua Titling MT',
-            'Pristina',
-            'Sitka text',
-        ]
-    });
-})
+                'Bell MT',
+                'Bodoni MT',
+                'Bookman Old Style',
+                'Bradley Hand ITC',
+                'Californian FB',
+                'Centaur',
+                'Century',
+                'Corbel light',
+                'Lucida Calligraphy',
+                'Leelawadee UI',
+                'Leelawadee UI Semilight',
+                'Ink free',
+                'Modern No. 20',
+                'Monotype Corsiva',
+                'Perpetua Titling MT',
+                'Pristina',
+                'Sitka text',
+            ]
+        });
+    })
 </script>
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    const form = document.getElementById("testform");
+    document.addEventListener("DOMContentLoaded", function() {
+        const form = document.getElementById("testform");
 
-    form.addEventListener("keydown", function(event) {
-        if (event.key === "Enter") {
-            event.preventDefault(); // Bloquer l'action par défaut
+        form.addEventListener("keydown", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault(); // Bloquer l'action par défaut
+            }
+        });
+
+        form.addEventListener("submit", function(event) {
+            // Facultatif : Vous pouvez ajouter des vérifications ici
+            // console.log("Formulaire soumis !");
+        });
+    });
+
+    $('.select2').select2()
+
+
+
+    $("#testformulaire").on("mouseover", function() {
+        let datecontact = $("#datecontact").val();
+        let dateplanifie = $("#dateplanifie").val();
+        let trdemande = $("#trdemande").val();
+        let description = $("#editor-container1").val();
+        let descriptif = $("#descriptif").val();
+        let datecptrendu = $("#datecptrendu").val();
+        let pie = $("#pie").val();
+
+
+        $("#testformulaire").prop('disabled', false);
+
+        if (!datecontact) {
+            alert("Saisissez la date contact");
+            $("#testformulaire").prop('disabled', true); // Désactivation du bouton
+            return false;
         }
+        if (!dateplanifie) {
+            alert("Saisissez la date planifiée");
+            $("#testformulaire").prop('disabled', true); // Désactivation du bouton
+            return false;
+        }
+        if (!trdemande) {
+            alert("Saisissez le travail demandé");
+            $("#testformulaire").prop('disabled', true); // Désactivation du bouton
+            return false;
+        }
+        if (!description) {
+            alert("Saisissez la Description");
+            $("#testformulaire").prop('disabled', true); // Désactivation du bouton
+            return false;
+        }
+        if (!descriptif) {
+            alert("Saisissez la Schéma décriptif");
+            $("#testformulaire").prop('disabled', true); // Désactivation du bouton
+            return false;
+        }
+
+
+
+        if ($(".typebesoin-checkbox:checked").length === 0) {
+            alert("Veuillez choisir au moins un besoin visite");
+            $("#testformulaire").prop('disabled', true); // Désactivation du bouton
+            return false;
+        }
+        if ($('.typebesoin-checkbox[value="1"]').is(':checked') && !pie) {
+            alert("Veuillez choisir une piece jointe");
+            $("#testformulaire").prop('disabled', true); // Désactivation du bouton
+            return false;
+
+        }
+
+        if ($(".compterendu-checkbox:checked").length === 0) {
+            alert("Veuillez choisir le Compte rendu à qui ?");
+            $("#testformulaire").prop('disabled', true); // Désactivation du bouton
+            return false;
+        }
+
+        return true;
     });
-
-    form.addEventListener("submit", function(event) {
-        // Facultatif : Vous pouvez ajouter des vérifications ici
-        // console.log("Formulaire soumis !");
-    });
-});
-
-$('.select2').select2()
-
-
-
-$("#testformulaire").on("mouseover", function() {
-    let datecontact = $("#datecontact").val();
-    let dateplanifie = $("#dateplanifie").val();
-    let trdemande = $("#trdemande").val();
-    let description = $("#editor-container1").val();
-    let descriptif = $("#descriptif").val();
-    let datecptrendu = $("#datecptrendu").val();
-    let pie = $("#pie").val();
-
-
-    $("#testformulaire").prop('disabled', false);
-
-    if (!datecontact) {
-        alert("Saisissez la date contact");
-        $("#testformulaire").prop('disabled', true); // Désactivation du bouton
-        return false;
-    }
-    if (!dateplanifie) {
-        alert("Saisissez la date planifiée");
-        $("#testformulaire").prop('disabled', true); // Désactivation du bouton
-        return false;
-    }
-    if (!trdemande) {
-        alert("Saisissez le travail demandé");
-        $("#testformulaire").prop('disabled', true); // Désactivation du bouton
-        return false;
-    }
-    if (!description) {
-        alert("Saisissez la Description");
-        $("#testformulaire").prop('disabled', true); // Désactivation du bouton
-        return false;
-    }
-    if (!descriptif) {
-        alert("Saisissez la Schéma décriptif");
-        $("#testformulaire").prop('disabled', true); // Désactivation du bouton
-        return false;
-    }
-
-
-
-    if ($(".typebesoin-checkbox:checked").length === 0) {
-        alert("Veuillez choisir au moins un besoin visite");
-        $("#testformulaire").prop('disabled', true); // Désactivation du bouton
-        return false;
-    }
-    if ($('.typebesoin-checkbox[value="1"]').is(':checked') && !pie) {
-        alert("Veuillez choisir une piece jointe");
-        $("#testformulaire").prop('disabled', true); // Désactivation du bouton
-        return false;
-
-    }
-
-    if ($(".compterendu-checkbox:checked").length === 0) {
-        alert("Veuillez choisir le Compte rendu à qui ?");
-        $("#testformulaire").prop('disabled', true); // Désactivation du bouton
-        return false;
-    }
-
-    return true;
-});
 </script>
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function() {
-        $(".toggle-add-type").click(function() {
+    $(document).ready(function() {
+        $(".toggle-add").click(function() {
             let button = $(this);
             let container = button.closest(".addable-type-container");
             let select = container.find(".select-with-add");
-            let input = container.find(".new-type-contact,.new-client");
-            let hiddenInput = container.find(".hidden-new-type-contact,.hidden-new-client");
+            let input = container.find(".new-type-contact,.new-client , .new-visiteur");
+            let hiddenInput = container.find(".hidden-new-type-contact,.hidden-new-client ,.hidden-new-visiteur");
 
             if (input.is(":visible")) {
                 // Hide input, enable select, reset button

@@ -235,6 +235,7 @@ class VisitesController extends AppController
         $this->loadModel('Compterendus');
         $this->loadModel('Typecontacts');
         $this->loadModel('Clients');
+        $this->loadModel('Commercials');
         $visite = $this->Visites->newEmptyEntity();
 
         $num = $this->Visites->find()->select(["num" => 'MAX(Visites.numero)'])->first();
@@ -303,14 +304,21 @@ class VisitesController extends AppController
                 $type_contact_id = $this->findOrCreateEntity('Typecontacts', 'libelle', $newTypeContact);
             }
 
-
-            
             // Handling Client creation 
             $client_id = (int) $this->request->getData('client_id');
             $newClient = trim($this->request->getData('Raison_Sociale'));
             debug($newClient);
             if (empty($client_id) && !empty($newClient)) {
                 $client_id = $this->findOrCreateEntity('Clients', 'Raison_Sociale',  $newClient );
+                
+            }
+
+            // Handling Visiteur creation 
+            $commercial_id = (int) $this->request->getData('commercial_id');
+            $newCommercial = trim($this->request->getData('name'));
+            debug($newCommercial);
+            if (empty($commercial_id) && !empty($newCommercial)) {
+                $commercial_id = $this->findOrCreateEntity('Commercials', 'name',  $newClient );
                 
             }
 
