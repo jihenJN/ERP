@@ -2,11 +2,9 @@
 <?php echo $this->Html->script('AdminLTE./bower_components/summernote/summernote.min', ['block' => 'script']); ?>
 <?php echo $this->Html->css('AdminLTE./bower_components/summernote/summernote.min', ['block' => 'css']); ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"> </script>
-
 <?php echo $this->Html->css('select2'); ?>
 
 <section class="content-header">
-
     <ol class="breadcrumb">
         <li><a href="<?php echo $this->Url->build(['action' => 'index']); ?>"><i class="fa fa-reply"></i>
                 <?php echo __('Retour'); ?></a></li>
@@ -14,7 +12,6 @@
 </section><br>
 
 <section class="content">
-
     <div class="row">
         <div class="col-md-12">
             <!-- general form elements -->
@@ -27,7 +24,6 @@
                         <div class="col-xs-6">
                             <h1 class="box-title" style="color:#3C386E!important;margin-top:5%;"><strong>Ajouter Visite
                                     sur site N° <?php echo $mm; ?></strong></h1>
-
                         </div>
                     </div>
                     <!-- <h3 class="box-title">Formulaire Consultation Client</h3> -->
@@ -162,33 +158,23 @@
                             <div class="box box-primary">
                                 <!-- <h3 class="box-title"><strong><?php echo __('Demande Client'); ?></strong></h3><br> -->
                                 <div class="row">
-
-
                                     <div class="row" style="gap: 20px; display: flex; flex-wrap: wrap;">
                                         <div
                                             style="margin: 0 auto; margin-left: 20px; margin-right: 20px; position: static; width: 100%;">
-
-
                                             <div class="col-xs-6" style="margin-bottom: 20px;">
-
                                                 <label>Travail demandé :</label>
                                                 <?php echo $this->Form->control('trdemande', ['type' => 'textarea', 'label' => false]); ?>
                                             </div>
                                             <div class="col-xs-6"></div>
                                             <div class="col-xs-12" style="margin-bottom: 20px;">
                                                 <label>Description :</label>
-
                                                 <textarea id="editor-container1" name="description"
                                                     class="form-control summernote" rows="100" cols="100"
                                                     style="height: 900px;">
-
                                                </textarea>
                                             </div>
-
-
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         </section>
@@ -196,12 +182,10 @@
                             <div class="row">
                                 <div class="box box-primary">
                                     <div class="box-header with-border">
-
                                     </div>
                                     <div class="panel-body">
                                         <div class="table-responsive ls-table" style=" height: 100%;">
                                             <div class="col-xs-12" style="margin-bottom: 20px;">
-
                                                 <label>Schéma décriptif :</label>
                                                 <?php echo $this->Form->control('descriptif', ['name' => 'descriptif', 'type' => 'textarea', 'label' => false]); ?>
                                             </div>
@@ -217,15 +201,11 @@
                                                     <?php endforeach; ?>
                                                 </div>
                                             </div>
-
-
                                             <div class="col-xs-12" id="piece" style="display:none;">
                                                 <?php echo $this->Form->input('piece', ['type' => 'file', 'id' => 'pie', 'label' => false]); ?>
                                             </div>
                                             <br>
-
                                             <br><br>
-
                                             <div class="col-xs-12" style="margin-bottom: 20px;">
                                                 <div style="display: flex; flex-wrap: wrap; gap: 20px;">
                                                     <label>Compte rendu à qui ?:</label> &nbsp; &nbsp; &nbsp; &nbsp;
@@ -243,31 +223,14 @@
                                             <div class="col-xs-6" style="margin-bottom: 20px;">
                                                 <?php echo $this->Form->control('datecptrendu', ['label' => 'Date compte rendu', 'type' => 'datetime', 'name']); ?>
                                             </div>
-
                                         </div>
-
-
                                     </div>
 
                                 </div>
                             </div>
-
-
                         </section>
-
-
-
-
-
-
-
                     </div>
-
-
-
-
                 </div>
-
                 <div align="center">
                     <button type="submit" class="pull-right btn btn-primary btn-sm " id="testformulaire"
                         style="margin-right:48%;margin-top: 20px;margin-bottom:20px; border-color:#3C386E!important;background-color:#3C386E!important;">Création</button>
@@ -277,9 +240,11 @@
         </div>
     </div>
 </section>
+
 <?php echo $this->Html->css('AdminLTE./bower_components/select2/dist/css/select2.min', ['block' => 'css']); ?>
 <?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
 <?php $this->start('scriptBottom'); ?>
+
 <script>
     $(document).ready(function() {
         $('.typebesoin-checkbox').change(function() {
@@ -291,6 +256,7 @@
         });
     });
 </script>
+
 <script>
     $(function() {
         $('.summernote').summernote({
@@ -345,11 +311,7 @@
             // console.log("Formulaire soumis !");
         });
     });
-
     $('.select2').select2()
-
-
-
     $("#testformulaire").on("mouseover", function() {
         let datecontact = $("#datecontact").val();
         let dateplanifie = $("#dateplanifie").val();
@@ -358,10 +320,7 @@
         let descriptif = $("#descriptif").val();
         let datecptrendu = $("#datecptrendu").val();
         let pie = $("#pie").val();
-
-
         $("#testformulaire").prop('disabled', false);
-
         if (!datecontact) {
             alert("Saisissez la date contact");
             $("#testformulaire").prop('disabled', true); // Désactivation du bouton
@@ -388,8 +347,6 @@
             return false;
         }
 
-
-
         if ($(".typebesoin-checkbox:checked").length === 0) {
             alert("Veuillez choisir au moins un besoin visite");
             $("#testformulaire").prop('disabled', true); // Désactivation du bouton
@@ -399,7 +356,6 @@
             alert("Veuillez choisir une piece jointe");
             $("#testformulaire").prop('disabled', true); // Désactivation du bouton
             return false;
-
         }
 
         if ($(".compterendu-checkbox:checked").length === 0) {
@@ -460,8 +416,5 @@
         });
     });
 </script>
-
-
-
 
 <?php $this->end(); ?>

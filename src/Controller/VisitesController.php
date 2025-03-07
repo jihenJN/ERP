@@ -266,20 +266,16 @@ class VisitesController extends AppController
 
         if (!empty($client_id)) {
             $clients = $this->fetchTable('Clients')->find('all')->where(['Clients.id' => $client_id])->first();
-            // debug($clients);
         }
 
         if (!empty($type_contact_id)) {
             $typeContacts = $this->fetchTable('Typecontacts')->find('all')->where(['Typecontacts.id' => $type_contact_id])->first();
-            // debug($typeContacts);
         }
 
         if (!empty($commercial_id)) {
             $commercials = $this->fetchTable('Commercials')->find('all')->where(['Commercials.id' => $commercial_id])->first();
-            // debug($commercials);
         }
         if ($this->request->is('post')) {
-            // debug($this->request->getData());die;
             $document = $this->request->getData('piece');
             if ($document && $document->getClientFilename()) {
                 $namedoc = $document->getClientFilename();
@@ -287,15 +283,11 @@ class VisitesController extends AppController
                 $document->moveTo($targetPath);
                 $data['piece'] = $namedoc;
             }
-
-
             $num = $this->Visites->find()->select(["num" => 'MAX(Visites.numero)'])->first();
-
             $n = $num->num;
             $in = intval($n) + 1;
             $mm = str_pad("$in", 5, "0", STR_PAD_LEFT);
             $data['numero'] = $mm;
-
 
             // Handling TypeContact creation
             $type_contact_id = (int) $this->request->getData('type_contact_id');
@@ -307,23 +299,20 @@ class VisitesController extends AppController
             // Handling Client creation 
             $client_id = (int) $this->request->getData('client_id');
             $newClient = trim($this->request->getData('Raison_Sociale'));
-            debug($newClient);
             if (empty($client_id) && !empty($newClient)) {
-                $client_id = $this->findOrCreateEntity('Clients', 'Raison_Sociale',  $newClient );
-                
+                $client_id = $this->findOrCreateEntity('Clients', 'Raison_Sociale',  $newClient);
             }
 
             // Handling Visiteur creation 
             $commercial_id = (int) $this->request->getData('commercial_id');
             $newCommercial = trim($this->request->getData('name'));
-            debug($newCommercial);
             if (empty($commercial_id) && !empty($newCommercial)) {
-                $commercial_id = $this->findOrCreateEntity('Commercials', 'name',  $newClient );
-                
+                $commercial_id = $this->findOrCreateEntity('Commercials', 'name',  $newClient);
             }
 
             // Handle demandeclient_id (use $id if available)
             $data['demandeclient_id'] = $id ? $id : null;
+
             // Use values from Demandeclient or default empty values
             $data['datecontact'] = $this->request->getData('datecontact');
             $data['dateplanifie'] = $this->request->getData('dateplanifie');
@@ -331,7 +320,7 @@ class VisitesController extends AppController
             $data['description'] = $this->request->getData('description');
             $data['date_visite'] = $this->request->getData('date_visite');
 
-            // If no demandeclient_id (i.e., no $id), leave fields empty
+          
             $data['client_id'] = $client_id ?? $this->request->getData('client_id');
             $data['commercial_id'] = $commercial_id ?? $this->request->getData('commercial_id');
             $data['type_contact_id'] = $type_contact_id ?? $this->request->getData('type_contact_id');
@@ -345,24 +334,6 @@ class VisitesController extends AppController
             $data['tel'] = $this->request->getData('Tel');
             $data['adresse'] = $this->request->getData('Adresse');
             $visite = $this->Visites->patchEntity($visite, $data);
-           
-
-
-            if ($this->Visites->save($visite)) {
-                $this->Flash->success(__('The visit has been saved successfully.'));
-                return $this->redirect(['action' => 'index']);
-            } else {
-                $this->Flash->error(__('The visit could not be saved. Please, try again.'));
-            }
-
-            if (!$this->Visites->save($visite)) {
-                debug($visite->getErrors());
-                die();
-            }
-
-
-
-
             if ($this->Visites->save($visite)) {
                 $this->loadModel('Listetypebesoins');
                 $besoinIds = $this->request->getData('typebesoins');
@@ -382,7 +353,6 @@ class VisitesController extends AppController
                     }
                 }
 
-                ////////////////
                 $this->loadModel('Listecompterendus');
                 $compteIds = $this->request->getData('compterendus');
                 $filterecompteIds = array_filter($compteIds);
@@ -411,8 +381,8 @@ class VisitesController extends AppController
         $clientsList = $this->fetchTable('Clients')->find('list', ['keyfield' => 'id', 'valueField' => 'Raison_Sociale']);
         $typeContactsList = $this->fetchTable('Typecontacts')->find('list', ['keyfield' => 'id', 'valueField' => 'libelle']);
 
-        
-        $this->set(compact('mm', 'typebesoins', 'visite', 'clients', 'compterendus', 'typeContacts', 'commercials','id','commercialsList','clientsList','typeContactsList' ));
+
+        $this->set(compact('mm', 'typebesoins', 'visite', 'clients', 'compterendus', 'typeContacts', 'commercials', 'id', 'commercialsList', 'clientsList', 'typeContactsList'));
     }
     /**
      * Edit method
@@ -458,17 +428,14 @@ class VisitesController extends AppController
         $commercial_id = $visite->commercial_id;
         if (!empty($client_id)) {
             $clients = $this->fetchTable('Clients')->find('all')->where(['Clients.id' => $client_id])->first();
-            // debug($clients);
         }
 
         if (!empty($type_contact_id)) {
             $typeContacts = $this->fetchTable('Typecontacts')->find('all')->where(['Typecontacts.id' => $type_contact_id])->first();
-            // debug($typeContacts);
         }
 
         if (!empty($commercial_id)) {
             $commercials = $this->fetchTable('Commercials')->find('all')->where(['Commercials.id' => $commercial_id])->first();
-            // debug($commercials);
         }
 
         if ($this->request->is(['patch', 'post', 'put'])) {
@@ -486,8 +453,6 @@ class VisitesController extends AppController
 
             $data['numero'] = $visite->numero;
             $data['demandeclient_id'] = $visite->demandeclient_id ? $id : null;
-
-            // $data['demandeclient_id'] = $visite->demandeclient_id;
             $data['datecontact'] = $this->request->getData('datecontact');
             $data['dateplanifie'] = $this->request->getData('dateplanifie');
             $data['trdemande'] = $this->request->getData('trdemande');
@@ -495,9 +460,6 @@ class VisitesController extends AppController
             $data['client_id'] = $this->request->getData('client_id');
             $data['commercial_id'] = $this->request->getData('commercial_id');
             $data['type_contact_id'] = $this->request->getData('type_contact_id');
-
-            // $data['commercial_id'] = $this->request->getData('commercial_id');
-            // $data['adresselivraisonclient_id'] = $this->request->getData('adresse');
             $data['descriptif'] = !empty($this->request->getData('descriptif')) ? $this->request->getData('descriptif') : null;
             if ($this->request->getData('datecptrendu')) {
                 $data['datecptrendu'] = date('Y-m-d H:i:s', strtotime($this->request->getData('datecptrendu')));
@@ -567,10 +529,8 @@ class VisitesController extends AppController
                         }
                     }
                 }
-
                 return $this->redirect(['action' => 'index']);
             }
-            // $this->Flash->error(__('The visite could not be saved. Please, try again.'));
         }
         // $typedemandes = $this->fetchTable('Typedemandes')->find('list', ['limit' => 200])->all();
         $compterendus = $this->fetchTable('Compterendus')->find('list')->toArray();
@@ -641,9 +601,9 @@ class VisitesController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-
     // Function to find or create an entity
-    private function findOrCreateEntity($model, $field, $value) {
+    private function findOrCreateEntity($model, $field, $value)
+    {
         $existingEntity = $this->$model->find()
             ->where([$field => $value])
             ->first();
