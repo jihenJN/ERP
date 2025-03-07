@@ -447,10 +447,6 @@ class VisitesController extends AppController
                 $document->moveTo($targetPath);
                 $data['piece'] = $namedoc;
             }
-
-
-
-
             $data['numero'] = $visite->numero;
             $data['demandeclient_id'] = $visite->demandeclient_id ? $id : null;
             $data['datecontact'] = $this->request->getData('datecontact');
@@ -592,7 +588,7 @@ class VisitesController extends AppController
             $this->Listetypebesoins->delete($existingtype);
         }
         $visite = $this->Visites->get($id);
-        if ($this->Visites->delete($visite->id)) {
+        if ($this->Visites->delete($visite)) {
             // $this->Flash->success(__('The visite has been deleted.'));
         } else {
             //  $this->Flash->error(__('The visite could not be deleted. Please, try again.'));
