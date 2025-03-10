@@ -395,7 +395,13 @@ class VisitesController extends AppController
         $typebesoins = $this->fetchTable('Typebesoins')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $compterendus = $this->fetchTable('Compterendus')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $commercialsList = $this->fetchTable('Commercials')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
-        $clientsList = $this->fetchTable('Clients')->find('list', ['keyfield' => 'id', 'valueField' => 'Raison_Sociale']);
+       // $clientsList = $this->fetchTable('Clients')->find('list', ['keyfield' => 'id', 'valueField' => 'Raison_Sociale']);
+        $clientsList = $this->fetchTable('Clients')->find('list', [
+            'keyField' => 'id',
+            'valueField' => function ($row) {
+                return $row->Code . '  ' . $row->Raison_Sociale; // Concatenate Raison_Sociale and code
+            }
+        ]);
         $typeContactsList = $this->fetchTable('Typecontacts')->find('list', ['keyfield' => 'id', 'valueField' => 'libelle']);
 
 
