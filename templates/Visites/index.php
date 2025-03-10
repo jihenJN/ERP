@@ -171,7 +171,7 @@ foreach ($lien as $k => $liens) {
             <br>
             <div class="row">
                 <div class="col-xs-3">
-                    <label class="control-label" for="name">Numéro Visites</label>
+                    <label class="control-label" for="name">Numéro Visite</label>
                     <select class="form-control select2" id="numero" name="numero">
                         <option value="" selected="selected" disabled>Veuillez choisir !!</option>
                         <?php foreach ($numeros as $numero): ?>
