@@ -94,6 +94,19 @@ class TypecontactsController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $typecontact = $this->Typecontacts->get($id);
+
+        // Vérifier si le typecontact est lié à une visite
+        $visiteCount = $this->Typecontacts->Visites->find()
+        ->where(['type_contact_id' => $id])
+        ->count();
+       
+
+        if ($visiteCount > 0) {
+            // S'il y a des visites associées, afficher un message d'erreur
+            $this->Flash->error("Ce type de contact ne peut pas être supprimé car il est associé à des visites.");
+            return $this->redirect(['action' => 'index']);  // ou la page appropriée
+        }
+
         if ($this->Typecontacts->delete($typecontact)) {
           //  $this->Flash->success(__('The typecontact has been deleted.'));
         } else {
