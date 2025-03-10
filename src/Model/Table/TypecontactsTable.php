@@ -45,6 +45,11 @@ class TypecontactsTable extends Table
             'foreignKey' => 'type_contact_id',  
             'dependent' => true,  // Si un Typecontact est supprimé, les Visites associées sont supprimées aussi
         ]);
+
+        $this->hasMany('Demandeclients', [
+            'foreignKey' => 'type_contact_id',  
+            'dependent' => true,  
+        ]);
         
 
     }

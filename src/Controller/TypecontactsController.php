@@ -95,16 +95,24 @@ class TypecontactsController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $typecontact = $this->Typecontacts->get($id);
 
-        // Vérifier si le typecontact est lié à une visite
-        $visiteCount = $this->Typecontacts->Visites->find()
-        ->where(['type_contact_id' => $id])
-        ->count();
-       
+        // Liste des associations à vérifier avec leurs messages d'erreur correspondants
+        $associations = [
+            'Visites' => 'visites',
+            'Demandeclients' => 'demandes clients'
+        ];
 
-        if ($visiteCount > 0) {
-            // S'il y a des visites associées, afficher un message d'erreur
-            $this->Flash->error("Ce type de contact ne peut pas être supprimé car il est associé à des visites.");
-            return $this->redirect(['action' => 'index']);  // ou la page appropriée
+        // Vérifier chaque association
+        foreach ($associations as $association => $message) {
+            // Compter les éléments associés dans l'association
+            $count = $this->Typecontacts->{$association}->find()
+                ->where(['type_contact_id' => $id])
+                ->count();
+
+            // Si l'association a des éléments, afficher un message d'erreur et rediriger
+            if ($count > 0) {
+                $this->Flash->error("Ce type de contact ne peut pas être supprimé car il est associé à des $message.");
+                return $this->redirect(['action' => 'index']); // ou la page appropriée
+            }
         }
 
         if ($this->Typecontacts->delete($typecontact)) {
