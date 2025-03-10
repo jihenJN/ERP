@@ -32,10 +32,12 @@ class VisitesController extends AppController
         $cond3 = '';
         $cond4 = '';
         $cond5 = '';
+        $cond6 = '';
 
         $datedebut = $this->request->getQuery('datedebut');
         $datefin = $this->request->getQuery('datefin');
         $client_id = $this->request->getQuery('client_id');
+        $commercial_id = $this->request->getQuery('commercial_id');
         $numero = $this->request->getQuery('numero');
 
 
@@ -53,6 +55,11 @@ class VisitesController extends AppController
             $cond5 = "Visites.numero = '" . $numero . "' ";
         }
 
+        if ($commercial_id) {
+            $cond6 = "Visites.commercial_id = '" . $commercial_id . "' ";
+        }
+
+
         // Fetch all distinct 'numero' values
         $numeros = $this->Visites->find()
             ->select(['numero'])
@@ -61,7 +68,7 @@ class VisitesController extends AppController
 
         $query = $this->Visites->find('all')
             ->contain(['Clients', 'Commercials', 'Typecontacts'])
-            ->where([$cond2, $cond3, $cond4, $cond5])
+            ->where([$cond2, $cond3, $cond4, $cond5, $cond6])
             ->order(['Visites.id' => 'DESC']);
 
         $this->paginate = [
@@ -75,7 +82,8 @@ class VisitesController extends AppController
 
 
         $clients = $this->Visites->Clients->find('all'); //->where(["Clients.etat" => 'TRUE']);
-
+        $commercials = $this->Visites->Commercials->find('all');
+       
         // Calculate total visits
         $totalVisites = $this->Visites->find()->count();
 
@@ -133,7 +141,7 @@ class VisitesController extends AppController
             ];
         }
 
-        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut', 'totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard', 'tauxReponse', 'typeContactsData', 'numeros'));
+        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut', 'totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard', 'tauxReponse', 'typeContactsData', 'numeros','commercials'));
     }
     /**
      * View method

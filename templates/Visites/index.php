@@ -199,15 +199,17 @@ foreach ($lien as $k => $liens) {
 
                 <div class="col-xs-3">
                     <label class="control-label" for="name">Visiteur</label>
-                    <select class="form-control select2" id="numero" name="numero">
+                    <select class="form-control select2" id="idcommercial" name="commercial_id">
                         <option value="" selected="selected" disabled>Veuillez choisir !!</option>
-                        <?php foreach ($numeros as $numero): ?>
-                            <option value="<?php echo $numero['numero']; ?>"
-                                <?php if ($this->request->getQuery('numero') == $numero['numero']) echo 'selected="selected"'; ?>>
-                                <?php echo $numero['numero']; ?>
-                                <!-- Option label should be the numero -->
+                        <?php foreach ($commercials as $id => $commercial) {
+                        ?>
+                            <option
+                                <?php if ($this->request->getQuery('commercial_id') == $commercial->id) echo 'selected="selected"' ?>
+                                value="<?php echo $commercial->id; ?>">
+                                <?php
+                                echo $commercial->name ?>
                             </option>
-                        <?php endforeach; ?>
+                        <?php } ?>
                     </select>
                 </div>
 
@@ -393,6 +395,7 @@ foreach ($lien as $k => $liens) {
         const numeroInput = document.querySelector('input[name="numero"]');
         const datedebutInput = document.getElementById('datedebut');
         const datefinInput = document.getElementById('datefin');
+        const commercial = document.getElementById('commercial_id');
         const clientcIdSelect = $('#idclient');
         const clientnIdSelect = $('#idclient1');
         const etatlivv = document.getElementById('reglee');
@@ -433,6 +436,7 @@ foreach ($lien as $k => $liens) {
                     activeElement === numdebb ||
                     activeElement === numfinn ||
                     activeElement === etatlivv ||
+                    activeElement === commercial ||
                     $(activeElement).hasClass('select2-search__field') || // Champ de recherche Select2
                     $(activeElement).closest('.select2-container').length // Conteneur Select2
                 ) {
