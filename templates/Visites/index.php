@@ -270,7 +270,8 @@ foreach ($lien as $k => $liens) {
                                 <th>Date Contact</th>
                                 <th>Type Contact</th>
                                 <th>Client</th>
-                                <th>Addresse</th>
+                                <th>Lieu</th>
+                                <th>Localistation</th>
                                 <th>Résponsable</th>
                                 <th>Délai Palnifie</th>
                                 <th>Jours Restants </th>
@@ -288,6 +289,7 @@ foreach ($lien as $k => $liens) {
                                     <td><?= h($vv->typecontact->libelle)  ?></td>
                                     <td><?= $vv->client->Code . ' ' . h($vv->client->Raison_Sociale) ?></td>
                                     <td><?= h($vv->client->Adresse) ?></td>
+                                    <td><?= h($vv->client->localisation) ?></td>
                                     <td><?= h($vv->client->responsable) ?></td>
                                     <td><?= $this->Time->format($vv->dateplanifie, 'dd/MM/y'); ?></td>
                                     <?php
