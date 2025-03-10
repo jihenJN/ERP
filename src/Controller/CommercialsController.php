@@ -492,10 +492,11 @@ class CommercialsController extends AppController {
         $session = $this->request->getSession();
         $abrv = $session->read('abrvv');
         $lien_commercialmenus = $session->read('lien_commercialmenus' . $abrv);
-        // Vérifier si le commercial est lié à une visite
-        $visiteCount = $this->Commercials->Visites->find()
-        ->where(['commercial_id' => $id])
-        ->count();
+        // Liste des associations à vérifier avec leurs messages d'erreur correspondants
+        $associations = [
+            'Visites' => 'visites',
+            'Demandeclients' => 'demandes clients'
+        ];
 
         $commercial = 0;
         foreach ($lien_commercialmenus as $k => $liens) {
@@ -519,12 +520,20 @@ class CommercialsController extends AppController {
         }
 
        
-        if ($visiteCount > 0) {
-            // S'il y a des visites associées, afficher un message d'erreur
-            $this->Flash->error("Ce Commercial ne peut pas être supprimé car il est associé à des visites.");
-            return $this->redirect(['action' => 'index']);  // ou la page appropriée
+           // Vérifier chaque association
+           foreach ($associations as $association => $message) {
+            // Compter les éléments associés dans l'association
+            $count = $this->Commercials->{$association}->find()
+                ->where(['commercial_id' => $id])
+                ->count();
+
+            // Si l'association a des éléments, afficher un message d'erreur et rediriger
+            if ($count > 0) {
+                $this->Flash->error("Ce type de contact ne peut pas être supprimé car il est associé à des $message.");
+                return $this->redirect(['action' => 'index']); // ou la page appropriée
+            }
         }
-        
+
         if ($this->Commercials->delete($commercial)) {
             // $this->Flash->success(__('The {0} has been deleted.', 'Commercial'));
         } else {
