@@ -492,8 +492,11 @@ class CommercialsController extends AppController {
         $session = $this->request->getSession();
         $abrv = $session->read('abrvv');
         $lien_commercialmenus = $session->read('lien_commercialmenus' . $abrv);
+        // Vérifier si le commercial est lié à une visite
+        $visiteCount = $this->Commercials->Visites->find()
+        ->where(['commercial_id' => $id])
+        ->count();
 
-        //   debug($liendd);
         $commercial = 0;
         foreach ($lien_commercialmenus as $k => $liens) {
             //  debug($liens);
@@ -514,6 +517,14 @@ class CommercialsController extends AppController {
 
             $this->Gouvernoratcommercials->delete($c);
         }
+
+       
+        if ($visiteCount > 0) {
+            // S'il y a des visites associées, afficher un message d'erreur
+            $this->Flash->error("Ce Commercial ne peut pas être supprimé car il est associé à des visites.");
+            return $this->redirect(['action' => 'index']);  // ou la page appropriée
+        }
+        
         if ($this->Commercials->delete($commercial)) {
             // $this->Flash->success(__('The {0} has been deleted.', 'Commercial'));
         } else {
