@@ -270,8 +270,8 @@ foreach ($lien as $k => $liens) {
                                 <th>Date Contact</th>
                                 <th>Type Contact</th>
                                 <th>Client</th>
-                                <th>Lieu</th>
-                                <th>Localisation</th>
+                                <th>Addresse</th>
+                                <th>Résponsable</th>
                                 <th>Délai Palnifie</th>
                                 <th>Jours Restants </th>
                                 <th>Visiteur</th>
@@ -287,8 +287,8 @@ foreach ($lien as $k => $liens) {
                                     <td><?= $this->Time->format($vv->datecontact, 'dd/MM/y'); ?></td>
                                     <td><?= h($vv->typecontact->libelle)  ?></td>
                                     <td><?= $vv->client->Code . ' ' . h($vv->client->Raison_Sociale) ?></td>
-                                    <td><?= h($vv->addresse) ?></td>
-                                    <td><?= h($vv->localisation) ?></td>
+                                    <td><?= h($vv->client->Adresse) ?></td>
+                                    <td><?= h($vv->client->responsable) ?></td>
                                     <td><?= $this->Time->format($vv->dateplanifie, 'dd/MM/y'); ?></td>
                                     <?php
                                     // Calculate remaining days directly in the view

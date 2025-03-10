@@ -481,6 +481,7 @@ class VisitesController extends AppController
             $data['responsable'] = !empty($this->request->getData('responsable')) ? $this->request->getData('responsable') : null;
             $data['tel'] = $this->request->getData('Tel');
             $data['adresse'] = $this->request->getData('Adresse');
+          
             $visite = $this->Visites->patchEntity($visite, $data);
 
             /////////////
