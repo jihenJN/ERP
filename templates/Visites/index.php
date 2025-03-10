@@ -185,15 +185,17 @@ foreach ($lien as $k => $liens) {
                 </div>
                 <div class="col-xs-3">
                     <label class="control-label" for="name">Type contact</label>
-                    <select class="form-control select2" id="numero" name="numero">
+                    <select class="form-control select2" id="idtypecontact" name="type_contact_id">
                         <option value="" selected="selected" disabled>Veuillez choisir !!</option>
-                        <?php foreach ($numeros as $numero): ?>
-                            <option value="<?php echo $numero['numero']; ?>"
-                                <?php if ($this->request->getQuery('numero') == $numero['numero']) echo 'selected="selected"'; ?>>
-                                <?php echo $numero['numero']; ?>
-                                <!-- Option label should be the numero -->
+                        <?php foreach ($typecontacts as $id => $typecontact) {
+                        ?>
+                            <option
+                                <?php if ($this->request->getQuery('type_contact_id') == $typecontact->id) echo 'selected="selected"' ?>
+                                value="<?php echo $typecontact->id; ?>">
+                                <?php
+                                echo $typecontact->libelle ?>
                             </option>
-                        <?php endforeach; ?>
+                        <?php } ?>
                     </select>
                 </div>
 
@@ -395,7 +397,8 @@ foreach ($lien as $k => $liens) {
         const numeroInput = document.querySelector('input[name="numero"]');
         const datedebutInput = document.getElementById('datedebut');
         const datefinInput = document.getElementById('datefin');
-        const commercialSelect = document.getElementById('idcommercial'); 
+        const commercial = document.getElementById('idcommercial'); 
+        const typecontact = document.getElementById('idtypecontact'); 
         const clientcIdSelect = $('#idclient');
         const clientnIdSelect = $('#idclient1');
         const etatlivv = document.getElementById('reglee');
@@ -437,6 +440,9 @@ foreach ($lien as $k => $liens) {
                     activeElement === numfinn ||
                     activeElement === etatlivv ||
                     activeElement === commercial ||
+                    activeElement === typecontact ||
+
+
                     $(activeElement).hasClass('select2-search__field') || // Champ de recherche Select2
                     $(activeElement).closest('.select2-container').length // Conteneur Select2
                 ) {

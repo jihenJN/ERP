@@ -33,11 +33,13 @@ class VisitesController extends AppController
         $cond4 = '';
         $cond5 = '';
         $cond6 = '';
+        $cond7 = '';
 
         $datedebut = $this->request->getQuery('datedebut');
         $datefin = $this->request->getQuery('datefin');
         $client_id = $this->request->getQuery('client_id');
         $commercial_id = $this->request->getQuery('commercial_id');
+        $type_contact_id = $this->request->getQuery('type_contact_id');
         $numero = $this->request->getQuery('numero');
 
 
@@ -59,6 +61,12 @@ class VisitesController extends AppController
             $cond6 = "Visites.commercial_id = '" . $commercial_id . "' ";
         }
 
+        
+        if ($type_contact_id) {
+            $cond7 = "Visites.type_contact_id = '" .$type_contact_id. "' ";
+        }
+
+
 
         // Fetch all distinct 'numero' values
         $numeros = $this->Visites->find()
@@ -68,7 +76,7 @@ class VisitesController extends AppController
 
         $query = $this->Visites->find('all')
             ->contain(['Clients', 'Commercials', 'Typecontacts'])
-            ->where([$cond2, $cond3, $cond4, $cond5, $cond6])
+            ->where([$cond2, $cond3, $cond4, $cond5, $cond6,$cond7 ])
             ->order(['Visites.id' => 'DESC']);
 
         $this->paginate = [
@@ -83,6 +91,7 @@ class VisitesController extends AppController
 
         $clients = $this->Visites->Clients->find('all'); //->where(["Clients.etat" => 'TRUE']);
         $commercials = $this->Visites->Commercials->find('all');
+        $typecontacts = $this->Visites->Typecontacts->find('all');
        
         // Calculate total visits
         $totalVisites = $this->Visites->find()->count();
@@ -141,7 +150,7 @@ class VisitesController extends AppController
             ];
         }
 
-        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut', 'totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard', 'tauxReponse', 'typeContactsData', 'numeros','commercials'));
+        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut', 'totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard', 'tauxReponse', 'typeContactsData', 'numeros','commercials','typecontacts'));
     }
     /**
      * View method
