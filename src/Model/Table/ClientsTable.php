@@ -66,6 +66,11 @@ class ClientsTable extends Table {
             'foreignKey' => 'client_id',  
             'dependent' => true,  // Si un Typecontact est supprimé, les Visites associées sont supprimées aussi
         ]);
+
+        $this->hasMany('Demandeclients', [
+            'foreignKey' => 'client_id',  
+            'dependent' => true,  
+        ]);
         
 
         $this->belongsTo('Commercials', [

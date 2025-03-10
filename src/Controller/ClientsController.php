@@ -1583,7 +1583,7 @@ class ClientsController extends AppController
         // $this->loadModel('Clients');
         $num = $this->Clients->find()->select([
             "num" =>
-                'MAX(Clients.codeclient)'
+            'MAX(Clients.codeclient)'
         ])->first();
         $numero = $num->num;
 
@@ -1683,14 +1683,15 @@ class ClientsController extends AppController
                     $select = $select . "<option value=" . $cl['id'] . " " . $selected . " >" . $cl['nom'] . " </option>";
                 }
                 $select = $select . '</select>';
-                ?>
+?>
                 <script>
                     //  aler                t(); 
-                    //   var select = "<? php// echo $select;        ?>"; 
+                    //   var select = "<? php // echo $select;        
+                                        ?>"; 
                     window.opener.document.getElementById('cliselect<?php echo $index; ?>').innerHTML = "<?php echo $select; ?>";
                     window.close();
                 </script>
-                <?php
+            <?php
             }
         }
         $this->loadModel('Gouvernorats');
@@ -1741,7 +1742,7 @@ class ClientsController extends AppController
         // $this->loadModel('Clients');
         $num = $this->Clients->find()->select([
             "num" =>
-                'MAX(Clients.codeclient)'
+            'MAX(Clients.codeclient)'
         ])->first();
         $numero = $num->num;
 
@@ -1841,13 +1842,12 @@ class ClientsController extends AppController
                     $select = $select . "<option value=" . $cl['id'] . " " . $selected . " >" . $cl['Raison_Sociale'] . " </option>";
                 }
                 $select = $select . '</select>';
-                ?>
+            ?>
                 <script>
-
                     window.opener.document.getElementById('client_id').innerHTML = "<?php echo $select; ?>";
                     window.close();
                 </script>
-                <?php
+<?php
             }
         }
         $this->loadModel('Gouvernorats');
@@ -1881,7 +1881,7 @@ class ClientsController extends AppController
         // }
         $this->set(compact('code', 'paiements', 'personnel_id', 'dd', 'client', 'dhouha', 'gouvernorats', 'pays', 'devises', 'commercials', 'tags', 'typetiers', 'salaris', 'typeentites', 'incoterms', 'prospects'));
     }
- 
+
     public function add()
     {
         $session = $this->request->getSession();
@@ -1906,7 +1906,7 @@ class ClientsController extends AppController
         $this->loadModel('Localites');
         $client = $this->Clients->newEmptyEntity();
 
-       /* $prefix = "4113"; 
+        /* $prefix = "4113"; 
         $numeroobj = $this->Clients->find()->select(["numerox" => 'MAX(Clients.Code)'])->first();
         $lastCode = $numeroobj ? $numeroobj->numerox : null;
 
@@ -1920,17 +1920,17 @@ class ClientsController extends AppController
         }*/
 
 
-        $prefix = "4113"; 
+        $prefix = "4113";
         $maxLimit = $prefix . "9999"; // Limite supérieure 41199999
-        
+
         // Rechercher le plus grand Code qui est en dessous de la limite
         $numeroobj = $this->Clients->find()
             ->select(["numerox" => 'MAX(Clients.Code)'])
             ->where(["Clients.Code <" => $maxLimit]) // Exclure les codes >= 41199999
             ->first();
-        
+
         $lastCode = $numeroobj ? $numeroobj->numerox : null;
-        
+
         if ($lastCode !== null) {
             $lastCodeAsString = strval($lastCode); // Convertir $lastCode en chaîne
             $lastNumber = intval(substr($lastCodeAsString, strlen($prefix))); // Extraire la partie numérique
@@ -1939,9 +1939,9 @@ class ClientsController extends AppController
         } else {
             $code = $prefix . "0001";
         }
-        
 
-        
+
+
 
         // Now $newCode contains the desired serial number as a string
         // Use $newCode as needed in your application
@@ -1962,17 +1962,17 @@ class ClientsController extends AppController
             } else {
                 $code = $prefix . "0001";
             }*/
-            $prefix = "4113"; 
+            $prefix = "4113";
             $maxLimit = $prefix . "9999"; // Limite supérieure 41199999
-            
+
             // Rechercher le plus grand Code qui est en dessous de la limite
             $numeroobj = $this->Clients->find()
                 ->select(["numerox" => 'MAX(Clients.Code)'])
                 ->where(["Clients.Code <" => $maxLimit]) // Exclure les codes >= 41199999
                 ->first();
-            
+
             $lastCode = $numeroobj ? $numeroobj->numerox : null;
-            
+
             if ($lastCode !== null) {
                 $lastCodeAsString = strval($lastCode); // Convertir $lastCode en chaîne
                 $lastNumber = intval(substr($lastCodeAsString, strlen($prefix))); // Extraire la partie numérique
@@ -1981,10 +1981,10 @@ class ClientsController extends AppController
             } else {
                 $code = $prefix . "0001";
             }
-            
+
             // Affichage ou utilisation du nouveau code
-           // echo "Nouveau Code Client : " . $code;
-            
+            // echo "Nouveau Code Client : " . $code;
+
             $client = $this->Clients->patchEntity($client, $this->request->getData());
             $client->Code = $code;
             //debug($this->request->getData('data')['lignes']);die;
@@ -2258,7 +2258,7 @@ class ClientsController extends AppController
         $pays = $this->fetchTable('Pays')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $this->set(compact('code', 'pays', 'client', 'types', 'cli', 'ar', 'articles', 'type', 'delegations', 'localites', 'commercials', 'gouvernorats', 'typeexonerations', 'banques', 'paiements', 'typeclients', 'pointdeventes', 'bureaupostes'));
     }
- 
+
     /**
      * Edit method
      *
@@ -2718,10 +2718,13 @@ class ClientsController extends AppController
         $session = $this->request->getSession();
         $abrv = $session->read('abrvv');
         $liendd = $session->read('lien_clients' . $abrv);
-        // Vérifier si le client est lié à une visite
-        $visiteCount = $this->Clients->Visites->find()
-        ->where(['client_id' => $id])
-        ->count();
+
+        // Liste des associations à vérifier avec leurs messages d'erreur correspondants
+        $associations = [
+            'Visites' => 'visites',
+            'Demandeclients' => 'demandes clients'
+        ];
+
 
         //   debug($liendd);
         $societe = 0;
@@ -2784,20 +2787,23 @@ class ClientsController extends AppController
         }
 
 
-
-
-
-
-
-
-
         $client = $this->Clients->get($id);
 
-        if ($visiteCount > 0) {
-            // S'il y a des visites associées, afficher un message d'erreur
-            $this->Flash->error("Ce Client ne peut pas être supprimé car il est associé à des visites.");
-            return $this->redirect(['action' => 'index']);  // ou la page appropriée
+
+        // Vérifier chaque association
+        foreach ($associations as $association => $message) {
+            // Compter les éléments associés dans l'association
+            $count = $this->Clients->{$association}->find()
+                ->where(['client_id' => $id])
+                ->count();
+
+            // Si l'association a des éléments, afficher un message d'erreur et rediriger
+            if ($count > 0) {
+                $this->Flash->error("Ce Client ne peut pas être supprimé car il est associé à des $message.");
+                return $this->redirect(['action' => 'index']); // ou la page appropriée
+            }
         }
+
         if ($this->Clients->delete($client)) {
             $this->misejour("Clients", "delete", $id);
 
@@ -2805,6 +2811,8 @@ class ClientsController extends AppController
         } else {
             //  $this->Flash->error(__('The client could not be deleted. Please, try again.'));
         }
+
+
 
         return $this->redirect(['action' => 'index']);
     }
@@ -3150,18 +3158,18 @@ class ClientsController extends AppController
     {
         $this->loadModel('Factureclients');
         $this->loadModel('Clients');
-    
+
         $client_id = $this->request->getQuery('client_id');
-    
+
         $conditions = [
             'Clients.soldedebut IS NOT' => null,
             'Clients.soldedebut !=' => 0
         ];
-    
+
         if (!empty($client_id)) {
             $conditions['Clients.id'] = $client_id;
         }
-    
+
         $clients = $this->fetchTable('Clients')->find('all')->where($conditions);
         $clientss = $this->fetchTable('Clients')->find('list', [
             'keyField' => 'id',
@@ -3173,13 +3181,13 @@ class ClientsController extends AppController
             'keyField' => 'id',
             'valueField' => 'name'
         ]);
-    
+
         $moiss = $this->fetchTable('Mois')->find('all', [
             'keyField' => 'id',
             'valueField' => 'num'
         ]);
-    
-        $this->set(compact('clients','clientss','client_id', 'mois', 'moiss'));
+
+        $this->set(compact('clients', 'clientss', 'client_id', 'mois', 'moiss'));
     }
     function etatnonsolde()
     {
@@ -3189,14 +3197,13 @@ class ClientsController extends AppController
 
         if (!empty($client_id)) {
             $conditions['Clients.id'] = $client_id;
-
         }
-    
+
         $clients = $this->fetchTable('Clients')->find('all')->where([
             'Clients.id !=' => 12,
             $conditions
         ]);
-                $mois = $this->fetchTable('Mois')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+        $mois = $this->fetchTable('Mois')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $clientss = $this->fetchTable('Clients')->find('list', [
             'keyField' => 'id',
             'valueField' => function ($row) {
@@ -3207,10 +3214,7 @@ class ClientsController extends AppController
         // debug($clients);
         $moiss = $this->fetchTable('Mois')->find('all', ['keyfield' => 'id', 'valueField' => 'num']);
 
-        $this->set(compact("clients",'client_id',"clientss","mois","moiss"));
-
-
-
+        $this->set(compact("clients", 'client_id', "clientss", "mois", "moiss"));
     }
 
     function impnonsolde()
@@ -3221,14 +3225,13 @@ class ClientsController extends AppController
 
         if (!empty($client_id)) {
             $conditions['Clients.id'] = $client_id;
-
         }
-    
+
         $clients = $this->fetchTable('Clients')->find('all')->where([
             'Clients.id !=' => 12,
             $conditions
         ]);
-                $mois = $this->fetchTable('Mois')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+        $mois = $this->fetchTable('Mois')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $clientss = $this->fetchTable('Clients')->find('list', [
             'keyField' => 'id',
             'valueField' => function ($row) {
@@ -3239,27 +3242,24 @@ class ClientsController extends AppController
         // debug($clients);
         $moiss = $this->fetchTable('Mois')->find('all', ['keyfield' => 'id', 'valueField' => 'num']);
 
-        $this->set(compact("clients","clientss","mois","moiss"));
-
-
-
+        $this->set(compact("clients", "clientss", "mois", "moiss"));
     }
     function impnonsolde12122024()
     {
         $this->loadModel('Factureclients');
         $this->loadModel('Clients');
-    
+
         $client_id = $this->request->getQuery('client_id');
-    
+
         $conditions = [
             'Clients.soldedebut IS NOT' => null,
             'Clients.soldedebut !=' => 0
         ];
-    
+
         if (!empty($client_id)) {
             $conditions['Clients.id'] = $client_id;
         }
-    
+
         $clients = $this->fetchTable('Clients')->find('all')->where($conditions);
         $clientss = $this->fetchTable('Clients')->find('list', [
             'keyField' => 'id',
@@ -3271,13 +3271,13 @@ class ClientsController extends AppController
             'keyField' => 'id',
             'valueField' => 'name'
         ]);
-    
+
         $moiss = $this->fetchTable('Mois')->find('all', [
             'keyField' => 'id',
             'valueField' => 'num'
         ]);
-    
-        $this->set(compact('clients','clientss','client_id', 'mois', 'moiss'));
+
+        $this->set(compact('clients', 'clientss', 'client_id', 'mois', 'moiss'));
     }
 
 
