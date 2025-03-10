@@ -395,7 +395,7 @@ foreach ($lien as $k => $liens) {
         const numeroInput = document.querySelector('input[name="numero"]');
         const datedebutInput = document.getElementById('datedebut');
         const datefinInput = document.getElementById('datefin');
-        const commercial = document.getElementById('commercial_id');
+        const commercialSelect = document.getElementById('idcommercial'); 
         const clientcIdSelect = $('#idclient');
         const clientnIdSelect = $('#idclient1');
         const etatlivv = document.getElementById('reglee');
