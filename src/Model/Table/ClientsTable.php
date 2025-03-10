@@ -62,6 +62,12 @@ class ClientsTable extends Table {
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
 
+        $this->hasMany('Visites', [
+            'foreignKey' => 'client_id',  
+            'dependent' => true,  // Si un Typecontact est supprimé, les Visites associées sont supprimées aussi
+        ]);
+        
+
         $this->belongsTo('Commercials', [
             'foreignKey' => 'commercial_id',
         ]);

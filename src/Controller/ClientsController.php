@@ -2718,6 +2718,10 @@ class ClientsController extends AppController
         $session = $this->request->getSession();
         $abrv = $session->read('abrvv');
         $liendd = $session->read('lien_clients' . $abrv);
+        // Vérifier si le client est lié à une visite
+        $visiteCount = $this->Clients->Visites->find()
+        ->where(['client_id' => $id])
+        ->count();
 
         //   debug($liendd);
         $societe = 0;
@@ -2788,6 +2792,12 @@ class ClientsController extends AppController
 
 
         $client = $this->Clients->get($id);
+
+        if ($visiteCount > 0) {
+            // S'il y a des visites associées, afficher un message d'erreur
+            $this->Flash->error("Ce Client ne peut pas être supprimé car il est associé à des visites.");
+            return $this->redirect(['action' => 'index']);  // ou la page appropriée
+        }
         if ($this->Clients->delete($client)) {
             $this->misejour("Clients", "delete", $id);
 
