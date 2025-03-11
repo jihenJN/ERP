@@ -314,10 +314,15 @@ class VisitesController extends AppController
             }
 
             // Handling Client creation 
+
+            //   $code = $this->generateClientCode($prefix, $this->Clients);
+            //  debug($code);die();
+            $prefix = "4113";
             $client_id = (int) $this->request->getData('client_id');
             $newClient = trim($this->request->getData('Raison_Sociale'));
+
             if (empty($client_id) && !empty($newClient)) {
-                $client_id = $this->findOrCreateEntity('Clients', 'Raison_Sociale',  $newClient);
+                $client_id = $this->findOrCreateEntity('Clients', 'Raison_Sociale',  $newClient, $prefix);
             }
 
             // Handling Visiteur creation 
@@ -622,7 +627,7 @@ class VisitesController extends AppController
     }
 
     // Function to find or create an entity
-    private function findOrCreateEntity($model, $field, $value)
+    private function findOrCreateEntity($model, $field, $value , $prefix = null)
     {
         $existingEntity = $this->$model->find()
             ->where([$field => $value])
@@ -634,6 +639,14 @@ class VisitesController extends AppController
             $newEntity = $this->$model->newEmptyEntity();
             $newEntity->$field = $value;
 
+            // Check if the model is 'Clients' to assign the generated code
+            if ($model == 'Clients' && $prefix !== null) {
+                // Generate the client code
+                $code = $this->generateClientCode($prefix, $this->$model);
+                $newEntity->Code = $code;  // Set the generated code to the new entity
+            }
+
+
             if ($this->$model->save($newEntity)) {
                 return $newEntity->id; // Return new ID
             } else {
@@ -642,4 +655,29 @@ class VisitesController extends AppController
             }
         }
     }
+   // function to generate code client
+    private function generateClientCode($prefix, $Clients)
+    {
+        $maxLimit = $prefix . "9999"; // Limite supérieure 41199999
+
+        // Rechercher le plus grand Code qui est en dessous de la limite
+        $numeroobj = $Clients->find()
+            ->select(["numerox" => 'MAX(Clients.Code)'])
+            ->where(["Clients.Code <" => $maxLimit]) // Exclure les codes >= 41199999
+            ->first();
+
+        $lastCode = $numeroobj ? $numeroobj->numerox : null;
+
+        if ($lastCode !== null) {
+            $lastCodeAsString = strval($lastCode); // Convertir $lastCode en chaîne
+            $lastNumber = intval(substr($lastCodeAsString, strlen($prefix))); // Extraire la partie numérique
+            $newNumber = $lastNumber + 1;
+            $code = $prefix . str_pad((string)$newNumber, 4, "0", STR_PAD_LEFT);
+        } else {
+            $code = $prefix . "0001";
+        }
+
+        return $code;
+    }
+
 }
