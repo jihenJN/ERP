@@ -729,10 +729,10 @@
 
 <!-- Select2 -->
 <?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
-<?php $this->start('scriptBottom'); ?>
+<!--?php $this->start('scriptBottom'); ?>
 <script>
     $('.testobgarticle').on('mouseover', function() {
-        // alert('fff')
+        alert('fff')
         famille = $('#salma').val();
         unite = $('#unite-id').val();
         Dsignation = $('#Dsignation').val();
@@ -799,7 +799,7 @@
         format: 'MM/DD/YYYY h:mm A'
     })
 </script>
-<?php $this->end(); ?>
+<!-?php $this->end(); ?-->
 
 <script type="text/javascript">
     $(function() {
@@ -1340,3 +1340,32 @@
         });
     });
 </script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var form = document.querySelector("form");
+        var famille = document.getElementById("salma");
+        var sousfamille = document.getElementById("sous");
+        var submitButton = document.querySelector("form button[type='submit'], form input[type='submit']"); 
+        form.addEventListener("submit", function (event) {
+            if (!famille.value) {
+                event.preventDefault(); // Prevent form submission
+                alert("Veuillez choisir une famille avant d'enregistrer l'article !");
+                submitButton.disabled = true;
+
+            }
+
+         
+
+        
+            submitButton.disabled = false;
+        
+        
+        });
+
+       
+    });
+</script>
+the sousfamille is not detected
+
+
