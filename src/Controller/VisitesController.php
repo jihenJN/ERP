@@ -61,9 +61,9 @@ class VisitesController extends AppController
             $cond6 = "Visites.commercial_id = '" . $commercial_id . "' ";
         }
 
-        
+
         if ($type_contact_id) {
-            $cond7 = "Visites.type_contact_id = '" .$type_contact_id. "' ";
+            $cond7 = "Visites.type_contact_id = '" . $type_contact_id . "' ";
         }
 
 
@@ -76,7 +76,7 @@ class VisitesController extends AppController
 
         $query = $this->Visites->find('all')
             ->contain(['Clients', 'Commercials', 'Typecontacts'])
-            ->where([$cond2, $cond3, $cond4, $cond5, $cond6,$cond7 ])
+            ->where([$cond2, $cond3, $cond4, $cond5, $cond6, $cond7])
             ->order(['Visites.id' => 'DESC']);
 
         $this->paginate = [
@@ -92,7 +92,7 @@ class VisitesController extends AppController
         $clients = $this->Visites->Clients->find('all'); //->where(["Clients.etat" => 'TRUE']);
         $commercials = $this->Visites->Commercials->find('all');
         $typecontacts = $this->Visites->Typecontacts->find('all');
-       
+
         // Calculate total visits
         $totalVisites = $this->Visites->find()->count();
 
@@ -150,7 +150,7 @@ class VisitesController extends AppController
             ];
         }
 
-        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut', 'totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard', 'tauxReponse', 'typeContactsData', 'numeros','commercials','typecontacts'));
+        $this->set(compact('visites', 'count', 'clients', 'datefin', 'client_id', 'datedebut', 'totalVisites', 'completedVisites', 'pendingVisites', 'tauxRetard', 'tauxReponse', 'typeContactsData', 'numeros', 'commercials', 'typecontacts'));
     }
     /**
      * View method
@@ -314,9 +314,6 @@ class VisitesController extends AppController
             }
 
             // Handling Client creation 
-
-            //   $code = $this->generateClientCode($prefix, $this->Clients);
-            //  debug($code);die();
             $prefix = "4113";
             $client_id = (int) $this->request->getData('client_id');
             $newClient = trim($this->request->getData('Raison_Sociale'));
@@ -342,7 +339,7 @@ class VisitesController extends AppController
             $data['description'] = $this->request->getData('description');
             $data['date_visite'] = $this->request->getData('date_visite');
 
-          
+
             $data['client_id'] = $client_id ?? $this->request->getData('client_id');
             $data['commercial_id'] = $commercial_id ?? $this->request->getData('commercial_id');
             $data['type_contact_id'] = $type_contact_id ?? $this->request->getData('type_contact_id');
@@ -400,7 +397,7 @@ class VisitesController extends AppController
         $typebesoins = $this->fetchTable('Typebesoins')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $compterendus = $this->fetchTable('Compterendus')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $commercialsList = $this->fetchTable('Commercials')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
-       // $clientsList = $this->fetchTable('Clients')->find('list', ['keyfield' => 'id', 'valueField' => 'Raison_Sociale']);
+        // $clientsList = $this->fetchTable('Clients')->find('list', ['keyfield' => 'id', 'valueField' => 'Raison_Sociale']);
         $clientsList = $this->fetchTable('Clients')->find('list', [
             'keyField' => 'id',
             'valueField' => function ($row) {
@@ -492,7 +489,7 @@ class VisitesController extends AppController
             $data['responsable'] = !empty($this->request->getData('responsable')) ? $this->request->getData('responsable') : null;
             $data['tel'] = $this->request->getData('Tel');
             $data['adresse'] = $this->request->getData('Adresse');
-          
+
             $visite = $this->Visites->patchEntity($visite, $data);
 
             /////////////
@@ -627,7 +624,7 @@ class VisitesController extends AppController
     }
 
     // Function to find or create an entity
-    private function findOrCreateEntity($model, $field, $value , $prefix = null)
+    private function findOrCreateEntity($model, $field, $value, $prefix = null)
     {
         $existingEntity = $this->$model->find()
             ->where([$field => $value])
@@ -655,7 +652,8 @@ class VisitesController extends AppController
             }
         }
     }
-   // function to generate code client
+
+    // function to generate code client
     private function generateClientCode($prefix, $Clients)
     {
         $maxLimit = $prefix . "9999"; // Limite supérieure 41199999
@@ -679,5 +677,4 @@ class VisitesController extends AppController
 
         return $code;
     }
-
 }
