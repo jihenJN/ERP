@@ -61,8 +61,8 @@ var v1=arguments,v2=v1[2].split(","),v3=(v1.length>3)?v1[3]:false,v4=(v1.length>
                 </div>
                 <div class="col-md-6">
                     <br>
-                Bon  livraison <input type="checkbox" name="bl" <?php if ($this->request->getQuery()['bl']==1) {
-                  echo "checked";
+                Bon  livraison <input type="checkbox" checked name="bl" <?php if ($this->request->getQuery()['bl']==1) {
+                // echo "checked";
                 } ?> value="1">
                    
                 </div>
@@ -156,7 +156,7 @@ var v1=arguments,v2=v1[2].split(","),v3=(v1.length>3)?v1[3]:false,v4=(v1.length>
                                             <center>Libell&eacute; Piece</center>
                                         </strong></th>
                                     <th style="border:1px solid black;width: 118px;" bgcolor="#F2D7D5"><strong>
-                                            <center>D&eacute;dit</center>
+                                            <center>D&eacute;bit</center>
                                         </strong></th>
                                     <th style="border:1px solid black;width: 106px;" bgcolor="#F2D7D5"><strong>
                                             <center>Cr&eacute;dit</center>

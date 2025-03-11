@@ -9,27 +9,6 @@ use Cake\Datasource\ConnectionManager;
 $connection = ConnectionManager::get('default');
 ?>
 <?php $this->layout = 'AdminLTE.print'; ?>
-<?php
-
-use Cake\ORM\TableRegistry;
-
-?>
-
-
-<?php
-$connection = ConnectionManager::get('default');
-
-$societeTable = TableRegistry::getTableLocator()->get('Societes');
-
-$societe = $societeTable->find()->where('id=1')->first();
-
-?>
-
-
-<?php
-$connection = ConnectionManager::get('default');
-?>
-<?php $this->layout = 'AdminLTE.print'; ?>
 
 <style>
     body {
@@ -60,9 +39,8 @@ $connection = ConnectionManager::get('default');
             </div> -->
         </td>
         <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-            <?php echo $societe->adresseEntete; ?>
-            <br>
-        </td>
+                    <?php echo $societefirst->adresseEntete; ?><br>
+                </td>
         <td align="center" style="width: 25%;border: none;">
             <div>
                 <?php
@@ -107,13 +85,13 @@ Date: <?php
         </td>
         <td><strong>Depot:</strong>
             <?php
-            echo $depots;
-
+                echo $depots;
+                
             ?>
         </td>
-
+        
         <td style="margin-right:5% !important;"><strong>R:</strong>
-            Reste
+           Reste
         </td>
 
     </tr>
@@ -163,20 +141,20 @@ Date: <?php
                 ->where(['factureclient_id' => $facture->id])
                 ->execute()
                 ->fetch('assoc')['count'];
-
+        
             if ($existsInLigneregelementclients > 0) {
-
+               
                 $sumQuery = $connection->newQuery();
                 $totalMontant = $sumQuery->select(['totalMontant' => $sumQuery->func()->sum('Montant')])
                     ->from('lignereglementclients')
                     ->where(['factureclient_id' => $facture->id])
                     ->execute()
                     ->fetch('assoc')['totalMontant'];
-                $resultat = '<strong>R </strong> ' . ($facture->totalttc - $totalMontant);
-            } else {
-                $resultat = 'Non';
+                    $resultat = '<strong>R </strong> ' . ($facture->totalttc - $totalMontant) ;
+                } else {
+                $resultat='Non';
             }
-
+           
             $totalttc += $facture->totalttc;
             $totalht += $facture->totalht;
             if ($facture->user_id != null) {

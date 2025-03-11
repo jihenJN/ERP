@@ -16,7 +16,7 @@
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>
-    Modification famille
+        Modification famille
     </h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo $this->Url->build(['action' => 'index']); ?>"><i class="fa fa-reply"></i>
@@ -35,7 +35,7 @@
                 <!-- /.box-header -->
                 <!-- form start -->
                 <?php echo $this->Form->create($famille, ['role' => 'form', 'onkeypress' => "return event.keyCode!=13"]);
-              //  debug ($famille);
+                //  debug ($famille);
                 /// die;
                 ?>
 
@@ -47,15 +47,16 @@
                         <div class="row">
                             <div style=" margin: 0 auto;  margin-left: 20px; margin-right: 20px; position: static; ">
 
+
+                                <div class="col-xs-6">
+                                    <?php echo $this->Form->control('code', ['readonly', 'label' => 'Code','required' => 'off', 'id' => 'code', 'class' => 'form-control']); ?>
+                                </div>
                                 <div class="col-xs-6">
                                     <?php echo $this->Form->control('Nom', ['label' => 'Nom', 'required' => 'off', 'id' => 'Nom', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control']); ?>
 
                                 </div>
-                                <div class="col-xs-6">
-                                    <?php echo $this->Form->control('marque_id', ['empty' => 'Veuillez choisir !!','label' => 'Marque','options'=>$marques, 'required' => 'off', 'id' => 'marque_id', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control']); ?>
-                                </div>
-                          
-                               
+
+
 
                             </div>
                         </div>
@@ -65,9 +66,9 @@
                     </div>
                     <div align="center">
 
-                    <?php echo $this->Form->end(); ?>
-                </div>
-                <!--
+                        <?php echo $this->Form->end(); ?>
+                    </div>
+                    <!--
                 <h3 style="margin-left: 10px ;"> Liste des articles</h3>
                 <table align="center" style="width: 100%;" class="table table-bordered table-striped table-bottomless" id="tab">
                     <thead>
@@ -77,16 +78,16 @@
 
                     </thead>
                     <?php
-                    
+
                     foreach ($articles as $a) :
-                    $chaine = '' ;
-                    if ($a->vente == 1) {
-                        $chaine = 'oui' ; 
-                    }
-                    if ($a->vente == 0) {
-                        $chaine = 'non' ; 
-                    }
-                    
+                        $chaine = '';
+                        if ($a->vente == 1) {
+                            $chaine = 'oui';
+                        }
+                        if ($a->vente == 0) {
+                            $chaine = 'non';
+                        }
+
                     ?>
                         <tr>
                         <td >
@@ -99,7 +100,7 @@
                             
                             
                             <td>
-                                <?php echo $chaine ; ?>
+                                <?php echo $chaine; ?>
                             </td>
 
                             
@@ -113,22 +114,22 @@
 
                 </table>
                 -->
-                <button type="submit" class="pull-right btn btn-success btn-sm"  style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+                    <button type="submit" class="pull-right btn btn-success btn-sm" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
 
-                <?php echo $this->Form->end(); ?>
-
-
+                    <?php echo $this->Form->end(); ?>
 
 
 
 
-    
-                <!-- /.box -->
 
-                <!-- /.box -->
+
+
+                    <!-- /.box -->
+
+                    <!-- /.box -->
+                </div>
             </div>
-        </div>
-        <!-- /.row -->
+            <!-- /.row -->
 
 </section>
 <?php echo $this->Html->script('AdminLTE./bower_components/datatables.net/js/jquery.dataTables.min', ['block' => 'script']); ?>
@@ -154,13 +155,13 @@
     $('.select2').select2()
 
     //Datemask dd/mm/yyyy
-//    $('#datemask').inputmask('dd/mm/yyyy', {
-//        'placeholder': 'dd/mm/yyyy'
-//    })
+    //    $('#datemask').inputmask('dd/mm/yyyy', {
+    //        'placeholder': 'dd/mm/yyyy'
+    //    })
     //Datemask2 mm/dd/yyyy
-//    $('#datemask2').inputmask('mm/dd/yyyy', {
-//        'placeholder': 'mm/dd/yyyy'
-//    })
+    //    $('#datemask2').inputmask('mm/dd/yyyy', {
+    //        'placeholder': 'mm/dd/yyyy'
+    //    })
     //Money Euro
     $('[data-mask]').inputmask()
 
@@ -180,7 +181,7 @@
 
         $('input[type=radio][name=radio]').click(function() {
 
-            s= 1 ; 
+            s = 1;
             if (this.value == '0') {
                 $('#ventee').val(Number(s));
                 return confirm('Voulez-vous mettre tous les articles liés à cette famille non destinée à la vente ?')

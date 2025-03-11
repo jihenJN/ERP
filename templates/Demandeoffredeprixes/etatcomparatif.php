@@ -11,7 +11,7 @@ $connection = ConnectionManager::get('default');
 
 <section class="content-header">
     <h1>
-        Passer bande commande
+        Passer Bon commande
         <small><?php echo __(''); ?></small>
     </h1>
     <ol class="breadcrumb">
@@ -104,7 +104,7 @@ $connection = ConnectionManager::get('default');
                                                                             <td align="center" style="width: 5%;"><strong><?php echo ('Quantité'); ?></strong></td>
                                                                             <td align="center" style="width: 5%;"><strong><?php echo ('Prix'); ?></strong></td>
                                                                             <td align="center" style="width: 5%;"><strong><?php echo ('Tva %'); ?></strong></td>
-                                                                            <td align="center" style="width: 5%;"><strong><?php echo ('fodec %'); ?></strong></td>
+                                                                            <!-- <td align="center" style="width: 5%;"><strong><?php echo ('fodec %'); ?></strong></td> -->
                                                                             <td align="center" style="width: 5%;"><strong><?php echo ('remise %'); ?></strong></td>
 
                                                                             <td align="center" style="width: 5%;"><strong><?php echo ('Total'); ?></strong></td>
@@ -150,7 +150,7 @@ $connection = ConnectionManager::get('default');
                                                                                         <?php echo $this->Form->input('tva', array('value' => $ligne['tva'], 'name' => 'data[fligne][' . $j . '][aligne][' . $i . '][tva]', 'id' => 'tva' . $j . '-' . $i, 'champ' => 'tva', 'table' => 'fligne', 'tableligne' => 'aligne', 'indexligne' => $i, 'index' => $j, 'div' => 'form-group',  'type' => 'hidden', 'class' => 'form-control')); ?>
                                                                                         <?php echo $ligne['tva']; ?>
                                                                                     </td>
-                                                                                    <td align="center">
+                                                                                    <td align="center" hidden>
                                                                                         <?php echo $this->Form->input('fodec', array('value' => $ligne['fodec'], 'name' => 'data[fligne][' . $j . '][aligne][' . $i . '][fodec]', 'id' => 'fodec' . $j . '-' . $i, 'champ' => 'fodec', 'table' => 'fligne', 'tableligne' => 'aligne', 'indexligne' => $i, 'index' => $j, 'div' => 'form-group',  'type' => 'hidden', 'class' => 'form-control')); ?>
                                                                                         <?php echo $ligne['fodec']; ?>
                                                                                     </td>

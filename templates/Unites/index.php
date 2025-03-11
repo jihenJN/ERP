@@ -91,10 +91,10 @@ if ($add == 1) {
                                     echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $unite->id), array('escape' => false));
                                 }
                                 ?>
-                                <?php //if ($delete == 1) { ?>
+                                <?php if ($delete == 1) { ?>
                                     <button index='<?php echo $i ?>' class='verifiercmd btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>
                                   <!--echo $this->Form->postLink("<button class='btn deleteConfirm btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $unite->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $unite->id));-->
-                                <?php //} ?>
+                                <?php } ?>
                             </td>
 
                         </tr>

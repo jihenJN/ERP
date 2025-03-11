@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Model\Entity;
@@ -35,5 +36,7 @@ class Fichearticle extends Entity
         'article_id3' => true,
         'qte' => true,
         'article' => true,
+        'unite_id' => true,
+        'coeff' => true,
     ];
 }

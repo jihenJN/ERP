@@ -30,9 +30,8 @@ class BesionachatsController extends AppController
                 $cond1 = "Besionachats.numero  like  '%" . $numero . "%' ";
             }
             if ($date) {
-               // $cond2 = "Besionachats.date  like  '%" . $date . "%' ";
-               $cond2 = "Besionachats.date >= '" . $date . " 00:00:00'";
-
+                // $cond2 = "Besionachats.date  like  '%" . $date . "%' ";
+                $cond2 = "Besionachats.date >= '" . $date . " 00:00:00'";
             }
             if ($personnel_id) {
                 $cond3 = "Besionachats.personnel_id  like  '%" . $personnel_id . "%' ";
@@ -115,7 +114,7 @@ class BesionachatsController extends AppController
         $personnels = $this->fetchTable('Personnels')->find('list', ['keyfield' => 'id', 'valueField' => 'nom']);
         $art = $this->fetchTable('Articles')->find('list', ['keyfield' => 'id', 'valueField' => 'Dsignation']); //->where(['Articles.famille_id = 2']);
         $lignebesionachats = $this->fetchTable('Lignebesionachats')->find('all')->where(['Lignebesionachats.besionachat_id' => $id]);
-        $articles = $this->fetchTable('Articles')->find('all', ['keyfield' => 'id', 'valueField' => 'Dsignation']) ; //->where(['Articles.famille_id = 2']);;
+        $articles = $this->fetchTable('Articles')->find('all', ['keyfield' => 'id', 'valueField' => 'Dsignation']); //->where(['Articles.famille_id = 2']);;
         $services = $this->fetchTable('Services')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $machines = $this->fetchTable('Machines')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
 
@@ -149,7 +148,7 @@ class BesionachatsController extends AppController
             $mm = str_pad("$in", 5, "0", STR_PAD_LEFT);
 
             $besionachat = $this->Besionachats->patchEntity($besionachat, $this->request->getData());
-            $besionachat->numero=$mm;
+            $besionachat->numero = $mm;
             if ($this->Besionachats->save($besionachat)) {
                 $besionachat_id = $besionachat->id;
 
@@ -256,7 +255,7 @@ class BesionachatsController extends AppController
         $personnels = $this->fetchTable('Personnels')->find('list', ['keyfield' => 'id', 'valueField' => 'nom']);
         $art = $this->fetchTable('Articles')->find('list', ['keyfield' => 'id', 'valueField' => 'Dsignation']); //->where(['Articles.famille_id = 2']);
         $lignebesionachats = $this->fetchTable('Lignebesionachats')->find('all')->where(['Lignebesionachats.besionachat_id' => $id]);
-        $articles = $this->fetchTable('Articles')->find('all', ['keyfield' => 'id', 'valueField' => 'Dsignation']) ; //->where(['Articles.famille_id = 2']);
+        $articles = $this->fetchTable('Articles')->find('all', ['keyfield' => 'id', 'valueField' => 'Dsignation']); //->where(['Articles.famille_id = 2']);
         $services = $this->fetchTable('Services')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $machines = $this->fetchTable('Machines')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
 
@@ -298,5 +297,27 @@ class BesionachatsController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+
+    public function imprimeview($id = null)
+    {
+        $besionachat = $this->Besionachats->get($id, [
+            'contain' => ['Personnels'],
+        ]);
+    
+
+        $personnels = $this->fetchTable('Personnels')->find('list', ['keyfield' => 'id', 'valueField' => 'nom']);
+        $art = $this->fetchTable('Articles')->find('list', ['keyfield' => 'id', 'valueField' => 'Dsignation']); //->where(['Articles.famille_id = 2']);
+        $lignebesionachats = $this->fetchTable('Lignebesionachats')->find('all',[
+            'contain' => ['Articles'],
+        ])->where(['Lignebesionachats.besionachat_id' => $id]);
+        $articles = $this->fetchTable('Articles')->find('all', ['keyfield' => 'id', 'valueField' => 'Dsignation']); //->where(['Articles.famille_id = 2']);;
+        $machines = $this->fetchTable('Machines')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+        $services = $this->fetchTable('Services')->find();
+        $count = $this->fetchTable('Services')->find()->count();
+
+
+        $this->set(compact('count','machines', 'besionachat', 'lignebesionachats', 'art', 'personnels', 'articles', 'services'));
     }
 }

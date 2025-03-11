@@ -593,7 +593,7 @@ use Cake\Datasource\ConnectionManager;
                                                                 <td>Montant</td> <!-- mnt bl -->
                                                                 <td>
                                                                     <?php
-                                                                    echo $this->Form->control('montant', array('class' => 'form-control differance', 'label' => '', 'index' => 0, 'champ' => 'montant', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant]'));
+                                                                    echo $this->Form->control('montant', array('class' => 'form-control differance sum-input', 'label' => '', 'index' => 0, 'champ' => 'montant', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant]'));
                                                                     ?>
                                                                 </td>
                                                             </tr>
@@ -745,7 +745,7 @@ use Cake\Datasource\ConnectionManager;
             </div>
         </div>
         <?php if ($client_id != null) { ?>
-            <button type="submit" class="pull-right btn btn-success verifmontant desactive numeroreg" id="testpersonnel" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+            <button type="submit" class="pull-right btn btn-success testmnt verifmontant desactive numeroreg" id="testpersonnel" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
         <?php } ?>
         <?php echo $this->Form->end(); ?>
     </div>
@@ -760,8 +760,9 @@ $missingSerials = [];
 $connection = ConnectionManager::get('default');
 
 $typereg = $type;
+// var_dump($typereg);
 $currentYear = date('Y');
-$query = 'SELECT numero FROM reglementclients WHERE YEAR(reglementclients.date) = :year AND reglementclients.type =' .$typereg;
+$query = 'SELECT numeroconca FROM reglementclients WHERE YEAR(reglementclients.date) = :year AND reglementclients.type =' .$typereg;
 $serialNumbers = $connection->execute($query, ['year' => $currentYear])->fetchAll('assoc');
 
 
@@ -807,7 +808,7 @@ if (!empty($numericSerialNumbers)) {
                     alert("Numéro Réglement : " + numero);
                 }
             } else {
-                alert("Aucun numéro manquant n'est disponible.");
+             //   alert("Aucun numéro manquant n'est disponible.");
             }
         });
     });
@@ -875,6 +876,50 @@ if (!empty($numericSerialNumbers)) {
 
 
     $(function() {
+
+        $('.sum-input').on('keyup change', function() {
+            let indexString = $('#index').val(); // Assuming this is a comma-separated string of indexes.
+            let ttpayer = Number($('#ttpayer').val()) || 0; // Convert to number and handle empty value.
+            let tt = 0; // Initialize total amount.
+
+            if (indexString) {
+                let indexes = indexString.split(','); // Split into an array if it's comma-separated.
+                indexes.forEach(function(i) {
+                    let th = Number($('#montant' + i).val()) || 0; // Retrieve the value or default to 0.
+                    tt += th; // Accumulate total.
+                });
+            }
+
+            tt = tt.toFixed(3);
+
+            if (ttpayer < tt) {
+                alert('Ne dépassez pas le total des factures !');
+            }
+        });
+
+        $('.testmnt').on('mouseover', function() {
+            let ttpayer = Number($('#ttpayer').val()) || 0; // Get total from #ttpayer
+            let indexString = $('#index').val(); // Get index list (comma-separated string)
+            let tt = 0; // Initialize total amount
+
+            if (indexString) {
+                let indexes = indexString.split(','); // Split index string into an array
+                indexes.forEach(function(i) {
+                    let th = Number($('#montant' + i).val()) || 0; // Get montant value or default to 0
+                    tt += th; // Accumulate total
+                });
+            }
+
+            tt = tt.toFixed(3); // Format to 3 decimal places     
+
+            if (tt > ttpayer) {
+                alert('Le montant total dépasse le total de la facture !');
+            } else if (tt < ttpayer) {
+                alert('Le montant total est inférieur au total de la facture.');
+            } else {
+                //alert('Le montant total est égal au total de la facture.');
+            }
+        });
         $('.mnt').on('blur', function() {
             // alert("hay");
             v = $(this).attr('index'); //alert(v)//console.log(v);
@@ -911,6 +956,8 @@ if (!empty($numericSerialNumbers)) {
             }
             console.log(tt);
             $('#Montant').val(tt);
+            $('#mtotal').val(tt);
+
         });
         $('.modereglement2').on('change', function() {
             //alert();

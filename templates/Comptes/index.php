@@ -86,7 +86,7 @@ foreach ($lien as $k => $liens)
                        echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $compte->id), array('escape' => false)); 
                        //}?>
                     <?php //if ($delete == 1) {
-                        echo $this->Form->postLink("<button class=' btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $compte->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $compte->id)); ?>
+                        echo $this->Form->postLink("<button class=' btn btn-xs btn-danger deleteConfirm'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $compte->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $compte->id)); ?>
                     <!-- <button index='<?php echo $i?>' class=' verifiercmd btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button> -->
                     <?php //} ?>
                   </td>
@@ -133,7 +133,7 @@ $('.verifiercmd').on('click', function() {
       } else {
         if (confirm('Voulez-vous supprimer cet enregistrement')) {
             alert('ok supp');
-          document.location = wr+"Comptes/delete/" + id;
+          document.location =wr+ "Comptes/delete/" + id;
         }
       }
     }

@@ -115,8 +115,8 @@ echo $this->Html->script('salma');
                                 <div class="col-xs-6" id="mat" <?php echo $matStyle; ?>>
                                     <?php echo $this->Form->control('Matricule_Fiscale', [
                                         'id' => 'matriculefis',
-                                        'readonly'=>'readonly',
-                                        'label'=>'Matricule Fiscale',
+                                        'readonly' => 'readonly',
+                                        'label' => 'Matricule Fiscale',
                                         'class' => 'form-control verifiermatriculefiscale',
                                         'placeholder' => "0000000XXX000"
                                     ]); ?>
@@ -125,8 +125,8 @@ echo $this->Html->script('salma');
                                 <div class="col-xs-6" id="iden" <?php echo $idenStyle; ?>>
                                     <?php echo $this->Form->control('numidentite', [
                                         'id' => 'numidentite',
-                                        'label'=>'Num Identité',
-                                        'readonly'=>'readonly',
+                                        'label' => 'Num Identité',
+                                        'readonly' => 'readonly',
                                         'class' => 'form-control',
                                         'placeholder' => "00 00 00 00"
                                     ]); ?>
@@ -220,7 +220,7 @@ echo $this->Html->script('salma');
                 <div class="row">
                     <div style=" margin: 0 auto;  margin-left: 20px; margin-right: 20px; position: static; ">
 
-                        <div class="col-xs-6">
+                        <div class="col-xs-6" hidden>
                             <?php echo $this->Form->control('typeexoneration_id', ['disabled' => 'true', 'label' => 'Exoneration', 'empty' => 'Veuillez choisir !!', 'options' => $typeexonerations, 'class' => 'form-control select2 control-label typeexoneration', 'id' => 'exonerations', 'required' => 'off']); ?>
 
                         </div>
@@ -263,11 +263,11 @@ echo $this->Html->script('salma');
                             <?php echo $this->Form->control('Tel', ['readonly' => 'readonly', 'label' => 'Telephone', 'type' => 'text', 'class' => 'validationLengthChampTel control-label form-control']); ?>
                         </div> -->
                         <div class="col-xs-3">
-                                    <?php echo $this->Form->control('Tel', ['readonly' => 'readonly','id' => 'tel', 'label' => 'Télèphone 1', 'class' => 'validationLengthChampTel form-control control-label', 'type' => 'text']); ?>
-                                </div>
-                                <div class="col-xs-3">
-                                    <?php echo $this->Form->control('Tel1', ['readonly' => 'readonly','id' => 'tel', 'label' => 'Télèphone 2', 'class' => 'validationLengthChampTel form-control control-label', 'type' => 'text']); ?>
-                                </div>
+                            <?php echo $this->Form->control('Tel', ['readonly' => 'readonly', 'id' => 'tel', 'label' => 'Télèphone 1', 'class' => 'validationLengthChampTel form-control control-label', 'type' => 'text']); ?>
+                        </div>
+                        <div class="col-xs-3">
+                            <?php echo $this->Form->control('Tel1', ['readonly' => 'readonly', 'id' => 'tel', 'label' => 'Télèphone 2', 'class' => 'validationLengthChampTel form-control control-label', 'type' => 'text']); ?>
+                        </div>
                         <?php if ($client->date_ajout != null) { ?>
                             <div class="col-xs-6">
                                 <?php
@@ -284,9 +284,6 @@ echo $this->Html->script('salma');
                         <div class="col-xs-6">
                             <?php echo $this->Form->control('registre', ['label' => 'Registre de commerce', 'readonly' => 'readonly', 'type' => 'text', 'class' => ' control-label form-control']); ?>
                         </div>
-                        <div class="col-xs-6" >
-                                    <?php echo $this->Form->control('responsable', ['id' => 'responsable', 'readonly' => 'readonly', 'label'=>'Responsable']); ?>
-                                </div>
                         <br>
                         <!-- <div class="col-xs-6">
                                     <label class="control-label" for="unite-id" style="margin-right: 20px"> Prix:</label>
@@ -444,14 +441,14 @@ echo $this->Html->script('salma');
 
                                 </td>
                                 <td class="hiddenob">
-                                <b>
-                                Solde Début:</b>
-                            </td>
-                            <td class="hiddenob">
-                                <?php echo $this->Form->control('soldedebut', ['label' => '', 'class' => 'form-control', 'id' => 'soldedebut']); ?>
+                                    <b>
+                                        Solde Début:</b>
+                                </td>
+                                <td class="hiddenob">
+                                    <?php echo $this->Form->control('soldedebut', ['label' => '', 'class' => 'form-control', 'id' => 'soldedebut']); ?>
 
 
-                            </td>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -930,15 +927,31 @@ echo $this->Html->script('salma');
                                                     <?php echo $this->Form->input('compte', array('readonly' => 'readonly', 'label' => '', 'value' => $banque->compte, 'name' => 'data[banque][' . $i . '][compte]', 'type' => 'text', 'id' => 'compte' . $i, 'table' => 'banque', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
                                                 </td>
                                                 <td align="center">
-                                                    <?php echo $this->Form->input('rib', array('readonly' => 'readonly', 'label' => '', 'value' => $banque->rib, 'name' => 'data[banque][' . $i . '][rib]', 'type' => 'text', 'id' => 'rib' . $i, 'table' => 'banque', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                                    <div class="form-group" style="margin-top: 15%;">
+                                                        <div class="col-sm-12">
+                                                            <?php echo $this->Form->input('rib', array('readonly' => 'readonly', 'label' => '', 'value' => $banque->rib, 'name' => 'data[banque][' . $i . '][rib]', 'type' => 'text', 'id' => 'rib' . $i, 'table' => 'banque', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td align="center">
-                                                    <!-- <?php echo $this->Form->control('document'); ?> -->
-                                                    <input type="file" table="banque" disabled champ="documen" name="data[banque][<?php echo $i; ?>][documen]" class="form-control" id="documen">
-                                                    <?php echo $this->Html->link('webroot/img' . $banque->document, ['style' => 'max-width:200px;height:200px;']); ?>
+                                                    <div class="form-group" style="margin-top: 5%;">
+                                                        <div class="col-sm-12">
+                                                            <!-- <?php echo $this->Form->control('document'); ?> -->
+                                                            <input type="file" table="banque" disabled champ="documen" name="data[banque][<?php echo $i; ?>][documen]" class="form-control" id="documen">
+                                                            <div class="iframe-container" style="position: relative; display: block; margin-top: 10px;"><iframe style="border: 1px solid #ccc; display: block;" src="/img/imgart/<?php echo $banque->document; ?>"></iframe>
+                                                                <div onclick="openWindow(1000, 1000,'/img/imgart/<?php echo $banque->document; ?>');" style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(255, 255, 255, 0);
+                        cursor: pointer;
+                    "></div>
+                                                            </div>
 
-
-
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <!--                                                            <td align="center"><i index="<?php echo $i ?>" class="fa fa-times supLigne0ch" style="color: #C9302C;font-size: 22px;"></td>-->
                                             </tr>
@@ -1101,7 +1114,7 @@ echo $this->Html->script('salma');
 
             <?php //if (isset($exoner) && (!empty($exoner))) {  
             ?>
-            <div <?php if ($client->typeexoneration_id == 1) { ?> style='display:true' <?php } else { ?> style='display:none' <?php } ?>>
+            <div <?php if ($client->typeexoneration_id == 1) { ?> style='display:none' <?php } else { ?> style='display:none' <?php } ?>>
 
                 <section class="content-header">
                     <h1 class="box-title"><?php echo __('Suspension des droits et taxe '); ?></h1>
@@ -1110,17 +1123,7 @@ echo $this->Html->script('salma');
                     <div class="row">
                         <div class="box ">
                             <div class="box-header with-border">
-                                <!--                                        <a class="btn btn-primary al"   table='tabligne2' index='index' id='ajouter_ligne2' style="
-                                           float: right;
-                                           margin-bottom: 5px;
-                                           ">
 
-
-
-
-
-
-                                            <i class="fa fa-plus-circle " ></i> Ajouter suspension</a> -->
 
                             </div>
                             <div class="panel-body">
@@ -1321,9 +1324,17 @@ echo $this->Html->script('salma');
 
                                                 <td align="center">
                                                     <?php $url = $_SERVER['HTTP_HOST']; ?>
-                                                    <a onclick="openWindow(1000, 1000,'webroot/img/<?php echo $res->fichier; ?>');">
-
-                                                        <i class="fa fa fa-file" style="color:success;font-size: 30px;"></i></a>
+                                                    <div class="iframe-container" style="position: relative; display: block; margin-top: 10px;"><iframe style="border: 1px solid #ccc; display: block;" src="/img/logo/<?php echo $res->fichier; ?>"></iframe>
+                                                        <div onclick="openWindow(1000, 1000,'/img/logo/<?php echo $res->fichier; ?>');" style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(255, 255, 255, 0);
+                        cursor: pointer;
+                    "></div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         <?php endforeach; ?>

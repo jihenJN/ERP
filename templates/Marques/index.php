@@ -11,28 +11,28 @@
 echo $this->Html->script('salma');
 ?>
 <?php
-// $add = "";
-// $edit = "";
-// $delete = "";
-// $view = "";
-// $session = $this->request->getSession();
-// $abrv = $session->read('abrvv');
-// $lien = $session->read('lien_parametrage' . $abrv);
-// //debug($lien);die;
-// foreach ($lien as $k => $liens) {
-//   if (@$liens['lien'] == 'banques') {
-//     $add = $liens['ajout'];
-//     $edit = $liens['modif'];
-//     $delete = $liens['supp'];
-//   }
-//   //debug($liens);die;
-// }
+$add = "";
+$edit = "";
+$delete = "";
+$view = "";
+$session = $this->request->getSession();
+$abrv = $session->read('abrvv');
+$lien = $session->read('lien_articles' . $abrv);
+//debug($lien);die;
+foreach ($lien as $k => $liens) {
+  if (@$liens['lien'] == 'marques') {
+    $add = $liens['ajout'];
+    $edit = $liens['modif'];
+    $delete = $liens['supp'];
+  }
+  //debug($liens);die;
+}
 
-// if ($add == 1) { ?>
+ if ($add == 1) { ?>
 <div class="pull-left" style="margin-left:25px;margin-top: 20px">
   <?php echo $this->Html->link(__('Ajouter'), ['action' => 'Add'], ['class' => 'btn btn-success btn-sm']) ?>
 </div>
-<?php //} ?>
+<?php } ?>
 <br><br><br>
 <section class="content-header">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script>
@@ -65,19 +65,21 @@ echo $this->Html->script('salma');
                 </td>
                   <td class="actions text" align="center">
                     <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $marque->id), array('escape' => false)); ?>
-                    <?php //if ($edit == 1) { 
+                    <?php if ($edit == 1) { 
                         echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $marque->id), array('escape' => false));
-                        // }?>
-                    <?php //if ($delete == 1) {
+                         }?>
+                    <?php if ($delete == 1) {
                         //echo $this->Form->postLink("<button class='btn btn-xs btn-danger verifierbanque'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $marque->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $marque->id)); ?>
                     <button index='<?php echo $i?>' class='verifiermarque btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>
-                    <?php //} ?>
+                    <?php } ?>
                   </td>
                   
                 </tr>
               <?php endforeach; ?>
             </tbody>
           </table>
+          <input type="hidden" value="<?php echo $i ?>" id="index">
+
         </div>
         <!-- /.box-body -->
       </div>
@@ -113,9 +115,9 @@ echo $this->Html->script('salma');
         $('.verifiermarque').on('click', function () {
      //   alert("gg");
             ind = $(this).attr('index');
-           // alert(ind);
+        //    alert(ind);
             id = $('#id'+ind).val();
-          //alert(id);
+        //  alert(id);
           
             $.ajax({
                 method: "GET",

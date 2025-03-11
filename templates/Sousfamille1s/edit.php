@@ -52,9 +52,9 @@
                                     <?php echo $this->Form->control('famille_id', ['options' => $familles, 'empty' => 'Veuillez choisir !!', 'class' => 'select2 form-control commercial']); ?> </div>
 
                            
-                            <div class="col-xs-6" hidden>
-                            <?php echo $this->Form->control('code', ['label' => 'Code']); ?>
-                        </div>
+                                    <div class="col-xs-6">
+                                    <?php echo $this->Form->control('code', ['readonly', 'label' => 'Code','required' => 'off', 'id' => 'code', 'class' => 'form-control']); ?>
+                                </div>
 
                             <div class="col-xs-6">
                                 <?php echo $this->Form->control('name', ['label' => 'Nom', 'required' => 'off', 'id' => 'Nom', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control']); ?>
@@ -163,7 +163,7 @@
 
 
                 <div align="center">
-                    <?php echo $this->Form->submit(__('Enregistrer'), ['id' => 'enr0']); ?>
+                    <?php echo $this->Form->submit(__('Enregistrer'), ['id' => 'enr0',"class"=>"btn btn-success btn-sm"]); ?>
                 </div>
 
                 <?php echo $this->Form->end(); ?>

@@ -40,9 +40,9 @@ $connection = ConnectionManager::get('default');
                         <td align="center" style="width: 10%;border: none;">
 
                         </td>
-                        <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-                            <?php echo $societefirst->adresseEntete; ?><br>
-                        </td>
+                       <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
+                    <?php echo $societefirst->adresseEntete; ?><br>
+                </td>
                         <td align="center" style="width: 25%;border: none;">
                             <div>
                                 <?php

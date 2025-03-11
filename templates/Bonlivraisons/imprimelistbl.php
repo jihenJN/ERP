@@ -9,21 +9,7 @@ use Cake\Datasource\ConnectionManager;
 $connection = ConnectionManager::get('default');
 ?>
 <?php $this->layout = 'AdminLTE.print'; ?>
-<?php
 
-use Cake\ORM\TableRegistry;
-
-?>
-
-
-<?php
-$connection = ConnectionManager::get('default');
-
-$societeTable = TableRegistry::getTableLocator()->get('Societes');
-
-$societe = $societeTable->find()->where('id=1')->first();
-
-?>
 <style>
     body {
         font-size: 12px;
@@ -35,7 +21,7 @@ $societe = $societeTable->find()->where('id=1')->first();
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script>
 <?php echo $this->Html->script('alert'); ?>
-<table style="width: 100%;">
+<table width="100%">
     <thead>
         <tr>
             <td>
@@ -56,10 +42,9 @@ $societe = $societeTable->find()->where('id=1')->first();
 
                                 </div> -->
                         </td>
-                        <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-                            <?php echo $societe->adresseEntete; ?>
-                            <br>
-                        </td>
+                       <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
+                    <?php echo $societefirst->adresseEntete; ?><br>
+                </td>
                         <td align="center" style="width: 25%;border: none;">
                             <div>
                                 <?php
@@ -114,6 +99,7 @@ $societe = $societeTable->find()->where('id=1')->first();
                 </tr>
                 <tr>
                     <td><strong>Depot:</strong>
+                        
                     </td>
                     <td>
                     </td>
@@ -187,12 +173,12 @@ $societe = $societeTable->find()->where('id=1')->first();
                                 <?= h($facture['client']['Raison_Sociale']) ?>
                             </td>
                             <!-- <td align="center">
-            <?php echo $mm; ?>
-        </td> -->
-                            <td align="center" style="height:2%!important; padding: 10px 0;">
+                            <?php echo $mm; ?>
+                        </td> -->
+                            <td align="right" style="height:2%!important; padding: 10px 0;">
                                 <?= sprintf("%01.3f", ($facture->totalht)) ?>
                             </td>
-                            <td align="center" style="height:2%!important; padding: 10px 0;">
+                            <td align="right" style="height:2%!important; padding: 10px 0;">
                                 <?= sprintf("%01.3f", ($facture->totalttc)) ?>
                             </td>
                             <td hidden align="center">
@@ -218,11 +204,11 @@ $societe = $societeTable->find()->where('id=1')->first();
                                     <th colspan="2" style="text-align: center;">Total Période :</th>
                                 </tr>
                                 <tr>
-                                    <td style="width: 50%;">
-                                        <?php echo '<span class="center-text gray-background" style="width: 100%; display: inline-block;">' . sprintf("%01.3f", $totalht) . '</span>'; ?>
+                                    <td style="width: 50%;" align="right">
+                                        <?php echo '<span class="center-right gray-background" style="width: 100%; display: inline-block;">' . sprintf("%01.3f", $totalht) . '</span>'; ?>
                                     </td>
-                                    <td style="width: 50%;">
-                                        <?php echo '<span class="center-text gray-background" style="width: 100%; display: inline-block;">' . sprintf("%01.3f", $totalttc) . '</span>'; ?>
+                                    <td style="width: 50%;" align="right">
+                                        <?php echo '<span class="center-right gray-background" style="width: 100%; display: inline-block;">' . sprintf("%01.3f", $totalttc) . '</span>'; ?>
                                     </td>
 
                                 </tr>

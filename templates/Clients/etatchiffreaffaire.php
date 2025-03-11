@@ -67,7 +67,7 @@ $connection = ConnectionManager::get('default');
                 <br>
                 <div class="form-group">
                     <div class="text-center">
-                        <a onClick="openWindow(1000, 1000, wr+'clients/impetatchiffre?datedebut=<?php echo @$datedebut; ?>&datefin=<?php echo @$datefin; ?>')">
+                        <a onclick="openWindow(1000, 1000, wr+'/clients/impetatchiffre?datedebut=<?php echo @$datedebut; ?>&datefin=<?php echo @$datefin; ?>')">
                             <button class="btn btn-primary">Imprimer</button>
                         </a>
                         <?php echo $this->Html->link(__('Actualiser'), ['action' => '/etatchiffreaffaire'], ['class' => 'btn btn-primary ']) ?>

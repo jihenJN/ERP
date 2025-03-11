@@ -7,24 +7,7 @@ use Cake\Datasource\ConnectionManager;
 ?>
 <?php $connection = ConnectionManager::get('default'); ?>
 
-<?php
-$connection = ConnectionManager::get('default');
-?>
-<?php $this->layout = 'AdminLTE.print'; ?>
-<?php
 
-use Cake\ORM\TableRegistry;
-
-?>
-
-
-<?php
-
-$societeTable = TableRegistry::getTableLocator()->get('Societes');
-
-$societe = $societeTable->find()->where('id=1')->first();
-
-?>
 <br>
 <style>
     body {
@@ -55,9 +38,8 @@ $societe = $societeTable->find()->where('id=1')->first();
             </div> -->
         </td>
         <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-            <?php echo $societe->adresseEntete; ?>
-            <br>
-        </td>
+                    <?php echo $societefirst->adresseEntete; ?><br>
+                </td>
         <td align="center" style="width: 25%;border: none;">
             <div>
                 <?php
@@ -100,18 +82,18 @@ $societe = $societeTable->find()->where('id=1')->first();
 
 
                                 date_default_timezone_set('Africa/Tunis');
-                                $date1 =    date("Y") . '-01-01' . date(" 00:00:00");
+                                $date1 =    date("Y").'-01-01'. date(" 00:00:00");
                                 ///debug($date1);
                                 $time = new FrozenTime('now', 'Africa/Tunis');
                                 $date2 = date('Y-m-d H:i:s');
 
-                                ///  debug($date2);
+                              ///  debug($date2);
 
 
                                 $connection = ConnectionManager::get('default');
                                 $month = (int)date('m');
                                 $inv = $connection->execute("select stockbassem(" . $articleid . ",'" . $date2 . "','0'," . $depotid . " ) as v")->fetchAll('assoc');
-
+                            
                                 $qtestock = $inv[0]['v'];
                                 ///debug($qtestock);
 
@@ -120,31 +102,31 @@ $societe = $societeTable->find()->where('id=1')->first();
 
 
 
-
+                            
                             ?>
-                                <?php if ($qtestock != 0) : ?>
-                                    <tr>
+                                <?php  if ($qtestock != 0) : ?>
+                                <tr>
 
-                                        <td align="center">
+                                    <td align="center">
 
-                                            <?php echo  $stockdepot['Code'] ?>
+                                        <?php echo  $stockdepot['Code'] ?>
 
-                                        </td>
-                                        <td align="center">
+                                    </td>
+                                    <td align="center">
 
-                                            <?php echo  $stockdepot['Dsignation'] ?>
+                                        <?php echo  $stockdepot['Dsignation'] ?>
 
-                                        </td>
+                                    </td>
 
-                                        <td align="center"><?php
-                                                            echo $qtestock
-                                                            ?>
-                                        </td>
+                                    <td align="center"><?php
+                                                        echo $qtestock
+                                                        ?>
+                                    </td>
 
-                                    </tr>
-                                <?php endif; ?>
-                            <?php endforeach; ?>
-
+                                </tr>
+                                <?php endif ; ?>
+                            <?php endforeach ; ?>
+                         
                         </tbody>
 
                     </table>

@@ -44,7 +44,7 @@ use Cake\ORM\TableRegistry;
                         <!-- <label>Date Début</label> -->
                         <?php
                         echo $this->Form->control('datedebut', [
-                            'value' =>$datedebut ,// $this->request->getQuery('datedebut'), // Utilisez directement la valeur de la requête
+                            'value' => $datedebut, // $this->request->getQuery('datedebut'), // Utilisez directement la valeur de la requête
                             'div' => 'form-group',
                             'between' => '<div class="col-sm-10">',
                             'after' => '</div>',
@@ -62,7 +62,7 @@ use Cake\ORM\TableRegistry;
                         <!-- <label>Date Début</label> -->
                         <?php
                         echo $this->Form->control('datefin', [
-                            'value' => $datefin ,/// $this->request->getQuery('datefin'), // Utilisez directement la valeur de la requête
+                            'value' => $datefin, /// $this->request->getQuery('datefin'), // Utilisez directement la valeur de la requête
                             'div' => 'form-group',
                             'between' => '<div class="col-sm-10">',
                             'after' => '</div>',
@@ -79,7 +79,7 @@ use Cake\ORM\TableRegistry;
 
                 </div>
                 <div class="row">
-                   
+
                     <div class="col-xs-6">
                         <label> Marques </label>
                         <select name="marque_id" id="marque_id" class="form-control select2" value='<?php $this->request->getQuery('marque_id') ?>'>
@@ -91,11 +91,11 @@ use Cake\ORM\TableRegistry;
 
                         </select>
                     </div>
-              
+
                     <div class="col-xs-6">
                         <?php echo $this->Form->control('depot_id', ['label' => 'Depot ', 'options' => $depots, 'id' => 'depot_id', 'name' => 'depot_id', 'empty' => 'Veuillez choisir !!', 'class' => 'form-control select2 ', 'value' => 6]); ?>
 
-                       
+
                     </div>
                     <br>
 
@@ -146,11 +146,11 @@ use Cake\ORM\TableRegistry;
                         </tr>
 
                         <tr style="background-color: #ffc0cb; color: #000000; font-style: italic; font-weight: bold;">
-                        <td style="font-size: 16px;" align="center"  width="8%">Marque</td>
+                            <td style="font-size: 16px;" align="center" width="8%">Marque</td>
                             <!-- <td style="font-size: 16px;" align="center"  width="8%">Famille</td> -->
-                            <td style="font-size: 16px;" align="center"  width="10%">Code</td>
-                            <td style="font-size: 16px;" align="center"  width="32%">Désignation</td>
-                            <td style="font-size: 16px;" align="center"  width="6%">Unité</td>
+                            <td style="font-size: 16px;" align="center" width="10%">Code</td>
+                            <td style="font-size: 16px;" align="center" width="32%">Désignation</td>
+                            <td style="font-size: 16px;" align="center" width="6%">Unité</td>
                             <td style="font-size: 16px;" width="10%" align="center">Qte AU: <strong><?php echo $date_formattee; ?></strong></td>
                             <td style="font-size: 16px;" width="9%" align="center">Qte Entrée</td>
                             <td style="font-size: 16px;" width="9%" align="center">Qte Sortie</td>
@@ -287,7 +287,7 @@ use Cake\ORM\TableRegistry;
                                     ?>
                                     <tr>
                                         <?php if ($firstFamilleRow) : ?>
-                                            <td rowspan="<?php echo $familleRowSpan + $sf + 1; ?>"   style="font-size: 16px; text-align: center; writing-mode: vertical-lr; transform: rotate(180deg);">
+                                            <td rowspan="<?php echo $familleRowSpan + $sf + 1; ?>" style="font-size: 16px; text-align: center; writing-mode: vertical-lr; transform: rotate(180deg);">
 
                                                 <?php echo $marq->name; ?>
                                             </td>
@@ -308,9 +308,19 @@ use Cake\ORM\TableRegistry;
                                         <td align="center" style="font-size: 16px; font-weight: bold;"> <?php echo $qtestockentre; ?> </td>
                                         <td align="center" style="font-size: 16px; font-weight: bold;"> <?php echo $qtestocksortie; ?> </td>
                                         <td align="center" style="font-size: 16px; font-weight: bold;">
-                                            <a href='/ERP/Articles/indexspec?date1=<?php echo @$datedebut; ?>&date2=<?php echo @$datef; ?>&depot_id=<?php echo @$depotid; ?>&article_id=<?php echo $art['id']; ?>' target="_blank">
-                                                <?php echo $qtestock; ?>
+                                            <a href="<?= $this->Url->build([
+                                                            'controller' => 'Articles',
+                                                            'action' => 'indexspec',
+                                                            '?' => [
+                                                                'date1' => @$datedebut,
+                                                                'date2' => @$datef,
+                                                                'depot_id' => @$depotid,
+                                                                'article_id' => $art['id']
+                                                            ]
+                                                        ], ['fullBase' => true]); ?>" target="_blank">
+                                                <?= h($qtestock) ?>
                                             </a>
+
                                         </td>
                                     </tr>
 

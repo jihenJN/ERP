@@ -132,7 +132,7 @@ function int2str($a)
     }
 
 
- 
+   
     .print-container {
         background-image: url('https://sttp.mtd-erp.com/ERP/img/facturedalinda.jpg') !important;
         background-size: cover;
@@ -472,7 +472,7 @@ for ($page = 0; $page < $totalPages; $page++) :
                             $query = $lignestable->find();
                             $query->select([
                                 'tva' => 'Lignebonlivraisons.tva',
-                                'base' => $query->func()->sum('(qte*ml*punht - (qte*ml*punht)* (remise / 100) + (qte*ml*punht - (qte*ml*punht)* (remise / 100)) * ifnull(fodec,0) / 100)'),
+                                'base' => $query->func()->sum('(qte*punht)'),
                                 'total' => $query->func()->sum('((qte*ml*punht - (qte*ml*punht)* (remise / 100) + (qte*ml*punht - (qte*ml*punht)* (remise / 100)) * ifnull(fodec,0) / 100)) * tva / 100')
                             ])
                                 ->where(['Lignebonlivraisons.bonlivraison_id' => $bonlivraison->id])
@@ -483,14 +483,14 @@ for ($page = 0; $page < $totalPages; $page++) :
                             $fodquery = $lignestable->find();
                             $fodquery->select([
                                 'fodec' => 'Lignebonlivraisons.fodec',
-                                'base' => $query->func()->sum('qte*ml*punht - (qte*ml*punht)* (remise / 100)'),
+                                'base' => $query->func()->sum('qte*punht)'),
                                 'total' => $query->func()->sum('(qte*ml*punht - (qte*ml*punht)* (remise / 100)) *ifnull(fodec,0) / 100')
                             ])
                                 ->where(['Lignebonlivraisons.bonlivraison_id' => $bonlivraison->id])
                                 ->group('Lignebonlivraisons.fodec');
 
                             // Execute the query
-                            $fodresults = $fodquery->toArray();
+                            // $fodresults = $fodquery->toArray();
                             // print_r($results);
                             foreach ($results as $rrr) {
                                 if ($rrr->tva != 0) {
@@ -505,7 +505,7 @@ for ($page = 0; $page < $totalPages; $page++) :
                                                 <?= $this->Number->format($rrr->tva) ?>
                                             </b>
                                             <b style="margin-left: 18% !important; font-weight: normal; font-size:15px; display: block; margin-top: -0.2px;">
-                                                <?php echo number_format(abs($rrr->total), 3, ',', ' '); ?>
+                                                <?php echo number_format(abs($rrr->base), 3, ',', ' '); ?>
                                             </b>
                                         </td>
 
@@ -600,10 +600,10 @@ for ($page = 0; $page < $totalPages; $page++) :
                                     </b>
 
                                     <b style="display: inline-block; width: 130px; text-align: right; line-height: 1.5;">
-                                        <?php echo number_format(abs($bonlivraison->totalht), 2, ',', ' '); ?><br>
+                                        <?php echo number_format(abs($bonlivraison->totalht), 3, ',', ' '); ?><br>
                                     </b>
                                     <b style="display: inline-block; width: 130px; text-align: right; line-height: 1.9;">
-                                        <?php echo number_format(abs($bonlivraison->totaltva), 2, ',', ' '); ?><br>
+                                        <?php echo number_format(abs($bonlivraison->totaltva), 3, ',', ' '); ?><br>
                                     </b>
                                     <!-- <b style="display: inline-block; width: 130px; text-align: right; line-height: 1.5;">
                                         <?php //echo $timbre; 

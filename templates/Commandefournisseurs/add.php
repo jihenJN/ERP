@@ -56,7 +56,7 @@
 
 
                         <div class="col-xs-6">
-                            <?php echo $this->Form->control('depot_id', ['value' => 6, 'readonly' => 'readonly', 'value' => $depots, 'class' => 'form-control  control-label', 'id' => 'depot']);
+                            <?php echo $this->Form->control('depot_id', ['value' => 6, 'value' => $depots, 'class' => 'form-control  control-label', 'id' => 'depot']);
                             ?>
                         </div>
 
@@ -88,13 +88,29 @@
                         </div>
 
 
-
                         <div class="col-xs-6">
+                            <?php echo $this->Form->control('dateliv', ['label' => 'Date Livraison', 'value' => $this->Time->format(
+                                'now',
+                                'd/MM/y'
+                            ), 'class' => 'form-control', 'type' => 'date']); ?>
+                        </div>
+                        <div class="col-xs-6">
+                            <label> Mode de livraison </label>
+                            <select name="modeliv" class="form-control">
+                                <option value="0" <?php if ($commande->modeliv == 0) { ?> selected <?php } ?>> Partiel
+                                <option value="1" <?php if ($commande->modeliv == 1) { ?> selected <?php } ?>> Total
+                            </select>
+                        </div>
+                        <div class="col-xs-6">
+                            <label> Type de livraison </label>
+                            <select name="typeliv" class="form-control">
+                                <option value="0" <?php if ($commande->typeliv == 0) { ?> selected <?php } ?>> Interne
+                                <option value="1" <?php if ($commande->typeliv == 1) { ?> selected <?php } ?>> Externe
+                            </select>
+                        </div>
+                        <div class="col-xs-12">
                             <?php echo $this->Form->control('observation', ['label' => 'Commentaire', 'class' => 'form-control ajouterli focus', 'type' => 'textarea']); ?>
                         </div>
-
-
-
 
 
 
@@ -144,8 +160,9 @@
 
                                                         <datalist table="ligner" index="" champ="codearticle_id">
                                                             <?php //debug($articles);
-                                                             foreach ($articles as $id => $article) {
-                                                                //debug($article); ?>
+                                                            foreach ($articles as $id => $article) {
+                                                                //debug($article); 
+                                                            ?>
                                                                 <option value="<?php echo $article->Code; ?>">
 
                                                                 </option>
@@ -153,7 +170,7 @@
                                                             <?php } ?>
                                                         </datalist>
 
-                                                       
+
                                                     </td>
                                                     <td champ="tddes">
                                                         <input table="ligner" index="" class="getcode articleidbl1des" champ="article_iddes" type="text">
@@ -280,7 +297,21 @@
 <?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
 <?php $this->start('scriptBottom'); ?>
 <script>
+    $('#addcmd1').on('mouseover', function() {
+        index = $('#index0').val();
+        for (j = 0; j <= index; j++) {
+            article_idcode = $('#article_idcode' + j).val();
+            sup = $('#sup0' + j).val();
+
+            if (!article_idcode && sup != 1) {
+                alert('Entrer article SVP');
+            }
+        }
+    });
+</script>
+<script>
     $(document).ready(function() {
+
         $('.getcode').on('change', function() {
             index = $(this).attr('index'); //alert(index);
             selectedcodename = $(this).val(); //alert(selectedcodename);

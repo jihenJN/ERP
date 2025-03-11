@@ -56,7 +56,7 @@
 
 
 
-                    <button type="submit" class="pull-right btn btn-success btn-sm" id="" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+                    <button type="submit" class="pull-right btn btn-success btn-sm" id="testtransporteur" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
                     <?php echo $this->Form->end(); ?>
                 </div>
                 <!-- /.box-body -->
@@ -68,6 +68,34 @@
     </div>
     <!-- /.row -->
 </section>
+<script>
+  $('#testtransporteur').on('mouseover', function () {
+     name = $('#name').val();
+     matricule = $('#matricule').val();
+     const tel = $('#tel').val();
+
+    if (name === "") {
+      alert("Veuillez saisir le nom !");
+      return false;
+    } else
+    if (matricule === "") {
+      alert("Veuillez saisir la matricule !");
+      return false;
+    } else
+    if (tel === "") {
+      alert("Veuillez saisir le tel !");
+      return false;
+    } 
+    const telRegex = /^[0-9]{8,15}$/; // Exemple : uniquement des chiffres, entre 8 et 15 caractères
+    if (!telRegex.test(tel)) {
+        alert("Veuillez saisir un numéro de téléphone valide !");
+       $('#tel').val('');
+        return false;
+    }
+
+
+});
+  </script>
 <?php echo $this->Html->script('alert'); ?>
 
 

@@ -35,9 +35,9 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-xs-6">
-                            <?php echo $this->Form->control('famille_id', ['options' => $familles, 'empty' => 'Veuillez choisir !!', 'class' => 'select2 form-control commercial']); ?> </div>
-                        <div class="col-xs-6" hidden>
-                            <?php echo $this->Form->control('code', ['label' => 'Code']); ?>
+                            <?php echo $this->Form->control('famille_id', ['id' => 'famille_id', 'options' => $familles, 'empty' => 'Veuillez choisir !!', 'class' => 'select2 form-control commercial']); ?> </div>
+                        <div class="col-xs-6">
+                            <?php echo $this->Form->control('code', ['readonly', 'label' => 'Code', 'required' => 'off', 'id' => 'code', 'class' => 'form-control']); ?>
                         </div>
                         <div class="col-xs-6">
                             <?php echo $this->Form->control('name', ['label' => 'Nom']); ?>
@@ -108,6 +108,29 @@
         topOffset = (screen.height / 2) - h / 2;
         window.open(url, this.target, 'left=' + leftOffset + ',top=' + topOffset + ',width=' + w + ',height=' + h + ',resizable,scrollbars=yes');
     }
+
+    $(document).ready(function() {
+        $('#famille_id').on('change', function() {
+            var famille_id = $(this).val();
+            $.ajax({
+                method: "GET",
+                url: "<?= $this->Url->build(['controller' => 'Sousfamille1s', 'action' => 'getcode']) ?>",
+                dataType: "json",
+                data: {
+                    famille_id: famille_id,
+
+                },
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+                },
+                success: function(data) {
+                    var finalCode = data.finalCode;
+                    // alert(finalCode);
+                    $('#code').val(finalCode);
+                }
+            });
+        });
+    });
     $(function() {
 
         $("form").submit(function() {

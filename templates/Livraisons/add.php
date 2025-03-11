@@ -38,7 +38,7 @@
             <div class="col-md-6">
               <?php
               // echo $this->Form->control('numero', ["value" => "BL" . sprintf('%04d', $numero + 1), 'readonly' => 'readonly']);
-              echo $this->Form->control('numero', ['label' => 'Numéro']);
+              echo $this->Form->control('numero', ['label' => 'Numéro','value'=>$b,'readonly']);
 
 
               ?>

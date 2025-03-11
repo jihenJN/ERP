@@ -42,10 +42,10 @@ class BonsortiestocksController extends AppController
         $cartecarburant_id = $this->request->getQuery('cartecarburant_id');
         $chauffeur_id = $this->request->getQuery('chauffeur_id');
         if ($datedebut) {
-            $cond1 = "Bonsortiestocks.date >=  '" . $datedebut . "' ";
+            $cond1 = "Date(Bonsortiestocks.date) >=  '" . $datedebut . "' ";
         }
         if ($datefin) {
-            $cond2 = "Bonsortiestocks.date >=  '" . $datefin . "' ";
+            $cond2 = "Date(Bonsortiestocks.date) <=  '" . $datefin . "' ";
         }
         if ($pointdevente_id) {
             $cond3 = "Bonsortiestocks.pointdevente_id  =  '" .     $pointdevente_id . "' ";

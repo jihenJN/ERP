@@ -127,83 +127,83 @@ class FacturesTable extends Table
         //     ->integer('livraison_id')
         //     ->allowEmptyString('livraison_id');
 
-        $validator
-            ->scalar('numero')
-            ->maxLength('numero', 255)
-            ->allowEmptyString('numero');
+        // $validator
+        //     ->scalar('numero')
+        //     ->maxLength('numero', 255)
+        //     ->allowEmptyString('numero');
 
-        $validator
-            ->dateTime('date')
-            ->allowEmptyDateTime('date');
+        // $validator
+        //     ->dateTime('date')
+        //     ->allowEmptyDateTime('date');
 
-        $validator
-            ->integer('fournisseur_id')
-            ->allowEmptyString('fournisseur_id');
+        // $validator
+        //     ->integer('fournisseur_id')
+        //     ->allowEmptyString('fournisseur_id');
 
         // $validator
         //     ->integer('pointdevente_id')
         //     ->allowEmptyString('pointdevente_id');
 
-        $validator
-            ->integer('depot_id')
-            ->allowEmptyString('depot_id');
+        // $validator
+        //     ->integer('depot_id')
+        //     ->allowEmptyString('depot_id');
 
-        $validator
-            ->integer('cartecarburant_id')
-            ->allowEmptyString('cartecarburant_id');
+        // $validator
+        //     ->integer('cartecarburant_id')
+        //     ->allowEmptyString('cartecarburant_id');
 
-        $validator
-            ->integer('materieltransport_id')
-            ->allowEmptyString('materieltransport_id');
+        // $validator
+        //     ->integer('materieltransport_id')
+        //     ->allowEmptyString('materieltransport_id');
 
 
-            $validator
-            ->integer('device_id')
-            ->allowEmptyString('device_id');
+        //     $validator
+        //     ->integer('device_id')
+        //     ->allowEmptyString('device_id');
 
-        $validator
-            ->integer('chauffeur')
-            ->allowEmptyString('chauffeur');
+        // $validator
+        //     ->integer('chauffeur')
+        //     ->allowEmptyString('chauffeur');
 
-        $validator
-            ->integer('convoyeur')
-            ->allowEmptyString('convoyeur');
+        // $validator
+        //     ->integer('convoyeur')
+        //     ->allowEmptyString('convoyeur');
 
-        $validator
-            ->integer('valide')
-            ->notEmptyString('valide');
+        // $validator
+        //     ->integer('valide')
+        //     ->notEmptyString('valide');
 
-        $validator
-            ->decimal('remise')
-            ->allowEmptyString('remise');
+        // $validator
+        //     ->decimal('remise')
+        //     ->allowEmptyString('remise');
 
-        $validator
-            ->decimal('tva')
-            ->allowEmptyString('tva');
+        // $validator
+        //     ->decimal('tva')
+        //     ->allowEmptyString('tva');
 
-        $validator
-            ->decimal('fodec')
-            ->allowEmptyString('fodec');
+        // $validator
+        //     ->decimal('fodec')
+        //     ->allowEmptyString('fodec');
 
-        $validator
-            ->decimal('ttc')
-            ->allowEmptyString('ttc');
+        // $validator
+        //     ->decimal('ttc')
+        //     ->allowEmptyString('ttc');
 
-        $validator
-            ->decimal('punht')
-            ->allowEmptyString('punht');
+        // $validator
+        //     ->decimal('punht')
+        //     ->allowEmptyString('punht');
 
-        $validator
-            ->integer('adresselivraisonfournisseur_id')
-            ->allowEmptyString('adresselivraisonfournisseur_id');
+        // $validator
+        //     ->integer('adresselivraisonfournisseur_id')
+        //     ->allowEmptyString('adresselivraisonfournisseur_id');
 
-        $validator
-            ->integer('kilometragedepart')
-            ->allowEmptyString('kilometragedepart');
+        // $validator
+        //     ->integer('kilometragedepart')
+        //     ->allowEmptyString('kilometragedepart');
 
-        $validator
-            ->integer('kilometragearrive')
-            ->allowEmptyString('kilometragearrive');
+        // $validator
+        //     ->integer('kilometragearrive')
+        //     ->allowEmptyString('kilometragearrive');
 
         return $validator;
     }

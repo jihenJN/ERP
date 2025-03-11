@@ -115,7 +115,6 @@ $('.verifiercmd').on('click', function() {
         alert('existe dans un document');
       } else {
         if (confirm('Voulez-vous supprimer cet enregistrement')) {
-            alert('ok supp');
           document.location = wr+"Typeoperations/delete/" + id;
         }
       }

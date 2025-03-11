@@ -5,15 +5,10 @@
  * @var \App\Model\Entity\Utilisateur $utilisateur
  */
 ?>
-<!-- Content Header (Page header) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script>
 <?php echo $this->Html->script('alert'); ?>
 <section class="content-header">
     <h1>
-        <?php
-        // $acc = ClassRegistry::init('Accueil')->find('first');
-        // $abrv = $acc['Accueil']['name']; 
-        ?>
         Profile
         <small><?php echo __(''); ?></small>
     </h1>
@@ -23,438 +18,356 @@
 </section>
 <section class="content">
     <div class="row">
-        <div class="col-xs-12">
-            <div class="box">
+        <div class="col-md-12">
+            <div class="box ">
                 <?php echo $this->Form->create($utilisateur, ['role' => 'form', 'onkeypress' => "return event.keyCode!=13"]); ?>
                 <div class="box-body">
                     <?php
                     echo $this->Form->control('name');
                     ?>
 
+
+
                     <!-- <label style="margin-right:2px" class="control-label"> Commercials: </label>
-                    <input type="checkbox" name="commercial" value="1"> -->
-                    <!--                    <input type="text" name="data[commercials][lien]" value="menucommercial">-->
+                    <input type="checkbox" name="commercial" <?php if ($utilisateur->commercial == 1) { ?> checked="" <?php } ?> value="1"> -->
                 </div>
+                <?php
+                //$matrice = array();
+                // debug($liens[0]['Lien']);die;                                   
+                // foreach ($tab as $lien) {
+                //   //foreach ($lien['Lien'] as $l) {
+                //     // debug($l);die;
+                //     $matrice[$lien['Menu']['name']][$l['lien']]['add'] = $l['add'];
+                //     $matrice[$lien['Menu']['name']][$l['lien']]['edit'] = $l['edit'];
+                //     $matrice[$lien['Menu']['name']][$l['lien']]['delete'] = $l['delete'];
+                //     $matrice[$lien['Menu']['name']][$l['lien']]['imprimer'] = $l['imprimer'];
+                //     $matrice[$lien['Menu']['name']][$l['lien']]['valide'] = $l['valide'];
+                //   //}
+                // }
+                // debug($matrice);die;                         
+                ?>
                 <div>
                     <h4 class="box" style="background-color: 	#f8f8ff ; border: 20px solid #f8f8ff;">
                         Droit D'acces
                     </h4>
+
                     <nav class="navbar navbar-default" style="background-color:white;">
                         <div class="container-fluid">
                             <ul class="nav navbar-nav">
                                 <li><a href="#parametrage" data-toggle="tab"><i class="fa fa-fw fa-cog text-aqua"></i>Parametrage</a></li>
                                 <li><a href="#achat" data-toggle="tab"><i class="fa fa-fw fa-cart-plus text-yellow"></i>Achat</a></li>
-                                <li><a href="#vente" data-toggle="tab"><i class="fa fa-laptop text-green"></i>Vente</a></li>
-                                <li><a href="#stock" data-toggle="tab"><i class="fa fa-fw  fa-cubes text-red"></i>Stock</a></li>
-                                <li><a href="#gestionprojet" data-toggle="tab"><i class="fa fa-fw fa-laptop text-green"></i>Gestion Projet</a></li>
-
-                                <!-- <li><a href="#prévisionnement" data-toggle="tab"> <i class="fa fa-fw fa-search text-yellow"></i> Prévisionnements</a></li> -->
-                                <li><a href="#clients" data-toggle="tab"><i class="fa fa-user-circle-o"></i>clients</a></li>
+                                <li><a href="#vente" data-toggle="tab"><i class="fa fa-fw fa-laptop text-green"></i>Vente</a></li>
+                                <li><a href="#stock" data-toggle="tab"><i class="fa fa-fw fa-cube text-red"></i>Stock</a></li>
                                 <li><a href="#articles" data-toggle="tab"><i class="fa fa-fw  fa-cube text-aqua"></i>Articles</a></li>
+                                <li><a href="#clients" data-toggle="tab"><i class="fa fa-fw fa-user-circle-o"></i>Clients</a></li>
+                                <!-- <li><a href="#prévisionnement" data-toggle="tab"> <i class="fa fa-fw fa-search text-yellow"></i> Prévisionnement</a></li> -->
                                 <!-- <li><a href="#zones" data-toggle="tab"><i class=" fa fa-map-o"></i> Zones</a></li> -->
-                                <li><a href="#commercials" data-toggle="tab"> <i class="fa fa-fw fa-users text-purple"></i> Commercials</a></li>
-                                <!-- <li><a  hidden href="#caisses" data-toggle="tab"> <i class="fa fa-fw fa-dollar" style="color: #515DF9;"></i> Caisses</a></li> -->
+                                <!-- <li><a href="#commercials" data-toggle="tab"> <i class="fa fa-fw fa-users text-purple"></i> Commercials</a></li> -->
+                                <li><a href="#caisses" data-toggle="tab"> <i class="fa fa-fw fa-dollar" style="color: #515DF9;"></i> Caisses</a></li>
                                 <li><a href="#finance" data-toggle="tab"> <i class="fa fa-fw fa-money text-red"></i> Finances</a></li>
                                 <li><a href="#statistiques" data-toggle="tab"> <i class="fa fa-fw fa-bar-chart" style="color: #4DAAA5;"></i> Statistiques</a></li>
 
-                            </ul>
 
+                            </ul>
                             <div class="tab-content tab-border">
                                 <div class="tab-pane fade in param active" id="parametrage">
-                                    <table cellpadding="4" cellspacing="1" class="table" width="100%" style="background-color: 	#f8f8ff ;">
-                                        <a index="p" ligne="1" ind="100" class="cocheru">Tout Cocher</a>/
-                                        <a index="p" ligne="1" ind="100" class="decocheru">Tout Decocher</a>
+                                    <table cellpadding="4" cellspacing="1" class="table" width="100%">
+                                    <div class='pull-right'>
+                                            <button type="button" class="btn btn-xs btn-primary check-all" data-tab="parametrage">Tout Cocher</button>
+                                            <button type="button" class="btn btn-xs btn-danger uncheck-all" data-tab="parametrage">Tout Décocher</button>
+                                        </div>
                                         <tbody>
                                             <tr>
-                                                <td align="center">Autorisation <input type="checkbox" name="acces[]" id="p1" value="2"></td>
+                                                <td align="center">Autorisation <input type="checkbox" <?php if (isset($matrice['Parametrage'])) { ?> checked="checked" <?php } ?> name="acces[]" id="ventetab" id="p1" value="2"></td>
                                                 <td align="center">Ajout</td>
                                                 <td align="center">Modification</td>
                                                 <td align="center">Suppression</td>
                                                 <td align="center">Impression</td>
+
                                             </tr>
                                             <tr class="societes">
-                                                <td align="left">Societés</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Societés </td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][0][add]" id="p2" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['societes']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][0][add]" id="p2" value="1">
                                                     <input type="hidden" name="data[2][Lien][0][lien]" value="societes">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][0][edit]" id="p3" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][0][delete]" id="p4" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][0][imprimer]" id="p5" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['societes']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][0][edit]" id="p3" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['societes']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][0][delete]" id="p4" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['societes']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][0][imprimer]" id="p5" value="1"></td>
+
                                             </tr>
 
+                                            <tr class="pointdeventes">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Sites</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['pointdeventes']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][31][add]" value="1">
+                                                    <input type="hidden" name="data[2][Lien][31][lien]" value="pointdeventes">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['pointdeventes']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][31][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['pointdeventes']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][31][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['pointdeventes']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][31][imprimer]" value="1"></td>
+
+                                            </tr>
 
                                             <tr class="banques">
-                                                <td align="left">Banques</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Banques</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][1][add]" id="p6" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['banques']['add'] == 1) { ?> checked="checked" <?php } ?>name="data[2][Lien][1][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][1][lien]" value="banques">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][1][edit]" id="p7" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][1][delete]" id="p8" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][1][imprimer]" id="p9" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['banques']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][1][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['banques']['delete'] == 1) { ?> checked="checked" <?php } ?>name="data[2][Lien][1][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['banques']['imprimer'] == 1) { ?> checked="checked" <?php } ?>name="data[2][Lien][1][imprimer]" value="1"></td>
+                                                <td align="center"></td>
                                             </tr>
-
                                             <tr class="devises">
-                                                <td align="left">Devise</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Devise</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][20][add]" id="p80" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['devises']['add'] == 1) { ?> checked="checked" <?php } ?>name="data[2][Lien][20][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][20][lien]" value="devises">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][20][edit]" id="p81" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][20][delete]" id="p82" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][20][imprimer]" id="p83" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['devises']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][20][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['devises']['delete'] == 1) { ?> checked="checked" <?php } ?>name="data[2][Lien][20][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['devises']['imprimer'] == 1) { ?> checked="checked" <?php } ?>name="data[2][Lien][20][imprimer]" value="1"></td>
+                                                <td align="center"></td>
                                             </tr>
                                             <tr class="transporteurs">
-                                                <td align="left">Transporteurs</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Transporteurs</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][30][add]" id="p80" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['transporteurs']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][30][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][30][lien]" value="transporteurs">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][30][edit]" id="p81" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][30][delete]" id="p82" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][30][imprimer]" id="p83" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['transporteurs']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][30][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['transporteurs']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][30][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['transporteurs']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][30][imprimer]" value="1"></td>
+
                                             </tr>
 
 
-                                            <tr class="fonctions">
-                                                <td align="left">Fonctions</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][3][add]" id="p14" value="1">
-                                                    <input type="hidden" name="data[2][Lien][3][lien]" value="fonctions">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][3][edit]" id="p15" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][3][delete]" id="p16" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][3][imprimer]" id="p17" value="1"></td>
-                                            </tr>
 
-                                            <tr class="fonctions">
-                                                <td align="left">profile</td>
+
+                                            <tr class="profil">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Profile</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][4][add]" id="p18" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['profile']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][4][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][4][lien]" value="profile">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][4][edit]" id="p19" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][4][delete]" id="p20" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][4][imprimer]" id="p21" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['profile']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][4][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['profile']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][4][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['profile']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][4][imprimer]" value="1"></td>
+
                                             </tr>
-
-
 
                                             <tr class="utilisateurs">
-                                                <td align="left">Utilisateurs</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Utilisateurs</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][5][add]" id="p22" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['utilisateurs']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][5][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][5][lien]" value="utilisateurs">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][5][edit]" id="p23" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][5][delete]" id="p24" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][5][imprimer]" id="p25" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['utilisateurs']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][5][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['utilisateurs']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][5][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['utilisateurs']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][5][imprimer]" value="1"></td>
+
                                             </tr>
 
-
-                                            <tr class="users">
-                                                <td align="left">Users</td>
+                                            <tr class="fonctions">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Fonctions</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][6][add]" id="p26" value="1">
-                                                    <input type="hidden" name="data[2][Lien][6][lien]" value="users">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['fonctions']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][3][add]" value="1">
+                                                    <input type="hidden" name="data[2][Lien][3][lien]" value="fonctions">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][6][edit]" id="p27" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][6][delete]" id="p28" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][6][imprimer]" id="p29" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['fonctions']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][3][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['fonctions']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][3][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['fonctions']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][3][imprimer]" value="1"></td>
+
                                             </tr>
-
-
-
 
                                             <tr class="personnels">
-                                                <td align="left">Personnels</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Personnels</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][7][add]" id="p30" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['personnels']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][7][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][7][lien]" value="personnels">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][7][edit]" id="p31" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][7][delete]" id="p32" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][7][imprimer]" id="p33" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['personnels']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][7][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['personnels']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][7][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['personnels']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][7][imprimer]" value="1"></td>
+
                                             </tr>
                                             <tr class="pays" hidden>
-                                                <td align="left">Pays</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Pays</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][21][add]" id="p84" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['pays']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][21][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][21][lien]" value="pays">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][21][edit]" id="p85" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][21][delete]" id="p86" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][21][imprimer]" id="p87" value="1"></td>
-                                            </tr>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['pays']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][21][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['pays']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][21][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['pays']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][21][imprimer]" value="1"></td>
 
+                                            </tr>
                                             <tr class="gouvernorats" hidden>
-                                                <td align="left">Gouvernorats</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Gouvernorats</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][8][add]" id="p34" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['gouvernorats']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][8][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][8][lien]" value="gouvernorats">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][8][edit]" id="p35" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][8][delete]" id="p36" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][8][imprimer]" id="p37" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['gouvernorats']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][8][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['gouvernorats']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][8][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['gouvernorats']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][8][imprimer]" value="1"></td>
+
                                             </tr><!-- comment -->
 
 
+
+
                                             <tr class="delegations" hidden>
-                                                <td align="left">Delegations</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Délégations</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][9][add]" id="p38" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['delegations']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][9][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][9][lien]" value="delegations">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][9][edit]" id="p39" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][9][delete]" id="p40" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][9][imprimer]" id="p41" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['delegations']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][9][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['delegations']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][9][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['delegations']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][9][imprimer]" value="1"></td>
+
                                             </tr>
 
 
 
-                                            <tr class="localites" hidden>
-                                                <td align="left">Localites</td>
+                                            <tr class="gouvernorats" hidden>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Localités</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][10][add]" id="p42" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['localites']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][10][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][10][lien]" value="localites">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][10][edit]" id="p43" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][10][delete]" id="p44" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][10][imprimer]" id="p45" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['localites']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][10][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['localites']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][10][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['localites']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][10][imprimer]" value="1"></td>
+
                                             </tr>
+
+
                                             <tr class="basepostes" hidden>
-                                                <td align="left">Base postes </td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Base postes</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][35][add]" id="p76" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['basepostes']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][35][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][35][lien]" value="basepostes">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][35][edit]" id="p77" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][35][delete]" id="p78" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][35][imprimer]" id="p79" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['basepostes']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][35][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['basepostes']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][35][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['basepostes']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][35][imprimer]" value="1"></td>
+
                                             </tr>
+
+
                                             <tr class="cartecarburants" hidden>
-                                                <td align="left">Cartecarburant</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Cartecarburant</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][11][add]" id="p46" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['cartecarburants']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][11][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][11][lien]" value="cartecarburants">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][11][edit]" id="p47" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][11][delete]" id="p48" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][11][imprimer]" id="p49" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['cartecarburants']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][11][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['cartecarburants']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][11][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['cartecarburants']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][11][imprimer]" value="1"></td>
+
                                             </tr>
+
+
                                             <tr class="typecartecarburants" hidden>
-                                                <td align="left">Type Carte Carburant</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Type Carte Carburants</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][12][add]" id="p50" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['typecartecarburants']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][12][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][12][lien]" value="typecartecarburants">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][12][edit]" id="p51" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][12][delete]" id="p52" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][12][imprimer]" id="p53" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['typecartecarburants']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][12][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['typecartecarburants']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][12][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['typecartecarburants']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][12][imprimer]" value="1"></td>
+
                                             </tr>
                                             <tr class="materieltransports" hidden>
-                                                <td align="left">Materieltransports</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Materieltransports</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][13][add]" id="p54" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['materieltransports']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][13][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][13][lien]" value="materieltransports">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][13][edit]" id="p55" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][13][delete]" id="p56" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][13][imprimer]" id="p57" value="1"></td>
-                                            </tr>
-                                            <!--                                            <tr class="pointdeventes">
-                                                <td align="left">Points De Ventes</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][4][add]" id="p6" value="1">
-                                                    <input type="hidden" name="data[2][Lien][4][lien]" value="pointdeventes">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][4][edit]" id="p7" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][4][delete]" id="p8" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][4][imprimer]" id="p9" value="1"></td>
-                                            </tr>-->
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['materieltransports']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][13][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['materieltransports']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][13][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['materieltransports']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][13][imprimer]" value="1"></td>
 
-
-                                            <tr class="timbres">
-                                                <td align="left">Timbres</td>
-                                                <td align="center">
-
-                                                    <input type="hidden" name="data[2][Lien][14][lien]" value="timbres">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][14][edit]" id="p58" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][14][delete]" id="p59" value="1"></td>
                                             </tr>
 
-
-
-
+                                            <tr class="typeexons">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Type exonerations</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['typeexons']['add'] == 1) { ?> checked="checked" <?php } ?>name="data[2][Lien][18][add]" value="1">
+                                                    <input type="hidden" name="data[2][Lien][18][lien]" value="typeexons">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['typeexons']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][18][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['typeexons']['delete'] == 1) { ?> checked="checked" <?php } ?>name="data[2][Lien][18][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['typeexons']['imprimer'] == 1) { ?> checked="checked" <?php } ?>name="data[2][Lien][18][imprimer]" value="1"></td>
+                                                <td align="center"></td>
+                                            </tr>
 
 
 
                                             <tr class="tvas">
-                                                <td align="left">TVA</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>TVA</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][15][add]" id="p60" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['tvas']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][15][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][15][lien]" value="tvas">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][15][edit]" id="p61" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][15][delete]" id="p62" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][15][imprimer]" id="p63" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['tvas']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][15][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['tvas']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][15][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['tvas']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][15][imprimer]" value="1"></td>
+
                                             </tr>
-                                            <tr class="tpes">
-                                                <td align="left">TPE</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][16][add]" id="p79" value="1">
-                                                    <input type="hidden" name="data[2][Lien][16][lien]" value="tpes">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][16][edit]" id="p64" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][16][delete]" id="p65" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][16][imprimer]" id="p66" value="1"></td>
-                                            </tr>
+
                                             <tr class="fodecs">
-                                                <td align="left">Fodec</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Fodec</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][17][add]" id="p67" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['fodecs']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][17][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][17][lien]" value="fodecs">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][17][edit]" id="p68" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][17][delete]" id="p69" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][17][imprimer]" id="p70" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['fodecs']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][17][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['fodecs']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][17][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['fodecs']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][17][imprimer]" value="1"></td>
                                             </tr>
-                                            <tr class="typeexons">
-                                                <td align="left">Type exonerations</td>
+
+                                            <tr class="timbres">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Timbres</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][18][add]" id="p71" value="1">
-                                                    <input type="hidden" name="data[2][Lien][18][lien]" value="typeexons">
+                                                    <input type="hidden" name="data[2][Lien][14][lien]" value="timbres">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][18][edit]" id="p72" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][18][delete]" id="p73" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][18][imprimer]" id="p74" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['timbres']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][14][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['timbres']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][14][delete]" value="1"></td>
                                             </tr>
+
+
+
+
+
                                             <tr class="caisses" hidden>
-                                                <td align="left">Caisses</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Caisses</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][2][add]" id="p10" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['caisses']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][2][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][2][lien]" value="caisses">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][2][edit]" id="p11" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][2][delete]" id="p12" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][2][imprimer]" id="p13" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['caisses']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][2][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['caisses']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][2][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['caisses']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][2][imprimer]" value="1"></td>
+
                                             </tr>
 
                                             <tr class="tracemisajour">
-                                                <td align="left">Trace mise a jour</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Trace mise a jour</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][19][add]" id="p75" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Parametrage']['tracemisajour']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][19][add]" value="1">
                                                     <input type="hidden" name="data[2][Lien][19][lien]" value="tracemisajour">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][19][edit]" id="p76" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][19][delete]" id="p77" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][19][imprimer]" id="p78" value="1"></td>
-                                            </tr>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['tracemisajour']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][19][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['tracemisajour']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][19][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Parametrage']['tracemisajour']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[2][Lien][19][imprimer]" value="1"></td>
 
-                                            <!--                                            <tr class="remiseqtes">
-                                                <td align="left">Remise/comptant </td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][36][add]" id="p80" value="1">
-                                                    <input type="hidden" name="data[2][Lien][36][lien]" value="remiseqtes">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][36][edit]" id="p81" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][36][delete]" id="p82" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][36][imprimer]" id="p83" value="1"></td>
                                             </tr>
-                                            <tr class="familles">
-                                                <td align="left">Familles </td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][37][add]" id="p84" value="1">
-                                                    <input type="hidden" name="data[2][Lien][37][lien]" value="familles">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][37][edit]" id="p85" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][37][delete]" id="p86" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][37][imprimer]" id="p87" value="1"></td>
-                                            </tr>
-                                            <tr class="sousfamille1s">
-                                                <td align="left">Sous Familles </td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][38][add]" id="p88" value="1">
-                                                    <input type="hidden" name="data[2][Lien][38][lien]" value="sousfamille1s">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][38][edit]" id="p89" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][38][delete]" id="p90" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][38][imprimer]" id="p91" value="1"></td>
-                                            </tr>
-                                            <tr class="sousfamille2s">
-                                                <td align="left">Sous sous Familles </td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][39][add]" id="p92" value="1">
-                                                    <input type="hidden" name="data[2][Lien][39][lien]" value="sousfamille2s">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][39][edit]" id="p93" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][39][delete]" id="p94" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][39][imprimer]" id="p95" value="1"></td>
-                                            </tr>
-                                            <tr class="unites">
-                                                <td align="left">Unites</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][40][add]" id="p96" value="1">
-                                                    <input type="hidden" name="data[2][Lien][40][lien]" value="unites">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][40][edit]" id="p97" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][40][delete]" id="p98" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][40][imprimer]" id="p99" value="1"></td>
-                                            </tr>
-                                            <tr class="nombrecommandes">
-                                                <td align="left">BC Bonifier</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][41][add]" id="p100" value="1">
-                                                    <input type="hidden" name="data[2][Lien][41][lien]" value="nombrecommandes">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][41][edit]" id="p101" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][41][delete]" id="p102" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][41][imprimer]" id="p103" value="1"></td>
-                                            </tr>
-                                            <tr class="coefficientclients">
-                                                <td align="left">Coefficient Clients</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[2][Lien][42][add]" id="p104" value="1">
-                                                    <input type="hidden" name="data[2][Lien][42][lien]" value="coefficientclients">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][42][edit]" id="p105" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][42][delete]" id="p106" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[2][Lien][42][imprimer]" id="p107" value="1"></td>
-                                            </tr>-->
-
-                                            <!--                                            <tr class="articleunites">
-     <td align="left">Article Unites</td>
-     <td align="center">
-         <input type="checkbox" name="data[2][Lien][44][add]" id="p112" value="1">
-         <input type="hidden" name="data[2][Lien][44][lien]" value="articleunites">
-     </td>
-     <td align="center"><input type="checkbox" name="data[2][Lien][44][edit]" id="p113" value="1"></td>
-     <td align="center"><input type="checkbox" name="data[2][Lien][44][delete]" id="p114" value="1"></td>
-     <td align="center"><input type="checkbox" name="data[2][Lien][44][imprimer]" id="p115" value="1"></td>
- </tr>
- <tr class="categories">
-     <td align="left">Categories</td>
-     <td align="center">
-         <input type="checkbox" name="data[2][Lien][45][add]" id="p116" value="1">
-         <input type="hidden" name="data[2][Lien][45][lien]" value="categories">
-     </td>
-     <td align="center"><input type="checkbox" name="data[2][Lien][45][edit]" id="p117" value="1"></td>
-     <td align="center"><input type="checkbox" name="data[2][Lien][45][delete]" id="p118" value="1"></td>
-     <td align="center"><input type="checkbox" name="data[2][Lien][45][imprimer]" id="p119" value="1"></td>
- </tr>
- <tr class="famillerotations">
-     <td align="left">Famille Rotations</td>
-     <td align="center">
-         <input type="checkbox" name="data[2][Lien][46][add]" id="p120" value="1">
-         <input type="hidden" name="data[2][Lien][46][lien]" value="famillerotations">
-     </td>
-     <td align="center"><input type="checkbox" name="data[2][Lien][46][edit]" id="p121" value="1"></td>
-     <td align="center"><input type="checkbox" name="data[2][Lien][46][delete]" id="p122" value="1"></td>
-     <td align="center"><input type="checkbox" name="data[2][Lien][46][imprimer]" id="p123" value="1"></td>
- </tr>-->
-
 
 
 
@@ -464,490 +377,534 @@
                                         </tbody>
                                     </table>
                                 </div>
-
-                                <div class="tab-pane fade in " id="stock<?php $abrv ?>">
-                                    <table cellpadding="4" cellspacing="1" class="table" width="100%" style="background-color: 	#f8f8ff ;">
-                                        <a index="s" ligne="1" ind="59" class="cocheru">Tout Cocher</a>/
-                                        <a index="s" ligne="1" ind="59" class="decocheru">Tout Decocher</a>
+                                <div class="tab-pane fade in " id="stock">
+                                    <table cellpadding="4" cellspacing="1" class="table" width="100%">
+                                    <div class='pull-right'>
+                                            <button type="button" class="btn btn-xs btn-primary check-all" data-tab="stock">Tout Cocher</button>
+                                            <button type="button" class="btn btn-xs btn-danger uncheck-all" data-tab="stock">Tout Décocher</button>
+                                        </div>
                                         <tbody>
                                             <tr>
-                                                <td align="center">Autorisation <input type="checkbox" name="acces[]" id="s1" value="1"></td>
+                                                <td align="center">Autorisation <input type="checkbox" <?php if (isset($matrice['Stock'])) { ?> checked="checked" <?php } ?> name="acces[]" id="ventetab" value="1"></td>
                                                 <td align="center">Ajout</td>
                                                 <td align="center">Modification</td>
                                                 <td align="center">Suppression</td>
                                                 <td align="center">Impression</td>
+                                                <td align="center">Validation</td>
                                             </tr>
                                             <tr class="depots">
-                                                <td align="left">Dépots</td>
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Dépots</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[1][Lien][7][add]" id="s34" value="1">
-                                                    <input type="hidden" name="data[1][Lien][7][lien]" value="depots">
+                                                    <input type="checkbox" <?php if (@$matrice['Stock']['depots']['add'] == 1) { ?> checked="checked" <?php } ?>name="data[1][Lien][8][add]" value="1">
+                                                    <input type="hidden" name="data[1][Lien][8][lien]" value="depots">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][7][edit]" id="s35" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][7][delete]" id="s36" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][7][imprimer]" id="s37" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['depots']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[1][Lien][8][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['depots']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[1][Lien][8][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['depots']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[1][Lien][8][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
                                             </tr>
                                             <tr class="stockdepots">
-                                                <td align="left">Stock depots</td>
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Stock depots</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[1][Lien][14][add]" id="s54" value="1">
-                                                    <input type="hidden" name="data[1][Lien][14][lien]" value="stockdepots">
+                                                    <input type="checkbox" <?php if (@$matrice['Stock']['stockdepots']['add'] == 1) { ?> checked="checked" <?php } ?>name="data[1][Lien][9][add]" value="1">
+                                                    <input type="hidden" name="data[1][Lien][9][lien]" value="stockdepots">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][14][edit]" id="s55" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][14][delete]" id="s56" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][14][imprimer]" id="s57" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['stockdepots']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[1][Lien][9][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['stockdepots']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[1][Lien][9][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['stockdepots']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[1][Lien][9][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
+                                            </tr>
+
+                                            <tr class="historiquearticles">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Historique article</td>
+                                                <td align="center">
+
+                                                    <input type="hidden" name="data[1][Lien][12][lien]" value="historiquearticles">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Stock']['historiquearticles']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[1][Lien][12][imprimer]" value="1">
+                                                </td>
+
+                                                <td align="center"></td>
+
                                             </tr>
 
                                             <tr class="suivistocks">
-                                                <td align="left">Suivi stock </td>
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Suivi stock</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[1][Lien][12][add]" id="s2" value="1">
-                                                    <input type="hidden" name="data[1][Lien][12][lien]" value="suivistocks">
+                                                    <input type="checkbox" <?php if (@$matrice['Stock']['suivistocks']['add'] == 1) { ?> checked="checked" <?php } ?>name="data[1][Lien][10][add]" value="1">
+                                                    <input type="hidden" name="data[1][Lien][10][lien]" value="suivistocks">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][12][edit]" id="s3" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][12][delete]" id="s4" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][12][imprimer]" id="s5" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['suivistocks']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[1][Lien][10][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['suivistocks']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[1][Lien][10][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['suivistocks']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[1][Lien][10][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
+                                            </tr>
+
+
+                                            <tr class="detailstocks">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Etat detail stock</td>
+                                                <td align="center">
+                                                    <input type="hidden" name="data[1][Lien][13][lien]" value="detailstocks">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['detailstocks']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[1][Lien][13][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
                                             </tr>
 
                                             <tr class="inventairestock">
-                                                <td align="left">Inventaires</td>
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Inventaires</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[1][Lien][13][add]" id="s6" value="1">
-                                                    <input type="hidden" name="data[1][Lien][13][lien]" value="inventairestock">
+                                                    <input type="checkbox" <?php if (@$matrice['Stock']['inventairestock']['add'] == 1) { ?> checked="checked" <?php } ?>name="data[1][Lien][11][add]" value="1">
+                                                    <input type="hidden" name="data[1][Lien][11][lien]" value="inventairestock">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][13][edit]" id="s7" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][13][delete]" id="s8" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][13][imprimer]" id="s9" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['inventairestock']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[1][Lien][11][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['inventairestock']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[1][Lien][11][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['inventairestock']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[1][Lien][11][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
                                             </tr>
 
-
-
-                                            <tr class="bondechargements">
-                                                <td align="left">Bon chargements</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[1][Lien][11][add]" id="s50" value="1">
-                                                    <input type="hidden" name="data[1][Lien][11][lien]" value="bondechargements">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][11][edit]" id="s51" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][11][delete]" id="s52" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][11][imprimer]" id="s53" value="1"></td>
-                                            </tr>
                                             <tr class="bonsortiestocks">
-                                                <td align="left">Bon sortie du stock</td>
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Bon Sortie Stocks</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[1][Lien][8][add]" id="s46" value="1">
-                                                    <input type="hidden" name="data[1][Lien][8][lien]" value="bonsortiestocks">
+                                                    <input type="checkbox" <?php if (@$matrice['Stock']['bonsortiestocks']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[1][Lien][3][add]" value="1">
+                                                    <input type="hidden" name="data[1][Lien][3][lien]" value="bonsortiestocks">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][8][edit]" id="s47" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][8][delete]" id="s48" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][8][imprimer]" id="s49" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['bonsortiestocks']['edit'] == 1) { ?> checked="checked" <?php } ?>name="data[1][Lien][3][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['bonsortiestocks']['delete'] == 1) { ?> checked="checked" <?php } ?>name="data[1][Lien][3][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stock']['bonsortiestocks']['imprimer'] == 1) { ?> checked="checked" <?php } ?>name="data[1][Lien][3][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
                                             </tr>
-                                            <tr class="bonreceptionstocks">
-                                                <td align="left">Bon reception du stock</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[1][Lien][9][add]" id="s38" value="1">
-                                                    <input type="hidden" name="data[1][Lien][9][lien]" value="bonreceptionstocks">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][9][edit]" id="s39" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][9][delete]" id="s40" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][9][imprimer]" id="s41" value="1"></td>
-                                            </tr>
-                                            <tr class="bondetransferts">
-                                                <td align="left">bon transferts</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[1][Lien][10][add]" id="s42" value="1">
-                                                    <input type="hidden" name="data[1][Lien][10][lien]" value="bondetransferts">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][10][edit]" id="s43" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][10][delete]" id="s44" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[1][Lien][10][imprimer]" id="s45" value="1"></td>
-                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
-
-                                
-                                <div class="tab-pane fade in param" id="gestionprojet">
-                                    <table cellpadding="4" cellspacing="1" class="table" width="100%" style="background-color: 	#f8f8ff ;">
-                                        <a index="a" ligne="1" ind="100" class="cocheru">Tout Cocher</a>/
-                                        <a index="a" ligne="1" ind="100" class="decocheru">Tout Decocher</a>
-                                        <tbody>
-                                            <tr>
-                                                <td align="center">Autorisation <input type="checkbox" name="acces[]" id="a1" value="26"></td>
-                                                <td align="center">Ajout</td>
-                                                <td align="center">Modification</td>
-                                                <td align="center">Suppression</td>
-                                                <td align="center">Impression</td>
-                                                <td align="center">Validation</td>
-                                            </tr>
-                                            <tr class="projets">
-                                                <td align="left">Projets</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[26][Lien][1][add]" id="a2" value="1">
-                                                    <input type="hidden" name="data[26][Lien][1][lien]" value="projets">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][1][edit]" id="a3" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][1][delete]" id="a4" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][1][imprimer]" id="a5" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][1][valide]" id="a6" value="1"></td>
-                                            </tr>
-                                            <tr class="contrats">
-                                                <td align="left">Contrats</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[26][Lien][4][add]" id="a17" value="1">
-                                                    <input type="hidden" name="data[26][Lien][4][lien]" value="contrats">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][4][edit]" id="a18" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][4][delete]" id="a19" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][4][imprimer]" id="a20" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][4][valide]" id="a21" value="1"></td>
-                                            </tr>
-                                            <tr class="transferts">
-                                                <td align="left">Transferts</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[26][Lien][3][add]" id="a12" value="1">
-                                                    <input type="hidden" name="data[26][Lien][3][lien]" value="transferts">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][3][edit]" id="a13" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][3][delete]" id="a14" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][3][imprimer]" id="a15" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][3][valide]" id="a16" value="1"></td>
-                                            </tr>
-                                            <tr class="taches">
-                                                <td align="left">Taches</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[26][Lien][0][add]" id="a7" value="1">
-                                                    <input type="hidden" name="data[26][Lien][0][lien]" value="taches">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][0][edit]" id="a8" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][0][delete]" id="a9" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][0][imprimer]" id="a10" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][0][valide]" id="a11" value="1"></td>
-                                            </tr>
-                                            <!-- <tr class="etatfinance">
-                                                <td align="left">Etat Finance</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[26][Lien][2][add]" id="a12" value="1">
-                                                    <input type="hidden" name="data[26][Lien][2][lien]" value="etatfinance">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][2][edit]" id="a13" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][2][delete]" id="a14" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][2][imprimer]" id="a15" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[26][Lien][2][valide]" id="a16" value="1"></td>
-
-                                            </tr> -->
-                                        </tbody>
-                                    </table>
-                                </div>
-
-                                <div class="tab-pane fade in vente" id="vente">
-                                    <table cellpadding="4" cellspacing="1" class="table" width="100%" style="background-color: 	#f8f8ff ;">
-                                        <a index="v" ligne="1" ind="59" class="cocheru">Tout Cocher</a>/
-                                        <a index="v" ligne="1" ind="59" class="decocheru">Tout Decocher</a>
-                                        <tbody>
-                                            <tr>
-                                                <td align="center">Autorisation <input type="checkbox" name="acces[]" id="v1" value="4"></td>
-                                                <td align="center">Ajout</td>
-                                                <td align="center">Modification</td>
-                                                <td align="center">Suppression</td>
-                                                <td align="center">Impression</td>
-                                                <td align="center">Validation</td>
-                                            </tr>
-
-                                            <tr class="integrations" hidden>
-                                                <td align="left">Intégration</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[4][Lien][1][add]" id="v6" value="1">
-                                                    <input type="hidden" name="data[4][Lien][1][lien]" value="integrations">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][1][edit]" id="v7" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][1][delete]" id="v8" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][1][imprimer]" id="v9" value="1"></td>
-                                            </tr>
-
-                                            <tr class="offredeprix">
-                                                <td align="left">Devis</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[4][Lien][6][add]" id="v26" value="1">
-                                                    <input type="hidden" name="data[4][Lien][6][lien]" value="offredeprix">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][6][edit]" id="v27" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][6][delete]" id="v28" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][6][imprimer]" id="v29" value="1"></td>
-                                            </tr>
-                                            <tr class="commandes">
-                                                <td align="left">Commande clients</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[4][Lien][2][add]" id="v10" value="1">
-                                                    <input type="hidden" name="data[4][Lien][2][lien]" value="commandes">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][2][edit]" id="v11" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][2][delete]" id="v12" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][2][imprimer]" id="v13" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][2][valide]" id="v26" value="1"></td>
-                                            </tr>
-                                            <tr class="bonlivraisons">
-                                                <td align="left">Bon livraison</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[4][Lien][3][add]" id="v14" value="1">
-                                                    <input type="hidden" name="data[4][Lien][3][lien]" value="bonlivraisons">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][3][edit]" id="v15" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][3][delete]" id="v16" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][3][imprimer]" id="v17" value="1"></td>
-                                            </tr>
-                                            <tr class="factureclients">
-                                                <td align="left">Facture client</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[4][Lien][4][add]" id="v18" value="1">
-                                                    <input type="hidden" name="data[4][Lien][4][lien]" value="factureclients">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][4][edit]" id="v19" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][4][delete]" id="v20" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][4][imprimer]" id="v21" value="1"></td>
-                                            </tr>
-                                            <tr class="reglementclients">
-                                                <td align="left">Reglement</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[4][Lien][5][add]" id="v22" value="1">
-                                                    <input type="hidden" name="data[4][Lien][5][lien]" value="reglementclients">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][5][edit]" id="v23" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][5][delete]" id="v24" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[4][Lien][5][imprimer]" id="v25" value="1"></td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-
-
                                 <div class="tab-pane fade in param" id="achat">
-                                    <table cellpadding="4" cellspacing="1" class="table" width="100%" style="background-color: 	#f8f8ff ;">
-                                        <a index="a" ligne="1" ind="59" class="cocheru">Tout Cocher</a>/
-                                        <a index="a" ligne="1" ind="59" class="decocheru">Tout Decocher</a>
+                                    <table cellpadding="4" cellspacing="1" class="table" width="100%">
+                                    <div class='pull-right'>
+                                            <button type="button" class="btn btn-xs btn-primary check-all" data-tab="achat">Tout Cocher</button>
+                                            <button type="button" class="btn btn-xs btn-danger uncheck-all" data-tab="achat">Tout Décocher</button>
+                                        </div>
                                         <tbody>
                                             <tr>
-                                                <td align="center">Autorisation <input type="checkbox" name="acces[]" id="a1" value="3"></td>
+                                                <td align="center">Autorisation <input type="checkbox" <?php if (isset($matrice['Achat'])) { ?> checked="checked" <?php } ?> name="acces[]" id="ventetab" value="3"></td>
                                                 <td align="center">Ajout</td>
                                                 <td align="center">Modification</td>
                                                 <td align="center">Suppression</td>
                                                 <td align="center">Impression</td>
                                                 <td align="center">Validation</td>
                                             </tr>
+
+
                                             <tr class="fournisseurs">
-                                                <td align="left">Fournisseurs</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Fournisseurs</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[3][Lien][0][add]" id="a2" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Achat']['fournisseurs']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][0][add]" value="1">
                                                     <input type="hidden" name="data[3][Lien][0][lien]" value="fournisseurs">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][0][edit]" id="a3" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][0][delete]" id="a4" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][0][imprimer]" id="a5" value="1"></td>
-                                            </tr>
-                                            <tr class="services">
-                                                <td align="left">Services</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[3][Lien][7][add]" id="a39" value="1">
-                                                    <input type="hidden" name="data[3][Lien][7][lien]" value="services">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][7][edit]" id="a40" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][7][delete]" id="a41" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][7][imprimer]" id="a42" value="1"></td>
-                                            </tr>
-                                            <tr class="machines">
-                                                <td align="left">Machines</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[3][Lien][9][add]" id="a43" value="1">
-                                                    <input type="hidden" name="data[3][Lien][9][lien]" value="machines">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][9][edit]" id="a44" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][9][delete]" id="a45" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][9][imprimer]" id="a46" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['fournisseurs']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][0][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['fournisseurs']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][0][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['fournisseurs']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][0][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
                                             </tr>
 
-                                            <tr class="charges">
-                                                <td align="left">Charges</td>
+
+                                            <tr class="relevefournisseurs">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Relevé Fournisseur</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[3][Lien][6][add]" id="a26" value="1">
-                                                    <input type="hidden" name="data[3][Lien][6][lien]" value="charges">
+                                                    <input type="checkbox" <?php if (@$matrice['Achat']['relevefournisseurs']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][16][add]" value="1">
+                                                    <input type="hidden" name="data[3][Lien][16][lien]" value="relevefournisseurs">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][6][edit]" id="a27" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][6][delete]" id="a28" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][6][imprimer]" id="a29" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['relevefournisseurs']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][16][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['relevefournisseurs']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][16][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['relevefournisseurs']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][16][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
                                             </tr>
 
-                                            <tr class="besionachats">
-                                                <td align="left">Besoin Achat</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[3][Lien][8][add]" id="a35" value="1">
-                                                    <input type="hidden" name="data[3][Lien][8][lien]" value="besionachats">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][8][edit]" id="a36" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][8][delete]" id="a37" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][8][imprimer]" id="a38" value="1"></td>
-                                            </tr>
+
+
 
                                             <tr class="demandeoffredeprixes">
-                                                <td align="left">demande offre de prix</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Demande offre de prix</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[3][Lien][1][add]" id="a6" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Achat']['demandeoffredeprixes']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][1][add]" value="1">
                                                     <input type="hidden" name="data[3][Lien][1][lien]" value="demandeoffredeprixes">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][1][edit]" id="a7" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][1][delete]" id="a8" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][1][imprimer]" id="a9" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][1][valide]" id="a10" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['demandeoffredeprixes']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][1][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['demandeoffredeprixes']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][1][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['demandeoffredeprixes']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][1][imprimer]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['demandeoffredeprixes']['valide'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][1][valide]" value="1"></td>
+
+                                                <td align="center"></td>
                                             </tr>
                                             <tr class="commandes">
-                                                <td align="left">Bon commandes</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Bon de commandes</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[3][Lien][2][add]" id="a30" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Achat']['commandes']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][2][add]" value="1">
                                                     <input type="hidden" name="data[3][Lien][2][lien]" value="commandes">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][2][edit]" id="a31" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][2][delete]" id="a32" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][2][imprimer]" id="a33" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][2][valide]" id="a34" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['commandes']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][2][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['commandes']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][2][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['commandes']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][2][imprimer]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['commandes']['valide'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][2][valide]" value="1"></td>
 
+                                                <td align="center"></td>
                                             </tr>
                                             <tr class="livraisons">
-                                                <td align="left">Bon livraisons</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Bon de livraisons</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[3][Lien][3][add]" id="a14" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Achat']['livraisons']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][3][add]" value="1">
                                                     <input type="hidden" name="data[3][Lien][3][lien]" value="livraisons">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][3][edit]" id="a15" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][3][delete]" id="a16" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][3][imprimer]" id="a17" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['livraisons']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][3][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['livraisons']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][3][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['livraisons']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][3][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
                                             </tr>
                                             <tr class="factures">
-                                                <td align="left">Factures</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Factures</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[3][Lien][4][add]" id="a18" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Achat']['factures']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][4][add]" value="1">
                                                     <input type="hidden" name="data[3][Lien][4][lien]" value="factures">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][4][edit]" id="a19" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][4][delete]" id="a20" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][4][imprimer]" id="a21" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['factures']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][4][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['factures']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][4][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['factures']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][4][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
+                                            </tr>
+
+                                            <tr class="factureavoirfrs">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Facture Avoir</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Achat']['factureavoirfrs']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][15][add]" value="1">
+                                                    <input type="hidden" name="data[3][Lien][15][lien]" value="factureavoirfrs">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['factureavoirfrs']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][15][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['factureavoirfrs']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][15][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['factureavoirfrs']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][15][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
                                             </tr>
                                             <tr class="reglements">
-                                                <td align="left">Reglements</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Reglements</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[3][Lien][5][add]" id="a25" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Achat']['reglements']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][5][add]" value="1">
                                                     <input type="hidden" name="data[3][Lien][5][lien]" value="reglements">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][5][edit]" id="a22" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][5][delete]" id="a23" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[3][Lien][5][imprimer]" id="a24" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['reglements']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][5][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['reglements']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][5][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Achat']['reglements']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[3][Lien][5][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
                                             </tr>
                                         </tbody>
                                     </table>
                                 </div>
-
-                                <!-- <div class="tab-pane fade in param" id="prévisionnement">
-                                    <table cellpadding="4" cellspacing="1" class="table" width="100%" style="background-color: 	#f8f8ff ;">
-                                        <a index="pr" ligne="1" ind="150" class="cocheru">Tout Cocher</a>/
-                                        <a index="pr" ligne="1" ind="150" class="decocheru">Tout Decocher</a>
+                                <div class="tab-pane fade in param" id="vente">
+                                    <table cellpadding="4" cellspacing="1" class="table" width="100%">
+                                    <div class='pull-right'>
+                                            <button type="button" class="btn btn-xs btn-primary check-all" data-tab="vente">Tout Cocher</button>
+                                            <button type="button" class="btn btn-xs btn-danger uncheck-all" data-tab="vente">Tout Décocher</button>
+                                        </div>
                                         <tbody>
                                             <tr>
-                                                <td align="center">Autorisation <input type="checkbox" name="acces[]" id="pr1" value="12"></td>
+                                                <td align="center">Autorisation <input type="checkbox" <?php if (isset($matrice['Vente'])) { ?> checked="checked" <?php } ?> id='v1' name="acces[]" id="ventetab" value="4"></td>
                                                 <td align="center">Ajout</td>
                                                 <td align="center">Modification</td>
                                                 <td align="center">Suppression</td>
-                                                <td align="center">Impression</td>
-                                                <td align="center">Validation</td>
-                                            </tr>
-                                            <tr class="inventaires">
-                                                <td align="left">Achat</td>
-                                                <td align="center">
-                                                    <input type="hidden" name="data[12][Lien][0][lien]" value="inventaires">
-                                                </td>
-                                                <td align="center"></td>
-                                                <td align="center"></td>
-                                                <td align="center"><input type="checkbox" name="data[12][Lien][0][imprimer]" id="pr5" value="1"></td>
+                                                <!-- <td align="center">Impression</td>
+                                                <td align="center">Validation</td> -->
                                             </tr>
 
-                                            <tr class="previsionachats">
-                                                <td align="left">Productions</td>
-                                                <td align="center">
 
-                                                    <input type="hidden" name="data[12][Lien][1][lien]" value="previsionachats">
-                                                </td>
-                                                <td align="center"></td>
-                                                <td align="center"></td>
-                                                <td align="center"><input type="checkbox" name="data[12][Lien][1][imprimer]" id="pr9" value="1"></td>
-                                            </tr>
-                                            <tr class="previsionachatsv">
-                                                <td align="left">Vente N-1</td>
+
+
+
+
+                                            <tr class="bonlivraisons">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Bon livraison</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[12][Lien][2][add]" id="pr10" value="1">
-                                                    <input type="hidden" name="data[12][Lien][2][lien]" value="previsionachatsv">
+                                                    <input type="checkbox" <?php if (@$matrice['Vente']['bonlivraisons']['add'] == 1) { ?> checked="checked" <?php } ?> id='v2' name="data[4][Lien][16][add]" value="1">
+                                                    <input type="hidden" name="data[4][Lien][16][lien]" value="bonlivraisons">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[12][Lien][2][edit]" id="pr11" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[12][Lien][2][delete]" id="pr12" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[12][Lien][2][imprimer]" id="pr13" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['bonlivraisons']['edit'] == 1) { ?> checked="checked" <?php } ?> id='v3' name="data[4][Lien][16][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['bonlivraisons']['delete'] == 1) { ?> checked="checked" <?php } ?> id='v4' name="data[4][Lien][16][delete]" value="1"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <!-- <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['bonlivraisons']['imprimer'] == 1) { ?> checked="checked" <?php } ?> id='v5' name="data[4][Lien][16][imprimer]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['bonlivraisons']['valide'] == 1) { ?> checked="checked" <?php } ?> id='v6' name="data[4][Lien][16][valide]" value="1"></td> -->
                                             </tr>
+
+                                            <tr class="factureproformats">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Facture proforma</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Vente']['factureproformats']['add'] == 1) { ?> checked="checked" <?php } ?> id='v7' name="data[4][Lien][17][add]" value="1">
+                                                    <input type="hidden" name="data[4][Lien][17][lien]" value="factureproformats">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['factureproformats']['edit'] == 1) { ?> checked="checked" <?php } ?> id='v8' name="data[4][Lien][17][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['factureproformats']['delete'] == 1) { ?> checked="checked" <?php } ?> id='v9' name="data[4][Lien][17][delete]" value="1"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <!-- <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['factureproformats']['imprimer'] == 1) { ?> checked="checked" <?php } ?> id='v10' name="data[4][Lien][17][imprimer]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['factureproformats']['valide'] == 1) { ?> checked="checked" <?php } ?> id='v11' name="data[4][Lien][17][valide]" value="1"></td> -->
+                                            </tr>
+
+
+                                            <tr class="commandes">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Bon de Commande</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Vente']['commandes']['add'] == 1) { ?> checked="checked" <?php } ?> id='v12' name="data[4][Lien][18][add]" value="1">
+                                                    <input type="hidden" name="data[4][Lien][18][lien]" value="commandes">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['commandes']['edit'] == 1) { ?> checked="checked" <?php } ?> id='v13' name="data[4][Lien][18][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['commandes']['delete'] == 1) { ?> checked="checked" <?php } ?> id='v14' name="data[4][Lien][18][delete]" value="1"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <!-- <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['commandes']['imprimer'] == 1) { ?> checked="checked" <?php } ?> id='v15' name="data[4][Lien][18][imprimer]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['commandes']['valide'] == 1) { ?> checked="checked" <?php } ?> id='v16' name="data[4][Lien][18][valide]" value="1"></td> -->
+                                            </tr>
+
+
+                                            <tr class="factureatermes">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Facture A terme</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Vente']['factureatermes']['add'] == 1) { ?> checked="checked" <?php } ?> id='v17' name="data[4][Lien][19][add]" value="1">
+                                                    <input type="hidden" name="data[4][Lien][19][lien]" value="factureatermes">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['factureatermes']['edit'] == 1) { ?> checked="checked" <?php } ?> id='v18' name="data[4][Lien][19][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['factureatermes']['delete'] == 1) { ?> checked="checked" <?php } ?> id='v19' name="data[4][Lien][19][delete]" value="1"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <!-- <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['factureatermes']['imprimer'] == 1) { ?> checked="checked" <?php } ?> id='v20' name="data[4][Lien][19][imprimer]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['factureatermes']['valide'] == 1) { ?> checked="checked" <?php } ?> id='v21' name="data[4][Lien][19][valide]" value="1"></td> -->
+                                            </tr>
+
+
+                                            <tr class="facturecomptants">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Facture Comptant</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Vente']['facturecomptants']['add'] == 1) { ?> checked="checked" <?php } ?> id='v22' name="data[4][Lien][20][add]" value="1">
+                                                    <input type="hidden" name="data[4][Lien][20][lien]" value="facturecomptants">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['facturecomptants']['edit'] == 1) { ?> checked="checked" <?php } ?> id='v23' name="data[4][Lien][20][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['facturecomptants']['delete'] == 1) { ?> checked="checked" <?php } ?> id='v24' name="data[4][Lien][20][delete]" value="1"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <!-- <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['facturecomptants']['imprimer'] == 1) { ?> checked="checked" <?php } ?> id='v25' name="data[4][Lien][20][imprimer]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['facturecomptants']['valide'] == 1) { ?> checked="checked" <?php } ?> id='v26' name="data[4][Lien][20][valide]" value="1"></td> -->
+                                            </tr>
+
+
+                                            <tr class="factureavoirs">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Facture Avoir</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Vente']['factureavoirs']['add'] == 1) { ?> checked="checked" <?php } ?> id='v27' name="data[4][Lien][21][add]" value="1">
+                                                    <input type="hidden" name="data[4][Lien][21][lien]" value="factureavoirs">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['factureavoirs']['edit'] == 1) { ?> checked="checked" <?php } ?> id='v28' name="data[4][Lien][21][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['factureavoirs']['delete'] == 1) { ?> checked="checked" <?php } ?> id='v29' name="data[4][Lien][21][delete]" value="1"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <!-- <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['factureavoirs']['imprimer'] == 1) { ?> checked="checked" <?php } ?> id='v30' name="data[4][Lien][21][imprimer]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['factureavoirs']['valide'] == 1) { ?> checked="checked" <?php } ?> id='v31' name="data[4][Lien][21][valide]" value="1"></td> -->
+                                            </tr>
+
+
+                                            <tr class="reglementclientsbl">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Règlement BL </td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Vente']['reglementclientsbl']['add'] == 1) { ?> checked="checked" <?php } ?> id='v32' name="data[4][Lien][22][add]" value="1">
+                                                    <input type="hidden" name="data[4][Lien][22][lien]" value="reglementclientsbl">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['reglementclientsbl']['edit'] == 1) { ?> checked="checked" <?php } ?> id='v33' name="data[4][Lien][22][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['reglementclientsbl']['delete'] == 1) { ?> checked="checked" <?php } ?> id='v34' name="data[4][Lien][22][delete]" value="1"></td>
+
+                                                <td></td>
+                                                <td></td>
+                                                <!-- <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['reglementclientsbl']['imprimer'] == 1) { ?> checked="checked" <?php } ?> id='v35' name="data[4][Lien][22][imprimer]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['reglementclientsbl  ']['valide'] == 1) { ?> checked="checked" <?php } ?> id='v36' name="data[4][Lien][22][valide]" value="1"></td> -->
+                                            </tr>
+
+
+                                            <tr class="reglementclientsfac">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Règlement Facture</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Vente']['reglementclientsfac']['add'] == 1) { ?> checked="checked" <?php } ?> id='v37' name="data[4][Lien][23][add]" value="1">
+                                                    <input type="hidden" name="data[4][Lien][23][lien]" value="reglementclientsfac">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['reglementclientsfac']['edit'] == 1) { ?> checked="checked" <?php } ?> id='v38' name="data[4][Lien][23][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['reglementclientsfac']['delete'] == 1) { ?> checked="checked" <?php } ?> id='v39' name="data[4][Lien][23][delete]" value="1"></td>
+
+                                                <td></td>
+                                                <td></td>
+                                                <!-- <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['reglementclientsfac']['imprimer'] == 1) { ?> checked="checked" <?php } ?> id='v40' name="data[4][Lien][23][imprimer]" value="1"></td> -->
+                                                <!-- <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['reglementclientsfac']['valide'] == 1) { ?> checked="checked" <?php } ?> id='v41' name="data[4][Lien][23][valide]" value="1"></td> -->
+                                            </tr>
+
+
+                                            <tr class="retenus">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Retenu</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Vente']['retenus']['add'] == 1) { ?> checked="checked" <?php } ?> id='v42' name="data[4][Lien][24][add]" value="1">
+                                                    <input type="hidden" name="data[4][Lien][24][lien]" value="retenus">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['retenus']['edit'] == 1) { ?> checked="checked" <?php } ?> id='v43' name="data[4][Lien][24][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['retenus']['delete'] == 1) { ?> checked="checked" <?php } ?> id='v44' name="data[4][Lien][24][delete]" value="1"></td>
+                                                <td></td>
+                                                <td></td>
+                                                <!-- <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['retenus']['imprimer'] == 1) { ?> checked="checked" <?php } ?> id='v45' name="data[4][Lien][24][imprimer]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Vente']['retenus']['valide'] == 1) { ?> checked="checked" <?php } ?> id='v46' name="data[4][Lien][24][valide]" value="1"></td> -->
+                                            </tr>
+
                                         </tbody>
                                     </table>
-                                </div> -->
+                                </div>
+
+
+
+
+
+
+
+
+
+
+
 
 
                                 <div class="tab-pane fade in param" id="clients">
-                                    <table cellpadding="4" cellspacing="1" class="table" width="100%" style="background-color: 	#f8f8ff ;">
-                                        <a index="cli" ligne="1" ind="59" class="cocheru">Tout Cocher</a>/
-                                        <a index="cli" ligne="1" ind="59" class="decocheru">Tout Decocher</a>
+                                    <table cellpadding="4" cellspacing="1" class="table" width="100%">
+                                    <div class='pull-right'>
+                                            <button type="button" class="btn btn-xs btn-primary check-all" data-tab="clients">Tout Cocher</button>
+                                            <button type="button" class="btn btn-xs btn-danger uncheck-all" data-tab="clients">Tout Décocher</button>
+                                        </div>
                                         <tbody>
                                             <tr>
-                                                <td align="center">Autorisation <input type="checkbox" name="acces[]" id="cli1" value="9"></td>
+                                                <td align="center">Autorisation <input type="checkbox" <?php if (isset($matrice['clients'])) { ?> checked="checked" <?php } ?> name="acces[]" id="ventetab" value="9"></td>
                                                 <td align="center">Ajout</td>
                                                 <td align="center">Modification</td>
                                                 <td align="center">Suppression</td>
                                                 <td align="center">Impression</td>
                                                 <td align="center">Validation</td>
-                                                <td align="center">Fiche article</td>
                                             </tr>
+
+
+
+
                                             <tr class="clients">
-                                                <td align="left">Clients</td>
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Clients</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[9][Lien][0][add]" id="cli2" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['clients']['clients']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][0][add]" value="1">
                                                     <input type="hidden" name="data[9][Lien][0][lien]" value="clients">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[9][Lien][0][edit]" id="cli3" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[9][Lien][0][delete]" id="cli4" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[9][Lien][0][imprimer]" id="cli5" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['clients']['clients']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][0][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['clients']['clients']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][0][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['clients']['clients']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][0][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
                                             </tr>
-                                            <tr class="releveclients">
-                                                <td align="left">Relevé clients </td>
+
+                                            <tr class="listedivers">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Liste Divers</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[9][Lien][1][add]" id="cli6" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['clients']['listedivers']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][2][add]" value="1">
+                                                    <input type="hidden" name="data[9][Lien][2][lien]" value="listedivers">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['clients']['listedivers']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][2][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['clients']['listedivers']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][2][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['clients']['listedivers']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][2][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
+                                            </tr>
+
+                                            <tr class="releveclients">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Relevé clients </td>
+                                                <td align="center">
+                                                    <!-- <input type="checkbox" <?php if (@$matrice['clients']['releveclients']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][1][add]" value="1">-->
                                                     <input type="hidden" name="data[9][Lien][1][lien]" value="releveclients">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[9][Lien][1][edit]" id="cli7" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[9][Lien][1][delete]" id="cli8" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[9][Lien][1][imprimer]" id="cli9" value="1"></td>
-
+                                                <td align="center">
+                                                    <!-- <input type="checkbox" <?php if (@$matrice['clients']['releveclients']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][1][edit]" value="1"> -->
+                                                </td>
+                                                <td align="center">
+                                                    <!-- <input type="checkbox" <?php if (@$matrice['clients']['releveclients']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][1][delete]" value="1"> -->
+                                                </td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['clients']['releveclients']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][1][imprimer]" value="1">
+                                                </td>
+                                                <td align="center"></td>
                                             </tr>
+
+
+
+                                            <tr class="etatnonsolde">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Etat de Client Non Soldé</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['clients']['etatnonsolde']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][3][add]" value="1">
+                                                    <input type="hidden" name="data[9][Lien][3][lien]" value="etatnonsolde">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['clients']['etatnonsolde']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][3][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['clients']['etatnonsolde']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][3][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['clients']['etatnonsolde']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][3][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
+                                            </tr>
+
+
+
+                                            <tr class="etatsoldedivers">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Etat Solde Divers</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['clients']['etatsoldedivers']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][4][add]" value="1">
+                                                    <input type="hidden" name="data[9][Lien][4][lien]" value="etatsoldedivers">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['clients']['etatsoldedivers']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][4][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['clients']['etatsoldedivers']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][4][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['clients']['etatsoldedivers']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][4][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
+                                            </tr>
+
+
+                                            <tr class="etatretenus">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Etat Retenus
+                                                </td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['clients']['etatretenus']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][5][add]" value="1">
+                                                    <input type="hidden" name="data[9][Lien][5][lien]" value="etatretenus">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['clients']['etatretenus']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][5][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['clients']['etatretenus']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][5][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['clients']['etatretenus']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[9][Lien][5][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
+                                            </tr>
+
+
+
+
+
 
                                         </tbody>
                                     </table>
                                 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -956,371 +913,666 @@
 
 
                                 <div class="tab-pane fade in param" id="articles">
-                                    <table cellpadding="4" cellspacing="1" class="table" width="100%" style="background-color: 	#f8f8ff ;">
-                                        <a index="art" ligne="1" ind="59" class="cocheru">Tout Cocher</a>/
-                                        <a index="art" ligne="1" ind="59" class="decocheru">Tout Decocher</a>
+                                    <table cellpadding="4" cellspacing="1" class="table" width="100%">
+                                    <div class='pull-right'>
+                                            <button type="button" class="btn btn-xs btn-primary check-all" data-tab="articles">Tout Cocher</button>
+                                            <button type="button" class="btn btn-xs btn-danger uncheck-all" data-tab="articles">Tout Décocher</button>
+                                        </div>
                                         <tbody>
                                             <tr>
-                                                <td align="center">Autorisation <input type="checkbox" name="acces[]" id="art1" value="8"></td>
+                                                <td align="center">Autorisation <input type="checkbox" <?php if (isset($matrice['Article'])) { ?> checked="checked" <?php } ?> name="acces[]" id="ventetab" value="8"></td>
                                                 <td align="center">Ajout</td>
                                                 <td align="center">Modification</td>
                                                 <td align="center">Suppression</td>
                                                 <td align="center">Impression</td>
-
+                                                <td align="center">Validation</td>
+                                                <!-- <td align="center">Cout de revient </td> -->
                                             </tr>
+
+
+
                                             <tr class="unitecontenance">
-                                                <td align="left">Unités </td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Unités </td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[8][Lien][0][add]" id="art2" value="1">
-                                                    <input type="hidden" name="data[8][Lien][0][lien]" value="unitecontenance">
+                                                    <input type="checkbox" <?php if (@$matrice['Article']['unitecontenance']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][1][add]" value="1">
+                                                    <input type="hidden" name="data[8][Lien][1][lien]" value="unitecontenance">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][0][edit]" id="art3" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][0][delete]" id="art4" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][0][imprimer]" id="art5" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['unitecontenance']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][1][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['unitecontenance']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][1][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['unitecontenance']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][1][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
                                             </tr>
 
 
-
-                                            <tr class="factures" hidden>
-                                                <td align="left">Unites article </td>
+                                            <tr class="marques">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Marques </td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[8][Lien][1][add]" id="art6" value="1">
-                                                    <input type="hidden" name="data[8][Lien][1][lien]" value="unitearticle">
+                                                    <input type="checkbox" <?php if (@$matrice['Article']['marques']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][15][add]" value="1">
+                                                    <input type="hidden" name="data[8][Lien][15][lien]" value="marques">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][1][edit]" id="art7" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][1][delete]" id="art8" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][1][imprimer]" id="art9" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['marques']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][15][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['marques']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][15][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['marques']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][15][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
                                             </tr>
 
+
+                                            <tr class="unitearticle" hidden>
+                                                <td align="left">Unités article</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Article']['unitearticle']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][0][add]" value="1">
+                                                    <input type="hidden" name="data[8][Lien][0][lien]" value="unitearticle">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['unitearticle']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][0][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['unitearticle']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][0][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['unitearticle']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][0][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
+                                            </tr>
 
                                             <tr class="famille">
-                                                <td align="left">Familles</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Familles </td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[8][Lien][2][add]" id="art10" value="1">
-                                                    <input type="hidden" name="data[8][Lien][2][lien]" value="famille">
+                                                    <input type="checkbox" <?php if (@$matrice['Article']['famille']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][3][add]" value="1">
+                                                    <input type="hidden" name="data[8][Lien][3][lien]" value="famille">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][2][edit]" id="art11" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][2][delete]" id="art12" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][2][imprimer]" id="art13" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['famille']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][3][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['famille']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][3][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['famille']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][3][imprimer]" value="1"></td>
+                                                <td align="center"></td>
                                             </tr>
-
 
                                             <tr class="sousfamille">
-                                                <td align="left">Sous famille</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Sous famille</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[8][Lien][7][add]" id="art30" value="1">
-                                                    <input type="hidden" name="data[8][Lien][7][lien]" value="sousfamille">
+                                                    <input type="checkbox" <?php if (@$matrice['Article']['sousfamille']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][4][add]" value="1">
+                                                    <input type="hidden" name="data[8][Lien][4][lien]" value="sousfamille">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][7][edit]" id="art31" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][7][delete]" id="art32" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][7][imprimer]" id="art33" value="1"></td>
-
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['sousfamille']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][4][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['sousfamille']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][4][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['sousfamille']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][4][imprimer]" value="1"></td>
+                                                <td align="center"></td>
                                             </tr>
+
+
+
+
                                             <tr class="article">
-                                                <td align="left">Articles</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Articles</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[8][Lien][6][add]" id="art26" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Article']['article']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][6][add]" value="1">
                                                     <input type="hidden" name="data[8][Lien][6][lien]" value="article">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][6][edit]" id="art27" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][6][delete]" id="art28" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][6][imprimer]" id="art29" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['article']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][6][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['article']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][6][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['article']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][6][imprimer]" value="1"></td>
+
+                                                <td align="center"></td>
+                                                <!-- <td align="center"><input type="checkbox" <?php if (@$matrice['Article']['article']['coutrevient'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][6][imprimer]" value="1"></td> -->
+
+                                            </tr>
+
+
+
+                                            <tr class="changementprix">
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Changement de prix</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Article']['changementprix']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][7][add]" value="1">
+                                                    <input type="hidden" name="data[8][Lien][7][lien]" value="changementprix">
+                                                </td>
+                                                <td align="center">
+                                                    <!-- <input type="checkbox" <?php if (@$matrice['Article']['changementprix']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][7][edit]" value="1"> -->
+                                                </td>
+                                                <td align="center">
+                                                    <!-- <input type="checkbox" <?php if (@$matrice['Article']['changementprix']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][7][delete]" value="1"> -->
+                                                </td>
+                                                <td align="center">
+                                                    <!-- <input type="checkbox" <?php if (@$matrice['Article']['changementprix']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][7][imprimer]" value="1"> -->
+                                                </td>
+
                                                 <td align="center"></td>
 
-
                                             </tr>
-                                            <tr class="changementprix">
-                                                <td align="left">Changement de prix</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[8][Lien][8][add]" id="art35" value="1">
-                                                    <input type="hidden" name="data[8][Lien][8][lien]" value="changementprix">
-                                                </td>
-                                                <!-- <td align="center"><input type="checkbox" name="data[8][Lien][8][edit]" id="art36" value="1"></td> -->
-                                                <!-- <td align="center"><input type="checkbox" name="data[8][Lien][8][delete]" id="art37" value="1"></td> -->
-                                                <!-- <td align="center"><input type="checkbox" name="data[8][Lien][8][imprimer]" id="art38" value="1"></td> -->
 
-                                            </tr>
                                             <tr class="historiquearticles">
-                                                <td align="left">Etat historique article</td>
+                                                <td align="left"> <i class="fa fa-toggle-on toggle-btn"></i>Etat historique article</td>
                                                 <td align="center">
-                                                    <!-- <input type="checkbox" name="data[8][Lien][9][add]" id="art39" value="1"> -->
-                                                    <input type="hidden" name="data[8][Lien][9][lien]" value="historiquearticles">
+                                                    <!-- <input type="checkbox" <?php if (@$matrice['Article']['historiquearticles']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][8][add]" value="1"> -->
+                                                    <input type="hidden" name="data[8][Lien][8][lien]" value="historiquearticles">
                                                 </td>
                                                 <td align="center">
-                                                    <!-- <input type="checkbox" name="data[8][Lien][9][edit]" id="art40" value="1"> -->
+                                                    <!-- <input type="checkbox" <?php if (@$matrice['Article']['historiquearticles']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][8][edit]" value="1"> -->
                                                 </td>
                                                 <td align="center">
-                                                    <!-- <input type="checkbox" name="data[8][Lien][9][delete]" id="art41" value="1"> -->
+                                                    <!-- <input type="checkbox" <?php if (@$matrice['Article']['historiquearticles']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][8][delete]" value="1"> -->
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[8][Lien][9][imprimer]" id="art42" value="1"></td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Article']['historiquearticles']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[8][Lien][8][imprimer]" value="1">
+                                                </td>
+
+                                                <td align="center"></td>
 
                                             </tr>
+
+
+
 
                                         </tbody>
                                     </table>
                                 </div>
 
 
-                                <div hidden class="tab-pane fade in caisses" id="caisses">
-                                    <table cellpadding="4" cellspacing="1" class="table" width="100%" style="background-color: 	#f8f8ff ;">
-                                        <a index="cai" ligne="1" ind="59" class="cocheru">Tout Cocher</a>/
-                                        <a index="cai" ligne="1" ind="59" class="decocheru">Tout Decocher</a>
+
+
+
+
+
+
+
+
+
+
+                                <div class="tab-pane fade in param" id="caisses">
+                                    <table cellpadding="4" cellspacing="1" class="table" width="100%">
+                                    <div class='pull-right'>
+                                            <button type="button" class="btn btn-xs btn-primary check-all" data-tab="caisses">Tout Cocher</button>
+                                            <button type="button" class="btn btn-xs btn-danger uncheck-all" data-tab="caisses">Tout Décocher</button>
+                                        </div>
                                         <tbody>
                                             <tr>
-                                                <td align="center">Autorisation <input type="checkbox" name="acces[]" id="cai1" value="10"></td>
+                                                <td align="center">Autorisation <input type="checkbox" <?php if (isset($matrice['caisses'])) { ?> checked="checked" <?php } ?> name="acces[]" id="caisse1" value="10"></td>
                                                 <td align="center">Ajout</td>
                                                 <td align="center">Modification</td>
                                                 <td align="center">Suppression</td>
                                                 <td align="center">Impression</td>
                                                 <td align="center">Validation</td>
                                             </tr>
+
+
+
+
                                             <tr class="etatdecaisses">
-                                                <td align="left">Etat de caisses</td>
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Etat de caisse</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[10][Lien][0][add]" id="cai2" value="1">
+                                                    <!-- <input type="checkbox" <?php if (@$matrice['caisses']['etatdecaisses']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[10][Lien][0][add]" value="1"> -->
                                                     <input type="hidden" name="data[10][Lien][0][lien]" value="etatdecaisses">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[10][Lien][0][edit]" id="cai3" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[10][Lien][0][delete]" id="cai4" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[10][Lien][0][imprimer]" id="cai5" value="1"></td>
-                                            </tr>
-                                            <tr class="transferts">
-                                                <td align="left">Transfert entre les caisses </td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[10][Lien][1][add]" id="cai6" value="1">
+                                                    <!-- <input type="checkbox" <?php if (@$matrice['caisses']['etatdecaisses']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[10][Lien][0][edit]" value="1"> -->
+                                                </td>
+                                                <td align="center">
+                                                    <!-- <input type="checkbox" <?php if (@$matrice['caisses']['etatdecaisses']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[10][Lien][0][delete]" value="1"> -->
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['caisses']['etatdecaisses']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[10][Lien][0][imprimer]" value="1">
+                                                </td>
+
+                                                <td align="center"></td>
+                                            </tr>
+
+                                            <tr class="transferts">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i> Transfert entre les caisses </td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['caisses']['transferts']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[10][Lien][1][add]" value="1">
                                                     <input type="hidden" name="data[10][Lien][1][lien]" value="transferts">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[10][Lien][1][edit]" id="cai7" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[10][Lien][1][delete]" id="cai8" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[10][Lien][1][imprimer]" id="cai9" value="1"></td>
-
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['caisses']['transferts']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[10][Lien][1][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['caisses']['transferts']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[10][Lien][1][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['caisses']['transferts']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[10][Lien][1][imprimer]" value="1"></td>
+                                                <td align="center"></td>
                                             </tr>
-                                            <tr class="depenses">
-                                                <td align="left">Dépenses </td>
+
+                                            <!-- <tr class="depenses">
+                                                <td align="left"> Dépenses </td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[10][Lien][2][add]" id="cai10" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['caisses']['depenses']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[10][Lien][2][add]" value="1">
                                                     <input type="hidden" name="data[10][Lien][2][lien]" value="depenses">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[10][Lien][2][edit]" id="cai11" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[10][Lien][2][delete]" id="cai12" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[10][Lien][2][imprimer]" id="cai13" value="1"></td>
-
-                                            </tr>
-
-
-
-                                        </tbody>
-                                    </table>
-                                </div>
-
-
-
-                                <div class="tab-pane fade in param" id="commercials">
-                                    <table cellpadding="4" cellspacing="1" class="table" width="100%" style="background-color: 	#f8f8ff ;">
-                                        <a index="commercial" ligne="1" ind="59" class="cocheru">Tout Cocher</a>/
-                                        <a index="commercial" ligne="1" ind="59" class="decocheru">Tout Decocher</a>
-                                        <tbody>
-                                            <tr>
-                                                <td align="center">Autorisation <input type="checkbox" name="acces[]" id="commercial1" value="11"></td>
-                                                <td align="center">Ajout</td>
-                                                <td align="center">Modification</td>
-                                                <td align="center">Suppression</td>
-                                                <td align="center">Impression</td>
-                                                <td align="center">Validation</td>
-                                            </tr>
-                                            <tr class="commercial">
-                                                <td align="left">Commercial</td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[11][Lien][0][add]" id="commercial2" value="1">
-                                                    <input type="hidden" name="data[11][Lien][0][lien]" value="commercials">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[11][Lien][0][edit]" id="commercial3" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[11][Lien][0][delete]" id="commercial4" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[11][Lien][0][imprimer]" id="commercial5" value="1"></td>
-                                            </tr>
-                                            <tr class="categories">
-                                                <td align="left">Categories </td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[11][Lien][1][add]" id="commercial6" value="1">
-                                                    <input type="hidden" name="data[11][Lien][1][lien]" value="categories">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[11][Lien][1][edit]" id="commercial7" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[11][Lien][1][delete]" id="commercial8" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[11][Lien][1][imprimer]" id="commercial9" value="1"></td>
-
-                                            </tr>
-                                            <!-- <tr class="bonusmalus">
-                                                <td align="left">Bonus/Malus </td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[11][Lien][2][add]" id="commercial10" value="1">
-                                                    <input type="hidden" name="data[11][Lien][2][lien]" value="bonusmalus">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[11][Lien][2][edit]" id="commercial11" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[11][Lien][2][delete]" id="commercial12" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[11][Lien][2][imprimer]" id="commercial13" value="1"></td>
-
-                                            </tr>
-                                            <tr class="reglementcommercial">
-                                                <td align="left">Reglement commercial </td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[11][Lien][3][add]" id="commercial14" value="1">
-                                                    <input type="hidden" name="data[11][Lien][3][lien]" value="reglementcommercial">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[11][Lien][3][edit]" id="commercial15" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[11][Lien][3][delete]" id="commercial16" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[11][Lien][3][imprimer]" id="commercial17" value="1"></td>
-
-                                            </tr>
-
-                                            <tr class="relevecommercial">
-                                                <td align="left">Relev� commercial </td>
-                                                <td align="center">
-                                                    <input type="checkbox" name="data[11][Lien][4][add]" id="commercial18" value="1">
-                                                    <input type="hidden" name="data[11][Lien][4][lien]" value="relevecommercial">
-                                                </td>
-                                                <td align="center"><input type="checkbox" name="data[11][Lien][4][edit]" id="commercial19" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[11][Lien][4][delete]" id="commercial20" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[11][Lien][4][imprimer]" id="commercial21" value="1"></td>
-
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['caisses']['depenses']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[10][Lien][2][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['caisses']['depenses']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[10][Lien][2][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['caisses']['depenses']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[10][Lien][2][imprimer]" value="1"></td>
+                                                <td align="center"></td>
                                             </tr> -->
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                                         </tbody>
                                     </table>
                                 </div>
+
+
+
+
+
 
 
                                 <div class="tab-pane fade in finance" id="finance">
-                                    <table cellpadding="4" cellspacing="1" class="table" width="100%" style="background-color: 	#f8f8ff ;">
-                                        <a index="f" ligne="1" ind="60" class="cocheru">Tout Cocher</a>/
-                                        <a index="f" ligne="1" ind="60" class="decocheru">Tout Decocher</a>
+                                    <table cellpadding="4" cellspacing="1" class="table" width="100%">
+                                    <div class='pull-right'>
+                                            <button type="button" class="btn btn-xs btn-primary check-all" data-tab="finance">Tout Cocher</button>
+                                            <button type="button" class="btn btn-xs btn-danger uncheck-all" data-tab="finance">Tout Décocher</button>
+                                        </div>
                                         <tbody>
                                             <tr>
-                                                <td align="center">Autorisation <input type="checkbox" name="acces[]" id="f1" value="5"></td>
+                                                <td align="center">Autorisation <input type="checkbox" <?php if (isset($matrice['Finance'])) { ?> checked="checked" <?php } ?> name="acces[]" id="ventetab" value="5"></td>
                                                 <td align="center">Ajout</td>
                                                 <td align="center">Modification</td>
                                                 <td align="center">Suppression</td>
                                                 <td align="center">Impression</td>
                                             </tr>
-                                            <tr class="engagementfournisseur">
-                                                <td align="left">Etat de paiement Fournisseur</td>
+
+
+                                            <tr class="engagementcomptes">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Engagement Compte</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[5][Lien][13][add]" id="f36" value="1">
+                                                    <input type="checkbox" <?php if (@$matrice['Finance']['engagementcomptes']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][16][add]" value="1">
+                                                    <input type="hidden" name="data[5][Lien][16][lien]" value="engagementcomptes">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['engagementcomptes']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][16][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['engagementcomptes']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][16][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['engagementcomptes']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][16][imprimer]" value="1"></td>
+
+                                            </tr>
+
+
+                                            <tr class="engagementfournisseur">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Engagement Fournisseur</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Finance']['engagementfournisseur']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][13][add]" value="1">
                                                     <input type="hidden" name="data[5][Lien][13][lien]" value="engagementfournisseur">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[5][Lien][13][edit]" id="f37" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[5][Lien][13][delete]" id="f34" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[5][Lien][13][imprimer]" id="f39" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['engagementfournisseur']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][13][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['engagementfournisseur']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][13][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['engagementfournisseur']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][13][imprimer]" value="1"></td>
+
                                             </tr>
-                                            <tr class="listecheque">
-                                                <td align="left">Liste chéque</td>
+
+
+                                            <tr class="engagementclients">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Engagement Client</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[5][Lien][14][add]" id="f40" value="1">
-                                                    <input type="hidden" name="data[5][Lien][14][lien]" value="listecheque">
+                                                    <input type="checkbox" <?php if (@$matrice['Finance']['engagementclients']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][17][add]" value="1">
+                                                    <input type="hidden" name="data[5][Lien][17][lien]" value="engagementclients">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[5][Lien][14][edit]" id="f41" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[5][Lien][14][delete]" id="f42" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[5][Lien][14][imprimer]" id="f43" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['engagementclients']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][17][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['engagementclients']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][17][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['engagementclients']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][17][imprimer]" value="1"></td>
+
                                             </tr>
-                                            <tr class="listetraite">
-                                                <td align="left">Liste traite</td>
+
+
+                                            <tr class="banques">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Banques</td>
                                                 <td align="center">
-                                                    <input type="checkbox" name="data[5][Lien][15][add]" id="f44" value="1">
-                                                    <input type="hidden" name="data[5][Lien][15][lien]" value="listetraite">
+                                                    <input type="checkbox" <?php if (@$matrice['Finance']['banques']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][18][add]" value="1">
+                                                    <input type="hidden" name="data[5][Lien][18][lien]" value="banques">
                                                 </td>
-                                                <td align="center"><input type="checkbox" name="data[5][Lien][15][edit]" id="f45" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[5][Lien][15][delete]" id="f46" value="1"></td>
-                                                <td align="center"><input type="checkbox" name="data[5][Lien][15][imprimer]" id="f47" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['banques']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][18][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['banques']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][18][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['banques']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][18][imprimer]" value="1"></td>
+
                                             </tr>
+
+                                            <tr class="comptes">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Comptes</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Finance']['comptes']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][26][add]" value="1">
+                                                    <input type="hidden" name="data[5][Lien][26][lien]" value="comptes">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['comptes']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][26][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['comptes']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][26][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['comptes']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][26][imprimer]" value="1"></td>
+
+                                            </tr>
+
+
+                                            <tr class="typecredits">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Type crédit</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Finance']['typecredits']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][19][add]" value="1">
+                                                    <input type="hidden" name="data[5][Lien][19][lien]" value="typecredits">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['typecredits']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][19][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['typecredits']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][19][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['typecredits']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][19][imprimer]" value="1"></td>
+
+                                            </tr>
+
+
+                                            <tr class="typeoperations">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Type opération</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Finance']['typeoperations']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][20][add]" value="1">
+                                                    <input type="hidden" name="data[5][Lien][20][lien]" value="typeoperations">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['typeoperations']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][20][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['typeoperations']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][20][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['typeoperations']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][20][imprimer]" value="1"></td>
+
+                                            </tr>
+
+
+                                            <tr class="operations">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Opérations</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Finance']['operations']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][21][add]" value="1">
+                                                    <input type="hidden" name="data[5][Lien][21][lien]" value="operations">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['operations']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][21][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['operations']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][21][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['operations']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][21][imprimer]" value="1"></td>
+
+                                            </tr>
+
+                                            <tr class="frequences">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Fréquences</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Finance']['frequences']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][22][add]" value="1">
+                                                    <input type="hidden" name="data[5][Lien][22][lien]" value="frequences">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['frequences']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][22][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['frequences']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][22][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['frequences']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][22][imprimer]" value="1"></td>
+
+                                            </tr>
+
+                                            <tr class="carnetcheques">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Carnet cheques</td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Finance']['carnetcheques']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][23][add]" value="1">
+                                                    <input type="hidden" name="data[5][Lien][23][lien]" value="carnetcheques">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['carnetcheques']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][23][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['carnetcheques']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][23][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['carnetcheques']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][23][imprimer]" value="1"></td>
+
+                                            </tr>
+
+                                            <tr class="bordereaucheques">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Bordereau Chéques
+                                                </td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Finance']['bordereaucheques']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][24][add]" value="1">
+                                                    <input type="hidden" name="data[5][Lien][24][lien]" value="bordereaucheques">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['bordereaucheques']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][24][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['bordereaucheques']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][24][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['bordereaucheques']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][24][imprimer]" value="1"></td>
+
+                                            </tr>
+
+
+                                            <tr class="bordereautraites">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Bordereau Traites </td>
+                                                <td align="center">
+                                                    <input type="checkbox" <?php if (@$matrice['Finance']['bordereautraites']['add'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][25][add]" value="1">
+                                                    <input type="hidden" name="data[5][Lien][25][lien]" value="bordereautraites">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['bordereautraites']['edit'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][25][edit]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['bordereautraites']['delete'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][25][delete]" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Finance']['bordereautraites']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[5][Lien][25][imprimer]" value="1"></td>
+
+                                            </tr>
+
                                         </tbody>
                                     </table>
                                 </div>
 
+
+
+
                                 <div class="tab-pane fade in statistiques" id="statistiques">
-                                    <table cellpadding="4" cellspacing="1" class="table" width="100%" style="background-color: 	#f8f8ff ;">
-                                        <a index="st" ligne="1" ind="61" class="cocheru">Tout Cocher</a>/
-                                        <a index="st" ligne="1" ind="61" class="decocheru">Tout Decocher</a>
+                                    <table cellpadding="4" cellspacing="1" class="table" width="100%">
+                                        <div class='pull-right'>
+                                            <button type="button" class="btn btn-xs btn-primary check-all" data-tab="statistiques">Tout Cocher</button>
+                                            <button type="button" class="btn btn-xs btn-danger uncheck-all" data-tab="statistiques">Tout Décocher</button>
+                                        </div>
                                         <tbody>
                                             <tr>
-                                                <td align="center">Autorisation <input type="checkbox" name="acces[]" id="st1" value="6"></td>
+                                                <td align="center">Autorisation <input type="checkbox" <?php if (isset($matrice['Stat'])) { ?> checked="checked" <?php } ?> name="acces[]" id="ventetab" value="6"></td>
                                                 <td align="center">Ajout</td>
                                                 <td align="center">Modification</td>
                                                 <td align="center">Suppression</td>
                                                 <td align="center">Impression</td>
                                             </tr>
-                                            <tr class="listeoffres">
-                                                <td align="left">Liste Offres de prix Vente</td>
-                                                <td align="center">
-                                                    <input type="hidden" name="data[6][Lien][13][lien]" value="listeoffres">
-                                                </td>
-                                                <td align="center"></td>
-                                                <td align="center"></td>
-                                                <td align="center"><input type="checkbox" name="data[6][Lien][13][imprimer]" id="st39" value="1"></td>
-                                            </tr>
-                                            <tr class="listecommandes">
-                                                <td align="left">Liste Commandes Vente</td>
+                                            <tr class="pararticle">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Statistique Par Article</td>
                                                 <td align="center">
 
-                                                    <input type="hidden" name="data[6][Lien][14][lien]" value="listecommandes">
+                                                    <input type="hidden" name="data[6][Lien][0][lien]" value="pararticle">
                                                 </td>
-                                                <td align="center"></td>
-                                                <td align="center"></td>
-                                                <td align="center"><input type="checkbox" name="data[6][Lien][14][imprimer]" id="st43" value="1"></td>
-                                            </tr>
-                                            <tr class="listefactures">
-                                                <td align="left">Liste Factures Vente</td>
                                                 <td align="center">
-
-                                                    <input type="hidden" name="data[6][Lien][15][lien]" value="listefactures">
                                                 </td>
-                                                <td align="center"></td>
-                                                <td align="center"></td>
-                                                <td align="center"><input type="checkbox" name="data[6][Lien][15][imprimer]" id="st47" value="1"></td>
-                                            </tr>
-
-                                            <tr class="listebl">
-                                                <td align="left">Liste Bons de livraisons Vente</td>
                                                 <td align="center">
-
-                                                    <input type="hidden" name="data[6][Lien][16][lien]" value="listebl">
                                                 </td>
-                                                <td align="center"></td>
-                                                <td align="center"></td>
-                                                <td align="center"><input type="checkbox" name="data[6][Lien][16][imprimer]" id="st51" value="1"></td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['pararticle']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][0][imprimer]" value="1"></td>
+
                                             </tr>
 
 
-                                            <tr class="listecommandesachat" >
-                                                <td align="left">Liste Commandes achat</td>
+                                            <tr class="parclientarticle">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Statistique Par Client/Article</td>
                                                 <td align="center">
-                                                    <input type="hidden" name="data[6][Lien][17][lien]" value="listecommandesachat">
+
+                                                    <input type="hidden" name="data[6][Lien][1][lien]" value="parclientarticle">
                                                 </td>
-                                                <td align="center"></td>
-                                                <td align="center"></td>
-                                                <td align="center"><input type="checkbox" name="data[6][Lien][17][imprimer]" id="st55" value="1"></td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['parclientarticle']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][1][imprimer]" value="1"></td>
+
+                                            </tr>
+                                            <tr class="pararticleannee">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Statistique Par Article/Année</td>
+                                                <td align="center">
+
+                                                    <input type="hidden" name="data[6][Lien][2][lien]" value="pararticleannee">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['pararticleannee']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][2][imprimer]" value="1"></td>
+
+                                            </tr>
+                                            <tr class="chiffredaffaire">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Chiffre d'affaire</td>
+                                                <td align="center">
+
+                                                    <input type="hidden" name="data[6][Lien][3][lien]" value="chiffredaffaire">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['chiffredaffaire']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][3][imprimer]" value="1"></td>
+
+                                            </tr>
+                                            <tr class="journalvente">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Journal de Vente </td>
+                                                <td align="center">
+
+                                                    <input type="hidden" name="data[6][Lien][4][lien]" value="journalvente">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['journalvente']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][4][imprimer]" value="1"></td>
+
+                                            </tr>
+                                            <tr class="etatecheance">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Etat des Echéances</td>
+                                                <td align="center">
+
+                                                    <input type="hidden" name="data[6][Lien][5][lien]" value="etatecheance">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['etatecheance']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][5][imprimer]" value="1"></td>
+
                                             </tr>
 
-                                            <tr class="listeblachat">
-                                                <td align="left">Liste Bons de livraisons Achat</td>
+                                            <tr class="etatsoldefournisseur">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Etat Solde Fournisseurs</td>
                                                 <td align="center">
-                                              
-                                                    <input type="hidden" name="data[6][Lien][18][lien]" value="listeblachat">
+
+                                                    <input type="hidden" name="data[6][Lien][6][lien]" value="etatsoldefournisseur">
                                                 </td>
-                                                <td></td>
-                                                <td></td>
-                                                <td align="center"><input type="checkbox" name="data[6][Lien][18][imprimer]" id="st56" value="1"></td>
-                                            </tr>
-                                            <tr class="listefacturesachat">
-                                                <td align="left">Liste Factures Achat</td>
                                                 <td align="center">
-                                                    
-                                                    <input type="hidden" name="data[6][Lien][19][lien]" value="listefacturesachat">
                                                 </td>
-                                                <td></td>
-                                                <td></td>
-                                                <td align="center"><input type="checkbox" name="data[6][Lien][19][imprimer]" id="st57" value="1"></td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['etatsoldefournisseur']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][6][imprimer]" value="1"></td>
+
                                             </tr>
+
+                                            <tr class="etatsoldeclient">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Etat solde Client</td>
+                                                <td align="center">
+
+                                                    <input type="hidden" name="data[6][Lien][7][lien]" value="etatsoldeclient">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['etatsoldeclient']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][7][imprimer]" value="1"></td>
+
+                                            </tr>
+
+                                            <tr class="etatsoldedivers">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Etat solde Divers</td>
+                                                <td align="center">
+
+                                                    <input type="hidden" name="data[6][Lien][8][lien]" value="etatsoldedivers">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['etatsoldedivers']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][8][imprimer]" value="1"></td>
+
+                                            </tr>
+
+                                            <tr class="detailsvente">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Détails de Vente</td>
+                                                <td align="center">
+
+                                                    <input type="hidden" name="data[6][Lien][9][lien]" value="detailsvente">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['detailsvente']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][9][imprimer]" value="1"></td>
+
+                                            </tr>
+
+                                            <tr class="etatjournalier">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Etat Journalier</td>
+                                                <td align="center">
+
+                                                    <input type="hidden" name="data[6][Lien][10][lien]" value="etatjournalier">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['etatjournalier']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][10][imprimer]" value="1"></td>
+
+                                            </tr>
+
+                                            <tr class="etatecart">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Etat Ecart</td>
+                                                <td align="center">
+
+                                                    <input type="hidden" name="data[6][Lien][11][lien]" value="etatecart">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['etatecart']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][11][imprimer]" value="1"></td>
+
+                                            </tr>
+
+                                            <tr class="etatimpaye">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Etat Impayé</td>
+                                                <td align="center">
+
+                                                    <input type="hidden" name="data[6][Lien][12][lien]" value="etatimpaye">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['etatimpaye']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][12][imprimer]" value="1"></td>
+
+                                            </tr>
+
+                                            <tr class="etatpayeimpaye">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Etat Payé/Impayé</td>
+                                                <td align="center">
+
+                                                    <input type="hidden" name="data[6][Lien][13][lien]" value="etatpayeimpaye">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['etatpayeimpaye']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][13][imprimer]" value="1"></td>
+
+                                            </tr>
+
+                                            <tr class="etatdebitcredit">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Etat Débit/Crédit</td>
+                                                <td align="center">
+
+                                                    <input type="hidden" name="data[6][Lien][14][lien]" value="etatdebitcredit">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['etatdebitcredit']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][14][imprimer]" value="1"></td>
+
+                                            </tr>
+
+                                            <tr class="etatreglementbl">
+                                                <td align="left"><i class="fa fa-toggle-on toggle-btn"></i>Etat Réglement BL</td>
+                                                <td align="center">
+
+                                                    <input type="hidden" name="data[6][Lien][15][lien]" value="etatreglementbl">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center">
+                                                </td>
+                                                <td align="center"><input type="checkbox" <?php if (@$matrice['Stat']['etatreglementbl']['imprimer'] == 1) { ?> checked="checked" <?php } ?> name="data[6][Lien][15][imprimer]" value="1"></td>
+
+                                            </tr>
+
+
+
                                         </tbody>
                                     </table>
                                 </div>
@@ -1330,21 +1582,53 @@
                         <?php echo $this->Form->end(); ?>
                     </nav>
                 </div>
-
             </div>
-
-        </div>
-        <!-- /.box -->
-    </div>
-    </div>
+            <!-- /.box -->
 </section>
+
+
+<script>
+    $(document).ready(function() {
+        function updateButtonState() {
+            $('.toggle-btn').each(function() {
+                var checkboxes = $(this).closest('tr').find(':checkbox');
+                var isChecked = checkboxes.length > 0 && checkboxes.filter(':checked').length === checkboxes.length;
+                $(this).toggleClass('active', isChecked);
+            });
+        }
+
+        // On page load, update button states
+        updateButtonState();
+
+        // Handle toggle button clicks
+
+    });
+</script>
+<style>
+    .toggle-btn {
+        display: inline-block;
+        padding: 5px 10px;
+        text-align: center;
+        text-decoration: none;
+        border: 1px solid #007BFF;
+        color: #007BFF;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: white;
+        transition: all 0.3s ease;
+    }
+
+    /* .toggle-btn.active {
+        background-color: #007BFF;
+        color: white;
+    } */
+</style>
+
 <script>
     $(function() {
         $('.cocheru').on('click', function() {
             index = $(this).attr('index');
             ligne = $(this).attr('ligne');
-            ligne = $(this).attr('ligne');
-            // alert(ligne);
             ind = $(this).attr('ind');
             for (i = 0; i <= Number(ligne); i++) {
                 for (j = 0; i <= Number(ind); i++) {
@@ -1364,4 +1648,54 @@
             }
         })
     })
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('.toggle-col-btn').click(function() {
+            var columnName = $(this).data('col');
+
+            var checkboxes = $('table td').find('[name$=' + columnName + ']');
+
+            // Vérifier si la plupart des cases sont cochées
+            var isChecked = checkboxes.filter(':checked').length > checkboxes.length / 2;
+
+
+            // Cocher ou décocher toutes les cases en fonction de l'état actuel
+            checkboxes.prop('checked', !isChecked);
+
+
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        // Gérer le clic sur l'icône de bascule
+        $('.toggle-btn').click(function() {
+            // Trouver les cases à cocher dans la même ligne
+            var checkboxes = $(this).closest('tr').find(':checkbox');
+
+            // Vérifier si la plupart des cases sont cochées
+            var isChecked = checkboxes.filter(':checked').length > checkboxes.length / 2;
+
+            // Cocher ou décocher toutes les cases en fonction de l'état actuel
+            checkboxes.prop('checked', !isChecked);
+
+            $(this).toggleClass('active');
+
+        });
+    });
+
+    $(document).ready(function() {
+        $('.check-all').click(function() {
+            var tabId = $(this).data('tab');
+            $('#' + tabId).find(':checkbox').prop('checked', true);
+        });
+
+        $('.uncheck-all').click(function() {
+            var tabId = $(this).data('tab');
+            $('#' + tabId).find(':checkbox').prop('checked', false);
+        });
+    });
 </script>

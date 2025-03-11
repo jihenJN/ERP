@@ -35,7 +35,7 @@
               ?>
                                 </div>
                          </div>
-               <button type="submit" class="pull-right btn btn-success" id="typeoperation"  style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+               <button type="submit" class="pull-right btn btn-success testchamp" id="typeoperation"  style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
           <?php echo $this->Form->end(); ?>
             </div>
             
@@ -49,3 +49,19 @@
   <!-- /.row -->
 </section>
 <?php echo $this->Html->script('alert'); ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.testchamp').on('click', function() {
+
+            num = $('#name').val();
+          
+            if (num == '') {
+                alert("Ajouter le nom  SVP");
+                return false;
+            }
+           
+         
+
+        });
+    });
+</script>

@@ -67,3 +67,33 @@
         </div>
         <!-- /.row -->
 </section>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.testchamp').on('click', function() {
+
+            num = $('#name').val();
+            datedebut = $('#datedebut').val();
+            datevaleur = $('#datevaleur').val();
+            typeoperation_id = $('#typeoperation_id').val();
+
+            if (num == '') {
+                alert("Ajouter le nom  SVP");
+                return false;
+            }
+            if (datedebut == '') {
+                alert("Ajouter la date debut  SVP");
+                return false;
+            }
+            if (datevaleur == '') {
+                alert("Ajouter la date valeur  SVP");
+                return false;
+            }
+            if (typeoperation_id == '') {
+                alert("Choisir le type d'opération  SVP");
+                return false;
+            }
+         
+
+        });
+    });
+</script>

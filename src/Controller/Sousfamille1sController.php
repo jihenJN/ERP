@@ -10,14 +10,16 @@ namespace App\Controller;
  * @property \App\Model\Table\Sousfamille1sTable $Sousfamille1s
  * @method \App\Model\Entity\Sousfamille1[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
-class Sousfamille1sController extends AppController {
+class Sousfamille1sController extends AppController
+{
 
     /**
      * Index method
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function index() {
+    public function index()
+    {
         $cond1 = '';
         $cond2 = '';
 
@@ -57,7 +59,8 @@ class Sousfamille1sController extends AppController {
      * @return \Cake\Http\Response|null|void Renders view
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function view($id = null) {
+    public function view($id = null)
+    {
         $sousfamille1 = $this->Sousfamille1s->get($id, [
             'contain' => ['Familles'],
         ]);
@@ -71,7 +74,8 @@ class Sousfamille1sController extends AppController {
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add() {
+    public function add()
+    {
         $session = $this->request->getSession();
         $abrv = $session->read('abrvv');
         $liendd = $session->read('lien_articles' . $abrv);
@@ -89,7 +93,49 @@ class Sousfamille1sController extends AppController {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
         $sousfamille1 = $this->Sousfamille1s->newEmptyEntity();
+
+
+
+        $numeroobj = $this->Sousfamille1s->find()->select(["numerox" =>
+        'MAX(Sousfamille1s.code)'])->first();
+        $numero = $numeroobj->numerox;
+        if ($numero != null) {
+            // debug($numero);
+
+            $n = $numero;
+
+            $lastnum = $n;
+            $nume = intval($lastnum) + 1;
+            $nn = (string)$nume;
+
+            $code = str_pad($nn, 3, "0", STR_PAD_LEFT);
+            // debug($code);die;
+
+        } else {
+            $code = "001";
+        }
+
         if ($this->request->is('post')) {
+
+            $numeroobj = $this->Sousfamille1s->find()->select(["numerox" =>
+            'MAX(Sousfamille1s.code)'])->first();
+            $numero = $numeroobj->numerox;
+            if ($numero != null) {
+                // debug($numero);
+
+                $n = $numero;
+
+                $lastnum = $n;
+                $nume = intval($lastnum) + 1;
+                $nn = (string)$nume;
+
+                $code = str_pad($nn, 3, "0", STR_PAD_LEFT);
+                // debug($code);die;
+
+            } else {
+                $code = "001";
+            }
+
             $sousfamille1 = $this->Sousfamille1s->patchEntity($sousfamille1, $this->request->getData());
             if ($this->Sousfamille1s->save($sousfamille1)) {
                 $sousfamille1_id = ($this->Sousfamille1s->save($sousfamille1)->id);
@@ -99,7 +145,7 @@ class Sousfamille1sController extends AppController {
             $this->Flash->error(__('Veuillez réessayer '));
         }
         $familles = $this->Sousfamille1s->Familles->find('list', ['keyfield' => 'id', 'valueField' => 'Nom']);
-        $this->set(compact('sousfamille1', 'familles'));
+        $this->set(compact('sousfamille1', 'familles', 'code'));
     }
 
     /**
@@ -109,8 +155,9 @@ class Sousfamille1sController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function edit($id = null) {
-      $session = $this->request->getSession();
+    public function edit($id = null)
+    {
+        $session = $this->request->getSession();
         $abrv = $session->read('abrvv');
         $liendd = $session->read('lien_articles' . $abrv);
 
@@ -123,10 +170,10 @@ class Sousfamille1sController extends AppController {
             }
         }
         // debug($societe);die;
-         if (($societe <> 1)) {
+        if (($societe <> 1)) {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
-       
+
         $sousfamille1 = $this->Sousfamille1s->get($id, [
             'contain' => [],
         ]);
@@ -152,7 +199,8 @@ class Sousfamille1sController extends AppController {
      * @return \Cake\Http\Response|null|void Redirects to index.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
-    public function delete($id = null) {
+    public function delete($id = null)
+    {
         $session = $this->request->getSession();
         $abrv = $session->read('abrvv');
         $liendd = $session->read('lien_articles' . $abrv);
@@ -175,13 +223,13 @@ class Sousfamille1sController extends AppController {
             $sousfamille1_id = ($this->Sousfamille1s->save($sousfamille1)->id);
             $this->misejour("Sousfamille1s", "delete", $sousfamille1_id);
         } else {
-            
         }
 
         return $this->redirect(['action' => 'index']);
     }
 
-    public function getsousfamille1() {
+    public function getsousfamille1()
+    {
         //$this->request->allowMethod('ajax');
         //$id = $this->request->data['id'];
         //debug($id);
@@ -195,11 +243,45 @@ class Sousfamille1sController extends AppController {
         die;
     }
 
-    public function verif() {
+    public function verif()
+    {
         $id = $this->request->getQuery('idfam');
         $familles = $this->fetchTable('Articles')->find('all')->where(['Articles.sousfamille1_id=' . $id])->count();
         echo json_encode(array('familles' => $familles));
         die;
     }
 
+    public function getcode()
+    {
+        $familleId = $this->request->getQuery('famille_id');
+        // debug($familleId);
+        $famille = $this->fetchTable('Familles')->find()->where(['id' => $familleId])->first();
+// debug($famille);
+        if ($famille) {
+            $familleCode = (string)$famille->code; 
+            // debug($familleCode);
+
+
+            $numeroObj = $this->Sousfamille1s->find()
+                ->select(['numerox' => 'MAX(Sousfamille1s.code)'])
+                ->where(['famille_id' => $familleId]) 
+                ->first();
+
+                // debug($numeroObj);
+
+            $numero = $numeroObj ? $numeroObj->numerox : null;
+
+            if ($numero) {
+                $lastSousfamilleCode = substr($numero, 2); 
+                $newSousfamilleCode = str_pad((string)((int)$lastSousfamilleCode + 1), 2, '0', STR_PAD_LEFT); 
+            } else {
+                $newSousfamilleCode = '01';
+            }
+
+            $finalCode = $familleCode . $newSousfamilleCode;
+
+            echo json_encode(array('finalCode' => $finalCode));
+            die;
+        }
+    }
 }

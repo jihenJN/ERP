@@ -142,7 +142,7 @@ if ($add == 1) { ?>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php foreach ($clients as $i => $client) :
+                            <?php foreach ($clientslist as $i => $client) :
                                 /// debug($client);
                             ?>
                                 <tr>
@@ -172,7 +172,7 @@ if ($add == 1) { ?>
                                             echo $this->Html->link("<button class='btn btn-xs btn-warning '><i class='fa fa-edit'></i></button>", array('action' => 'edit', $client->id), array('escape' => false));
                                         } ?>
                                         <?php //echo $this->Form->postLink("<button class='btn btn-xs btn-danger verifiercmd ' index=$i><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $client->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # %s?', $client->id));
-                                        if ($delete == 1 && $client->Code !='41199999') { ?>
+                                        if ($delete == 1 && $client->Code != '41199999') { ?>
 
                                             <button index='<?php echo $i ?>' class='verifiercmd btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>
 
@@ -307,32 +307,37 @@ if ($add == 1) { ?>
     });
     $(function() {
         $('.verifiercmd').on('click', function() {
-            let index = $(this).attr('index');
-            let clientId = $('#id' + index).val();
-
+            // alert('hello');
+            ind = $(this).attr('index');
+            //  alert(ind);
+            clientId = $('#id' + ind).val();
+            //  alert(id);
+            //  alert(id)
             $.ajax({
                 method: "GET",
-                url: "<?= $this->Url->build(['controller' => 'Clients', 'action' => 'getclientscmd']) ?>",
+                url: "<?= $this->Url->build(['controller' => 'Clients', 'action' => 'getclientcmd']) ?>",
                 dataType: "json",
                 data: {
-                    idclient: clientId
+                    clientid: clientId
                 },
                 headers: {
                     'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
                 },
-                success: function(response) {
-                    if (response.hasDependencies) {
-                        alert("Existe dans autre document");
+                success: function(data) {
+                    //   $('#pays').html(data.pays);
+                    //  alert(data.pays);
+
+
+                    if (data.clients != 0) {
+                        alert("Existe dans un autre document");
+
                     } else {
-                        if (confirm('Voulez-vous vraiment supprimer cet enregistrement ?')) {
-                            window.location.href = wr + "clients/delete/" + clientId;
+                        if (confirm('Voulez vous vraiment supprimer cet enregistrement')) {
+                            document.location = wr + "clients/delete/" + clientId;
                         }
                     }
-                },
-                error: function() {
-                    alert("Une erreur s'est produite. Veuillez réessayer.");
                 }
-            });
+            })
         });
 
     });

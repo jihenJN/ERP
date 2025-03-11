@@ -151,7 +151,7 @@ use Cake\Datasource\ConnectionManager;
 
                                       $reste = $liv['totalttc'] - $montreg;
                                       // debug($reglement) ;
-                                      if (($mon[0]['mont'] ) != $liv['totalttc']) {
+                                      //if (($mon[0]['mont'] ) != $liv['totalttc']) {
                                   ?>
 
                                   <tr>
@@ -168,7 +168,7 @@ use Cake\Datasource\ConnectionManager;
                                       ?>
                                     </td>
                                   </tr>
-                              <?php }
+                              <?php // }
                                     } ?>
                               <input type="hidden" name="max" value="<?php echo @$i; ?>" id="max"> <?php } ?>
                             <tr id="totalbon" style="color: #3C8DBC ; font-weight: bold;">

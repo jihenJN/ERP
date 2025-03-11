@@ -1,20 +1,7 @@
-<?php $this->layout = 'AdminLTE.print'; ?>
-<?php
+<?php $this->layout = 'AdminLTE.print';
 
-use Cake\Datasource\ConnectionManager;
-use Cake\ORM\TableRegistry;
-
-?>
-
-
-<?php
-$connection = ConnectionManager::get('default');
-
-$societeTable = TableRegistry::getTableLocator()->get('Societes');
-
-$societe = $societeTable->find()->where('id=1')->first();
-
-?><br>
+use Cake\ORM\TableRegistry; ?>
+<br>
 <style>
     body {
         font-size: 12px;
@@ -44,9 +31,8 @@ $societe = $societeTable->find()->where('id=1')->first();
             </div> -->
         </td>
         <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-        <?php echo $societe->adresseEntete; ?>
-        <br>
-        </td>
+                    <?php echo $societefirst->adresseEntete; ?><br>
+                </td>
         <td align="center" style="width: 25%;border: none;">
             <!-- <div>
                 <?php
@@ -54,7 +40,7 @@ $societe = $societeTable->find()->where('id=1')->first();
 
             </div> -->
         </td>
-       
+
 
         </td>
     </table>
@@ -63,10 +49,10 @@ $societe = $societeTable->find()->where('id=1')->first();
 
 
 Date: <?php
-date_default_timezone_set('Africa/Tunis');
+        date_default_timezone_set('Africa/Tunis');
 
-echo date('d/m/Y H:i:s');
-?>
+        echo date('d/m/Y H:i:s');
+        ?>
 <br><br>
 
 
@@ -79,25 +65,24 @@ echo date('d/m/Y H:i:s');
     <div style="display:flex;width: 1000%;">
         <div style="width: 10000%;" class="box" align="left">
             <b> Facture N° : </b><?= h($facture->numero) ?> <br>
-            <b> Date : </b><?= h( $this->Time->format( $facture->date,'dd/MM/y'));
-                  ?> <br>
-            <b> Remise : </b><?= h($facture->remise) ?> <br>
-          
+            <b> Date : </b><?= h($this->Time->format($facture->date, 'dd/MM/y'));
+                            ?> <br>
+           
+            <!-- <b> Remise : </b><?= h($facture->remise) ?> <br> -->
+            <!-- <b> Mode paiement : </b><br> -->
         </div>
     </div>
 
     <div style="display:flex ;width:1000%;margin-left:10%">
 
         <div style="width: 10000%;" class="box" align="left"> <b> Fournisseur : </b> <?php
-                                                                                if (isset($facture->fournisseur)) {
-                                                                                    echo  h($facture->fournisseur->name);
-                                                                                } ?><br>
+                                                                                        if (isset($facture->fournisseur)) {
+                                                                                            echo  h($facture->fournisseur->name);
+                                                                                        } ?><br>
             <b> Code postal: </b><?= h($facture->fournisseur->codepostal) ?> <br>
-            <b> N° Fac Fournisseur: </b><?= h($facture->facturefournisseur) ?> <br>
-            <b> Date Fac Fournisseur: </b><?php echo($this->Time->format($facture->datefournisseur,'dd/MM/y')); ?> <br>
-           
-           
-      
+
+            <b> Telephone : </b><?= h($facture->fournisseur->Tel) ?> <br>
+
         </div>
     </div>
 </div>
@@ -106,14 +91,16 @@ echo date('d/m/Y H:i:s');
         <div>
             <table border="1">
                 <thead>
-                    <tr>
-                      
+                    <tr style="font-size:15px;">
+
                         <td align="center" style="width: 20%;"><strong>Article</strong></td>
-                        <td align="center" ><strong>Qte</strong></td>
-                        <td align="center" ><strong>Prix</strong></td>
-                        <td align="center" ><strong>Total HT</strong></td>
-                        <td align="center" ><strong>TVA </strong></td>
-                        <td align="center" ><strong>Total TTC</strong></td>
+                        <td align="center"><strong>Qte</strong></td>
+                        <td align="center"><strong>Prix</strong></td>
+                        <td align="center"><strong>Total HT</strong></td>
+                        <td align="center" hidden><strong>Fodec </strong></td>
+
+                        <td align="center"><strong>TVA </strong></td>
+                        <td align="center"><strong>Total TTC</strong></td>
                     </tr>
                 </thead>
                 <tbody>
@@ -123,27 +110,30 @@ echo date('d/m/Y H:i:s');
                     foreach ($lignefactures as $lignecommande) :
                     ?>
 
-                        <tr class="tr">
-                            
-                            <td><?php
-                                if (isset($lignecommande->article)) {
-                                    echo  h($lignecommande->article->Dsignation);
-                                }
-                                ?></td>
+                        <tr class="tr" style="font-size:14px;">
+
+                            <td style="width: 6%;vertical-align:top" align="center"><?php
+                                                                                    if (isset($lignecommande->article)) {
+                                                                                        echo  h($lignecommande->article->Dsignation);
+                                                                                    }
+                                                                                    ?></td>
                             <td style="width: 6%;vertical-align:top" align="center">
                                 <?= $this->Number->format($lignecommande->qte) ?>
                             </td>
                             <td style="width: 8%;vertical-align:top" align="center">
-                                <?= $this->Number->format($lignecommande->prix) ?>
+                                <?php echo  sprintf("%01.3f", $lignecommande->prix) ?>
                             </td>
                             <td style="width: 10%;vertical-align:top" align="center">
-                                <?= $this->Number->format($lignecommande->ht) ?>
+                                <?php echo  sprintf("%01.3f", $lignecommande->ht) ?>
+                            </td>
+                            <td hidden style="width: 6%;vertical-align:top" align="center">
+                                <?= $this->Number->format($lignecommande->fodec)  ?>
                             </td>
                             <td style="width: 6%;vertical-align:top" align="center">
-                                <?= $this->Number->format($lignecommande->tva) ?>
+                                <?= $this->Number->format($lignecommande->tva)  ?>
                             </td>
                             <td style="width: 8%;vertical-align:top" align="center">
-                                <?= $this->Number->format($lignecommande->ttc) ?>
+                                <?php echo  sprintf("%01.3f", $lignecommande->ttc) ?>
                             </td>
 
                         </tr>
@@ -152,90 +142,144 @@ echo date('d/m/Y H:i:s');
             </table>
 
             <div style="display:flex ; margin-top:25px;">
-                <table class="table table-bordered table-striped table-bottomless" style="margin-right:40px;width: 250px;">
-                    <thead>
-                        <tr>
-                            <td align="center" style="width: 25%;"><strong>Taxe</strong></td>
-                            <td align="center" style="width: 20%;"><strong>Taux </strong></td>
-                            <td align="center" style="width: 25%;"><strong>Assiette</strong></td>
-                            <td align="center" style="width: 20%;"><strong>Montant</strong></td>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div style="width: 50%!important;height:80%!important;">
+                    <table style="margin-right:40px;width: 100%!important;;height: 100%!important;">
+                        <thead>
+                            <tr height="30px" style="font-size:15px;">
+                                <td align="center" style="width: 25%;border:1px solid black;"><strong>Taxe</strong></td>
+                                <td align="center" style="width: 20%;border:1px solid black;"><strong>Taux </strong></td>
+                                <td align="center" style="width: 25%;border:1px solid black;"><strong>Assiette</strong></td>
+                                <td align="center" style="width: 20%;border:1px solid black;"><strong>Montant</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                    <!-- <tr class="tr">
-                            <td style="width: 25%;height: 20px" align="center">
+                            <?php $lignestable = TableRegistry::getTableLocator()->get('Lignefactures');
 
-                                Fodec
-                            </td>
+                            $query = $lignestable->find();
+                            $query->select([
+                                'tva' => 'Lignefactures.tva',
+                                'base' => $query->func()->sum('(qte*prix - (qte*prix)* (ifnull(remise,0) / 100) + (qte*prix - (qte*prix)* (ifnull(remise,0) / 100)) * ifnull(fodec,0) / 100)'),
+                                'total' => $query->func()->sum('((qte*prix - (qte*prix)* (ifnull(remise,0) / 100) + (qte*prix - (qte*prix)* (ifnull(remise,0) / 100)) * ifnull(fodec,0) / 100)) * tva / 100')
+                            ])
+                                ->where(['Lignefactures.facture_id' => $facture->id])
+                                ->group('Lignefactures.tva');
 
-                            <td style="width: 20%;height: 20px" align="center">
-                                <?= $this->Number->format($lignecommande->fodec)  ?>
-
-                            </td>
-
-
-                            <td style="width: 25%;height: 20px" align="center">
-                               <?php echo  sprintf("%01.3f",$facture->ht) ?>
-
-                            </td>
-                            <td style="width: 20%;height: 20px" align="center">
-                               <?php echo  sprintf("%01.3f", $facture->fodec) ?>
-
-                            </td>
-
-                        </tr> -->
+                            // Execute the query
+                            $results = $query->toArray();
 
 
-                        <tr class="tr">
-                            <td style="width: 25%;height: 20px" align="center">
+                            /*   $fodquery = $lignestable->find();
+                        $fodquery->select([
+                            'fodec' => 'Lignefactures.fodec',
+                            'base' => $query->func()->sum('qte*prix - (qte*prix)* (remise / 100)'),
+                            'total' => $query->func()->sum('(qte*prix - (qte*prix)* (remise / 100)) *ifnull(fodec,0) / 100')
+                        ])
+                            ->where(['Lignefactures.facture_id' => $facture->id])
+                            ->group('Lignefactures.fodec');
 
-                                TVA
-                            </td>
+                        // Execute the query
+                        $fodresults = $fodquery->toArray();*/
+                            // print_r($results);
 
-                            <td style="width: 20%;height: 20px" align="center">
-                                <?= $this->Number->format($lignecommande->tva)  ?>
+                            foreach ($results as $rrr) {
+                                if ($rrr->tva != 0) {
+                            ?>
 
-                            </td>
+                                    <tr class="tr" height="56px" style="font-size:14px;">
+
+                                        <td align="center" style="border:1px solid black;">
+                                            TVA
+                                        </td>
+
+                                        <td align="center" style="border:1px solid black;">
+                                            <?= $this->Number->format($rrr->tva) ?>
+
+                                        </td>
+                                        <td align="center" style="border:1px solid black;">
+                                            <?php echo sprintf("%01.3f", $rrr->base) ?>
 
 
-                            <td style="width: 25%;height: 20px" align="center">
-                               <?php echo  sprintf("%01.3f",$facture->ht+$facture->fodec) ?>
+                                        </td>
+                                        <td align="center" style="border:1px solid black;width: 20%;">
+                                            <?php echo sprintf("%01.3f", $rrr->total) ?>
+                                        </td>
+                                    </tr>
 
-                            </td>
-                            <td style="width: 20%;height: 20px" align="center">
-                               <?php echo  sprintf("%01.3f", $facture->tva) ?>
 
-                            </td>
+                            <?php }
+                            } ?>
 
-                        </tr>
+                            <?php
+                            // foreach ($fodresults as $frrr) {
+                            //     if ($frrr->fodec != 0) {
+                            ?>
 
-                       
+                            <tr hidden class="tr">
 
-                    </tbody>
-                </table>
-                <!--<div style="margin-right:40px;width: 99% ; border: dashed;height: 150px" class="box ">
+                                <td align="center" height="20px" style="border:1px solid black;">
+                                    FODEC
+                                </td>
+
+                                <td align="center" style="border:1px solid black;">
+                                    <?= $this->Number->format($frrr->fodec) ?>
+
+                                </td>
+                                <td align="center" style="border:1px solid black;">
+                                    <?php echo sprintf("%01.3f", $frrr->base) ?>
+
+
+                                </td>
+                                <td align="center" style="border:1px solid black;width: 20%;">
+                                    <?php echo sprintf("%01.3f", $frrr->total) ?>
+                                </td>
+                            </tr>
+
+
+                            <?php // }
+                            // }
+                            ?>
+
+                        </tbody>
+                    </table>
+                    <!--<div style="margin-right:40px;width: 99% ; border: dashed;height: 150px" class="box ">
                     <h5 align="center">Signature</h5>
 
                 </div>-->
-                <div style="display:flex">
-                    <div class="table-bordered box" style="width: 100px; display:flex ;   margin-left:250px"  align=" left"><strong>Total  HT <br><br>
+                </div>
+                <div style="display:flex" style="font-size:14px;">
+                    <div class="table-bordered box" style="width: 150px; display:flex ;   margin-left:100px" align=" left">
+                        <strong>Total HT <br>
                             <!-- Total Fodec <br><br> -->
-                            Total TVA <br><br>
-                            Timbre <br><br>
-                            Total TTC</strong>
-                    </div>
-                    <div class="table-bordered box" style="width: 100px; " align="right">
-                        <?php  ?>
-                       <?php echo  sprintf("%01.3f",$facture->ht) ?><br><br>
-                       <!-- <?php echo  sprintf("%01.3f",$facture->fodec) ?><br><br> -->
+                            <strong>Total Remise</strong><br>
 
-                       <?php echo  sprintf("%01.3f",$facture->tva) ?><br><br>
-                       <?php echo  sprintf("%01.3f",$timbre) ?><br><br>
-                       <?php echo  sprintf("%01.3f",$facture->ttc) ?>
+                            <strong>Total TVA</strong> <br>
+                            <strong>Timbre</strong> <br>
+
+                            <strong>Total TTC</strong>
+
+                    </div>
+                    <div class="table-bordered box" style="width: 150px; " align="right">
+                        <?php  ?>
+                        <?php echo  sprintf("%01.3f", $facture->ht) ?><br>
+                        <!-- <?php //echo  sprintf("%01.3f", $facture->fodec) 
+                                ?><br><br> -->
+                        <?php echo sprintf("%01.3f",$facture->remise) ?> <br>
+                        <?php echo  sprintf("%01.3f", $facture->tva) ?><br>
+                        <?php echo  sprintf("%01.3f", $facture->timbre) ?><br>
+
+                        <?php echo  sprintf("%01.3f", $facture->ttc) ?>
                     </div>
                 </div>
             </div>
+
+
+
+
+
+
+
+
         </div>
     </div>
 </div>
@@ -243,13 +287,13 @@ echo date('d/m/Y H:i:s');
 
 <br>
 
-<table>
-            <tr>
-                <td >
-                    <p>
-                        <Strong>Commentaire : </Strong><?php echo $facture->observation ?>
-                  
-                    </p>
-                </td>
-            </tr>
-        </table>
+<!-- <table>
+    <tr>
+        <td>
+            <p>
+                <Strong>Commentaire : </Strong><?php //echo $facture->observation ?>
+
+            </p>
+        </td>
+    </tr>
+</table> -->

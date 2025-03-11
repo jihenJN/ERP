@@ -63,8 +63,8 @@ use Cake\Datasource\ConnectionManager;
             </div> -->
         </td>
         <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-           <?php echo $societefirst->adresseEntete; ?><br>
-        </td>
+                    <?php echo $societefirst->adresseEntete; ?><br>
+                </td>
         <td align="center" style="width: 25%;border: none;">
             <div>
                 <?php
@@ -80,7 +80,7 @@ use Cake\Datasource\ConnectionManager;
 <br>
 
 <h3>
-    <div style="margin-left: 5px ;color: #ce2029 ; "> <?php echo $societefirst->nom ?></div>
+    <div style="margin-left: 5px ;color: #ce2029 ; ">  <?php echo $societefirst->nom; ?></div>
 
 
     <div align="center" style="color: #ce2029 ; ">

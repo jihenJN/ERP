@@ -117,7 +117,7 @@
 
 
                           <?php
-                          echo $this->Form->input('qteTheorique', array('class' => ' form-control', 'label' => '', 'index' => '', 'champ' => 'qteTheorique', 'table' => 'ligner', 'name' => '', 'id' => ''));
+                          echo $this->Form->input('qteTheorique', array('readonly','class' => ' form-control', 'label' => '', 'index' => '', 'champ' => 'qteTheorique', 'table' => 'ligner', 'name' => '', 'id' => ''));
                           ?>
                         </td>
                         <td align="center" table="ligner">
@@ -163,7 +163,7 @@
 
                           </td>
                           <td align="center">
-                            <?php echo $this->Form->control('qteTheorique', array('class' => 'form-control', 'label' => '', 'value' => $li->qteTheorique, 'champ' => 'qteTheorique', 'name' => 'data[ligner][' . $i . '][qteTheorique]', 'id' => 'qteTheorique' . $i, 'table' => 'ligner', 'index' => $i)); ?>
+                            <?php echo $this->Form->control('qteTheorique', array('readonly','class' => 'form-control', 'label' => '', 'value' => $li->qteTheorique, 'champ' => 'qteTheorique', 'name' => 'data[ligner][' . $i . '][qteTheorique]', 'id' => 'qteTheorique' . $i, 'table' => 'ligner', 'index' => $i)); ?>
 
                           </td>
                           <td align="center">
@@ -225,14 +225,20 @@
 <?php $this->start('scriptBottom'); ?>
 <script>
   $(document).ready(function() {
-    $('.ajouttt').on('change', function() {
-        alert('dalandaaaaa')
+    $('.ajouttt').on('keydown', function (event) {
+        // alert('aller')
+        if (event.key === "Enter" && event.ctrlKey) {
 
-    $('html, body').animate({
-      scrollTop: $("#tabligne").offset().top
-    }, 1000);
-    ajouter("tabligne", "index");
-  })
+            event.preventDefault();
+            $(this).val($(this).val() + "\n");
+        } else if (event.key === "Enter") {
+
+            ajouter("tabligne", "index");
+
+            // });
+        }
+    });
+  });
 
     $(document).on('keyup', '.focus', function(e) {
       //  alert('fff')

@@ -2,28 +2,6 @@
 <?php
 
 use Cake\Datasource\ConnectionManager;
-
-?>
-
-
-<?php
-$connection = ConnectionManager::get('default');
-?>
-<?php $this->layout = 'AdminLTE.print'; ?>
-<?php
-
-use Cake\ORM\TableRegistry;
-
-?>
-
-
-<?php
-$connection = ConnectionManager::get('default');
-
-$societeTable = TableRegistry::getTableLocator()->get('Societes');
-
-$societe = $societeTable->find()->where('id=1')->first();
-
 ?>
 <br>
 <style>
@@ -55,9 +33,8 @@ $societe = $societeTable->find()->where('id=1')->first();
                 </div> -->
         </td>
         <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-            <?php echo $societe->adresseEntete; ?>
-            <br>
-        </td>
+                    <?php echo $societefirst->adresseEntete; ?><br>
+                </td>
         <td align="center" style="width: 25%;border: none;">
             <div>
                 <?php
@@ -148,7 +125,7 @@ $societe = $societeTable->find()->where('id=1')->first();
         <div style="display:flex ;width:1000%;margin-left:10%;">
             <div style="width: 10000%;border:1px solid black;border-radius: 15px;" align="left">
                 <br>
-                <b style="margin-left:7% ;"> Rég. Facture client N°: </b><?= h($reglement->numeroconca) ?> <br>
+                <b style="margin-left:7% ;"> Réglement Factue client N° : </b><?= h($reglement->numeroconca) ?> <br>
                 <b style="margin-left:7% ;"> Date : </b><?= $this->Time->format(
                                                             $reglement->date,
                                                             'dd/MM/y'
@@ -428,17 +405,16 @@ $societe = $societeTable->find()->where('id=1')->first();
                                             </tr>
                                             <tr <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 5) || ($piece->paiement_id == 54) || ($piece->paiement_id == 9) || ($piece->paiement_id == 7)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trechances<?php echo $i  ?>">
                                                 <td name="data[piece][<?php echo $i ?>][trechance]" id="trechancea<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque"><strong>Echéance</strong></td>
-                                                <td name="data[piece][<?php echo $i ?>][trechance]" id="trechanceb<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque"><?php echo $this->Time->format(
-                                                                                                                                                                                                    $piece->echance,
-                                                                                                                                                                                                    'dd/MM/y'
-                                                                                                                                                                                                ); ?> </td>
+                                                <td name="data[piece][<?php echo $i ?>][trechance]" id="trechanceb<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque"><?php
+
+                                                                                                                                                                                                echo  $piece->echance;
+                                                                                                                                                                                                ?> </td>
                                             </tr>
                                             <tr <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 5) || ($piece->paiement_id == 55) || ($piece->paiement_id == 7) || ($piece->paiement_id == 8) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trechances<?php echo $i  ?>">
                                                 <td name="data[piece][<?php echo $i ?>][trechance2]" id="trechancea2<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque" style="color:#dc143c;">Echéance 2</td>
-                                                <td name="data[piece][<?php echo $i ?>][trechance2]" id="trechanceb2<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque" style="color:#dc143c;"><?php echo $this->Time->format(
-                                                                                                                                                                                                                            $piece->echance2,
-                                                                                                                                                                                                                            'dd/MM/y'
-                                                                                                                                                                                                                        ); ?> </td>
+                                                <td name="data[piece][<?php echo $i ?>][trechance2]" id="trechanceb2<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque" style="color:#dc143c;"><?php
+                                                                                                                                                                                                                        echo  $piece->echance2;
+                                                                                                                                                                                                                        ?> </td>
                                             </tr>
                                             <tr <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 5) || ($piece->paiement_id == 7) || ($piece->paiement_id == 8) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trbanque<?php echo $i  ?>">
                                                 <td name="data[piece][<?php echo $i ?>][trbanque]" id="trbanque<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque">Banque </td>

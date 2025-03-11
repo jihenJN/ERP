@@ -96,10 +96,10 @@
                                     <?php echo $this->Form->control('type_id', ['id' => 'type_id', 'empty' => 'Veuillez choisir !!', 'class' => 'form-control select2 control-label']); ?>
                                 </div>
                                 <div class="col-xs-6" id="mat">
-                                    <?php echo $this->Form->control('Matricule_Fiscale', ['id' => 'matriculefis','label'=>'Matricule Fiscale', 'class' => ' form-control verifiermatriculefiscale ', 'placeholder' => "0000000XXX000"]); ?>
+                                    <?php echo $this->Form->control('Matricule_Fiscale', ['id' => 'matriculefis', 'label' => 'Matricule Fiscale', 'class' => ' form-control verifiermatriculefiscale ', 'placeholder' => "0000000XXX000"]); ?>
                                 </div>
                                 <div class="col-xs-6" id="iden">
-                                    <?php echo $this->Form->control('numidentite', ['id' => 'numidentite', 'label'=>'Num Identité','class' => ' form-control  ', 'placeholder' => "00 00 00 00"]); ?>
+                                    <?php echo $this->Form->control('numidentite', ['id' => 'numidentite', 'label' => 'Num Identité', 'class' => ' form-control  ', 'placeholder' => "00 00 00 00"]); ?>
                                 </div>
                                 <div class="col-xs-3">
                                     <?php echo $this->Form->control('Tel', ['id' => 'tel', 'label' => 'Télèphone 1', 'class' => 'validationLengthChampTel form-control control-label', 'type' => 'text']); ?>
@@ -256,14 +256,9 @@
 
 
                                 </div>
-                                <!-- <div class="  col-xs-2" style="margin-top: 22px; width: 60px; margin-right: 25px;">
-                                    <span title="ajout paiement"> <a onClick="openWindow(1000, 1000, wr+'paiements/add');" champ="orderr" value="0" class="btn btn-primary"><i class="fa fa fa-plus"></i></a> </span>
-                                </div> -->
-                                <div class="col-xs-6">
+                             
+                                <div class="col-xs-6" hidden>
                                     <?php echo $this->Form->control('typeexoneration_id', ['label' => 'Exoneration', 'value' => 2, 'empty' => 'Veuillez choisir !!', 'options' => $typeexonerations, 'class' => 'form-control select2 control-label typeexoneration', 'id' => 'exonerations', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-6" >
-                                    <?php echo $this->Form->control('responsable', ['id' => 'responsable','label'=>'Responsable']); ?>
                                 </div>
 
                             </div>
@@ -457,7 +452,7 @@
                                                 <b>
                                                     Solde Début:</b>
                                             </td>
-                                            <td class="hiddenob" >
+                                            <td class="hiddenob">
                                                 <?php echo $this->Form->control('soldedebut', ['label' => '', 'class' => 'form-control', 'id' => 'soldedebut']); ?>
 
 
@@ -862,10 +857,20 @@
                                                     </td>
                                                     <td align="center">
 
-                                                        <?php echo $this->Form->input('rib', array('champ' => 'rib', 'label' => '', 'name' => '', 'type' => 'text', 'id' => '', 'table' => 'banque', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+
+                                                        <div class="form-group" style="margin-top: 15%;">
+                                                            <div class="col-sm-12">
+                                                                <?php echo $this->Form->input('rib', array('champ' => 'rib', 'label' => '', 'name' => '', 'type' => 'text', 'id' => '', 'table' => 'banque', 'index' => '',  'class' => 'form-control')); ?>
+
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                     <td align="center" table="banque">
-                                                        <input style="margin-top:1%" type="file" table="banque" champ="documen" name="documen" class="form-control" id="">
+                                                        <div class="form-group" style="margin-top: 5%;">
+                                                            <div class="col-sm-12">
+                                                                <input style="margin-top:1%" type="file" table="banque" champ="documen" name="documen" class="form-control" id="">
+                                                            </div>
+                                                        </div>
                                                     </td>
 
 
@@ -1009,7 +1014,7 @@
 
 
 
-                    <div id="exon" style="display:none">
+                    <!-- <div id="exon" style="display:none">
 
                         <section class="content-header">
                             <h1 class="box-title"><?php echo __('Suspension des droits et taxe '); ?></h1>
@@ -1090,7 +1095,7 @@
                                 </div>
                             </div>
                         </section>
-                    </div>
+                    </div> -->
 
 
                     <section class="content-header">
@@ -1164,7 +1169,7 @@
                     <div align="center">
                         <!-- <button type="submit" class="pull-right btn btn-success verifier_nbr verifierexoneration verifier_date_echance  addclient alertcode" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button> -->
 
-                        <button type="submit" class="pull-right btn btn-success" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+                        <button type="submit" class="pull-right btn btn-success testobgclient" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
                     </div>
                     <?php /* echo $this->Form->submit(__('Enregistrer')); */ ?>
 
@@ -1188,6 +1193,129 @@
 
 
 <script type="text/javascript">
+    $('.testobgclient').on('mouseover', function() {
+        // Retrieve input values
+        const rai = $('#raisonsoc').val().trim();
+        const type = $('#type_id').val().trim();
+        const mat = $('#matriculefis').val().trim();
+        const tel = $('#tel').val().trim();
+
+        const mail = $('#email').val().trim();
+        const numidentite = $('#numidentite').val().trim();
+
+        if (rai === "") {
+            alert("Veuillez saisir le Raison Sociale !");
+            return false;
+        }
+
+        if (type === "") {
+            alert("Veuillez choisir le type client !");
+            return false;
+        }
+
+        if (mat === "" && type == 1) {
+            alert("Veuillez saisir la matricule fiscale !");
+            return false;
+        }
+        if (numidentite === "" && type == 2) {
+            alert("Veuillez saisir le numéro identité !");
+            return false;
+        }
+
+        if (tel === "") {
+            alert("Veuillez saisir le numéro de téléphone 1 !");
+            return false;
+        }
+
+        // Validate phone number format
+        const phoneRegex = /^\d{8}$/;
+        if (!phoneRegex.test(tel)) {
+            alert("Le numéro de téléphone doit contenir exactement 8 chiffres !");
+            return false;
+        }
+
+        if (mail === "") {
+            alert("Veuillez saisir le mail !");
+            return false;
+        }
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!emailRegex.test(mail)) {
+            alert("Veuillez saisir une adresse e-mail valide !");
+            return false;
+        }
+        indexbanque = $('#indexbanque').val();
+        indexresponsable = $('#indexresponsable').val();
+        indexdoc = $('#indexdoc').val();
+        if (indexbanque != -1) {
+            for (i = 0; i <= indexbanque; i++) {
+                supbanque = $('#supbanque' + i).val();
+                if (supbanque != 1) {
+                    banque_id = $('#banque_id' + i).val();
+                    rib = $('#rib' + i).val();
+                    if (banque_id == '') {
+                        alert("Choisir le banque a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                    if (rib == '') {
+                        alert("Ajouter le rib bancaire a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                }
+            }
+        }
+        if (indexresponsable != -1) {
+            for (i = 0; i <= indexresponsable; i++) {
+                supresponsable = $('#supresponsable' + i).val();
+                if (supresponsable != 1) {
+                    name = $('#name' + i).val();
+                    email = $('#email' + i).val();
+                    tel = $('#tel' + i).val();
+                    poste = $('#poste' + i).val();
+
+                    if (name == '') {
+                        alert("Ajouter le nom du responsable a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                    if (email == '') {
+                        alert("Ajouter l'email du responsable a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                    if (tel == '') {
+                        alert("Ajouter le téléphone du responsable a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                    if (poste == '') {
+                        alert("Ajouter la poste du responsable a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                }
+            }
+        }
+        if (indexdoc != -1) {
+            for (i = 0; i <= indexdoc; i++) {
+                supdoc = $('#supdoc' + i).val();
+                if (supdoc != 1) {
+                    name = $('#name' + i).val();
+                    fichier = $('#fichier' + i).val();
+                    if (name == '') {
+                        alert("Ajouter le nom du document a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                    if (fichier == '') {
+                        alert("Choisir le document a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                }
+            }
+        }
+
+
+        // All validations passed
+        // alert("Toutes les validations sont réussies !");
+        return true;
+    });
+
     $('#code').on('keyup', function() {
         code = $('#code').val();
         $('#compte').val(code);
@@ -1225,7 +1353,6 @@
 
         });
     });
-    nouveau_client
 </script>
 
 
@@ -1658,6 +1785,73 @@
             }
 
         });
+        $("input[type=file]").change(function(e) {
+            let inputFile = $(this);
+            let files = e.target.files;
+
+            // Supprimer les anciens iframes avant d'ajouter les nouveaux
+            inputFile.nextAll(".iframe-container").remove();
+
+            for (let i = 0; i < files.length; i++) {
+                let file = files[i];
+                let fileType = file.type; // Détecter le type MIME
+
+                let reader = new FileReader();
+                reader.onload = function(event) {
+                    let fileData = event.target.result;
+
+                    // Convertir en Blob
+                    let blob = new Blob([event.target.result], {
+                        type: fileType
+                    });
+                    let fileURL = URL.createObjectURL(blob); // Générer une URL Blob
+
+                    // Créer un conteneur pour l'iframe
+                    let iframeContainer = $("<div>", {
+                        class: "iframe-container",
+                        style: "position: relative; display: block; margin-top: 10px;"
+                    });
+
+                    // Créer l'iframe pour afficher le fichier
+                    let iframe = $("<iframe>", {
+                        width: "600",
+                        height: "400",
+                        style: "border: 1px solid #ccc; display: block;",
+                        src: fileURL
+                    });
+
+                    // Superposer un div transparent pour capturer le clic
+                    let overlay = $("<div>", {
+                        style: `
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(255, 255, 255, 0);
+                        cursor: pointer;
+                    `,
+                        click: function() {
+                            window.open(fileURL, "_blank", "width=800,height=600");
+                        }
+                    });
+
+                    // Ajouter l'iframe et l'overlay dans le conteneur
+                    iframeContainer.append(iframe, overlay);
+
+                    // Ajouter l'iframe après l'input file
+                    inputFile.after(iframeContainer);
+                };
+
+                // Lire le fichier en fonction de son type
+                if (fileType.startsWith("image/") || fileType === "application/pdf") {
+                    reader.readAsArrayBuffer(file); // Lire le fichier en buffer (meilleur pour Blob)
+                } else {
+                    alert("Format non supporté !");
+                }
+            }
+        });
+
 
 
 
@@ -1677,6 +1871,7 @@
 
 
 <?php $this->end(); ?>
+
 
 <script>
     $(function() {
@@ -1714,6 +1909,7 @@
 
 
     $(function() {
+
         $(".alertcode").on("mouseover", function() {
             //alert('')
             tel = $("#tel").val();

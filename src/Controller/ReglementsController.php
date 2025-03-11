@@ -6,6 +6,7 @@ namespace App\Controller;
 
 use Cake\Datasource\ConnectionManager;
 
+use Cake\Core\Configure;
 
 /**
  * Reglements Controller
@@ -33,20 +34,21 @@ class ReglementsController extends AppController
         $fournisseur_id = $this->request->getQuery('fournisseur_id');
         //debug($fournisseur_id);
         $pointdevente_id = $this->request->getQuery('pointdevente_id');
-        if ($fournisseur_id != '') {
+        if ($fournisseur_id) {
             $cond1 = "Reglements.fournisseur_id = " . $fournisseur_id;
         }
-        if ($pointdevente_id != '') {
-            $cond2 = "Reglements.pointdevente_id like  '%" . $pointdevente_id . "%' ";
+        if ($pointdevente_id) {
+
+            $cond2 = "Reglements.pointdevente_id = " . $pointdevente_id;  // "Reglements.pointdevente_id like  '%" . $pointdevente_id . "%' ";
         }
-        if ($datedebut != '') {
-            $cond3 = 'Reglements.Date >= ' . "'" . $datedebut . "'";
+        if ($datedebut) {
+            $cond3 = 'date(Reglements.Date) >= ' . "'" . $datedebut . "'";
         }
         // debug($cond3);
-        if ($datefin != '') {
-            $cond4 = 'Reglements.Date <= ' . "'" . $datefin . "'";
+        if ($datefin) {
+            $cond4 = 'date(Reglements.Date) <= ' . "'" . $datefin . "'";
         }
-        //         debug($cond3);
+        //         debug($cond3);     
         //         debug($cond4);
         //        $this->paginate = [
         //            'contain' => ['Fournisseurs', 'Importations', 'Utilisateurs', 'Exercices', 'Devises'],
@@ -64,6 +66,8 @@ class ReglementsController extends AppController
 
     public function indexeng()
     {
+        // Configure::write('debug', true);
+
         error_reporting(E_ERROR | E_PARSE);
         $this->loadModel('Paiements');
         $this->loadModel('Reglements');
@@ -125,6 +129,14 @@ class ReglementsController extends AppController
             // debug($piecereglements);
 
 
+        } else {
+            $reglements = $this->fetchTable('Reglements')->find('all', [
+                'contain' => ['Fournisseurs'],
+            ])->toArray();
+            $piecereglements = $this->fetchTable('Piecereglements')->find('all')
+                ->contain(['Comptes', 'Paiements', 'Etats', 'Reglements' => ['Fournisseurs']])
+                ->where(['Paiements.id' => '2'])
+                ->toArray();
         }
 
         $etatpieceregelemntt = $this->fetchTable('Etatpieceregelemnts')->newEmptyEntity();
@@ -133,18 +145,21 @@ class ReglementsController extends AppController
         if ($this->request->is('post')) {
             //  debug($etatpieceregelemntt);
             $etatpieceregelemnt = $this->fetchTable('Etatpieceregelemnts')->patchEntity($etatpieceregelemntt, $this->request->getData());
-
+           // debug($etatpieceregelemnt);
+           // die;
             //// mise ajour solde compte
-            $compte = $this->Comptes->get($etatpieceregelemnt['compte_id'], [
-                'contain' => []
-            ]);
+            if (!empty($etatpieceregelemnt['compte_id'])) {
+                $compte = $this->fetchTable('Comptes')->get($etatpieceregelemnt['compte_id'], [
+                    'contain' => []
+                ]);
 
 
-            $pv = $etatpieceregelemnt['montant'];
+                $pv = $etatpieceregelemnt['montant'];
 
-            // $compte->montant = $pv;
-            $compte->montant += $pv;
-            $this->fetchTable('Comptes')->save($compte);
+                // $compte->montant = $pv;
+                $compte->montant += $pv;
+                $this->fetchTable('Comptes')->save($compte);
+            }
 
             //// mise ajour etat piece
             $piece = $this->Piecereglements->get($etatpieceregelemnt['piecereglement_id'], [
@@ -172,16 +187,9 @@ class ReglementsController extends AppController
         }
 
 
-        $reglements = $this->fetchTable('Reglements')->find('all', [
-            'contain' => ['Fournisseurs'],
-        ])
-            // ->where([$cond2, $cond5])
-            ->toArray(); // Fetch results as an array
+        // Fetch results as an array
         // debug($reglements);
-        $piecereglements = $this->fetchTable('Piecereglements')->find('all')
-            ->contain(['Comptes', 'Paiements', 'Etats', 'Reglements' => ['Fournisseurs']])
-            ->where(['Paiements.id' => '2'])
-            ->toArray();
+
         $count = count($piecereglements);  // Utilisation de count() pour compter les résultats
 
         $comptes = $this->fetchTable('Comptes')->find('list', ['keyField' => 'id', 'valueField' => 'numero'])->contain('Agences');
@@ -223,7 +231,7 @@ class ReglementsController extends AppController
             }
             // debug($modeid);
 
-            $fournisseurid = $this->request->getQuery('fournisseur_id');
+            $fournisseurid = $this->request->getQuery('fournisseurid');
             if (!empty($fournisseurid)) {
                 //$conditions2['Reglementachats.fournisseur_id'] = $fournisseurid;
                 $cond2 = 'Reglements.fournisseur_id =' . $fournisseurid;
@@ -261,13 +269,18 @@ class ReglementsController extends AppController
             // debug($piecereglements);
 
 
+        } else {
+            $reglements = $this->fetchTable('Reglements')->find('all', [
+                'contain' => ['Fournisseurs'],
+            ])->toArray();
+            $piecereglements = $this->fetchTable('Piecereglements')->find('all')
+                ->contain(['Comptes', 'Paiements', 'Etats', 'Reglements' => ['Fournisseurs']])
+                ->where(['Paiements.id' => '2'])
+                ->toArray();
         }
 
 
-        $piecereglements = $this->fetchTable('Piecereglements')->find('all')
-            ->contain(['Comptes', 'Paiements', 'Etats', 'Reglements' => ['Fournisseurs']])
-            ->where(['Paiements.id' => '2'])
-            ->toArray();
+
 
         $comptes = $this->fetchTable('Comptes')->find('list', ['keyField' => 'id', 'valueField' => 'numero'])->contain('Agences');
         // debug($comptes);
@@ -920,7 +933,7 @@ class ReglementsController extends AppController
 
                 if (isset($this->request->getData('data')['pieceregelemnt']) && (!empty($this->request->getData('data')['pieceregelemnt']))) {
                     foreach ($this->request->getData('data')['pieceregelemnt'] as $j => $p) {
-                        if (isset($p['sup']) && $p['sup'] != 1) {
+                        if (isset($p['sup']) && $p['sup'] != 1 && $p['paiement_id'] != '') {
                             $tab = $this->fetchTable('Piecereglements')->newEmptyEntity();
 
                             // Common fields
@@ -1200,6 +1213,9 @@ class ReglementsController extends AppController
      */
     public function edit($id = null)
     {
+
+        // Configure::write('debug', true);
+
         $session = $this->request->getSession();
         $abrv = $session->read('abrvv');
         $liendd = $session->read('lien_achat' . $abrv);
@@ -1211,7 +1227,7 @@ class ReglementsController extends AppController
                 $fournisseur = $liens['modif'];
             }
         }
-        // debug($societe);die;
+        // debug($societe);die;      
         if (($fournisseur <> 1)) {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
@@ -1365,8 +1381,8 @@ class ReglementsController extends AppController
                         // debug($article);die;
                         $chequesp->etat = 0;
                         $this->fetchTable('Cheques')->save($chequesp);
-                        $this->Piecereglements->delete($item);
                     }
+                    $this->Piecereglements->delete($item);
                 }
                 // if (isset($this->request->getData('data')['pieceregelemnt']) && (!empty($this->request->getData('data')['pieceregelemnt']))) {
 
@@ -1429,7 +1445,7 @@ class ReglementsController extends AppController
                 // }
                 if (isset($this->request->getData('data')['pieceregelemnt']) && (!empty($this->request->getData('data')['pieceregelemnt']))) {
                     foreach ($this->request->getData('data')['pieceregelemnt'] as $j => $p) {
-                        if (isset($p['sup']) && $p['sup'] != 1) {
+                        if (isset($p['sup']) && $p['sup'] != 1 && $p['paiement_id'] != '') {
                             $tab = $this->fetchTable('Piecereglements')->newEmptyEntity();
 
                             // Common fields

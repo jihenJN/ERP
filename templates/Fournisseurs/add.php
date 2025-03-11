@@ -10,6 +10,7 @@
     v11 = new Array("width,left," + v4, "height,top," + v5);
     for (i = 0; i < v11.length; i++) {
       v12 = v11[i].split(",");
+      F
       l_iTarget = parseInt(v12[2]);
       if (l_iTarget > 1 || v1[2].indexOf("%") > -1) {
         v13 = eval("screen." + v12[0]);
@@ -89,7 +90,7 @@
 
           <div class="row">
             <div class="col-xs-6">
-              <?php echo $this->Form->control('code', ['label' => 'Code', 'required' => 'off']); ?>
+              <?php echo $this->Form->control('code', ['label' => 'Code', 'readonly', 'value' => $numero, 'required' => 'off']); ?>
             </div>
             <div class="col-xs-6">
               <?php echo $this->Form->control('name', ['label' => 'Nom', 'required' => 'off']); ?>
@@ -188,7 +189,7 @@
 
           <div class="row">
             <div class="col-xs-3"><?php echo $this->Form->control('tel', ['label' => 'Télèphone 1']); ?></div>
-            <div class="col-xs-3"><?php echo $this->Form->control('tel', ['label' => 'Télèphone 2']); ?></div>
+            <div class="col-xs-3"><?php echo $this->Form->control('tel1', ['label' => 'Télèphone 2']); ?></div>
 
             <div class="col-xs-6">
               <?php echo $this->Form->control('fax'); ?>
@@ -576,7 +577,7 @@
 
 
         <div align="center">
-          <button type="submit" class="pull-right btn btn-success btn-sm " id="" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+          <button type="submit" class="pull-right btn btn-success btn-sm " id="testfour" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
 
           <!-- <?php echo $this->Form->submit(__('Enregistrer')) ?> -->
         </div>
@@ -620,6 +621,7 @@
 <!-- iCheck 1.0.1 -->
 <?php echo $this->Html->script('AdminLTE./plugins/iCheck/icheck.min', ['block' => 'script']); ?>
 <?php $this->start('scriptBottom'); ?>
+
 <script>
   $(function() {
     //Initialize Select2 Elements

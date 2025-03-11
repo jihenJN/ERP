@@ -284,7 +284,9 @@ class LivraisonsController extends AppController
         $this->loadModel('Articles');
         $articles = $this->Articles->find('list', ['keyfield' => 'id', 'valueField' => 'designiation']);
         $livraisons = $this->Livraisons->find('all')->contain(['Fournisseurs']);
-        $this->set(compact('lignelivraisons', 'articles', 'livraison', 'fournisseurs'));
+        $societes = $this->fetchTable('Societes')->find('all')->first();
+
+        $this->set(compact('lignelivraisons','societes','articles', 'livraison', 'fournisseurs'));
     }
     public function index($typebl = null)
     {
@@ -432,20 +434,60 @@ class LivraisonsController extends AppController
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
         $livraison = $this->Livraisons->newEmptyEntity();
-        $last = $this->Livraisons->find()->order(['id' => "desc"])->first();
-        $numero = 1;
-        if ($last != null) {
-            preg_match_all('!\d+!', $last->numero, $numero);
 
-            $numero = $numero[0][0];
+
+        $yearf = date('Y');
+        $currentYear = date('y');
+        $num = $this->Livraisons->find()->select([
+            "num" =>
+            'MAX(Livraisons.numero)'
+        ])->where('YEAR(Livraisons.date)=' . $yearf)->first();
+
+        $n = $num->num;
+
+        if ($n) {
+            $lastFourDigits = substr($n, -4);
+            $in = intval($lastFourDigits) + 1;
+        } else {
+            $in = '0001';
         }
+
+        $mm = str_pad("$in", 4, "0", STR_PAD_LEFT);
+        $b = "BL{$currentYear}00{$mm}";
+
+        $this->set(compact('b'));
+
+
+
+
 
         if ($this->request->is('post')) {
             //debug($this->request->getData());die;
+
+            $yearf = date('Y');
+            $currentYear = date('y');
+            $num = $this->Livraisons->find()->select([
+                "num" =>
+                'MAX(Livraisons.numero)'
+            ])->where('YEAR(Livraisons.date)=' . $yearf)->first();
+    
+            $n = $num->num;
+    
+            if ($n) {
+                $lastFourDigits = substr($n, -4);
+                $in = intval($lastFourDigits) + 1;
+            } else {
+                $in = '0001';
+            }
+    
+            $mm = str_pad("$in", 4, "0", STR_PAD_LEFT);
+            $b = "BL{$currentYear}00{$mm}";
+
+
             $data['fournisseur_id'] = $this->request->getData('fournisseur_id');
             $data['depot_id'] = $this->request->getData('depot_id');
             $data['date'] = $this->request->getData('date');
-            $data['numero'] = $this->request->getData('numero');
+            $data['numero'] = $b;
             $data['ht'] = $this->request->getData('ht');
             $data['remise'] = $this->request->getData('remise');
             $data['fodec'] = $this->request->getData('fodec');

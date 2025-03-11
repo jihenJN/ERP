@@ -51,10 +51,10 @@
                             <div style=" margin: 0 auto;  margin-left: 20px; margin-right: 20px; position: static; ">
 
                                 <div class="col-xs-6">
-                                    <?php echo $this->Form->control('Nom', ['label' => 'Nom', 'required' => 'off', 'id' => 'Nom', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control']); ?>
+                                    <?php echo $this->Form->control('code', ['readonly','label' => 'Code','value' => $code, 'required' => 'off', 'id' => 'code', 'class' => 'form-control']); ?>
                                 </div>
                                 <div class="col-xs-6">
-                                    <?php echo $this->Form->control('marque_id', ['empty' => 'Veuillez choisir !!','label' => 'Marque','options'=>$marques, 'required' => 'off', 'id' => 'marque_id', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control']); ?>
+                                    <?php echo $this->Form->control('Nom', ['label' => 'Nom', 'required' => 'off', 'id' => 'Nom', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control']); ?>
                                 </div>
 
                                 <div class="col-xs-6" style="margin-top: 25px ; margin-right : 25px;" hidden>

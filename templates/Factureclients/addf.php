@@ -50,7 +50,7 @@ use Cake\Datasource\ConnectionManager;
     </h1>
 
     <ol class="breadcrumb">
-        <li><a href="<?php echo $this->Url->build(['action' => 'indexf/2']); ?>"><i class="fa fa-reply"></i>
+        <li><a href="<?php echo $this->Url->build(['action' => 'indexf/' . $type]); ?>"><i class="fa fa-reply"></i>
                 <?php echo __('Retour'); ?>
             </a></li>
     </ol>
@@ -247,7 +247,7 @@ use Cake\Datasource\ConnectionManager;
                     </div>
 
                     <div class="col-xs-4" id="divnomprenom" style="display:none">
-                        <?php echo $this->Form->control('nomprenom', ['label' => 'Nom / Prénom', 'required' => 'off', 'class' => 'form-control focus ajoutligneeettc2']); ?>
+                        <?php echo $this->Form->control('nomprenom', ['label' => 'Nom / Prénom', 'required' => 'off', 'class' => 'form-control focus ']); ?>
 
                     </div>
                     <div class="col-xs-4" id="divnumeroident" style="display:none">
@@ -383,7 +383,7 @@ use Cake\Datasource\ConnectionManager;
                                                     <td align="center" table="ligner">
                                                         <input type="hidden" table="ligner" name="" readonly champ="article_idd" class="  form-control" index>
 
-                                                        <input type="number" table="ligner" name="" id="qte" champ="qte" type="text" class="verifqte  focus calculligne2 form-control focus" index>
+                                                        <input type="number" table="ligner" name="" id="qte" champ="qte" type="text" class="verifqte  focus findtth2 form-control focus" index>
                                                     </td>
                                                     <td>
                                                         <input table="ligner" readonly type="text" name="" champ="puttcapr" class="form-control    calculligne2  findtth1  ttcligne" index>
@@ -443,45 +443,7 @@ use Cake\Datasource\ConnectionManager;
                 <section class="content" style="width: 99%">
                     <div class="row" id="sec">
                         <div class="row">
-                            <!-- <div style=" position: static;">
-                                <div class="col-xs-4">
-                                    <?php echo $this->Form->control('total', ['id' => 'totalht', 'class' => 'form-control', 'readonly' => 'readonly', 'label' => 'Total HT', 'name', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4">
-                                    <?php echo $this->Form->control('remisee', ['id' => 'totalremise', 'class' => 'form-control', 'readonly' => 'readonly', 'label' => 'Total remise', 'name' => 'remisee', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4" hidden>
-                                    <?php echo $this->Form->control('remiseee', ['id' => 'totalremise1', 'class' => 'form-control', 'readonly' => 'readonly', 'label' => 'test remise', 'name' => 'remiseee', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4" hidden>
-                                    <?php echo $this->Form->control('totalapres', ['class' => 'form-control', 'id' => 'totalhtapres', 'readonly' => 'readonly', 'label' => 'Total HT après remise', 'name', 'required' => 'off']); ?>
-                                </div>
 
-
-                             
-                                <div class="col-xs-4">
-                                    <?php echo $this->Form->control('tva', ['id' => 'totaltva', 'class' => 'form-control', 'readonly' => 'readonly', 'label' => 'Total TVA', 'name', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4" hidden>
-                                    <?php echo $this->Form->control('fodec', ['id' => 'totalfodec', 'class' => 'form-control', 'readonly' => 'readonly', 'label' => 'Total Fodec', 'name', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4" hidden>
-                                    <?php echo $this->Form->control('totalputtc', ['id' => 'totalputtc', 'readonly' => 'readonly', 'label' => 'Total PU ttc', 'name', 'class' => 'form-control verifttctotal ', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4">
-                                    <?php echo $this->Form->control('totalttc', ['id' => 'ttc', 'label' => 'Total ttc', 'name', 'class' => 'form-control calculinversetot  ', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4" hidden>
-                                    <?php echo $this->Form->control('totalttctest', ['id' => 'ttctest', 'readonly' => 'readonly', 'label' => 'test ttc', 'name', 'class' => 'form-control verifttctotal ', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4">
-                                    <?php echo $this->Form->control('timbre', ['type' => 'hidden', 'id' => 'timbre_id', 'name' => 'timbre_id', 'value' => $timbre_id]);
-
-                                    echo $this->Form->control('timbre_display', ['value' => sprintf("%01.3f", $timbre_max), 'id' => 'timbre', 'class' => 'form-control', 'readonly' => true,  'label' => 'Timbre']); ?>
-                                </div>
-                            
-
-                            </div> -->
                             <div style=" position: static;">
                                 <table style="width:55%;margin-left:70%;">
                                     <tr>
@@ -539,7 +501,7 @@ use Cake\Datasource\ConnectionManager;
                                         </td>
                                     </tr>
 
-                                    
+
 
                                     <tr hidden>
                                         <td>test remise</td>
@@ -575,16 +537,15 @@ use Cake\Datasource\ConnectionManager;
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td hidden>test ttc</td>
+                                        <td><strong>Montant Régler <strong></td>
                                         <td>
-                                            <div class="col-xs-4" hidden>
-                                                <?php echo $this->Form->control('totalttctest', ['id' => 'ttctest', 'readonly' => 'readonly', 'label' => false, 'name', 'class' => 'form-control total ', 'required' => 'off']); ?>
+                                            <div class="col-xs-4">
+                                                <?php echo $this->Form->control('Montant_Regler', ['class' => 'form-control tauxx', 'type' => 'text', 'id' => 'Montant_Regler', 'readonly' => 'readonly', 'label' => false, 'name' => 'Montant_Regler', 'required' => 'off']); ?>
                                             </div>
-                                            <!-- <div class="col-xs-4" hidden>
-                                                      <?php echo $this->Form->control('totalapres1', ['id' => 'totalhtapres1', 'class' => 'form-control', 'readonly' => 'readonly', 'label' => 'test après remise', 'name', 'required' => 'off']); ?>
-                                                 </div> -->
+
                                         </td>
                                     </tr>
+
                                 </table>
                             </div>
                         </div>
@@ -597,180 +558,163 @@ use Cake\Datasource\ConnectionManager;
                             <?php  //echo $this->Form->control('observation', ['label' => 'Commentaire', 'class' => 'form-control', 'type' => 'textarea']); 
                             ?>
                         </div><br> -->
-                        <div class="col-xs-4 ">
-                                    <?php echo $this->Form->control('Montant_Regler', ['class' => 'form-control tauxx', 'type' => 'hidden', 'id' => 'Montant_Regler', 'readonly' => 'readonly', 'label' => 'Montant_Regler', 'name' => 'Montant_Regler', 'required' => 'off']); ?>
-                                </div>
+
                         <div class="col-xs-6">
                             <?php echo $this->Form->control('observation', ['label' => 'Commentaire', 'class' => 'form-control', 'type' => 'textarea']); ?>
                         </div><br>
                     </div>
                 </section>
-                <?php if ($type == 2) { ?>
-                    <section class="content-header">
-                        <h1 class="box-title">
-                            <?php echo __('Mode Réglement'); ?>
-                        </h1>
-                    </section>
-                    <section class="content" style="width: 99%">
-                        <div class="row">
-                            <div class="box box-">
-                                <div class="box-header with-border">
-                                    <a class="btn btn-primary ajouterligne  reglclientchekajoutligne " table="addtable2" index="indexreg" tr='type' style="
+
+                <section class="content-header">
+                    <h1 class="box-title">
+                        <?php echo __('Mode Réglement'); ?>
+                    </h1>
+                </section>
+                <section class="content" style="width: 99%">
+                    <div class="row">
+                        <div class="box box-">
+                            <div class="box-header with-border">
+                                <a class="btn btn-primary ajouterligne  reglclientchekajoutligne " table="addtable2" index="indexreg" tr='type' style="
                                    float: right;
                                    margin-bottom: 5px;
                                    ">
-                                        <i class="fa fa-plus-circle "></i> Ajouter ligne </a>
+                                    <i class="fa fa-plus-circle "></i> Ajouter ligne </a>
 
-                                </div>
-                                <div class="panel-body">
-                                    <div class="table-responsive ls-table">
-                                        <table class="table table-bordered table-striped table-bottomless" id="addtable2">
-                                            <tr class="type" style="display: none ">
-                                                <td colspan="8" style="vertical-align: top;">
-                                                    <table>
-                                                        <tr>
-                                                            <td>Mode de paiement </td>
-                                                            <td>
-                                                                <select table="pieceregelemnt" index="" champ="paiement_id" id="paiement_id" class="modereglement2  form-control">
-                                                                    <?php foreach ($paiements as $id => $paiement) {
-                                                                    ?>
-                                                                        <option value="<?php echo $id; ?>">
-                                                                            <?php echo $paiement ?>
-                                                                        </option>
-                                                                    <?php } ?>
-                                                                </select>
-
-                                                                <?php echo $this->Form->input('sup2', array('name' => '', 'id' => '', 'champ' => 'sup2', 'table' => 'pieceregelemnt', 'index' => '', 'type' => 'hidden', 'class' => 'form', 'label' => '')); ?>
-                                                            </td>
-
-                                                        </tr>
-                                                        <tr>
-                                                            <td name="data[piece][0][trmontantbrut]" id="" index="0" champ="trmontantbruta" table="piece" style="display:none" class="modecheque">Montant brut</td>
-                                                            <td name="data[piece][0][trmontantbrut]" id="" index="0" champ="trmontantbrutb" table="piece" style="display:none" class="modecheque">
-                                                                <?php
-                                                                echo $this->Form->control('montant_brut', array('class' => 'form-control montantbrut', 'label' => '', 'type' => 'text', 'index' => 0, 'champ' => 'montantbrut', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant_brut]'));
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive ls-table">
+                                    <table class="table table-bordered table-striped table-bottomless" id="addtable2">
+                                        <tr class="type" style="display: none ">
+                                            <td colspan="8" style="vertical-align: top;">
+                                                <table>
+                                                    <tr>
+                                                        <td>Mode de paiement </td>
+                                                        <td>
+                                                            <select table="pieceregelemnt" index="" champ="paiement_id" id="paiement_id" class="modereglement2  form-control">
+                                                                <?php foreach ($paiements as $id => $paiement) {
                                                                 ?>
-                                                            </td>
-                                                        </tr>
+                                                                    <option value="<?php echo $id; ?>">
+                                                                        <?php echo $paiement ?>
+                                                                    </option>
+                                                                <?php } ?>
+                                                            </select>
 
-                                                        <tr>
-                                                            <td>Montant</td> <!-- mnt bl -->
-                                                            <td>
-                                                                <?php
-                                                                echo $this->Form->control('montant', array('class' => 'form-control sum-input differance', 'id' => 'montant', 'label' => '', 'index' => 0, 'champ' => 'montant', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant]'));
-                                                                ?>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td name="data[piece][0][trtaux]" id="" index="0" champ="trtauxa" table="piece" style="display:none" class="modecheque">Taux</td>
-                                                            <td name="data[piece][0][trtaux]" id="" index="0" champ="trtauxb" table="piece" style="display:none" class="modecheque">
-                                                                <?php
-                                                                echo $this->Form->control('valeur_id', array('class' => ' form-control  tauxx', 'label' => '', 'index' => 0, 'champ' => 'taux', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][taux]', 'empty' => 'Veuillez choisir'));
-                                                                ?>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td name="data[piece][0][trmontantnet]" id="" index="0" champ="trmontantneta" table="piece" style="display:none" class="modecheque">Montant Net </td>
-                                                            <td name="data[piece][0][trmontantnet]" id="" index="0" champ="trmontantnetb" table="piece" style="display:none" class="modecheque">
-                                                                <?php
-                                                                echo $this->Form->control('montant_net', array('div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control', 'label' => '', 'type' => 'text', 'index' => 0, 'champ' => 'montantnet', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant_net]'));
-                                                                ?>
-                                                            </td>
-                                                        </tr>
+                                                            <?php echo $this->Form->input('sup2', array('name' => '', 'id' => '', 'champ' => 'sup2', 'table' => 'pieceregelemnt', 'index' => '', 'type' => 'hidden', 'class' => 'form', 'label' => '')); ?>
+                                                        </td>
 
-                                                        <tr>
-                                                            <td name="data[piece][0][trechance]" id="" index="0" champ="trechancea" table="piece" style="display:none" class="modecheque">Echéance </td>
-                                                            <td name="data[piece][0][trechance]" id="" index="0" champ="trechanceb" table="piece" style="display:none" class="modecheque">
-                                                                <?php
-                                                                echo $this->Form->control('echance', array('class' => 'form-control ', 'label' => '', 'type' => 'date', 'value' => '99/99/9999', 'index' => 0, 'champ' => 'echance', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][echance]'));
-                                                                ?>
-                                                            </td>
-                                                        </tr>
+                                                    </tr>
+                                                    <tr>
+                                                        <td name="data[piece][0][trmontantbrut]" id="" index="0" champ="trmontantbruta" table="piece" style="display:none" class="modecheque">Montant brut</td>
+                                                        <td name="data[piece][0][trmontantbrut]" id="" index="0" champ="trmontantbrutb" table="piece" style="display:none" class="modecheque">
+                                                            <?php
+                                                            echo $this->Form->control('montant_brut', array('class' => 'form-control montantbrut', 'label' => '', 'type' => 'text', 'index' => 0, 'champ' => 'montantbrut', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant_brut]'));
+                                                            ?>
+                                                        </td>
+                                                    </tr>
 
-                                                        <tr>
-                                                            <td name="data[piece][0][trbanque]" id="" index="0" champ="trbanquea" table="piece" style="display:none" class="modecheque">Banque </td>
-                                                            <td name="data[piece][0][trbanque]" id="" index="0" champ="trbanqueb" table="piece" style="display:none" class="modecheque">
-                                                                <?php
-                                                                echo $this->Form->control('banque_id', array('class' => 'form-control ', 'empty' => 'veuillez choisir', 'label' => '', 'index' => 0, 'champ' => 'banque', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][banque]'));
-                                                                ?>
-                                                            </td>
-                                                        </tr>
+                                                    <tr>
+                                                        <td>Montant</td> <!-- mnt bl -->
+                                                        <td>
+                                                            <?php
+                                                            echo $this->Form->control('montant', array('type'=>'number','step'=>'any','class' => 'form-control sum-input differance', 'id' => 'montant', 'label' => '', 'index' => 0, 'champ' => 'montant', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant]'));
+                                                            ?>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td name="data[piece][0][trtaux]" id="" index="0" champ="trtauxa" table="piece" style="display:none" class="modecheque">Taux</td>
+                                                        <td name="data[piece][0][trtaux]" id="" index="0" champ="trtauxb" table="piece" style="display:none" class="modecheque">
+                                                            <?php
+                                                            echo $this->Form->control('valeur_id', array('class' => ' form-control  tauxx', 'label' => '', 'index' => 0, 'champ' => 'taux', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][taux]', 'empty' => 'Veuillez choisir'));
+                                                            ?>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td name="data[piece][0][trmontantnet]" id="" index="0" champ="trmontantneta" table="piece" style="display:none" class="modecheque">Montant Net </td>
+                                                        <td name="data[piece][0][trmontantnet]" id="" index="0" champ="trmontantnetb" table="piece" style="display:none" class="modecheque">
+                                                            <?php
+                                                            echo $this->Form->control('montant_net', array('div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control', 'label' => '', 'type' => 'text', 'index' => 0, 'champ' => 'montantnet', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant_net]'));
+                                                            ?>
+                                                        </td>
+                                                    </tr>
 
-                                                        <tr>
-                                                            <td name="data[piece][0][trnum]" id="" index="0" champ="trnuma" table="piece" style="display:none" class="modecheque">Numéro
-                                                                pièce </td>
-                                                            <td name="data[piece][0][trnum]" id="" index="0" champ="trnumb" table="piece" style="display:none" class="modecheque">
-                                                                <div class='form-group' id="" index="0" champ="divnumc" table="piece" style="display:none">
-                                                                    <label class='col-md-2 control-label'></label>
-                                                                    <div class='col-sm-10' name="data[piece][0][trnum]" id="" index="0" champ="trnumc" table="piece" class="modecheque"> </div>
+                                                    <tr>
+                                                        <td name="data[piece][0][trechance]" id="" index="0" champ="trechancea" table="piece" style="display:none" class="modecheque">Echéance </td>
+                                                        <td name="data[piece][0][trechance]" id="" index="0" champ="trechanceb" table="piece" style="display:none" class="modecheque">
+                                                            <?php
+                                                            echo $this->Form->control('echance', array('class' => 'form-control ', 'label' => '', 'type' => 'date', 'value' => '99/99/9999', 'index' => 0, 'champ' => 'echance', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][echance]'));
+                                                            ?>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td name="data[piece][0][trbanque]" id="" index="0" champ="trbanquea" table="piece" style="display:none" class="modecheque">Banque </td>
+                                                        <td name="data[piece][0][trbanque]" id="" index="0" champ="trbanqueb" table="piece" style="display:none" class="modecheque">
+                                                            <?php
+                                                            echo $this->Form->control('banque_id', array('class' => 'form-control ', 'empty' => 'veuillez choisir', 'label' => '', 'index' => 0, 'champ' => 'banque', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][banque]'));
+                                                            ?>
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td name="data[piece][0][trnum]" id="" index="0" champ="trnuma" table="piece" style="display:none" class="modecheque">Numéro
+                                                            pièce </td>
+                                                        <td name="data[piece][0][trnum]" id="" index="0" champ="trnumb" table="piece" style="display:none" class="modecheque">
+                                                            <div class='form-group' id="" index="0" champ="divnumc" table="piece" style="display:none">
+                                                                <label class='col-md-2 control-label'></label>
+                                                                <div class='col-sm-10' name="data[piece][0][trnum]" id="" index="0" champ="trnumc" table="piece" class="modecheque"> </div>
+                                                            </div>
+                                                            <div class='form-group' id="" index="0" champ="divnump" table="piece" style="display:none">
+                                                                <div class='col-sm-12'>
+                                                                    <?php echo $this->Form->control('num_piece', array('div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control ', 'label' => '', 'type' => 'text', 'index' => 0, 'champ' => 'num_piece', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][num_piece]')); ?>
                                                                 </div>
-                                                                <div class='form-group' id="" index="0" champ="divnump" table="piece" style="display:none">
-                                                                    <div class='col-sm-12'>
-                                                                        <?php echo $this->Form->control('num_piece', array('div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control ', 'label' => '', 'type' => 'text', 'index' => 0, 'champ' => 'num_piece', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][num_piece]')); ?>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
+                                                            </div>
+                                                        </td>
 
-                                                        </tr>
+                                                    </tr>
 
 
 
 
 
-                                                    </table>
+                                                </table>
 
-                                                </td>
+                                            </td>
 
-                                                <td align="center">
-                                                    <i id="" index="0" class="fa fa-times supreg" style="color: #c9302c;font-size: 22px;"></i>
-                                                </td>
-                                            </tr>
+                                            <td align="center">
+                                                <i id="" index="0" class="fa fa-times supreg" style="color: #c9302c;font-size: 22px;"></i>
+                                            </td>
+                                        </tr>
 
-                                            <input type="" value="-1" id="indexreg" hidden>
-                                            </tbody>
-                                        </table><br>
-                                    </div>
+                                        <input type="hidden" value="-1" id="indexreg" >
+                                        </tbody>
+                                    </table><br>
                                 </div>
                             </div>
                         </div>
-                    </section>
+                    </div>
+                </section>
 
-                <?php } ?>
+
 
                 <div align="center">
-                    <?php if ($type == 2) { ?>
-                        <!-- <button type="submit" class="pull-right btn btn-success btn-sm verifBonres  btnOffreprix" id="boutonlivraison" style="margin-right:51%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button> -->
 
-                        <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 20px; margin-bottom: 20px;">
-                            <button type="submit" class="testdiv btn btn-success btn-sm verifBonres btnOffreprix testreglement numerofac" id="boutonlivraison" name="enregistrer" style="width: 130px;">
-                                Enregistrer
-                            </button>
-                            <button type="submit" class="testdiv btn btn-primary btn-sm verifBonres btnOffreprix testreglement numerofac" id="boutonpdf" name="pdf" style="width: 70px;">
-                                <i class="fa fa-print"></i> PDF
-                            </button>
-                            <button type="submit" class="testdiv btn btn-xs btn-primary custom-class testreglement numerofac" id="boutonimprimer" name="enregistrer_imprimer" style="background-color: #bb3385; color: white; border-color: white; width: 40px;">
-                                <i class="fa fa-print"></i>
-                            </button>
+                    <!-- <button type="submit" class="pull-right btn btn-success btn-sm verifBonres  btnOffreprix" id="boutonlivraison" style="margin-right:51%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button> -->
 
-                            <br>
-                        </div>
-                    <?php } ?>
-                    <?php if ($type == 1) { ?>
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 20px; margin-bottom: 20px;">
+                        <button type="submit" class="testfac btn btn-success btn-sm verifBonres btnOffreprix testreglement numerofac" id="boutonlivraison" name="enregistrer" style="width: 130px;">
+                            Enregistrer
+                        </button>
+                        <button type="submit" class="testfac btn btn-primary btn-sm verifBonres btnOffreprix testreglement numerofac" id="boutonpdf" name="pdf" style="width: 70px;">
+                            <i class="fa fa-print"></i> PDF
+                        </button>
+                        <button type="submit" class="testfac btn btn-xs btn-primary custom-class testreglement numerofac" id="boutonimprimer" name="enregistrer_imprimer" style="background-color: #bb3385; color: white; border-color: white; width: 40px;">
+                            <i class="fa fa-print"></i>
+                        </button>
 
-                        <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 20px; margin-bottom: 20px;">
-                            <button type="submit" class="testdiv btn btn-success btn-sm verifBonres btnOffreprix numerofac" id="boutonlivraison" name="enregistrer" style="width: 130px;">
-                                Enregistrer
-                            </button>
-                            <button type="submit" class="testdiv btn btn-primary btn-sm verifBonres btnOffreprix numerofac" id="boutonpdf" name="pdf" style="width: 70px;">
-                                <i class="fa fa-print"></i> PDF
-                            </button>
-                            <button type="submit" class="testdiv btn btn-xs btn-primary custom-class numerofac" id="boutonimprimer" name="enregistrer_imprimer" style="background-color: #bb3385; color: white; border-color: white; width: 40px;">
-                                <i class="fa fa-print"></i>
-                            </button>
+                        <br>
+                    </div>
 
-                            <br>
-                        </div>
-                    <?php } ?>
+
                     <!-- <button type="submit" class="pull-right btn btn-success btn-sm verifBonres" id="btnOffreprix" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button> -->
                     <?php echo $this->Form->hidden('action', ['id' => 'action']); ?>
 
@@ -839,35 +783,91 @@ if (!empty($numericSerialNumbers)) {
                     alert("Numéro Réglement : " + numero);
                 }
             } else {
-                alert("Aucun numéro manquant n'est disponible.");
+                //   alert("Aucun numéro manquant n'est disponible.");
             }
         });
     });
 </script>
 <script>
-    $(document).ready(function() {
+$(document).ready(function () {
+    $('.testfac').on('mouseover', function () {
+        const depot = $('#depot_id').val();
+        const client = $('#idclient').val();
+        const nomprenom = $('#nomprenom').val();
+        const numeroidentite = $('#numeroidentite').val();
+        const indexreg = parseInt($('#indexreg').val(), 10); 
+        //alert(indexreg);
+        const ttc = parseFloat($('#ttc').val()) || 0; 
+        
 
-        $(".testdiv").on("mouseover", function() {
-            //  alert('ddd')
-            var client = $("#idclient").val();
-            var nom = $("#nomprenom").val();
-            var iden = $("#numeroidentite").val();
+        if (!depot) {
+            alert("Veuillez choisir le dépôt !");
+            return false;
+        }
 
-            // alert(type);
-            if (client == 12) {
-                if (nom == "") {
-                    alert("Saisie Le nom et prenom divers SVP !!");
-                    return;
-                } else
+ 
+        if (!client) {
+            alert("Veuillez choisir le client !");
+            return false;
+        }
 
-                if (iden == "") {
-                    alert("Saisie Le numéro identité divers SVP !!");
-                    return;
-                }
-            }
-        })
+  
+        if (client == 12 && !nomprenom) {
+            alert("Veuillez saisir le nom et prénom divers !");
+            return false;
+        }
+
+        if (client == 12 && !numeroidentite) {
+            alert("Veuillez saisir le numéro d'identité !");
+            return false;
+        }
+
+        if (indexreg === -1) {
+            alert("Veuillez choisir un mode de paiement !");
+            return false;
+        }
+
+   
+        let sum = 0;
+        $(".sum-input:visible").each(function () {
+            sum += parseFloat($(this).val()) || 0;
+        });
+
+    
+        if (sum > ttc) {
+            alert("Ne dépassez pas le total TTC de la facture comptant !");
+            return false;
+        } 
+        // else if (sum < ttc) {
+        //     alert("Montant régler inférieur au total TTC de la facture comptant !");
+        //     return false;
+        // }
+
+        return true;
     });
+});
+
+    /*  $(".testdiv").on("mouseover", function() {
+          //  alert('ddd')
+          var client = $("#idclient").val();
+          var nom = $("#nomprenom").val();
+          var iden = $("#numeroidentite").val();
+
+          // alert(type);
+          if (client == 12) {
+              if (nom == "") {
+                  alert("Saisie Le nom et prenom divers SVP !!");
+                  return;
+              } else
+
+              if (iden == "") {
+                  alert("Saisie Le numéro identité divers SVP !!");
+                  return;
+              }
+          }
+      })*/
 </script>
+
 <script>
     $(function() {
         $('.summernote').summernote({
@@ -1996,18 +1996,18 @@ $(document).ready(function () {
             $("#Montant_Regler").val(sum.toFixed(2));
 
             // Compare sum with the total TTC value
-            var totalTTC = parseFloat($('#ttc').val());
-            if (isNaN(totalTTC)) {
-                totalTTC = 0;
-            }
+            /*  var totalTTC = parseFloat($('#ttc').val());
+              if (isNaN(totalTTC)) {
+                  totalTTC = 0;
+              }
 
-            if (sum < totalTTC) {
-                alert('Veuillez terminer le règlement du montant.');
-            } else if (sum > totalTTC) {
-                alert('Ne dépassez pas le montant total TTC.');
-            } else {
+              if (sum < totalTTC) {
+                  alert('Veuillez terminer le règlement du montant.');
+              } else if (sum > totalTTC) {
+                  alert('Ne dépassez pas le montant total TTC.');
+              } else {
 
-            }
+              }*/
         });
 
         // $(document).ready(calculateTotalTTC);

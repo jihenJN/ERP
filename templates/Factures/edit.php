@@ -39,7 +39,7 @@
 
             <div class="col-md-6">
               <?php
-              echo $this->Form->control('numero', ['label' => 'Numéro']);
+              echo $this->Form->control('numero', ['label' => 'Numéro','readonly']);
               ?>
             </div>
             <div class="col-md-6">
@@ -216,8 +216,8 @@
 
                       </tr>
                       <?php foreach ($lignes as $indice => $ligne) :
-                       // debug($ligne);
-                        ?>
+                        // debug($ligne);
+                      ?>
                         <tr style="font-size: 18px;font-weight: bold;">
                           <td champ="tdcode">
                             <input table="tabligne3" index="<?= h($indice) ?>" class="getdesignation articleidbl1" id="article_idcode<?= h($indice) ?>" champ="article_idcode"
@@ -298,11 +298,11 @@
             </div>
             <div class="col-xs-6">
               <?php
-              echo $this->Form->control('remise', ['id' => 'totalremise', 'class' => 'form-control httbc ', 'readonly']); ?>
+              echo $this->Form->control('remise', ['id' => 'totalremise', 'value' => $facture->remise, 'class' => 'form-control httbc ', 'readonly']); ?>
             </div>
             <div class="col-xs-6">
               <?php
-              echo $this->Form->control('ht', ['label' => 'Ht', 'id' => 'totalht', 'class' => 'form-control httbc ', 'readonly']); ?>
+              echo $this->Form->control('ht', ['label' => 'Ht', 'id' => 'totalht', 'value' => $facture->ht, 'class' => 'form-control httbc ', 'readonly']); ?>
             </div>
 
             <div class="col-xs-6" hidden>
@@ -316,13 +316,13 @@
             </div>
             <div class="col-xs-6">
               <?php
-              echo $this->Form->control('timbre', ['readonly' => 'readonly', 'id' => 'timbre_id', 'value' => $timbre, 'class' => 'form-control httbc ']); ?>
+              echo $this->Form->control('timbre', ['readonly' => 'readonly', 'id' => 'timbre_id', 'value' => $facture->timbre, 'class' => 'form-control httbc ']); ?>
             </div>
             <div class="col-xs-6">
               <?php
               echo $this->Form->control('ttc', ['id' => 'totalttc', 'class' => 'form-control httbc ', 'readonly']); ?>
             </div>
-            <button type="submit" class="pull-right btn btn-success " id="livraisonSubmit" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+            <button type="submit" class="pull-right btn btn-success btnajout" id="livraisonSubmit" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
             <?php echo $this->Form->end(); ?>
           </div>
 
@@ -335,7 +335,26 @@
 </section>
 <script>
   $(document).ready(function() {
+    $('.btnajout').on('mouseover', function() {
+      // alert('dalanda');
+      numero = $('#numero').val();
+      depot = $('#depot-id').val();
+      fournisseur = $('#fournisseur-id').val();
+      if (numero == '') {
+        alert('choisir numéro SVP !!');
+        return false;
+      }
+      if (fournisseur == '') {
+        alert('choisir fournisseur SVP !!');
+        return false;
+      }
+      //alert(namepv)
+      if (depot == '') {
 
+        alert('choisir depot SVP !!');
+        return false;
+      }
+    });
     $('.httbc').on('keyup', function() {
 
       calculeachatavctimbre();
@@ -343,19 +362,25 @@
     });
 
     function calculeachatavctimbre() {
-    index = $('#index0').val();//alert(index)
+      index = $('#index0').val(); //alert(index)
 
-    // alert(index);
+      // alert(index);
 
-    totalremise = 0; totalht = 0; totalfodec = 0;
-    totaltva = 0; totalttc = 0;
-    punht = 0;
+      totalremise = 0;
+      totalht = 0;
+      totalfodec = 0;
+      totaltva = 0;
+      totalttc = 0;
+      punht = 0;
 
-    for (i = 0; i <= index; i++) {
+      for (i = 0; i <= index; i++) {
 
 
 
-        fodecl = 0; ht = 0; tval = 0; ttcl = 0;
+        fodecl = 0;
+        ht = 0;
+        tval = 0;
+        ttcl = 0;
         punht = 0;
         qte = $('#qte' + i).val() || 0;
         prix = $('#prix' + i).val() || 0;
@@ -388,20 +413,20 @@
         ttcl = Number(htfodec) + Number(tval);
         $('#ttc' + i).val(Number(ttcl).toFixed(3));
         totalttc = Number(totalttc) + Number(ttcl);
+      }
+
+      timbre = $('#timbre_id').val();
+      //alert(timbre);
+      totalttc = Number(totalttc) + Number(timbre);
+      //  alert(totalttc);
+      $('#punht').val(Number(punht).toFixed(3));
+      $('#totalremise').val(Number(totalremise).toFixed(3));
+      $('#totalht').val(Number(totalht).toFixed(3));
+      $('#totalfodec').val(Number(totalfodec).toFixed(3));
+      $('#totaltva').val(Number(totaltva).toFixed(3));
+      $('#totalttc').val(Number(totalttc).toFixed(3));
+
     }
-
-    timbre = $('#timbre_id').val();
-    //alert(timbre);
-    totalttc = Number(totalttc) + Number(timbre);
-    //  alert(totalttc);
-    $('#punht').val(Number(punht).toFixed(3));
-    $('#totalremise').val(Number(totalremise).toFixed(3));
-    $('#totalht').val(Number(totalht).toFixed(3));
-    $('#totalfodec').val(Number(totalfodec).toFixed(3));
-    $('#totaltva').val(Number(totaltva).toFixed(3));
-    $('#totalttc').val(Number(totalttc).toFixed(3));
-
-}
     $('.getcode').on('change', function() {
       index = $(this).attr('index'); //alert(index);
       selectedcodename = $(this).val(); //alert(selectedcodename);
@@ -753,12 +778,31 @@
     ajouter_ligne(table, index);
   })
   $('.btnajout').on('mouseover', function() {
-    //alert('marwa')
+    // alert('dalanda');
+    numero = $('#numero').val();
+    date = $('#date').val();
+
     depot = $('#depot-id').val();
+    fournisseur = $('#fournisseur-id').val();
+   
+    if (fournisseur == '') {
+      alert('choisir fournisseur SVP !!');
+      return false;
+    }
+
+    
+    if (date == '') {
+      
+      alert('choisir date SVP !!');
+      return false;
+    }
     //alert(namepv)
     if (depot == '') {
-      alert('choisir depot SVP !!', function() {});
+      
+      alert('choisir depot SVP !!');
+      return false;
     }
+
   });
 </script>
 <?php echo $this->Html->script('AdminLTE./bower_components/datatables.net/js/jquery.dataTables.min', ['block' => 'script']); ?>

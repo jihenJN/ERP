@@ -29,12 +29,12 @@ class TransporteursController extends AppController
 
 
         if ($name) {
-
-            $cond1 = "Transporteurs.name  =  '" . $name . "' ";
+            $cond1 = "Transporteurs.name LIKE '%" . $name . "%' ";
         }
         if ($matricule) {
-            $cond2 = "Transporteurs.matricule  = '" . $matricule . "' ";
+            $cond2 = "Transporteurs.matricule LIKE '%" . $matricule . "%' ";
         }
+        
 
         $query = $this->Transporteurs->find('all')->where([$cond1, $cond2])->order(["Transporteurs.id" => 'desc']);
         // debug($query);

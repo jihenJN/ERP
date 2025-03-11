@@ -106,7 +106,7 @@ use Cake\Datasource\ConnectionManager;
                                                     <td></td>
                                                 </tr>
 
-                                                <?php $i=-1;
+                                                <?php $i = -1;
                                                 //debug($factureclients->toArray());
                                                 if (!empty($compte)) {
 
@@ -125,7 +125,7 @@ use Cake\Datasource\ConnectionManager;
                                                     }
 
                                                     $reste = $compte->soldedebut - $montregsolde;
-                                                    // debug($reste);
+                                                    //  var_dump($reste);
                                                     //    if ($mon[0]['mont'] != $fac->totalttc) {
                                                 ?>
 
@@ -143,19 +143,20 @@ use Cake\Datasource\ConnectionManager;
                                                         <td></td>
                                                         <td>
                                                             <?php
-                                                            echo $this->Form->control('rest', array('value' => $reste, 'index' => $i,  'id' => 'reste' . $i, 'label' => '', 'class' => 'form-control getrest number', 'readonly' => 'readonly'));
+                                                            echo $this->Form->control('rest', array('value' => sprintf("%01.3f", $reste), 'index' => $i,  'id' => 'reste' . $i, 'label' => '', 'class' => 'form-control getrest number', 'readonly' => 'readonly'));
                                                             ?>
                                                         </td>
                                                         <td>
                                                             <input type="checkbox" name="data[Lignereglement][<?php echo $i; ?>][fournisseur_id]" id="facture_id<?php echo $i; ?>" index="<?php echo $i; ?>" class=" afficheinputmontantreglementclient   chekreglementfacdalanda checkmaxfac2  calculmontantt2" value="<?php echo $compte->id ?>" mnttounssi="<?php echo $compte->soldedebut; ?>" mnt="<?php echo $reste; ?>" compte="">
 
                                                             <?php
-                                                            echo $this->Form->input('Montanttt', array('value' => $reste, 'style' => 'display:none;background-color: #d2691e   ; font-weight: bold;', 'index' => $i, 'name' => 'data[Lignereglement][' . $i . '][Montanttt]', 'id' => 'Montantregler' . $i, 'label' => '',  'type' => 'text', 'class' => 'form-control afficheinputmontantreglementclient testmontantreglementclient2  chekreglementfacdalanda checkmaxfac2  calculmontantt2 '));
+                                                            echo $this->Form->input('Montanttt', array(sprintf("%01.3f", $reste), 'style' => 'display:none;background-color: #d2691e   ; font-weight: bold;', 'index' => $i, 'name' => 'data[Lignereglement][' . $i . '][Montanttt]', 'id' => 'Montantregler' . $i, 'label' => '',  'type' => 'text', 'class' => 'form-control afficheinputmontantreglementclient testmontantreglementclient2  chekreglementfacdalanda checkmaxfac2  calculmontantt2 '));
                                                             ?>
 
                                                         </td>
                                                         <td style="display: none;">
-                                                            <?php echo $reste; ?>
+                                                            <?php echo sprintf("%01.3f", $reste); ?>
+
                                                         </td>
                                                     </tr>
 
@@ -205,7 +206,7 @@ use Cake\Datasource\ConnectionManager;
                                                         $mon = $connection->execute("select montantreglerachat(" . $fac->id . " ) as mont")->fetchAll('assoc');
                                                         //debug($mon);
 
-                                                        if ($mon[0]['mont'] == null) {
+                                                        /* if ($mon[0]['mont'] == null) {
                                                             $montreg = 0;
                                                         } else {
                                                             $montreg = $mon[0]['mont'];
@@ -214,14 +215,22 @@ use Cake\Datasource\ConnectionManager;
                                                         if ($totavoir['0']['tot'] == null) {
                                                             $avtot = 0;
                                                         } else {
-                                                            $avtot = $totavoir['0']['tot'];
-                                                        }
+                                                          $avtot = $totavoir['0']['tot'];
+                                                        }*/
+                                                        $montreg = (float) ($mon[0]['mont'] ?? 0);
+                                                        $avtot = (float) ($totavoir[0]['tot'] ?? 0);
+                                                        (float)  $reste = sprintf("%01.3f", ($fac->ttc - ($montreg)) -  $avtot);
+                                                        // var_dump($fac->ttc);
+                                                        // var_dump($montreg);
 
-                                                        $reste = ($fac->ttc - ($montreg)) - $avtot;
+                                                        // var_dump($avtot);
+                                                        // var_dump($reste);
+
+
                                                         if ($reste != 0) {   ?>
 
                                                             <tr>
-                                                            <td><?php  echo 'Facture' ;?></td>
+                                                                <td><?php echo 'Facture'; ?></td>
 
                                                                 <td><?= h($fac->numero) ?></td>
                                                                 <td><?= $this->Time->format(
@@ -235,14 +244,14 @@ use Cake\Datasource\ConnectionManager;
 
                                                                 <td>
                                                                     <?php
-                                                                    echo $this->Form->control('rest', array('value' => $reste, 'index' => $i,  'id' => 'reste' . $i, 'label' => '', 'class' => 'form-control getrest number', 'readonly' => 'readonly'));
+                                                                    echo $this->Form->control('rest', array('value' => sprintf("%01.3f", $reste), 'index' => $i,  'id' => 'reste' . $i, 'label' => '', 'class' => 'form-control getrest number', 'readonly' => 'readonly'));
                                                                     ?>
                                                                 </td>
                                                                 <td>
                                                                     <input type="checkbox" name="data[Lignereglement][<?php echo $i; ?>][facture_id]" id="facture_id<?php echo $i; ?>" index="<?php echo $i; ?>" class="afficheinputmontantreglementclient   chekreglementfacdalanda checkmaxfac2  calculmontantt2" value="<?php echo $fac->id ?>" mnttounssi="<?php echo $fac->ttc; ?>" class="chekreglementbon" mnt="<?php echo $reste; ?>">
                                                                     <input type="hidden" name="data[Lignereglement][<?php echo $i; ?>][ttc]" value="<?php echo $fac->ttc; ?>">
                                                                     <strong> <?php
-                                                                                echo $this->Form->input('Montanttt', array('value' => $reste, 'style' => 'display:none ;background-color: #4DAAA5 ;color:aliceblue;', 'index' => $i, 'name' => 'data[Lignereglement][' . $i . '][Montanttt]', 'id' => 'Montantregler' . $i, 'label' => '',  'type' => 'text', 'class' => 'form-control afficheinputmontantreglementclient testmontantreglementclient2  chekreglementfacdalanda checkmaxfac2  calculmontantt2 '));
+                                                                                echo $this->Form->input('Montanttt', array('value' => sprintf("%01.3f", $reste), 'style' => 'display:none ;background-color: #4DAAA5 ;color:aliceblue;', 'index' => $i, 'name' => 'data[Lignereglement][' . $i . '][Montanttt]', 'id' => 'Montantregler' . $i, 'label' => '',  'type' => 'text', 'class' => 'form-control afficheinputmontantreglementclient testmontantreglementclient2  chekreglementfacdalanda checkmaxfac2  calculmontantt2 '));
                                                                                 ?> </strong>
                                                                 </td>
 
@@ -347,7 +356,7 @@ use Cake\Datasource\ConnectionManager;
                                                             <tr>
                                                                 <td>Montant</td>
                                                                 <td><?php
-                                                                    echo $this->Form->control('montant', array('div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control  mnt bl calculmontantt differance  calculmontantt2 ', 'label' => '', 'index' => 0, 'champ' => 'montant', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant]'));
+                                                                    echo $this->Form->control('montant', array('div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control sum-input mnt bl  differance  calculmontantt2 ', 'label' => '', 'index' => 0, 'champ' => 'montant', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant]'));
                                                                     ?> </td>
                                                             </tr>
                                                             <tr>
@@ -497,7 +506,7 @@ use Cake\Datasource\ConnectionManager;
                 <!-- /.box -->
             </div>
         </div>
-        <button type="submit" class="pull-right btn btn-success  " id="testpersonnel" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+        <button type="submit" class="pull-right btn btn-success testmnt " id="testpersonnel" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
         <?php echo $this->Form->end(); ?>
     </div>
     <!-- /.row -->
@@ -538,14 +547,14 @@ use Cake\Datasource\ConnectionManager;
         }
     })
 
-    $('.calculmontantt').on('change keyup', function() {
+  /*  $('.calculmontantt').on('change keyup', function() {
         ttb = Number($('#ttpayerbon').val());
         // ttf = Number($('#ttpayer').val())
         $('#Montant').val((ttb).toFixed(3));
         $('#difference').val(($('#Montant').val() - $('#mtotal').val()).toFixed(3));
 
 
-    })
+    })*/
     $('.chekreglementfac').on('change keyup', function() {
         function chekreglementfac() {
             $('#ttpayerbon').val(0.000);
@@ -693,24 +702,7 @@ use Cake\Datasource\ConnectionManager;
 
         });
     });
-</script>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script>
     // $('.afficheinputmontantreglementclient2').on('click', function() {
     //     index = $(this).attr('index');
     //     // alert(index)
@@ -721,7 +713,7 @@ use Cake\Datasource\ConnectionManager;
     //     }
     // })
 
-    $('.calculmontantt2').on('change keyup', function() {
+    $('.calculmontantt').on('change keyup', function() {
         ttb = Number($('#ttpayer').val());
         // ttf = Number($('#ttpayer').val())
         $('#Montant').val((ttb).toFixed(3));
@@ -794,7 +786,7 @@ use Cake\Datasource\ConnectionManager;
             ttb = Number($('#ttpayerbon').val());
             ttf = Number($('#ttpayer').val())
             $('#Montant').val((ttf).toFixed(3));
-            $('#difference').val(($('#Montant').val() - $('#mtotal').val()).toFixed(3));
+            // $('#difference').val(($('#Montant').val() - $('#mtotal').val()).toFixed(3));
             $('#mtotal').val(ttb.toFixed(3));
 
         }
@@ -994,13 +986,14 @@ use Cake\Datasource\ConnectionManager;
                 if ($('#sup' + i).val() != 1) {
                     th = $('#montant' + i).val() || 0; //console.log(th);
                     tt = Number(tt) + Number(th);
-                }
+                }     
             }
             console.log(tt);
             $('#Montant').val(tt);
+            $('#mtotal').val(tt);
         });
         $('.modereglement2').on('change', function() {
-            //alert();
+            //alert();                        
             index = $(this).attr('index');
             val = $(this).val();
             // alert(val);
@@ -1008,12 +1001,12 @@ use Cake\Datasource\ConnectionManager;
             //$('#montant'+index).val('');
             nb = 0;
             // if(index!=0){
-            //     for(j=0;j<=i;j++){
-            //       if($('#paiement_id'+j).val()==5)  {
+            //     for(j=0;j<=i;j++){    
+            //       if($('#paiement_id'+j).val()==5)  {          
             //         nb++;  
-            //       }
-            //     }
-            //     if(nb>1){
+            //       }              
+            //     }       
+            //     if(nb>1){  
             //      $('#btnenr').prop("disabled", true);
             //        bootbox.alert('interdit de choisi le mode retenue une autre fois', function (){});
             //        return false   
@@ -1245,34 +1238,80 @@ use Cake\Datasource\ConnectionManager;
 
 
         });
+
+        $('.sum-input').on('keyup change', function() {
+            let indexString = $('#index').val(); // Assuming this is a comma-separated string of indexes.
+            let ttpayer = Number($('#ttpayer').val()) || 0; // Convert to number and handle empty value.
+            let tt = 0; // Initialize total amount.
+
+            if (indexString) {
+                let indexes = indexString.split(','); // Split into an array if it's comma-separated.
+                indexes.forEach(function(i) {
+                    let th = Number($('#montant' + i).val()) || 0; // Retrieve the value or default to 0.
+                    tt += th; // Accumulate total.
+                });
+            }
+
+            tt = tt.toFixed(3);
+
+            if (ttpayer < tt) {
+                alert('Ne dépassez pas le total des factures !');
+            }
+        });
+
+        $('.testmnt').on('mouseover', function() {
+            let ttpayer = Number($('#ttpayer').val()) || 0; // Get total from #ttpayer
+            let indexString = $('#index').val(); // Get index list (comma-separated string)
+            let tt = 0; // Initialize total amount
+
+            if (indexString) {
+                let indexes = indexString.split(','); // Split index string into an array
+                indexes.forEach(function(i) {
+                    let th = Number($('#montant' + i).val()) || 0; // Get montant value or default to 0
+                    tt += th; // Accumulate total
+                });
+            }
+
+            tt = tt.toFixed(3); // Format to 3 decimal places     
+
+            if (tt > ttpayer) {
+                alert('Le montant total dépasse le total de la facture !');
+            } else if (tt < ttpayer) {
+                alert('Le montant total est inférieur au total de la facture.');
+            } else {
+                //alert('Le montant total est égal au total de la facture.');
+            }
+        });
+
         $('.montantbrut').on('keyup change', function() {
             index = $(this).attr('index');
-            montantbrut = $('#montant' + index).val() || 0;
+            montantbrut = $('#montantbrut' + index).val() || 0;
+            // alert(montantbrut);
             t = $('#taux' + index).val() || 0;
-            //  alert(t);
-            if (t == '1') {
-                taux = 1.5
-            };
-            if (t == '4') {
-                taux = 5
-            };
-            if (t == '3') {
-                taux = 15
-            };
-            if (t == '5') {
-                taux = 10
-            };
-            if (t == '6') {
-                taux = 3
-            };
-            if (t == '7') {
-                taux = 7
-            };
-            if (t == '8') {
-                taux = 1
-            };
+            //   alert(t);
+            // if (t == '1') {
+            //     taux = 1.5
+            // };
+            // if (t == '4') {
+            //     taux = 5
+            // };
+            // if (t == '3') {
+            //     taux = 15
+            // };
+            // if (t == '5') {
+            //     taux = 10
+            // };
+            // if (t == '6') {
+            //     taux = 3
+            // };
+            // if (t == '7') {
+            //     taux = 7
+            // };
+            // if (t == '8') {
+            //     taux = 1
+            // };
             //alert(taux);
-            retenue = (montantbrut * (taux / 100)).toFixed(3);
+            retenue = (montantbrut * (t / 100)).toFixed(3);
             $('#montant' + index).val(retenue);
             // $('#Montant').val(retenue);
             net = (montantbrut - retenue).toFixed(3);
@@ -1313,9 +1352,7 @@ use Cake\Datasource\ConnectionManager;
 
 
 
-            // ulr = 'https://codifaerp.isofterp.com/demo/reglements/add';
-            // alert(ulr);
-            // alert(link);
+         
             $(location).attr('href', link);
 
         });
@@ -1675,6 +1712,7 @@ use Cake\Datasource\ConnectionManager;
         //    ajouter_lignee(table, index);
         //  });
         $(".ajouterligne").on('click', function() {
+            // alert('ddddddd')
             table = $(this).attr('table'); //id table
             index = $(this).attr('index'); // id max compteur
             tr = $(this).attr('tr'); //class class type
@@ -1760,6 +1798,7 @@ use Cake\Datasource\ConnectionManager;
         //    console.log(tt);
         //    $('#Montant').val(tt);
         //        });
+    
     });
 </script>
 

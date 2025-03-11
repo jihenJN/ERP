@@ -1,22 +1,9 @@
 <?php $this->layout = 'AdminLTE.print'; ?>
 <?php
 
-
-use Cake\ORM\TableRegistry;
-
-?>
-
-
-<?php
-
-$societeTable = TableRegistry::getTableLocator()->get('Societes');
-
-$societe = $societeTable->find()->where('id=1')->first();
-
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\Datasource\ConnectionManager;
-
 ?>
 <?php $connection = ConnectionManager::get('default'); ?>
 
@@ -46,7 +33,7 @@ use Cake\Datasource\ConnectionManager;
     }
 </style>
 <br>
-<!-- <style>
+<style>
     body {
         font-size: 11px;
 
@@ -56,7 +43,7 @@ use Cake\Datasource\ConnectionManager;
         font-size: 12px;
 
     }
-</style> -->
+</style>
 
 <div style="display:flex;">
     <table border="1" cellpadding="0" cellspacing="0" style="border: 2px solid #002E50; border-left:none;border-right:none;border-collapse: collapse; width: 100%; ">
@@ -76,8 +63,11 @@ use Cake\Datasource\ConnectionManager;
             </div> -->
         </td>
         <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-            <?php echo $societe->adresseEntete; ?>
-            <br>
+
+
+            <?php echo $societes->nom; ?>&nbsp;&nbsp; au Capital : <?php echo $societes->capital; ?> <br>
+            <?php echo $societes->adresse; ?> - Tél : <?php echo $societes->tel; ?> -Fax : <?php echo $societes->fax; ?><br>
+            TVA : <?php echo $societes->codetva; ?> - E-mail : <?php echo $societes->mail; ?><br>
         </td>
         <td align="center" style="width: 25%;border: none;">
             <div>
@@ -94,7 +84,7 @@ use Cake\Datasource\ConnectionManager;
 <br>
 
 <h3>
-    <div style="margin-left: 5px ;color: #ce2029 ; "> <?php echo $societe->nom ?></div>
+    <div style="margin-left: 5px ;color: #ce2029 ; ">  <?php echo $societefirst->nom; ?></div>
 
 
     <div align="center" style="color: #ce2029 ; ">
@@ -108,149 +98,139 @@ use Cake\Datasource\ConnectionManager;
                 <div class="panel-body">
                     <table class="table table-bordered table-striped table-bottomless" id="example1" border="1">
                         <?php date_default_timezone_set('Africa/Tunis');
-                        $datedebut = date('Y-01-01 00:00:00');
-                        $datefin = date('Y-12-t 23:59:59'); ?>
+                        $datedebut = date('Y-01-01');
+                        $datefin = date('Y-12-t'); ?>
                         <!-- <table id="example1" class="table-fixed table table-bordered table-striped" style='display: block; overflow-x: auto; white-space: nowrap;'> -->
                         <thead style='position: sticky; top: 0;'>
-                            <tr style="font-style: italic; font-weight: bold;">
+                            <tr style="font-style: italic; font-weight: bold;height:30px;">
                                 <td width="15%">Démarcheur</td>
                                 <td>Solde Ini</td>
                                 <?php foreach ($mois as $mm) : ?>
-                                    <td style="font-size: 16px; background-color: #d7837f; color: #000000; font-style: italic; font-weight: bold;" align="center"><?php echo $mm; ?></td>
+                                    <td style="border:1px;font-size: 16px; background-color: #d7837f; color: #000000; font-style: italic; font-weight: bold;" align="center"><?php echo $mm; ?></td>
                                 <?php endforeach; ?>
                                 <td style="font-style: italic; font-weight: bold;">Encours</td>
-                                <td style="font-style: italic; font-weight: bold;">Total</td>
+                                <td style="font-style: italic; font-weight: bold;">Solde</td>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            $totalini = 0;
-                            $totalencours = 0;
-                            $generaltotaltt = 0;
+                            <?php $sumsoldedebut = 0;
+                            $sumencours = 0;
+                            $sumsolde = 0;
                             foreach ($clients as $client) :
                                 $client_id = $client->id;
-                                $date = date('Y') - 1;
+                                $sumsoldedebut += $client->soldedebut;
+
                                 $test = $connection->prepare("SELECT SUM(totalttc) as sumtotalttc
-                                                          FROM factureclients
-                                                          LEFT JOIN lignereglementclients ON lignereglementclients.factureclient_id = factureclients.id
-                                                          WHERE YEAR(factureclients.date) = ? AND factureclients.client_id = ?");
-                                $test->bindValue(1, $date);
-                                $test->bindValue(2, $client->id);
+                            FROM factureclients
+                            WHERE factureclients.client_id = ? AND Date(factureclients.date) BETWEEN ? AND ?");
+                                $test->bindValue(1, $client->id);
+                                $test->bindValue(2, $datedebut);
+                                $test->bindValue(3, $datefin);
                                 $test->execute();
                                 $resulttest = $test->fetchAll('assoc');
+                                $resFacture = $resulttest ? $resulttest[0]['sumtotalttc'] : 0;
 
-                                $res = $resulttest ? $resulttest[0]['sumtotalttc'] : 0;
-                                $totalini += $res + $client->soldedebut;
-
-                                date_default_timezone_set('Africa/Tunis');
-                                $datedebut = date('Y-01-01 00:00:00');
-                                $datefin = date('Y-12-t 23:59:59');
-                                $statement = $connection->prepare("SELECT SUM(totalttc) as ttc FROM bonlivraisons WHERE bonlivraisons.factureclient_id = 0 AND bonlivraisons.typebl = 1 AND bonlivraisons.client_id = ? AND bonlivraisons.date BETWEEN ? AND ?");
+                                $statement = $connection->prepare("SELECT SUM(totalttc) as ttc
+                                FROM bonlivraisons
+                                WHERE bonlivraisons.factureclient_id = 0 AND bonlivraisons.typebl = 1
+                                AND bonlivraisons.client_id = ? AND Date(bonlivraisons.date) BETWEEN ? AND ?");
                                 $statement->bindValue(1, $client_id);
                                 $statement->bindValue(2, $datedebut);
                                 $statement->bindValue(3, $datefin);
                                 $statement->execute();
                                 $test1 = $statement->fetchAll('assoc');
-                                $testfin = $test1 ? $test1['0']['ttc'] : 0;
+                                $resBL = $test1 ? $test1[0]['ttc'] : 0;
 
+                                $reglementQuery = $connection->prepare("SELECT SUM(lignereglementclients.Montant) AS sumMontant
+                            FROM lignereglementclients
+                            LEFT JOIN reglementclients 
+                            ON lignereglementclients.reglementclient_id = reglementclients.id
+                            WHERE reglementclients.client_id = ? AND reglementclients.date BETWEEN ? AND ?");
+                                $reglementQuery->bindValue(1, $client_id);
+                                $reglementQuery->bindValue(2, $datedebut);
+                                $reglementQuery->bindValue(3, $datefin);
+                                $reglementQuery->execute();
+                                $reglementResult = $reglementQuery->fetchAll('assoc');
+                                $resReg = $reglementResult ? $reglementResult[0]['sumMontant'] : 0;
 
-                                $parmoisdd = 0;
-                                foreach ($moiss as $mois_id => $mm) {
-                                    $mois = $mm->num;
-                                    $annee_en_cours = date('Y');
-                                    $date_debut = date('Y-m-01 00:00:00', mktime(0, 0, 0, $mois, 1, $annee_en_cours));
-                                    $date_fin = date('Y-m-t 23:59:59', mktime(0, 0, 0, $mois, 1, $annee_en_cours));
+                                $tt = $client->soldedebut + $resFacture + $resBL - $resReg;
+                                $sumencours += ($resFacture + $resBL);
+                                $sumsolde += $tt;
 
-                                    $listefact = $connection->execute('SELECT SUM(totalttc) AS sumtotalttc FROM factureclients 
-                                        WHERE factureclients.client_id = ' . $client->id . '
-                                        AND factureclients.date BETWEEN \'' . $date_debut . '\' AND \'' . $date_fin . '\'
-                                        AND factureclients.id NOT IN (
-                                            SELECT factureclient_id FROM lignereglementclients
-                                            WHERE lignereglementclients.factureclient_id = factureclients.id
-                                        )')
-                                        ->fetchAll('assoc');
-                                    $totalm = 0;
-                                    foreach ($listefact as $row) {
-                                        $totalm += $row['sumtotalttc'];
-                                        $parmoisdd += $row['sumtotalttc'];
-                                    }
-                                }
-                                $tt = $client->soldedebut + $res + $parmoisdd + $testfin;
-                                if ($tt != 0 || $testfin != 0) {
-                                    $totalencours += $testfin;
+                                if ($tt != 0) :
                             ?>
-                                    <tr>
+                                    <tr style="height:30px;">
                                         <td style="background-color: #8fbc8f; color: #000000;"><?php echo $client->Raison_Sociale; ?></td>
-                                        <td>
-                                            <?php
+                                        <td><?php echo  h(number_format(abs($client->soldedebut), 3, ',', ' ')) ?></td>
+                                        <?php foreach ($moiss as $mois_id => $mm) :
 
-                                            echo $client->soldedebut + $res;
-                                            ?>
-                                        </td>
-                                        <?php
-                                        $parmoisdd = 0;
-                                        foreach ($moiss as $mois_id => $mm) :
-                                            $mois = $mm->num;
-                                            $annee_en_cours = date('Y');
-                                            $date_debut = date('Y-m-01 00:00:00', mktime(0, 0, 0, $mois, 1, $annee_en_cours));
-                                            $date_fin = date('Y-m-t 23:59:59', mktime(0, 0, 0, $mois, 1, $annee_en_cours));
+                                            $month_start_date = date('Y-m-01', strtotime("{$mm->num}/01/" . date('Y')));
+                                            $month_end_date = date('Y-m-t', strtotime($month_start_date));
 
-                                            $listefact = $connection->execute('SELECT SUM(totalttc) AS sumtotalttc FROM factureclients 
-                                        WHERE factureclients.client_id = ' . $client->id . '
-                                        AND factureclients.date BETWEEN \'' . $date_debut . '\' AND \'' . $date_fin . '\'
-                                        AND factureclients.id NOT IN (
-                                            SELECT factureclient_id FROM lignereglementclients
-                                            WHERE lignereglementclients.factureclient_id = factureclients.id
-                                        )')
-                                                ->fetchAll('assoc');
+                                            // Query for factureclients totalttc for this month
+                                            $test = $connection->prepare("SELECT SUM(totalttc) as sumtotalttc
+                                        FROM factureclients
+                                        WHERE factureclients.client_id = ? AND Date(factureclients.date) BETWEEN ? AND ?");
+                                            $test->bindValue(1, $client->id);
+                                            $test->bindValue(2, $month_start_date);
+                                            $test->bindValue(3, $month_end_date);
+                                            $test->execute();
+                                            $resulttest = $test->fetchAll('assoc');
+                                            $resFacturemoi = $resulttest ? $resulttest[0]['sumtotalttc'] : 0;
 
-                                            //$totalm = 0;
-                                            foreach ($listefact as $row) {
-                                                // $totalm += $row['sumtotalttc'];
-                                                // $parmoisdd += $row['sumtotalttc'];
-                                                echo "<td>" . $row['sumtotalttc'] . "</td>";
-                                            }
-                                        endforeach;
+                                            // Query for bonlivraisons totalttc for this month
+                                            $statement = $connection->prepare("SELECT SUM(totalttc) as ttc 
+                                        FROM bonlivraisons 
+                                        WHERE bonlivraisons.factureclient_id = 0 AND bonlivraisons.typebl = 1 
+                                        AND bonlivraisons.client_id = ? AND Date(bonlivraisons.date) BETWEEN ? AND ?");
+                                            $statement->bindValue(1, $client_id);
+                                            $statement->bindValue(2, $month_start_date);
+                                            $statement->bindValue(3, $month_end_date);
+                                            $statement->execute();
+                                            $test1 = $statement->fetchAll('assoc');
+                                            $resBLmoi = $test1 ? $test1[0]['ttc'] : 0;
 
+                                            // Query for total reglement amount for this month
+                                            $reglementQuery = $connection->prepare("SELECT SUM(lignereglementclients.Montant) AS sumMontant
+                                            FROM lignereglementclients
+                                            LEFT JOIN reglementclients 
+                                            ON lignereglementclients.reglementclient_id = reglementclients.id
+                                            WHERE reglementclients.client_id = ? AND reglementclients.date BETWEEN ? AND ?");
+                                            $reglementQuery->bindValue(1, $client_id);
+                                            $reglementQuery->bindValue(2, $month_start_date);
+                                            $reglementQuery->bindValue(3, $month_end_date);
+                                            $reglementQuery->execute();
+                                            $reglementResult = $reglementQuery->fetchAll('assoc');
+                                            $resRegmoi = $reglementResult ? $reglementResult[0]['sumMontant'] : 0;
 
+                                            $parmoisdd =  $resFacturemoi + $resBLmoi - $resRegmoi;
+                                            $monthly_totals[$mois_id] += $parmoisdd;
 
-
-
-                                        $generaltotaltt += $tt;
                                         ?>
-                                        <td><?php echo $testfin; ?></td>
-                                        <td><?php echo $tt; ?></td>
+                                            <td><?php if ($parmoisdd != 0) {
+                                                    echo  h(number_format(abs($parmoisdd), 3, ',', ' '));
+                                                } ?></td>
+                                        <?php endforeach; ?>
+                                        <td><?php if (($resBL + $resFacture) != 0) {
+                                                echo  h(number_format(abs($resBL + $resFacture), 3, ',', ' '));
+                                            } ?></td>
+                                        <td><?php if ($tt != 0) {
+                                                echo  h(number_format(abs($tt), 3, ',', ' '));
+                                            } ?></td>
                                     </tr>
-                            <?php }
-                            endforeach; ?>
-                        </tbody>
-                        <tr>
-                            <td></td>
-                            <td><strong><?php echo $totalini; ?></strong></td>
                             <?php
-                            foreach ($moiss as $mois_id => $mm) :
-                                $mois = $mm->num;
-                                $annee_en_cours = date('Y');
-                                $date_debut = date('Y-m-01 00:00:00', mktime(0, 0, 0, $mois, 1, $annee_en_cours));
-                                $date_fin = date('Y-m-t 23:59:59', mktime(0, 0, 0, $mois, 1, $annee_en_cours));
-
-                                $listefact22 = $connection->execute('SELECT SUM(totalttc) AS sumtotalttc FROM factureclients 
-                                WHERE factureclients.date BETWEEN \'' . $date_debut . '\' AND \'' . $date_fin . '\'
-                                AND factureclients.id NOT IN (
-                                    SELECT factureclient_id FROM lignereglementclients
-                                    WHERE lignereglementclients.factureclient_id = factureclients.id
-                                )')
-                                    ->fetchAll('assoc');
-
-                                $totalm22 = 0;
-                                foreach ($listefact22 as $row) {
-                                    $totalm22 += $row['sumtotalttc'];
-                                    echo "<td><strong>" . $row['sumtotalttc'] . "</strong></td>";
-                                }
+                                endif;
                             endforeach;
                             ?>
-                            <td><strong><?php echo $totalencours; ?></strong></td>
-                            <td><strong><?php echo $generaltotaltt; ?></strong></td>
+                        </tbody>
+                        <tr style="height:30px;">
+                            <td style="background-color: #dcdcdc; font-weight: bold;">Total</td>
+                            <td style=" font-weight: bold;"><?php echo  h(number_format(abs($sumsoldedebut), 3, ',', ' ')) ?></td>
+                            <?php foreach ($monthly_totals as $total) : ?>
+                                <td style="background-color:#F0D2D2; font-weight: bold;"><?php echo h(number_format(abs($total), 3, ',', ' ')); ?></td>
+                            <?php endforeach; ?>
+                            <td style="font-weight: bold;"> <?php echo h(number_format(abs($sumencours), 3, ',', ' ')); ?></td>
+                            <td style="font-weight: bold;background-color:#C7FCC7;"> <?php echo h(number_format(abs($sumsolde), 3, ',', ' ')); ?></td>
                         </tr>
                     </table>
                 </div>

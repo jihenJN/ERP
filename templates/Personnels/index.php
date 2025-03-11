@@ -118,7 +118,7 @@ if ($add == 1) { ?>
                       echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $personnel->id), array('escape' => false));
                     } ?>
                     <?php if ($delete == 1) {
-                      echo $this->Html->link("<button class='btn btn-xs btn-danger'><i class='fa fa-trash'></i></button>", array('action' => 'delete', $personnel->id), array('escape' => false));?>
+                      echo $this->Html->link("<button  class='btn btn-xs btn-danger deletecon'><i class='fa fa-trash'></i></button>", array('action' => 'delete', $personnel->id), array('escape' => false));?>
 
                  <?php   } ?>
                   </td>
@@ -157,41 +157,9 @@ if ($add == 1) { ?>
 </script>
  <script>
 
-
-                $(function () {
-                    $('.verifier').on('click', function () {
-                        // alert('hello');
-                        ind = $(this).attr('index');
-                        //  alert(ind);
-                        id = $('#id' + ind).val();
-                        //  alert(id);
-                        //  alert(id)
-                        $.ajax({
-                            method: "GET",
-                            url: "<?= $this->Url->build(['controller' => 'Personnels', 'action' => 'verif']) ?>",
-                            dataType: "json",
-                            data: {
-                                idfam: id,
-                            },
-                            headers: {
-                                'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
-                            },
-                            success: function (data) {
-                                //   $('#pays').html(data.pays);
-                                //  alert(data.pays);
-                                if (data.familles != 0)
-                                {
-                                    alert('Vous ne pouvez pas supprimer cet enregistrement');
-                                } else {
-                                    if (confirm('Voulez-vous vraiment supprimer cet enregistrement?'))
-                                    {
-                                        //   alert('ok supp');
-                                        document.location = "https://codifaerp.isofterp.com/demo/Personnels/delete/" + id;
-                                    }
-                                }
-                            }
-                        })
-                    });
-                });
+$(".deletecon").on("click", function () {
+    return confirm("voulez vous supprimer cet enregistrement !!");
+  });
+        
             </script>
 <?php $this->end(); ?>

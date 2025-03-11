@@ -53,13 +53,13 @@ if ($add == 1) { ?>
 
 <section class="content" style="width: 99%">
   <div class="box">
-     <div class="box-header">
-    </div> 
+    <div class="box-header">
+    </div>
 
     <div class="box-body">
       <div class="row">
 
-        <?php echo $this->Form->create(/*$clients, ['role' => 'form']); */$livraisons, ['id' => 'searchForm','type' => 'get']);
+        <?php echo $this->Form->create(/*$clients, ['role' => 'form']); */$livraisons, ['id' => 'searchForm', 'type' => 'get']);
 
         ?>
 
@@ -71,7 +71,7 @@ if ($add == 1) { ?>
 
         <div class="col-xs-3">
           <?php
-          echo $this->Form->control('fournisseur_id', ['label' => 'Fournisseur ','id'=>'fournisseur_id', 'options' => $fournisseurs, 'value' => $this->request->getQuery('fournisseur_id'), 'class' => ' form-control select2', 'empty' => 'Veuillez choisir !!']); ?>
+          echo $this->Form->control('fournisseur_id', ['label' => 'Fournisseur ', 'id' => 'fournisseur_id', 'options' => $fournisseurs, 'value' => $this->request->getQuery('fournisseur_id'), 'class' => ' form-control select2', 'empty' => 'Veuillez choisir !!']); ?>
         </div>
 
 
@@ -136,14 +136,14 @@ if ($add == 1) { ?>
     </div>
     <br>
   </div>
-<!-- </section> -->
-<br>
+  <!-- </section> -->
+  <br>
 
-<input style="display:none" type="textarea" id="result" class='form-control'>
+  <input style="display:none" type="textarea" id="result" class='form-control'>
 
 
 
-<!-- <section class="content"> -->
+  <!-- <section class="content"> -->
   <div class="box">
     <div class="box-header">
     </div>
@@ -162,6 +162,8 @@ if ($add == 1) { ?>
             <th width="11%" align="center" scope="col"><?= h('N° BL Fournisseur') ?></th>
             <th width="11%" hidden align="center" scope="col"><?= h('Depot') ?>
             </th>
+            <th width="11%" align="center" scope="col"><?= h('Total TTC') ?></th>
+
             <th width="11%" align="center" scope="col"><?= h('Facture') ?></th>
             <th width="11%" align="center" scope="col" class="actions text-center"><?= __('Actions') ?></th>
           </tr>
@@ -197,6 +199,9 @@ if ($add == 1) { ?>
 
 
               <td width="11%" hidden><?= h($livraison->depot->name) ?></td>
+              <td width="11%" ><?= h($livraison->ttc) ?></td>
+
+
               <td>
                 <!--                  <input type="checkbox" value="<?php echo $livraison->livraison_id ?>" id="check<?php echo $i ?>" ligne="<?php echo $i ?>" index="<?php echo $i ?>" class="blfbre" />-->
                 <input id="fournisseur_id<?= $i ?>" ligne="<?php echo $i; ?>" class="" type="hidden" value="<?= $livraison->fournisseur_id ?>">
@@ -358,7 +363,7 @@ if ($add == 1) { ?>
   });
 </script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function() {
     const numeroInput = document.querySelector('input[name="numero"]');
     const numeroblInput = document.querySelector('input[name="blfournisseur"]');
 
@@ -369,30 +374,30 @@ document.addEventListener('DOMContentLoaded', function() {
 
     console.log('DOM entièrement chargé');
 
-    if (numeroInput && numeroblInput  && fournisseurIdSelect && searchForm) {
-        console.log('Éléments de formulaire trouvés');
-    
-        // Fonction pour soumettre le formulaire
-        function submitForm() {
-            searchForm.submit();
+    if (numeroInput && numeroblInput && fournisseurIdSelect && searchForm) {
+      console.log('Éléments de formulaire trouvés');
+
+      // Fonction pour soumettre le formulaire
+      function submitForm() {
+        searchForm.submit();
+      }
+
+      // Événement pour soumettre le formulaire lorsqu'Entrée est pressé
+      searchForm.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && (e.target !== numeroInput || e.target !== numeroblInput)) {
+          e.preventDefault();
+          submitForm();
         }
+      });
 
-        // Événement pour soumettre le formulaire lorsqu'Entrée est pressé
-        searchForm.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && (e.target !== numeroInput || e.target !== numeroblInput )) {
-                e.preventDefault();
-                submitForm();
-            }
-        });
-
-        // Événement pour soumettre le formulaire lorsqu'un changement est apporté au fournisseurIdSelect
-        fournisseurIdSelect.addEventListener('change', function() {
-            submitForm();
-        });
+      // Événement pour soumettre le formulaire lorsqu'un changement est apporté au fournisseurIdSelect
+      fournisseurIdSelect.addEventListener('change', function() {
+        submitForm();
+      });
     } else {
-        console.log('Éléments de formulaire non trouvés');
+      console.log('Éléments de formulaire non trouvés');
     }
-});
+  });
 </script>
 <script>
   $(function() {

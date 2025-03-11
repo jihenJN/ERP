@@ -289,23 +289,23 @@ class RelevefournisseursController extends AppController
                 ));
                 // debug($bonlivraisons->toarray());
 
-                foreach ($Livraisons as $bonlivraison) {
-                    $tablignelivraisons = $this->fetchTable('Relevefournisseurs')->newEmptyEntity();
+                // foreach ($Livraisons as $bonlivraison) {
+                //     $tablignelivraisons = $this->fetchTable('Relevefournisseurs')->newEmptyEntity();
 
-                    $tablignelivraisons['fournisseur_id'] = $bonlivraison->fournisseur_id;
-                    $tablignelivraisons['date'] = $bonlivraison->date;
-                    $tablignelivraisons['numero'] = $bonlivraison->numero;
-                    $tablignelivraisons['type'] = '<a onClick="flvFPW1(wr+`Livraisons/imprimeview/`+' . $bonlivraison->id . ',`UPLOAD`,`width=800,height=1150,scrollbars=yes`,0,2,2);return document.MM_returnValue" href="javascript:;" ><strong>Bon livraison N°     :' . $bonlivraison->numero . '</strong></a>';
-                    $tablignelivraisons['debit'] = $bonlivraison->ttc;
-                    $tablignelivraisons['credit'] = "";
-                    $tablignelivraisons['impaye'] = "";
-                    $tablignelivraisons['reglement'] = $bonlivraison->Montant_Regler;
-                    $tablignelivraisons['avoir'] = "";
-                    $tablignelivraisons['typ'] = "BL";
-                    $tablignelivraisons['solde'] = $bonlivraison->ttc - $bonlivraison->Montant_Regler;
-                    $tablignelivraisons['exercice_id'] = $bonlivraison->exercice_id;
-                    $this->Relevefournisseurs->save($tablignelivraisons);
-                }
+                //     $tablignelivraisons['fournisseur_id'] = $bonlivraison->fournisseur_id;
+                //     $tablignelivraisons['date'] = $bonlivraison->date;
+                //     $tablignelivraisons['numero'] = $bonlivraison->numero;
+                //     $tablignelivraisons['type'] = '<a onClick="flvFPW1(wr+`Livraisons/imprimeview/`+' . $bonlivraison->id . ',`UPLOAD`,`width=800,height=1150,scrollbars=yes`,0,2,2);return document.MM_returnValue" href="javascript:;" ><strong>Bon livraison N°     :' . $bonlivraison->numero . '</strong></a>';
+                //     $tablignelivraisons['debit'] = $bonlivraison->ttc;
+                //     $tablignelivraisons['credit'] = "";
+                //     $tablignelivraisons['impaye'] = "";
+                //     $tablignelivraisons['reglement'] = $bonlivraison->Montant_Regler;
+                //     $tablignelivraisons['avoir'] = "";
+                //     $tablignelivraisons['typ'] = "BL";
+                //     $tablignelivraisons['solde'] = $bonlivraison->ttc - $bonlivraison->Montant_Regler;
+                //     $tablignelivraisons['exercice_id'] = $bonlivraison->exercice_id;
+                //     $this->Relevefournisseurs->save($tablignelivraisons);
+                // }
             }
 
 

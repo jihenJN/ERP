@@ -35,10 +35,10 @@ class InventairesController extends AppController
 
 
         if ($datedebut != '') {
-            $cond1 = 'Inventaires.date >= ' . "'" . $datedebut . "'";
+            $cond1 = 'Date(Inventaires.date) >= ' . "'" . $datedebut . "'";
         }
         if ($datefin != '') {
-            $cond2 = 'Inventaires.date <= ' . "'" . $datefin . "'";
+            $cond2 = 'Date(Inventaires.date) <= ' . "'" . $datefin . "'";
         }
         if ($depot_id) {
             $cond3 = "Inventaires.depot_id  =  '" . $depot_id . "' ";
@@ -54,13 +54,13 @@ class InventairesController extends AppController
 
         //debug($query);
 
-      
+
 
         $inventaires = $this->paginate($query);
 
 
         $depots = $this->fetchTable('Depots')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
-       // debug($depots->toarray());
+        // debug($depots->toarray());
         $this->set(compact('inventaires', 'depots', 'type'));
     }
 
@@ -167,7 +167,7 @@ class InventairesController extends AppController
                     $this->loadModel('Ligneinventaires');
 
                     foreach ($this->request->getData('data')['ligner'] as $i => $li) {
-                        if ($li['sup'] != 1 &&(!empty($li['article_id']))) {
+                        if ($li['sup'] != 1 && (!empty($li['article_id']))) {
                             //debug($dep['sup1']);
                             $data1['inventaire_id'] = $inventaire->id;
                             $data1['article_id'] = $li['article_id'];
@@ -254,7 +254,7 @@ class InventairesController extends AppController
 
 
                         $this->loadModel('Ligneinventaires');
-                        if ($li['sup'] != 1  &&(!empty($li['article_id']))) {
+                        if ($li['sup'] != 1  && (!empty($li['article_id']))) {
 
                             $data1['inventaire_id'] = $inventaire->id;
                             $data1['article_id'] = $li['article_id'];
@@ -323,7 +323,7 @@ class InventairesController extends AppController
      */
     public function delete($id = null)
     {
-    //    $this->request->allowMethod(['post', 'delete']);
+        //    $this->request->allowMethod(['post', 'delete']);
         $this->loadModel("Ligneinventaires");
         $lignes = $this->Ligneinventaires->find('all')->where(['Ligneinventaires.inventaire_id =' . $id]);
         foreach ($lignes as $li) {
@@ -676,6 +676,30 @@ class InventairesController extends AppController
             $select =  $select . " >" . $q['name'] . "</option>";
         }
         $select = $select . "</select> </div> </div> ";
+        echo json_encode(array('select' => $select));
+        die;
+    }
+
+
+
+
+    public function getDepotbs($id = null)
+    {
+
+        $id = $this->request->getQuery('id');
+
+        $query = $this->fetchTable('Depots')->find();
+        $query->where(['pointdevente_id' => $id]);
+
+        $select = "
+                   <label class='control-label' for='depot_id'>Dépot</label>
+    <select name='depot_id' id='depot_id' class='form-control '  '>
+                <option >Veuillez choisir !!</option>";
+        foreach ($query as $q) {
+            $select =  $select . "  <option value ='" . $q['id'] . "'";
+            $select =  $select . " >" . $q['name'] . "</option>";
+        }
+        $select = $select . "</select>";
         echo json_encode(array('select' => $select));
         die;
     }

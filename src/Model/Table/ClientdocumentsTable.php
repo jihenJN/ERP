@@ -56,14 +56,14 @@ class ClientdocumentsTable extends Table
     public function validationDefault(Validator $validator): Validator
     {
        
-        $validator
-            ->integer('client_id')
-            ->allowEmptyString('client_id');
+        // $validator
+        //     ->integer('client_id')
+        //     ->allowEmptyString('client_id');
 
-        $validator
-            ->scalar('name')
-            ->maxLength('name', 255)
-            ->allowEmptyString('name');
+        // $validator
+        //     ->scalar('name')
+        //     ->maxLength('name', 255)
+        //     ->allowEmptyString('name');
         $validator
             ->allowEmptyFile('fichier')
             ->add('fichier', [

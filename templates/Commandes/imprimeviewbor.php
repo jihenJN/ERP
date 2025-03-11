@@ -116,23 +116,10 @@ function int2str($a)
         echo $this->Html->image('mm.png', ['alt' => 'CakePHP', 'height' => '70px', 'width' => '110px']); ?> -->
     </div>
     <div style="width: 40%;margin-left:2% ;text-align:center" align="center">
-      <!--   مصر�? تصنيع وتوزيع
-        <br>
-        مواد التنظي�?
-        <br><br>
-        Comptoir de Diffusion et de Fabrication
-        <br>
-        de Produits d'entretien SARL -->
+     
     </div>
     <div style="width: 50%;margin-left:8%" align="left">
-        <!-- <h5>
-            <b>Siége Social:</b>3 Rue Mustapha Sfar Tunis Bélvédére 1002 <br>
-            <b>Usine:</b>Rte Fouchana Chebedda Naassen 1135 Tunisie <br>
-            <b>Tel:</b>+216 71 398 404/<b>Fax:</b>+216 71 398 137<br>
-            <b>E-mail:</b>codifa@gnet.tn/<b>WEB:</b> www.codifa.tn <br>
-            <b>R.C:</b>B0128802005/<b>M.F:</b>02940/X/A/M/000<br>
-            <b>CCB:</b>01100028110500554697 ATB Rue du Plastique-Mégrine
-        </h5> -->
+       
     </div>
 </div>
 <div style="display:flex;margin-bottom:3px;" align="center">

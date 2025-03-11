@@ -35,7 +35,7 @@ $connection = ConnectionManager::get('default'); ?>
                         <div class="col-xs-6">
                             <?php
 
-                            echo $this->Form->control('date', array('value' => $this->request->getQuery('date'), 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control datePickerOnly ', 'type' => 'date', 'label' => 'Date'));
+                            echo $this->Form->control('date', array('value' => $this->request->getQuery('date'), 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control datePickerOnly ', 'type' => 'date', 'label' => 'Date du'));
                             ?>
 
                         </div>
@@ -49,7 +49,7 @@ $connection = ConnectionManager::get('default'); ?>
                         <div class="col-xs-6" style="color:#dc143c;">
                             <?php
 
-                            echo $this->Form->control('echance2', array('value' => $this->request->getQuery('echance2'), 'style' => 'color:#dc143c;', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control datePickerOnly ', 'type' => 'date', 'label' => 'Echéance 2'));
+                            echo $this->Form->control('echance2', array('value' => $this->request->getQuery('echance2'), 'style' => 'color:#dc143c;', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control datePickerOnly ', 'type' => 'date', 'label' => 'Echéance 2 du'));
                             ?>
 
                         </div>
@@ -228,6 +228,9 @@ $connection = ConnectionManager::get('default'); ?>
                                     // } 
                                     if (($dataItem->etat_id == 1) || ($dataItem->etat_id == 0)) {
                                         echo '<button class="btn btn-sm custom-button custom-button" style="background-color: #F55C43; color: white;">En Attente</button>';
+                                    } elseif ($dataItem->etat_id == 13) {
+
+                                        echo '<button class="btn btn-sm custom-button custom-button" style="background-color: #5f9ea0 ; color: white;">Escompte</button>';
                                     } elseif ($dataItem->etat_id == 2) {
 
                                         echo '<button class="btn btn-sm custom-button custom-button" style="background-color: #54A74D; color: white;">Payé</button>';

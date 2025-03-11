@@ -95,6 +95,8 @@ class Commande extends Entity {
         'nomprenom' => true,
         'numeroidentite'=>true,
         'adressediv'=>true,
+        'livre'=>true,
+
         
 
     ];

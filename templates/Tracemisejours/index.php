@@ -12,22 +12,23 @@
         <?php echo $this->Form->create($tracemisejours, ['type' => 'get']); ?>
 
         <div class="col-xs-6">
+
           <?php
-          echo $this->Form->input('historiquede', array('value' => $this->request->getQuery('historiquede'), 'id' => 'historiquede', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control', 'type' => 'date'));
+          echo $this->Form->control('historiquede', array('value' => $historiquede, 'id' => 'historiquede', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control', 'type' => 'date'));
           ?>
         </div>
         <div class="col-xs-6">
           <?php
-          echo $this->Form->input('au', array('value' => $this->request->getQuery('au'), 'id' => 'au', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control', 'type' => 'date'));
+          echo $this->Form->control('au', array('value' => $au, 'id' => 'au', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control', 'type' => 'date'));
           ?>
         </div>
         <div class="col-xs-6">
           <?php
-          echo $this->Form->control('model', ['label' => 'Model', 'value' => $this->request->getQuery('model'), 'required' => 'off']); ?>
+          echo $this->Form->control('model', ['type'=>'text','label' => 'Model', 'value' => $this->request->getQuery('model'), 'required' => 'off']); ?>
         </div>
         <div class="col-xs-6">
           <?php
-          echo $this->Form->control('operation', ['label' => 'Operation', 'value' => $this->request->getQuery('operation'), 'required' => 'off']); ?>
+          echo $this->Form->control('operation', ['type'=>'text','label' => 'Operation', 'value' => $this->request->getQuery('operation'), 'required' => 'off']); ?>
         </div>
         <div class="col-xs-6">
           <?php

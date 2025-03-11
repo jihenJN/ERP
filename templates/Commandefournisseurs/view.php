@@ -83,6 +83,26 @@
                             ?>
                         </div>
                         <div class="col-xs-6">
+                            <?php echo $this->Form->control('dateliv', ['label' => 'Date Livraison', 'class' => 'form-control', 'type' => 'date']); ?>
+                        </div>
+                        <div class="col-xs-6">
+                            <label> Mode de livraison </label>
+                            <select name="modeliv" class="form-control">
+                                <option value="0" <?php if ($commande->modeliv == 0) { ?> selected <?php } ?>> Partiel
+                                <option value="1" <?php if ($commande->modeliv == 1) { ?> selected <?php } ?>> Total
+                            </select>
+                        </div>
+                        <div class="col-xs-6">
+                            <label> Type de livraison </label>
+                            <select name="typeliv" class="form-control">
+                                <option value="0" <?php if ($commande->typeliv == 0) { ?> selected <?php } ?>> Interne
+                                <option value="1" <?php if ($commande->typeliv == 1) { ?> selected <?php } ?>> Externe
+                            </select>
+                        </div>
+                        <div class="col-xs-12">
+                            <?php echo $this->Form->control('observation', ['label' => 'Commentaire', 'class' => 'form-control ajouterli focus', 'type' => 'textarea']); ?>
+                        </div>
+                        <div class="col-xs-12">
                             <?php echo $this->Form->control('observation', ['readonly', 'label' => 'Commentaire', 'class' => 'form-control', 'type' => 'textarea']); ?>
                         </div>
                     </div>
@@ -104,11 +124,11 @@
                                     <div class="table-responsive ls-table">
                                         <table class="table table-bordered table-striped table-bottomless" id="tabligne0">
                                             <thead>
-                                                <tr>   
+                                                <tr>
                                                     <td align="center" style="width: 15%;"><strong>Code</strong> </td>
                                                     <td align="center" style="width: 25%;"><strong>Designation</strong> </td>
                                                     <td align="center" style="width: 6%;"><strong> Qté</strong></td>
-        
+
                                                     <td align="center" style="width: 10%;"><strong>PrixHt</strong></td>
                                                     <td align="center" style="width: 10%;"><strong>PUNHT</strong></td>
                                                     <td align="center" style="width: 5%;"><strong>Remise</strong></td>
@@ -123,9 +143,9 @@
                                                 foreach ($lignecommandes as $i => $res) : // debug($lignebonchargements->id);
 
                                                 ?>
-                                                    <tr  style="font-size: 18px;font-weight: bold;">
+                                                    <tr style="font-size: 18px;font-weight: bold;">
                                                         <td>
-                                                          
+
                                                             <input type="hidden" name="data[tabligne3][<?= h($i) ?>][sup]" id="sup<?= h($i) ?>" index="<?= h($i) ?>" class="form-control ">
 
                                                             <select name="data[tabligne3][<?= h($i) ?>][article_id]" disabled id="article_id<?= h($i) ?>" class="form-control" onchange="get_article(this.value,1)">
@@ -140,7 +160,7 @@
                                                         </td>
 
                                                         <td>
-                                                            
+
                                                             <input type="hidden" name="data[tabligne3][<?= h($i) ?>][sup]" id="sup<?= h($i) ?>" index="<?= h($i) ?>" class="form-control ">
 
                                                             <select name="data[tabligne3][<?= h($i) ?>][article_id]" disabled id="article_id<?= h($i) ?>" class="form-control" onchange="get_article(this.value,1)">
@@ -148,14 +168,14 @@
                                                                 <?php foreach ($articles as $article) : ?>
                                                                     <option value="<?= h($article->id) ?>" <?php if ($article->id == $res->article_id) {
                                                                                                                 echo "selected";
-                                                                                                            } ?>><?= h($article->Dsignation) ?></option>   
+                                                                                                            } ?>><?= h($article->Dsignation) ?></option>
                                                                 <?php endforeach; ?>
 
                                                             </select>
                                                         </td>
-                                                        
+
                                                         <td align="center">
-                                                        <?php echo $this->Form->input('sup0', ['name' => 'data[ligner][' . $i . '][sup0]', 'id' => 'sup0' . $i, 'champ' => 'sup0' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control']);?>
+                                                            <?php echo $this->Form->input('sup0', ['name' => 'data[ligner][' . $i . '][sup0]', 'id' => 'sup0' . $i, 'champ' => 'sup0' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control']); ?>
 
                                                             <?php
                                                             echo $this->Form->input('qte', array('readonly' => 'readonly', 'value' => $res['qte'], 'label' => '', 'name' => 'data[ligner][' . $i . '][qte]', 'id' => 'qte' . $i, 'champ' => 'qte', 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control vali htbc'));

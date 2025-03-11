@@ -179,7 +179,21 @@ class PointdeventesController extends AppController
        /// $villes = $this->Pointdeventes->Villes->find('list', ['limit' => 200]);
         $this->set(compact('pointdevente'));
     }
+    public function verif() {
+        $id = $this->request->getQuery('idfam');
+    
 
+        $points = 0;
+    
+
+        $points += $this->fetchTable('Inventaires')->find('all')->where(['Inventaires.pointdevente_id' => $id])->count();
+        $points += $this->fetchTable('Bonsortiestocks')->find('all')->where(['Bonsortiestocks.pointdevente_id' => $id])->count();
+        $points += $this->fetchTable('Depots')->find('all')->where(['Depots.pointdevente_id' => $id])->count();
+    
+ 
+        echo json_encode(['points' => $points]);
+        die;
+    }
 
     /**
      * Delete method
@@ -205,10 +219,10 @@ class PointdeventesController extends AppController
         // if (($pointdevente <> 1)) {
         //     $this->redirect(array('controller' => 'users', 'action' => 'login'));
         // }
-        $this->request->allowMethod(['post', 'delete']);
+       // $this->request->allowMethod(['post', 'delete']);
         $pointdevente = $this->Pointdeventes->get($id);
         if ($this->Pointdeventes->delete($pointdevente)) {
-            $pointdevente_id = ($this->Pointdeventes->save($pointdevente)->id);
+           // $pointdevente_id = ($this->Pointdeventes->save($pointdevente)->id);
             $this->misejour("Pointdeventes", "delete", "code");
         } else {
         }

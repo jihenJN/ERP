@@ -43,7 +43,7 @@
                 <div class="box-body">
                     <div class="row">
                         <div class="col-xs-6">
-                            <?php echo $this->Form->control('code', ['label' => 'Code', 'required' => 'off']); ?>
+                            <?php echo $this->Form->control('code', ['label' => 'Code', 'readonly', 'required' => 'off']); ?>
                         </div>
                         <div class="col-xs-6">
                             <?php echo $this->Form->control('name'); ?>
@@ -111,7 +111,7 @@
                             <?php echo $this->Form->control('tel'); ?>
                         </div> -->
                         <div class="col-xs-3"><?php echo $this->Form->control('tel', ['label' => 'Télèphone 1']); ?></div>
-                        <div class="col-xs-3"><?php echo $this->Form->control('tel', ['label' => 'Télèphone 2']); ?></div>
+                        <div class="col-xs-3"><?php echo $this->Form->control('tel1', ['label' => 'Télèphone 2']); ?></div>
 
                         <div class="col-xs-6">
                             <div class="form-group input text ">
@@ -473,7 +473,7 @@
                                                         ?>
                                                         <?php echo $this->Html->link(
                                                             $banque->document, // Le texte ou le nom du lien
-                                                            '/webroot/img/' . $banque->document, // L'URL du lien
+                                                            '/img/' . $banque->document, // L'URL du lien
                                                             ['target' => '_blank', 'style' => 'max-width:200px;height:200px;'] // Options supplémentaires
                                                         ); ?>
 
@@ -498,7 +498,7 @@
 
 
                 <div align="center">
-                    <button type="submit" class="pull-right btn btn-success btn-sm " id="" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+                    <button type="submit" class="pull-right btn btn-success btn-sm " id="testfour" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
 
                 </div>
 

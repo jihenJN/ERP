@@ -29,17 +29,7 @@ use Cake\Datasource\ConnectionManager;
 <?php }  ?>
 
 
-<?php if ($type == 2) { ?>
-    <section class="content-header">
-        <h1>
-            Ajout Réglement factures
-            <small><?php echo __(''); ?></small>
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="<?php echo $this->Url->build(['action' => 'index/2']); ?>"><i class="fa fa-reply"></i> <?php echo __('Retour'); ?></a></li>
-        </ol>
-    </section>
-<?php } ?>
+
 
 
 <section class="content">
@@ -211,7 +201,7 @@ use Cake\Datasource\ConnectionManager;
                                                                             <input type="checkbox" name="data[Lignereglementclient][<?php echo $i; ?>][bonreception_id]" id="facture_id<?php echo $i; ?>" index="<?php echo $i; ?>" class="afficheinputmontantreglementclient2 chekreglementfac1 calculmontantt1" value="<?php echo $livraison->id ?>" mnttounssi="<?php echo $livraison->totalttc; ?>" mnt="<?php echo $reste; ?>" checked>
 
                                                                             <?php
-                                                                            echo $this->Form->input('Montanttt', array('value' => $reste, 'style' => 'display:none;background-color: #9bc4e2; font-weight: bold;"', 'index' => $i, 'name' => 'data[Lignereglementclient][' . $i . '][Montanttt]', 'id' => 'Montantregler' . $i, 'label' => '',  'type' => 'text', 'class' => 'form-control testmontantreglementclient  chekreglementfac checkmaxfac number calculmontantt '));
+                                                                            echo $this->Form->input('Montanttt', array('value' => $reste, 'style' => 'display:none;background-color: #9bc4e2; font-weight: bold;"', 'index' => $i, 'name' => 'data[Lignereglementclient][' . $i . '][Montanttt]', 'id' => 'Montantregler' . $i, 'label' => '',  'type' => 'text', 'class' => 'form-control testmontantreglementclient  chekreglementfac1 checkmaxfac1 number calculmontantt1 '));
                                                                             ?>
                                                                         </td>
                                                                         <td style="display: none;">
@@ -244,273 +234,7 @@ use Cake\Datasource\ConnectionManager;
                                                         </tr>
                                                     <?php } ?>
 
-                                                    <?php if ($type == 2) { ?>
-                                                        <!-- <tr>
-                                                            <td><strong> Solde Debut</strong></td>
-
-
-                                                            <td align="center" style="color: #cd5b45 ;"><strong> <?php
-                                                                                                                    echo $compte->soldedebut;  ?>
-                                                                </strong>
-                                                            </td>
-                                                        </tr> -->
-                                                        <tr style="color: #dc143c;">
-                                                            <th><strong> Solde Client </strong>
-                                                            </th>
-                                                        </tr>
-                                                        <tr style="background-color: #d2691e ; color: white;">
-
-                                                            <td hidden>id</td>
-                                                            <td>Type</td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td>Montant</td>
-
-                                                            <td> Solde Réglé</td>
-                                                            <td></td>
-
-                                                            <td>Reste</td>
-
-                                                            <td></td>
-                                                        </tr>
-
-                                                        <?php //$i=0;
-                                                        //debug($factureclients->toArray());
-                                                        if (!empty($compte)) {
-
-
-                                                            $i++;
-                                                            // debug($i);
-
-                                                            //debug($fac);
-                                                            $connection = ConnectionManager::get('default');
-
-                                                            $ligco = $connection->execute('select * from lignereglementclients where lignereglementclients.client_id=' . $client_id . ';')->fetchAll('assoc');
-                                                            if ($ligco) {
-                                                                $montregsolde += $ligco[0]['Montant'];
-                                                            } else {
-                                                                $montregsolde = 0;
-                                                            }
-
-                                                            $reste = $compte->soldedebut - $montregsolde;
-                                                            // debug($reste);
-                                                            //    if ($mon[0]['mont'] != $fac->totalttc) {
-                                                        ?>
-
-                                                            <tr>
-
-                                                                <td hidden><?= h($compte->id) ?></td>
-                                                                <td>Solde Début</td>
-                                                                <td></td>
-                                                                <td></td>
-                                                                <td><?= h($compte->soldedebut) ?></td>
-
-                                                                <td><?php echo $montregsolde
-                                                                    ?>
-                                                                </td>
-                                                                <td></td>
-                                                                <td>
-                                                                    <?php
-                                                                    echo $this->Form->control('rest', array('value' => $reste, 'index' => $i,  'id' => 'reste' . $i, 'label' => '', 'class' => 'form-control getrest number', 'readonly' => 'readonly'));
-                                                                    ?>
-                                                                </td>
-                                                                <td>
-                                                                    <input type="checkbox" name="data[Lignereglementclient][<?php echo $i; ?>][client_id]" id="facture_id<?php echo $i; ?>" index="<?php echo $i; ?>" class=" afficheinputmontantreglementclient2 chekreglementfac calculmontantt" value="<?php echo $compte->id ?>" mnttounssi="<?php echo $compte->soldedebut; ?>" mnt="<?php echo $reste; ?>" compte="">
-
-                                                                    <?php
-                                                                    echo $this->Form->input('Montanttt', array('value' => $reste, 'style' => 'display:none;background-color: #d2691e   ; font-weight: bold;', 'index' => $i, 'name' => 'data[Lignereglementclient][' . $i . '][Montanttt]', 'id' => 'Montantregler' . $i, 'label' => '',  'type' => 'text', 'class' => 'form-control testmontantreglementclient  chekreglementfac checkmaxfac number calculmontantt '));
-                                                                    ?>
-
-                                                                </td>
-                                                                <td style="display: none;">
-                                                                    <?php echo $reste; ?>
-                                                                </td>
-                                                            </tr>
-
-
-
-                                                        <?php }  ?>
-
-
-
-
-
-
-
-                                                        <!-- <input type="text" name="max" value="<?php echo $i; ?>" id="max"> -->
-
-
-
-                                                        <tr style="color: #dc143c;">
-                                                            <th><strong> Facture </strong>
-                                                            </th>
-                                                        </tr>
-                                                        <tr style="background-color: #3C8DBC; color: white;">
-
-                                                            <td hidden>id</td>
-                                                            <td>Type</td>
-                                                            <td>N° Facture</td>
-                                                            <td>Date</td>
-                                                            <td>Total TTC</td>
-
-                                                            <td>Montant réglé</td>
-                                                            <td><strong>Avoir</strong></td>
-
-                                                            <td>Reste</td>
-
-                                                            <td></td>
-                                                        </tr>
-                                                        <?php
-                                                        //debug($factureclients->toArray());
-                                                        if (!empty($factureclients)) {
-
-                                                            foreach ($factureclients as $fac) {
-                                                                /////////testtt sur facture d'apres bonlivraison////////
-                                                                $i++;
-                                                                $connection = ConnectionManager::get('default');
-                                                                $totavoir = $connection->execute("select sum(factureavoirs.totalttc)as tot from factureavoirs where factureavoirs.factureclient_id =$fac->id")->fetchAll('assoc');
-                                                                if ($fac->bonlivraison_id) {
-                                                                    $montbonli = $connection->execute("select sum(lignereglementclients.montant)as tot from lignereglementclients where lignereglementclients.bonlivraison_id =$fac->bonlivraison_id")->fetchAll('assoc');
-                                                                    if ($montbonli['0']['tot']) {
-                                                                        $montantregbon = $montbonli['0']['tot'];
-                                                                    } else {
-                                                                        $montantregbon = 0;
-                                                                    }
-                                                                } else {
-                                                                    $montantregbon = 0;
-                                                                }
-                                                                //////////////////////////
-                                                                //debug($fac);
-
-                                                                $connection = ConnectionManager::get('default');
-                                                                $mon = $connection->execute("select montantregler(" . $fac->id . " ) as mont")->fetchAll('assoc');
-                                                                //debug($mon);        
-
-                                                                if ($mon[0]['mont'] == null) {
-                                                                    $montreg = 0 + $montantregbon;
-                                                                } else {
-                                                                    $montreg = $mon[0]['mont'] + $montantregbon;
-                                                                }
-                                                                if ($totavoir['0']['tot'] == null) {
-                                                                    $avtot = 0;
-                                                                } else {
-                                                                    $avtot = $totavoir['0']['tot'];
-                                                                }
-
-                                                                $reste = ($fac->totalttc - ($montreg)) - $avtot;
-                                                                if ($reste != 0) {
-                                                        ?>
-
-                                                                    <tr>
-
-                                                                        <td hidden><?= h($fac->id) ?></td>
-                                                                        <td>Facture</td>
-                                                                        <td><?= h($fac->numero) ?></td>
-                                                                        <td> <?= $this->Time->format($fac->date, 'dd/MM/y'); ?></td>
-                                                                        <td><?= h($fac->totalttc) ?></td>
-
-                                                                        <td><?php echo $montreg ?> </td>
-
-                                                                        <td><strong><?php echo $avtot ?></strong> </td>
-                                                                        <td>
-                                                                            <?php
-                                                                            echo $this->Form->control('rest', array('value' => $reste, 'index' => $i,  'id' => 'reste' . $i, 'label' => '', 'class' => 'form-control getrest number', 'readonly' => 'readonly'));
-                                                                            ?>
-                                                                        </td>
-                                                                        <td>
-                                                                            <input type="checkbox" name="data[Lignereglementclient][<?php echo $i; ?>][factureclient_id]" id="facture_id<?php echo $i; ?>" index="<?php echo $i; ?>" class=" afficheinputmontantreglementclient2 chekreglementfac calculmontantt" value="<?php echo $fac->id ?>" mnttounssi="<?php echo $fac->totalttc; ?>" mnt="<?php echo $reste; ?>" compte="">
-
-                                                                            <?php
-                                                                            echo $this->Form->input('Montanttt', array('value' => $reste, 'style' => 'display:none;background-color: #9bc4e2 ; font-weight: bold;', 'index' => $i, 'name' => 'data[Lignereglementclient][' . $i . '][Montanttt]', 'id' => 'Montantregler' . $i, 'label' => '',  'type' => 'text', 'class' => 'form-control testmontantreglementclient  chekreglementfac checkmaxfac number calculmontantt '));
-                                                                            ?>
-
-                                                                        </td>
-                                                                        <td style="display: none;">
-                                                                            <?php echo $reste; ?>
-                                                                        </td>
-                                                                    </tr>
-
-
-
-                                                                    <?php }
-                                                            }
-
-
-
-
-
-                                                            //debug($factureclients->toArray());
-                                                            if (!empty($factureavoirs)) {
-
-                                                                foreach ($factureavoirs as $facav) {
-                                                                    $i++;
-
-                                                                    //debug($fac);
-
-                                                                    $connection = ConnectionManager::get('default');
-                                                                    $monav = $connection->execute("select montantreglerav(" . $facav->id . " ) as mont")->fetchAll('assoc');
-                                                                    //debug($mon);        
-
-                                                                    if ($monav[0]['mont'] == null) {
-                                                                        $montreg = 0;
-                                                                    } else {
-                                                                        $montreg = $monav[0]['mont'];
-                                                                    }
-
-                                                                    $reste = $facav->totalttc  - $montreg;
-                                                                    //debug($montreg);
-                                                                    if ($monav[0]['mont'] != $facav->totalttc) {
-                                                                    ?>
-
-                                                                        <tr>
-
-                                                                            <td hidden><?= h($facav->id) ?></td>
-                                                                            <td>Facture avoir</td>
-
-                                                                            <td><?= h($facav->numero) ?></td>
-                                                                            <td> <?= $this->Time->format($facav->date, 'dd/MM/y'); ?></td>
-                                                                            <td><?= h($facav->totalttc) ?></td>
-
-                                                                            <td><?php echo $montreg ?>
-                                                                            </td>
-                                                                            <td></td>
-                                                                            <td>
-                                                                                <?php
-                                                                                echo $this->Form->control('rest', array('value' => $reste, 'index' => $i,  'id' => 'reste' . $i, 'label' => '', 'class' => 'form-control getrest number', 'readonly' => 'readonly'));
-                                                                                ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <input type="checkbox" name="data[Lignereglementclient][<?php echo $i; ?>][factureclientav_id]" id="facture_id<?php echo $i; ?>" index="<?php echo $i; ?>" class=" afficheinputmontantreglementclient22 chekreglementfac calculmontantt" value="<?php echo $facav->id ?>" mnttounssi="<?php echo -$facav->totalttc; ?>" mnt="<?php echo -$reste; ?>" compte="">
-
-                                                                                <?php
-                                                                                echo $this->Form->input('Montanttt', array('value' => -$reste, 'style' => 'display:none', 'index' => $i, 'name' => 'data[Lignereglementclient][' . $i . '][Montanttt]', 'id' => 'Montantregler' . $i, 'label' => '',  'type' => 'text', 'class' => 'form-control testmontantreglementclient  chekreglementfac1 checkmaxfac1 number calculmontantt '));
-                                                                                ?>
-
-                                                                            </td>
-                                                                            <td style="display: none;">
-                                                                                <?php echo $reste; ?>
-                                                                            </td>
-                                                                        </tr>
-
-
-
-                                                        <?php }
-                                                                }
-                                                            }
-                                                        } ?>
-
-                                                        <input type="hidden" name="max" value="<?php echo $i; ?>" id="max">
-                                                        <tr id="totalefacture" style="color:#3C8DBC; font-weight: bold;">
-                                                            <td colspan="6"> Total factures</td>
-                                                            <td colspan="3">
-                                                                <!-- <input type="text" name="data[Reglementclient][ttpayer]" id="ttpayer" class="form-control"  value="0.000" readonly> -->
-                                                                <?php
-                                                                echo $this->Form->input('ttpayer', array('value' => "0.000",  'name' => 'data[Reglementclient][ttpayer]', 'id' => 'ttpayer', 'label' => '',  'type' => 'text', 'class' => 'form-control', 'readonly' => 'readonly'));
-                                                                ?>
-                                                            </td>
-                                                        </tr>
-                                                        <!-- <tr> -->
-                                                    <?php } ?>
+                                         
                                                     <!-- <th><strong> Montant </strong> </th>
 
                                                         </tr> -->
@@ -819,7 +543,7 @@ if (!empty($numericSerialNumbers)) {
                     alert("Numéro Réglement : " + numero);
                 }
             } else {
-                alert("Aucun numéro manquant n'est disponible.");
+             //   alert("Aucun numéro manquant n'est disponible.");
             }
         });
     });
@@ -847,7 +571,7 @@ if (!empty($numericSerialNumbers)) {
             ttb = Number($('#ttpayerbon').val());
             ttf = Number($('#ttpayer').val())
             $('#Montant').val((ttb + ttf).toFixed(3));
-            $('#difference').val(($('#Montant').val() - $('#mtotal').val()).toFixed(3));
+           // $('#difference').val(($('#Montant').val() - $('#mtotal').val()).toFixed(3));
 
         }
         function chekreglementfac1() {
@@ -883,32 +607,32 @@ if (!empty($numericSerialNumbers)) {
         ttb = Number($('#ttpayerbon').val());
         ttf = Number($('#ttpayer').val())
         $('#Montant').val((ttb + ttf).toFixed(3));
-        $('#difference').val(($('#Montant').val() - $('#mtotal').val()).toFixed(3));
+       // $('#difference').val(($('#Montant').val() - $('#mtotal').val()).toFixed(3));
 
 
     })
 </script>
 <script>
-    // Fonction pour cocher ou décocher toutes les cases à cocher avec les trois classes spécifiées
+
     function toggleCheckboxes(state) {
-        var checkboxes = document.querySelectorAll('.afficheinputmontantreglementclient2.chekreglementfac.calculmontantt');
+        var checkboxes = document.querySelectorAll('.afficheinputmontantreglementclient2.chekreglementfac1.calculmontantt1');
         checkboxes.forEach(function(checkbox) {
             checkbox.checked = state;
         });
     }
 
-    // Événement pour le bouton "Cocher Tout"
+
     document.getElementById('cocherTout').addEventListener('click', function(event) {
-        toggleCheckboxes(false); // Cocher toutes les cases
-        $('.afficheinputmontantreglementclient2.chekreglementfac.calculmontantt').click(); // Déclencher l'événement de clic sur les cases à cocher
-        event.preventDefault(); // Empêcher le comportement par défaut du bouton (éviter le rechargement de la page)
+        toggleCheckboxes(false); 
+        $('.afficheinputmontantreglementclient2.chekreglementfac1.calculmontantt1').click(); 
+        event.preventDefault(); 
     });
 
-    // Événement pour le bouton "Décocher Tout"
+
     document.getElementById('decocherTout').addEventListener('click', function(event) {
-        toggleCheckboxes(true); // Décocher toutes les cases
-        $('.afficheinputmontantreglementclient2.chekreglementfac.calculmontantt').click(); // Déclencher l'événement de clic sur les cases à cocher
-        event.preventDefault(); // Empêcher le comportement par défaut du bouton (éviter le rechargement de la page)
+        toggleCheckboxes(true); 
+        $('.afficheinputmontantreglementclient2.chekreglementfac1.calculmontantt1').click(); 
+        event.preventDefault();
     });
 </script>
 <script>
@@ -922,30 +646,7 @@ if (!empty($numericSerialNumbers)) {
             }
         });
 
-        // $('.getcomptes').on('change', function() {
-        //     ind = $(this).attr('index');
-        //     banque_id = $('#banque_id' + ind).val() || 0;
-
-        //     // alert(banque_id);
-        //     // alert(ind);
-        //     $.ajax({
-        //         method: "GET",
-        //         url: "<?= $this->Url->build(['controller' => 'Reglementclients', 'action' => 'getcompte']) ?>",
-        //         dataType: "json",
-        //         data: {
-        //             banque_id: banque_id,
-        //             ind: ind,
-        //         },
-        //         headers: {
-        //             'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
-        //         },
-        //         success: function(data) {
-        //             //  alert(data.select1);
-        //             $('#divsous' + ind).html(data.select1);
-        //         }
-        //     });
-
-        // });
+    
     });
 
 
@@ -1356,7 +1057,7 @@ if (!empty($numericSerialNumbers)) {
 
 
             $('#mtotal').val(Number(total).toFixed(3));
-            $('#difference').val(Number(diff).toFixed(3));
+           // $('#difference').val(Number(diff).toFixed(3));
 
 
 
@@ -1489,7 +1190,7 @@ if (!empty($numericSerialNumbers)) {
             }
 
             $('#mtotal').val(variable1.toFixed(3));
-            $('#difference').val((Number(total) - Number(variable1)).toFixed(3));
+            //$('#difference').val((Number(total) - Number(variable1)).toFixed(3));
 
         });
     });

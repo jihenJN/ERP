@@ -47,7 +47,7 @@ class AdresselivraisonclientsTable extends Table
 
         $this->belongsTo('Clients', [
             'foreignKey' => 'client_id',
-            'joinType' => 'INNER',
+         //   'joinType' => 'INNER',
         ]);
         $this->hasMany('Bonlivraisons', [
             'foreignKey' => 'adresselivraisonclient_id',
@@ -65,16 +65,7 @@ class AdresselivraisonclientsTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
-        $validator
-            ->scalar('adresse')
-            ->maxLength('adresse', 255)
-            ->requirePresence('adresse', 'create')
-            ->notEmptyString('adresse');
-
-        $validator
-            ->integer('client_id')
-            ->requirePresence('client_id', 'create')
-            ->notEmptyString('client_id');
+       
 
         return $validator;
     }

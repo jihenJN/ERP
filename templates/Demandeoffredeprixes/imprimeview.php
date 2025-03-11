@@ -1,25 +1,6 @@
-<?php
-
-use Cake\Core\App;
-use Cake\Datasource\ConnectionManager; ?>
-
 <?php $this->layout = 'AdminLTE.print';
-?>
 
-<?php
-
-use Cake\ORM\TableRegistry;
-
-?>
-
-
-<?php
-$connection = ConnectionManager::get('default');
-
-$societeTable = TableRegistry::getTableLocator()->get('Societes');
-
-$societe = $societeTable->find()->where('id=1')->first();
-
+use Cake\Datasource\ConnectionManager;
 ?>
 <br>
 <style>
@@ -30,190 +11,206 @@ $societe = $societeTable->find()->where('id=1')->first();
     table {
         font-size: 12px;
     }
+
+    .page {
+        page-break-before: always;
+    }
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script>
 <?php echo $this->Html->script('alert'); ?>
-<table>
-    <div style="display:flex;">
-        <table border="1" cellpadding="0" cellspacing="0" style="border: 2px solid #002E50; border-left:none;border-right:none;border-collapse: collapse; width: 100%; ">
 
-
-            <td align="center" style="width: 25%;border: none;">
-                <div>
-                    <?php
-                    echo $this->Html->image('logoSMBM.png', ['alt' => 'CakePHP', 'height' => '80px', 'width' => '100%']); ?>
-                </div>
-            </td>
-            <td align="center" style="width: 10%;border: none;">
-                <!-- <div>
-                <?php
-                echo $this->Html->image('ISO-9001.png', ['alt' => 'CakePHP', 'height' => '50px', 'width' => '100%']); ?>
-
-            </div> -->
-            </td>
-            <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-                <?php echo $societe->adresseEntete; ?>
-                <br>
-            </td>
-            <td align="center" style="width: 25%;border: none;">
-                <div>
-                    <?php
-                    // echo $this->Html->image('ISO-9001.png', ['alt' => 'CakePHP', 'height' => '50px', 'width' => '100%']); 
-                    ?>
-
-                </div>
-            </td>
-
-            </td>
-        </table>
-    </div>
-    <br>
-    <HR> <br><br>
-
-
-
-
-
-
-
-
-
-
-    <!-- <div style="display:flex ;width:50%;">
-        <div style="width: 10000%;" align="left">
-            <b> DEMANDE N° : </b><?= h($demandeoffredeprix->numero) ?> <br>
-            <b> Date : </b><?=
-                            $this->Time->format(
-                                $demandeoffredeprix->date,
-                                'd/MM/y'
-                            )
-                            ?> <br>
-
-
-
-        </div>
-    </div> -->
-
-
-
-
-
-
-
-
-    <div style="width: 10000%;" align="left">
-        <?php
-        // $o = 0;
-        // foreach ($fr as $o => $fs) :
-        // $o++;
-        // echo $o;
-        ?>
-        <?php
-        //  if ($o > 0) {
-        ?>
-
-
-
-        <!-- 
-                <div style="display:flex">
-                    <div style="margin-left:4%">
-                        <?php echo $this->Html->image('mm.png', ['alt' => 'CakePHP', 'height' => '110px', 'width' => '200px']); ?>
-                    </div>
-                    <div style="width: 58%;margin-left:23%" class="box" align="left">
-                        Société Sirep Beton <br>
-                        GPI KM 6, BP N°38-6021,
-                        GHANNOUCH-Gabes
-                        <br>
-                        Phone : (+216) 75 350 600<br>
-                        Mail : codifa@gnet.tn <br>
-                    </div>
-                </div>
-                <br>
-                <HR> <br><br> -->
-
-        <div style="display:flex ;width:50%; ">
-            <div style="width: 10000%;" align="left">
-                <b> DEMANDE N° : </b><?= h($demandeoffredeprix->numero) ?> <br>
-                <b> Date : </b><?=
-                                $this->Time->format(
-                                    $demandeoffredeprix->date,
-                                    'd/MM/y'
-                                )
-                                ?> <br>
-
-
-
-            </div>
-        </div>
-
-        <?php
-        // }
-        ?>
-
-
-
-
-    </div>
+<div>
     <?php
-    // $o = 0;
-    // foreach ($fr as $o => $fs) :
-    // $o++;
-    // echo $o;
+    $o = 0;
+    foreach ($groupedResults as $res) :
+      //  debug($res);
+        $connection = \Cake\Datasource\ConnectionManager::get('default');
+        $sql = "SELECT * FROM fournisseurs WHERE name LIKE :name";
+        $params = ['name' => '%' . $four_id . '%'];
+        $fournisseurs = $connection->execute($sql, $params)->fetchAll('assoc');
+        if (!empty($fournisseurs)) {
+            $adresse = $fournisseurs[0]['adresse'];
+            $tel = $fournisseurs[0]['tel'];
+            $fax = $fournisseurs[0]['fax'];
+        }
+
     ?>
-    <div>
-        <div class="panel-body">
-            <table style="border:1px solid black;width: 100%;border-radius: 15px 15px 15px 15px;border-collapse: collapse;">
+        <div style="display:flex">
+            <div style="margin-left:4%">
+                <?php
+                echo $this->Html->image('logoSMBM.png', ['alt' => 'CakePHP', 'height' => '80px', 'width' => '100%']); ?>
+            </div>
+
+        </div>
+
+        <br>
+        <div class="container">
+            <hr class="titre">
+        </div>
+        <br>
+        <div>
+            <table style="border:0.2px solid black;border-radius: 15px 15px 15px 15px;border-collapse: collapse;width: 100%;">
                 <thead>
-                    <tr>
-                        <td align="center" style="width: 15%;border:1px solid black;background-color:#b5d6d3;"><strong>Designation</strong></td>
-                        <td align="center" style="width: 8%;border:1px solid black;background-color:#b5d6d3;"><strong>Unité</strong></td>
-                        <td align="center" style="width: 10%;border:1px solid black;background-color:#b5d6d3;"><strong>Code fournisseur</strong></td>
-                        <td align="center" style="width: 10%;border:1px solid black;background-color:#b5d6d3;"><strong>Quantité </strong></td>
-                        <td align="center" style="width: 10%;border:1px solid black;background-color:#b5d6d3;"><strong>Prix</strong></td>
-                        <td align="center" style="width: 10%;border:1px solid black;background-color:#b5d6d3;"><strong>HT</strong></td>
-                    </tr>
+
                 </thead>
                 <tbody>
-
-
-
-                    <tr class="tr">
-                        <?php
-                        foreach ($frs as $i => $tab1) :
-                            //debug($tab1);die;
-                        ?>
-
-                            <td align="center" style="border:1px solid black; border-top: true; border-bottom: true; vertical-align:top;">
-                                <?= h($tab1->article->Dsignation) ?>
-
-                            </td>
-                            <td align="center" style="border:1px solid black; border-top: true; border-bottom: true; vertical-align:top;">
-                                <?php $connection = ConnectionManager::get('default');
-                                $nameunite = $connection->execute('SELECT * FROM unites where id=' . $tab1->article->unite_id . ';')->fetchAll('assoc');
-                                echo   $nameunite[0]['name'];
-                                ?>
-                            </td>
-                            <td align="center" style="border:1px solid black; border-top: true; border-bottom: true; vertical-align:top;">
-                                <?= h($tab1->codefrs) ?>
-                            </td>
-
-                            <td align="center" style="border:1px solid black; border-top: true; border-bottom: true; vertical-align:top;">
-                                <?= h($tab1->qte) ?>
-
-                            </td>
-                            <td align="center" style="border:1px solid black; border-top: true; border-bottom: true; vertical-align:top;">
-                                <?= h($tab1->prix) ?>
-                            </td>
-                            <td align="center" style="border:1px solid black; border-top: true; border-bottom: true; vertical-align:top;">
-                                <?= h($tab1->ht) ?>
-                            </td>
-                            <br>
+                    <tr>
+                        <td style="width:30%;padding: 6px;">Numéro : </td>
+                        <td style="width:70%"><?php echo $demandeoffredeprix['numero']; ?></td>
                     </tr>
-                <?php endforeach ?>
+                    <tr>
+                        <td style="width:30%;padding: 6px;">Date :</td>
+                        <td style="width:70%"><?php echo $this->Time->format(
+                                                    $demandeoffredeprix['date'],
+                                                    'dd/MM/Y'
+                                                ) ?></td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;padding: 6px;"> Fournisseur : </td>
+                        <td style="width:70%"><?php echo $four_id; ?></td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;padding: 6px;"> Adresse : </td>
+                        <td style="width:70%"><?php echo  $adresse;
+                                                ?></td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;padding: 6px;"> Tel : </td>
+                        <td style="width:70%"><?php echo $tel;
+                                                ?></td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%;padding: 6px;"> Fax : </td>
+                        <td style="width:70%"><?php echo $fax;
+                                                ?></td>
+                    </tr>
                 </tbody>
             </table>
         </div>
-    </div>
-    <?php //endforeach 
-    ?>
-</table>
+        <br>
+        <div>
+            <p>Remarque : Nous vous prions de nous communiquer une facture proforma pour les articles suivants : </p>
+        </div>
+        <br><br>
+        <div>
+            <p>Prière de nous envoyer votre meilleur offre de prix pour l'achat des produits suivants : </p>
+        </div>
+        <div>
+            <div>
+                <div>
+                    <div>
+                        <table style="border:0.2px solid black;border-radius: 15px 15px 15px 15px;border-collapse: collapse;width: 100%;">
+                            <thead>
+                                <tr>
+                                    <td align="center" style="border:1px solid black;height:30px"><strong>Réf</strong></td>
+                                    <td align="center" style="border:1px solid black;height:30px"><strong>Désignation</strong></td>
+                                    <td align="center" style="border:1px solid black;height:30px"><strong>Réf.Fournisseur</strong></td>
+                                    <td align="center" style="border:1px solid black;height:30px"><strong>Quantité</strong></td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php foreach ($res as $article) :
+                                    $connection = ConnectionManager::get('default');
+                                    $articleId = $article->article_id;
+                                    $fournisseurId = $article->fournisseur_id;
+
+                                ?>
+                                    <tr class="tr">
+                                        <td style="vertical-align:top;border-right:1px solid black;height:30px" align="center">
+                                            <?php if ($articleId) {
+                                                $Code = $connection->execute("SELECT Code FROM articles WHERE id = " . $articleId)->fetch('assoc'); ?>
+                                                <?= h($Code['Code']) ?>
+
+                                            <?php   }  ?>
+
+                                        </td>
+                                        <?php if ($articleId) {
+                                            $designation = $connection->execute("SELECT Dsignation  FROM articles WHERE id = " . $articleId)->fetch('assoc');
+
+                                        ?>
+                                            <td style=" vertical-align: top;border-right:1px solid black;height:30px">
+                                                <?= h($designation['Dsignation']) ?>
+                                            </td>
+                                        <?php } else { ?>
+                                            <td style=" vertical-align: top;border-right:1px solid black;height:30px">
+                                                <?= h($article->designiationA) ?>
+                                            </td>
+                                        <?php } ?>
+
+
+                                        <td style="vertical-align:top;border-right:1px solid black;height:30px" align="center">
+                                        <?php if ($fournisseurId) {
+                                                $Code = $connection->execute("SELECT code FROM fournisseurs WHERE id = " . $fournisseurId)->fetch('assoc'); ?>
+                                                <?= h($Code['code']) ?>
+
+                                            <?php   }  ?>
+                                        </td>
+                                        <td style="vertical-align:top;border-right:1px solid black;height:30px" align="center">
+                                            <?= h($article->qte) ?>
+                                        </td>
+                                    </tr>
+                                <?php endforeach ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <p><strong>Mode Livraison : </strong></p>
+            </div>
+            <div style="displey:flex">
+                <div align="left">
+                    <p><strong>Avec nos remerciements anticipés . </strong></p>
+                </div>
+                <div align="right">
+                    <p><strong>La Direction ACHAT</strong></p>
+                </div>
+            </div>
+        </div>
+        <div class="footer">
+            <hr>
+            <br>
+            <table style="border:0.2px solid black;border-radius: 15px 15px 15px 15px;border-collapse: collapse;width: 100%;">
+                <thead>
+                    <th style="text-align:center">
+                    <td align="center" style="width: 100%;border:0;"><strong>
+                            <?php echo $societes->nom ?>&nbsp;&nbsp;&nbsp; Capital : <?php echo $societes->capital ?> <br>
+                            Adresse: <?php echo $societes->adresse ?> - Tél : <?php echo $societes->tel ?> - FAX: <?php echo $societes->fax ?> <br>
+                            TVA :<?php echo $societes->codetva ?> - E-mail :<?php echo $societes->mail ?><br>
+                    </td>
+                    </th>
+                </thead>
+            </table>
+        </div>
+        <div class="page"></div>
+        <br><br>
+    <?php endforeach; ?>
+</div>
+<style>
+    .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .titre {
+        border: none;
+        border-top: 2px solid #333;
+        color: #333;
+        overflow: visible;
+        text-align: center;
+        height: 5px;
+    }
+
+    .titre::after {
+        background: #fff;
+        content: 'Demande  de Prix';
+        padding: 0 4px;
+        position: relative;
+        top: -13px;
+        font-size: x-large;
+
+    }
+</style>

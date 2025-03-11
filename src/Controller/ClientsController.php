@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use Cake\Datasource\ConnectionManager;
+use Cake\Core\Configure;
+
 
 /**
  * Clients Controller
@@ -572,10 +574,10 @@ class ClientsController extends AppController
                         } else if ($ligne->factureclient_id == 0) {
                             $liste = $liste . "<tr>";
                             $liste = $liste . '<td  width="30%">BL</td>';
-                            $liste = $liste . "<td width='30%'>: " . @$ligne->bonlivraison->date->format("Y-m-d") . "</td>";
+                            $liste = $liste . "<td width='30%'>: " . @$ligne->bonlivraison->date . "</td>";
                             $liste = $liste . "<td width='40%'>: " . @$ligne->Montant . "</td>";
                             $liste = $liste . "</tr>";
-                            $liste1 = $liste1 . " --> BL :" . @$ligne->bonlivraison->date->format("Y-m-d") . " :" . @$ligne->Montant . "<br>";
+                            $liste1 = $liste1 . " --> BL :" . @$ligne->bonlivraison->date . " :" . @$ligne->Montant . "<br>";
                         }
                         // debug($liste1);
 
@@ -1109,37 +1111,30 @@ class ClientsController extends AppController
     }
     public function index()
     {
-        // Assurez-vous que les erreurs de niveau E_ERROR et E_PARSE sont reportées
         error_reporting(E_ERROR | E_PARSE);
 
-        // Récupérer l'ID de l'utilisateur actuel
         $user_id = $this->request->getAttribute('identity')->id;
         $user = $this->fetchTable('Users')->get($user_id);
 
-        // Récupérer le paramètre client_id de la requête GET
         $client_id = $this->request->getQuery('client_id');
-
-        // Construire les conditions de recherche pour la requête
+        // debug($client_id);
         $conditions = [];
         if ($client_id) {
             $conditions['Clients.id'] = $client_id;
         }
 
-        // Construire la requête pour récupérer les clients
         $query = $this->Clients->find('all')
             ->where($conditions)
-            ->order(['Code' => 'desc']); // Ajouter un ordre par 'Code' en descendant
+            ->order(['Code' => 'desc']);
 
-        // Configurer la pagination
         $this->paginate = [
             'maxLimit' => 5500,
             'limit' => 3000,
         ];
 
-        // Paginer les résultats
-        $clients = $this->paginate($query);
+        $clientslist = $this->paginate($query);
         $this->Clients = $this->loadModel('Clients');
-        $clients = $this->Clients->find('all')
+        $clientss = $this->Clients->find('all')
             ->select(['id', 'Code', 'Raison_Sociale'])
             ->order(['Code' => 'asc'])
             ->toArray();
@@ -1148,7 +1143,7 @@ class ClientsController extends AppController
         $clientOptionsRaison = [];
 
         // Préparez les options pour les deux menus déroulants
-        foreach ($clients as $client) {
+        foreach ($clientss as $client) {
             $clientOptionsCode[$client->id] = $client->Code;
             $clientOptionsRaison[$client->id] = $client->Raison_Sociale;
         }
@@ -1156,12 +1151,160 @@ class ClientsController extends AppController
 
         $this->set(compact(
             'client_id',
-            'clients',
+            'clientslist',
             'clientss',
             'clientOptionsCode',
             'clientOptionsRaison'
         ));
     }
+
+
+    public function getclientcmd($id = null)
+    {
+        $this->loadModel('Commandes');
+        $id = $this->request->getQuery('clientid');
+        $clients = 0;
+        $clients += $this->fetchTable('Factureclients')->find()->where(['Factureclients.client_id' => $id])->count();
+        $clients += $this->fetchTable('Commandes')->find()->where(['Commandes.client_id' => $id])->count();
+        $clients += $this->fetchTable('Bonlivraisons')->find()->where(['Bonlivraisons.client_id' => $id])->count();
+        $clients += $this->fetchTable('Factureavoirs')->find()->where(['Factureavoirs.client_id' => $id])->count();
+        $clients += $this->fetchTable('Reglementclients')->find()->where(['Reglementclients.client_id' => $id])->count();
+        $clients = $this->fetchTable('Lignereglementclients')->find()->where(['Lignereglementclients.client_id' => $id])->count();
+        $clients = $this->fetchTable('Adresselivraisonclients')->find()->where(['Adresselivraisonclients.client_id' => $id])->count();
+        $clients = $this->fetchTable('Clientresponsables')->find()->where(['Clientresponsables.client_id' => $id])->count();
+        $clients = $this->fetchTable('Clientdocuments')->find()->where(['Clientdocuments.client_id' => $id])->count();
+        // Check if there are any related records
+        $clients = $this->fetchTable('Clientbanques')->find()->where(['Clientbanques.client_id' => $id])->count();
+        $clients = $this->fetchTable('Clientexonerations')->find()->where(['Clientexonerations.client_id' => $id])->count();
+        $clients = $this->fetchTable('Clientarticles')->find()->where(['Clientarticles.client_id' => $id])->count();
+        echo json_encode(['clients' => $clients]);
+        die;
+    }
+
+    public function listedivers()
+    {
+        error_reporting(E_ERROR | E_PARSE);
+        $cond2 = '';
+        $cond3 = '';
+        $cond4 = '';
+
+        $datedebut = $this->request->getQuery('datedebut');
+        // debug($datedebut);
+        $datefin = $this->request->getQuery('datefin');
+        // debug($datefin);
+        $client_id = $this->request->getQuery('client_id');
+
+
+        if ($datedebut) {
+            $cond2 = "Bonlivraisons.date >= '" . $datedebut . " 00:00:00'";
+        }
+        if ($datefin) {
+            $cond3 = "Bonlivraisons.date <='" . $datefin . " 23:59:59' ";
+        }
+        if ($client_id) {
+            $cond4 = "Bonlivraisons.client_id = '" . $client_id . "' ";
+        }
+
+
+        //  debug($type);
+        $condtyp = "Bonlivraisons.typebl=1";
+        $conddiv = "Bonlivraisons.client_id=12";
+
+        $query = $this->fetchTable('Bonlivraisons')->find('all')->where([$condtyp, $cond2, $conddiv, $cond3, $cond4, 'Bonlivraisons.client_id = 12'])
+            ->group(['Bonlivraisons.nomprenom', 'Bonlivraisons.numeroidentite'])
+
+            ->order(['Bonlivraisons.id' => 'DESC'])->contain(['Clients', 'Depots', 'Personnels', 'Commercials', 'Users']);
+        $count = $query->count();
+
+        $bonlivraisons = $this->paginate($query);
+
+        $depots = $this->fetchTable('Depots')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+
+        $clients = $this->fetchTable('Clients')->find('all');
+
+        // debug($blnonfacture->toarray());
+        $this->set(compact('client_id', 'datedebut', 'datefin', 'bonlivraisons', 'clients'));
+    }
+
+
+
+    public function getids()
+    {
+
+        $connection = ConnectionManager::get('default');
+        $numeroidentitee = $this->request->getQuery('numeroidentite');
+        $nomprenomm = $this->request->getQuery('nomprenom');
+
+
+
+        $numeroidentite = $numeroidentitee;
+        $nomprenom = $nomprenomm;
+
+        $prefix = "4113";
+        $maxLimit = $prefix . "9999";
+
+
+        $numeroobj = $this->Clients->find()
+            ->select(["numerox" => 'MAX(Clients.Code)'])
+            ->where(["Clients.Code <" => $maxLimit])
+            ->first();
+
+        $lastCode = $numeroobj ? $numeroobj->numerox : null;
+
+
+        if ($lastCode !== null) {
+            $lastCodeAsString = strval($lastCode);
+            $lastNumber = intval(substr($lastCodeAsString, strlen($prefix)));
+            $newNumber = $lastNumber + 1;
+            $code = $prefix . str_pad((string)$newNumber, 4, "0", STR_PAD_LEFT);
+        } else {
+            $code = $prefix . "0001";
+        }
+
+        $Code = $code;
+
+
+        $connection->execute("INSERT INTO clients (Code, Raison_Sociale,numidentite) 
+                VALUES ('$Code', '$nomprenom', '$numeroidentite')");
+
+        $maxIdResult = $connection->execute("SELECT MAX(id) AS max_id FROM clients")->fetch('assoc');
+        $maxId = $maxIdResult['max_id'];
+
+        $updatedRows = $connection->execute("UPDATE bonlivraisons SET client_id = :maxId  WHERE numeroidentite = :numeroidentite AND nomprenom = :nomprenom", [
+            'maxId' => $maxId,
+            'numeroidentite' => $numeroidentite,
+            'nomprenom' => $nomprenom
+        ])->rowCount();
+
+        // echo "Nombre de lignes mises à jour dans bonlivraisons : " . $updatedRows;
+
+        $updatedRowsReglement = $connection->execute("UPDATE reglementclients SET client_id = :maxId  WHERE numeroidentite = :numeroidentite AND nomprenom = :nomprenom", [
+            'maxId' => $maxId,
+            'numeroidentite' => $numeroidentite,
+            'nomprenom' => $nomprenom
+        ])->rowCount();
+
+        $updatedRowsfacture = $connection->execute("UPDATE factureclients SET client_id = :maxId  WHERE numeroidentite = :numeroidentite AND nomprenom = :nomprenom", [
+            'maxId' => $maxId,
+            'numeroidentite' => $numeroidentite,
+            'nomprenom' => $nomprenom
+        ])->rowCount();
+        $updatedRowsavoir = $connection->execute("UPDATE factureavoirs SET client_id = :maxId  WHERE numeroidentite = :numeroidentite AND nomprenom = :nomprenom", [
+            'maxId' => $maxId,
+            'numeroidentite' => $numeroidentite,
+            'nomprenom' => $nomprenom
+        ])->rowCount();
+        //  echo "Nombre de lignes mises à jour dans reglementclients : " . $updatedRowsReglement;
+
+        // die;
+        echo json_encode(array(
+            'jbn' => 0,
+
+
+        ));
+        exit;
+    }
+
 
     /**
      * View method
@@ -1566,322 +1709,6 @@ class ClientsController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function addclient($index = null)
-    {
-        $session = $this->request->getSession();
-        $abrv = $session->read('abrvv');
-        $liendd = $session->read('lien_prévisionnement' . $abrv);
-        $client = 0;
-        foreach ($liendd as $k => $liens) {
-            if (@$liens['lien'] == 'clients') {
-                $client = $liens['ajout'];
-            }
-        }
-        if (($client <> 1)) {
-            $this->redirect(array('controller' => 'users', 'action' => 'login'));
-        }
-        // $this->loadModel('Clients');
-        $num = $this->Clients->find()->select([
-            "num" =>
-            'MAX(Clients.codeclient)'
-        ])->first();
-        $numero = $num->num;
-
-        if ($numero != null) {
-
-            $currentNumber = intval(substr($numero, 1, 5));
-
-            $newNumber = $currentNumber + 1;
-
-            $formattedNumber = str_pad((string) $newNumber, 5, '0', STR_PAD_LEFT);
-
-
-            $code = 'C' . $formattedNumber;
-        } else {
-            $code = "C00001";
-        }
-
-        // echo $code;
-        // $dhouha = $prospect_id;
-        $client = $this->Clients->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $data['nom'] = $this->request->getData('nom');
-            $data['Raison_Sociale'] = $this->request->getData('Raison_Sociale');
-            $data['client'] = $this->request->getData('prospect_id');
-            $data['codeclient'] = $this->request->getData('codeclient');
-            $data['fournisseur'] = $this->request->getData('fournisseur');
-            $data['codefr'] = $this->request->getData('codefr');
-            $data['etat'] = $this->request->getData('etat');
-            $data['Adresse'] = $this->request->getData('Adresse');
-            $data['Code_Ville'] = $this->request->getData('Code_Ville');
-            $data['pay_id'] = $this->request->getData('pay_id');
-            $data['gouvernorat_id'] = $this->request->getData('gouvernorat_id');
-            $data['Tel'] = $this->request->getData('Tel');
-            $data['Fax'] = $this->request->getData('Fax');
-            $data['modalite'] = $this->request->getData('modalite');
-            $data['Contact'] = $this->request->getData('Contact');
-            $data['RC'] = $this->request->getData('RC');
-            $data['Matricule_Fiscale'] = $this->request->getData('Matricule_Fiscale');
-            $data['codedouane'] = $this->request->getData('codedouane');
-            $data['BAN'] = $this->request->getData('BAN');
-            $data['R_TVA'] = $this->request->getData('R_TVA');
-            $data['numerotva'] = $this->request->getData('numerotva');
-            $data['typetiers'] = $this->request->getData('typetier_id');
-            $data['salaris'] = $this->request->getData('salari_id');
-            $data['typeentite'] = $this->request->getData('typeentite_id');
-            $data['Capital'] = $this->request->getData('Capital');
-            $data['incoterms'] = $this->request->getData('incoterm_id');
-            $data['devise_id'] = $this->request->getData('devise_id');
-            $data['port'] = $this->request->getData('port');
-            $data['commercial_id'] = $this->request->getData('commercial_id');
-            $logo = $this->request->getData('logo');
-            $name = $logo->getClientFilename();
-            $targetPath = WWW_ROOT . 'img' . DS . 'logoclients' . DS . $name;
-            if ($name) {
-                $logo->moveTo($targetPath);
-                $data['logo'] = $name;
-            }
-            $client = $this->Clients->patchEntity($client, $data);
-            if ($this->Clients->save($client)) {
-                $this->loadModel('Modalites');
-                $client_id = $client->id;
-                if (isset($this->request->getData('data')['tabligne3']) && (!empty($this->request->getData('data')['tabligne3']))) {
-                    foreach ($this->request->getData('data')['tabligne3'] as $i => $l) {
-                        if (isset($client_id)) {
-                            $ta = $this->fetchTable('Modalites')->newEmptyEntity();
-                            $ta['client_id'] = $client_id;
-                            $ta['paiement_id'] = $l['paiement_id'];
-                            $ta['duree'] = $l['duree'];
-                            $this->fetchTable('Modalites')->save($ta);
-                        }
-                    }
-                }
-
-                $this->loadModel('Tags');
-                $client_id = $client->id;
-                if ((!empty($this->request->getData('tag_id')))) {
-                    $this->loadModel('Tags');
-                    foreach ($this->request->getData('tag_id') as $j => $l) {
-                        $tags = $this->fetchTable('Tags')->newEmptyEntity();
-                        $dataa['client_id'] = $client_id;
-                        $dataa['listetag_id'] = $l;
-                        $tags = $this->Tags->patchEntity($tags, $dataa);
-                        $this->Tags->save($tags);
-                    }
-                }
-                // $this->loadModel('Clients');
-                $id = $client->id;
-                $clients = $this->Clients->query('SELECT clients.id id, clients.nom name from clients');
-                $select = "<select   name='data[lignec][" . $index . "][nameC]' class='form-control'  champ='nameC' id='nameC" . $index . "' style = 'text-align:left'>";
-                $select = $select . "<option value=''></option>";
-                foreach ($clients as $cl) {
-                    if ($cl['id'] == $id) {
-                        $selected = "selected";
-                    } else {
-                        $selected = "";
-                    }
-                    $select = $select . "<option value=" . $cl['id'] . " " . $selected . " >" . $cl['nom'] . " </option>";
-                }
-                $select = $select . '</select>';
-?>
-                <script>
-                    //  aler                t(); 
-                    //   var select = "<? php // echo $select;        
-                                        ?>"; 
-                    window.opener.document.getElementById('cliselect<?php echo $index; ?>').innerHTML = "<?php echo $select; ?>";
-                    window.close();
-                </script>
-            <?php
-            }
-        }
-        $this->loadModel('Gouvernorats');
-        $this->loadModel('Pays');
-        $this->loadModel('Devises');
-        $this->loadModel('Personnels');
-        $this->loadModel('Typetiers');
-        $this->loadModel('Salaris');
-        $this->loadModel('Typeentites');
-        $this->loadModel('Incoterms');
-        $this->loadModel('Prospects');
-        $this->loadModel('Paiements');
-        $this->loadModel('Listetags');
-        $tags = $this->fetchTable('Listetags')->find('list', ['keyfield' => 'id', 'valueField' => 'tag'])->all();
-        $paiements = $this->fetchTable('Paiements')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        $prospects = $this->fetchTable('Prospects')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        $incoterms = $this->fetchTable('Incoterms')->find('list', ['keyfield' => 'id', 'valueField' => 'code'])->all();
-        $typeentites = $this->fetchTable('Typeentites')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        $salaris = $this->fetchTable('Salaris')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        $typetiers = $this->fetchTable('Typetiers')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        $commercials = $this->fetchTable('Personnels')->find('list', ['keyfield' => 'id', 'valueField' => 'nom'])->where(['fonction_id' => 9])->all();
-        $user_id = $this->request->getAttribute('identity')->id;
-        $user = $this->fetchTable('Users')->find('all')->where(['id' => $user_id])->first();
-        $personnel_id = $user->personnel_id;
-        $devises = $this->fetchTable('Devises')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        $gouvernorats = $this->fetchTable('Gouvernorats')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        $pays = $this->fetchTable('Pays')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        // $typoo = $this->fetchTable('Prospects')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->where('Prospects.id =' . $prospect_id);
-        // foreach ($typoo as $typ) {
-        //     $dd = $typ;
-        // }
-        $this->set(compact('code', 'paiements', 'personnel_id', 'dd', 'client', 'dhouha', 'gouvernorats', 'pays', 'devises', 'commercials', 'tags', 'typetiers', 'salaris', 'typeentites', 'incoterms', 'prospects'));
-    }
-    public function addcli()
-    {
-        $session = $this->request->getSession();
-        $abrv = $session->read('abrvv');
-        $liendd = $session->read('lien_prévisionnement' . $abrv);
-        $client = 0;
-        foreach ($liendd as $k => $liens) {
-            if (@$liens['lien'] == 'clients') {
-                $client = $liens['ajout'];
-            }
-        }
-        if (($client <> 1)) {
-            $this->redirect(array('controller' => 'users', 'action' => 'login'));
-        }
-        // $this->loadModel('Clients');
-        $num = $this->Clients->find()->select([
-            "num" =>
-            'MAX(Clients.codeclient)'
-        ])->first();
-        $numero = $num->num;
-
-        if ($numero != null) {
-
-            $currentNumber = intval(substr($numero, 1, 5));
-
-            $newNumber = $currentNumber + 1;
-
-            $formattedNumber = str_pad((string) $newNumber, 5, '0', STR_PAD_LEFT);
-
-
-            $code = 'C' . $formattedNumber;
-        } else {
-            $code = "C00001";
-        }
-
-        // echo $code;
-        // $dhouha = $prospect_id;
-        $client = $this->Clients->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $data['nom'] = $this->request->getData('nom');
-            $data['Raison_Sociale'] = $this->request->getData('Raison_Sociale');
-            $data['client'] = $this->request->getData('prospect_id');
-            $data['codeclient'] = $this->request->getData('codeclient');
-            $data['fournisseur'] = $this->request->getData('fournisseur');
-            $data['codefr'] = $this->request->getData('codefr');
-            $data['etat'] = $this->request->getData('etat');
-            $data['Adresse'] = $this->request->getData('Adresse');
-            $data['Code_Ville'] = $this->request->getData('Code_Ville');
-            $data['pay_id'] = $this->request->getData('pay_id');
-            $data['gouvernorat_id'] = $this->request->getData('gouvernorat_id');
-            $data['Tel'] = $this->request->getData('Tel');
-            $data['Fax'] = $this->request->getData('Fax');
-            $data['modalite'] = $this->request->getData('modalite');
-            $data['Contact'] = $this->request->getData('Contact');
-            $data['RC'] = $this->request->getData('RC');
-            $data['Matricule_Fiscale'] = $this->request->getData('Matricule_Fiscale');
-            $data['codedouane'] = $this->request->getData('codedouane');
-            $data['BAN'] = $this->request->getData('BAN');
-            $data['R_TVA'] = $this->request->getData('R_TVA');
-            $data['numerotva'] = $this->request->getData('numerotva');
-            $data['typetiers'] = $this->request->getData('typetier_id');
-            $data['salaris'] = $this->request->getData('salari_id');
-            $data['typeentite'] = $this->request->getData('typeentite_id');
-            $data['Capital'] = $this->request->getData('Capital');
-            $data['incoterms'] = $this->request->getData('incoterm_id');
-            $data['devise_id'] = $this->request->getData('devise_id');
-            $data['port'] = $this->request->getData('port');
-            $data['commercial_id'] = $this->request->getData('commercial_id');
-            $logo = $this->request->getData('logo');
-            $name = $logo->getClientFilename();
-            $targetPath = WWW_ROOT . 'img' . DS . 'logoclients' . DS . $name;
-            if ($name) {
-                $logo->moveTo($targetPath);
-                $data['logo'] = $name;
-            }
-            $client = $this->Clients->patchEntity($client, $data);
-            if ($this->Clients->save($client)) {
-                $this->loadModel('Modalites');
-                $client_id = $client->id;
-                if (isset($this->request->getData('data')['tabligne3']) && (!empty($this->request->getData('data')['tabligne3']))) {
-                    foreach ($this->request->getData('data')['tabligne3'] as $i => $l) {
-                        if (isset($client_id)) {
-                            $ta = $this->fetchTable('Modalites')->newEmptyEntity();
-                            $ta['client_id'] = $client_id;
-                            $ta['paiement_id'] = $l['paiement_id'];
-                            $ta['duree'] = $l['duree'];
-                            $this->fetchTable('Modalites')->save($ta);
-                        }
-                    }
-                }
-
-                $this->loadModel('Tags');
-                $client_id = $client->id;
-                if ((!empty($this->request->getData('tag_id')))) {
-                    $this->loadModel('Tags');
-                    foreach ($this->request->getData('tag_id') as $j => $l) {
-                        $tags = $this->fetchTable('Tags')->newEmptyEntity();
-                        $dataa['client_id'] = $client_id;
-                        $dataa['listetag_id'] = $l;
-                        $tags = $this->Tags->patchEntity($tags, $dataa);
-                        $this->Tags->save($tags);
-                    }
-                }
-                // $this->loadModel('Clients');
-                $id = $client->id;
-                $clients = $this->Clients->query('SELECT clients.id id, clients.Raison_Sociale name from clients');
-                $select = "<select   name='data[Clients][client_id]' class='form-control'  champ='client_id' id='client_id' style = 'text-align:right'>";
-                $select = $select . "<option value=''></option>";
-                foreach ($clients as $cl) {
-                    if ($cl['id'] == $id) {
-                        $selected = "selected";
-                    } else {
-                        $selected = "";
-                    }
-                    $select = $select . "<option value=" . $cl['id'] . " " . $selected . " >" . $cl['Raison_Sociale'] . " </option>";
-                }
-                $select = $select . '</select>';
-            ?>
-                <script>
-                    window.opener.document.getElementById('client_id').innerHTML = "<?php echo $select; ?>";
-                    window.close();
-                </script>
-<?php
-            }
-        }
-        $this->loadModel('Gouvernorats');
-        $this->loadModel('Pays');
-        $this->loadModel('Devises');
-        $this->loadModel('Personnels');
-        $this->loadModel('Typetiers');
-        $this->loadModel('Salaris');
-        $this->loadModel('Typeentites');
-        $this->loadModel('Incoterms');
-        $this->loadModel('Prospects');
-        $this->loadModel('Paiements');
-        $this->loadModel('Listetags');
-        $tags = $this->fetchTable('Listetags')->find('list', ['keyfield' => 'id', 'valueField' => 'tag'])->all();
-        $paiements = $this->fetchTable('Paiements')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        $prospects = $this->fetchTable('Prospects')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        $incoterms = $this->fetchTable('Incoterms')->find('list', ['keyfield' => 'id', 'valueField' => 'code'])->all();
-        $typeentites = $this->fetchTable('Typeentites')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        $salaris = $this->fetchTable('Salaris')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        $typetiers = $this->fetchTable('Typetiers')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        $commercials = $this->fetchTable('Personnels')->find('list', ['keyfield' => 'id', 'valueField' => 'nom'])->where(['fonction_id' => 9])->all();
-        $user_id = $this->request->getAttribute('identity')->id;
-        $user = $this->fetchTable('Users')->find('all')->where(['id' => $user_id])->first();
-        $personnel_id = $user->personnel_id;
-        $devises = $this->fetchTable('Devises')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        $gouvernorats = $this->fetchTable('Gouvernorats')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        $pays = $this->fetchTable('Pays')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->all();
-        // $typoo = $this->fetchTable('Prospects')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->where('Prospects.id =' . $prospect_id);
-        // foreach ($typoo as $typ) {
-        //     $dd = $typ;
-        // }
-        $this->set(compact('code', 'paiements', 'personnel_id', 'dd', 'client', 'dhouha', 'gouvernorats', 'pays', 'devises', 'commercials', 'tags', 'typetiers', 'salaris', 'typeentites', 'incoterms', 'prospects'));
-    }
-
     public function add()
     {
         $session = $this->request->getSession();
@@ -1983,7 +1810,7 @@ class ClientsController extends AppController
             }
 
             // Affichage ou utilisation du nouveau code
-            // echo "Nouveau Code Client : " . $code;
+            echo "Nouveau Code Client : " . $code;
 
             $client = $this->Clients->patchEntity($client, $this->request->getData());
             $client->Code = $code;
@@ -2268,6 +2095,7 @@ class ClientsController extends AppController
      */
     public function edit($id = null)
     {
+        //Configure::write('debug', true);
         $session = $this->request->getSession();
         $abrv = $session->read('abrvv');
         $liendd = $session->read('lien_clients' . $abrv);
@@ -2452,43 +2280,39 @@ class ClientsController extends AppController
 
 
                 if (isset($this->request->getData('data')['document']) && (!empty($this->request->getData('data')['document']))) {
-                    foreach ($this->request->getData('data')['document'] as $i => $b) {
-                        if ($b['supbanque'] != 1) {
-                            if (isset($b['id']) && (!empty($b['id']))) {
+                   // debug($this->request->getData('data')['document']);die;
+                    foreach ($this->request->getData('data')['document'] as $i => $doc) {
+                       
+                        if ($doc['suprdoc'] != 1) {
+                            if (isset($b['id']) && (!empty($doc['id']))) {
 
-                                $clientbanque = $this->fetchTable('Clientbanques')->get($b['id'], [
+                                $docclients = $this->fetchTable('Clientdocuments')->get($doc['id'], [
                                     'contain' => []
                                 ]);
                             } else {
-                                $clientbanque = $this->fetchTable('Clientbanques')->newEmptyEntity();
+                                $docclients = $this->fetchTable('Clientdocuments')->newEmptyEntity();
                             };
-
-                            $datee['banque_id'] = $b['banque_id'];
-                            $datee['agence'] = $b['agence'];
-                            $datee['code_banque'] = $b['code_banque'];
-                            $datee['swift'] = $b['swift'];
-                            $datee['compte'] = $b['compte'];
-                            $datee['rib'] = $b['rib'];
-                            $datee['client_id'] = $id;
-                            $document = $b['documen'];
+                            $dataa['name'] = $doc['name'];
+                            $dataa['client_id'] = $id;
+                            $document = $doc['fichier'];
                             $name = $document->getClientFilename();
-                            $targetPath = WWW_ROOT . 'img' . DS . 'imgart' . DS . $name;
+                            $targetPath = WWW_ROOT . 'img' . DS . 'logo' . DS . $name;
                             if (!empty($name)) {
                                 $document->moveTo($targetPath);
-                                $clientbanque->document = $name;
+                                $docclients->fichier = $name;
                             }
 
-                            //debug($dat);
 
-                            $clientbanque = $this->fetchTable('Clientbanques')->patchEntity($clientbanque, $datee);
+                            $docclients = $this->fetchTable('Clientdocuments')->patchEntity($docclients, $dataa);
+                            //
 
-
-                            $this->fetchTable('Clientbanques')->save($clientbanque);
-                        } else if ($b['supbanque'] == 1 && !empty($b['id'])) {
-                            $clientbanque = $this->fetchTable('Clientbanques')->get($b['id'], [
+                            $this->fetchTable('Clientdocuments')->save($docclients);
+                            //  debug($docclients);
+                        } else if ($doc['suprdoc'] == 1 && !empty($doc['id'])) {
+                            $docclients = $this->fetchTable('Clientdocuments')->get($doc['id'], [
                                 'contain' => []
                             ]);
-                            $this->fetchTable('Clientbanques')->delete($clientbanque);
+                            $this->fetchTable('Clientdocuments')->delete($docclients);
                         }
                     }
                 }
@@ -2719,13 +2543,6 @@ class ClientsController extends AppController
         $abrv = $session->read('abrvv');
         $liendd = $session->read('lien_clients' . $abrv);
 
-        // Liste des associations à vérifier avec leurs messages d'erreur correspondants
-        $associations = [
-            'Visites' => 'visites',
-            'Demandeclients' => 'demandes clients'
-        ];
-
-
         //   debug($liendd);
         $societe = 0;
         foreach ($liendd as $k => $liens) {
@@ -2787,23 +2604,14 @@ class ClientsController extends AppController
         }
 
 
+
+
+
+
+
+
+
         $client = $this->Clients->get($id);
-
-
-        // Vérifier chaque association
-        foreach ($associations as $association => $message) {
-            // Compter les éléments associés dans l'association
-            $count = $this->Clients->{$association}->find()
-                ->where(['client_id' => $id])
-                ->count();
-
-            // Si l'association a des éléments, afficher un message d'erreur et rediriger
-            if ($count > 0) {
-                $this->Flash->error("Ce Client ne peut pas être supprimé car il est associé à des $message.");
-                return $this->redirect(['action' => 'index']); // ou la page appropriée
-            }
-        }
-
         if ($this->Clients->delete($client)) {
             $this->misejour("Clients", "delete", $id);
 
@@ -2811,8 +2619,6 @@ class ClientsController extends AppController
         } else {
             //  $this->Flash->error(__('The client could not be deleted. Please, try again.'));
         }
-
-
 
         return $this->redirect(['action' => 'index']);
     }
@@ -3213,7 +3019,7 @@ class ClientsController extends AppController
         // $clients = $this->fetchTable('Clients')->find('all');
         // debug($clients);
         $moiss = $this->fetchTable('Mois')->find('all', ['keyfield' => 'id', 'valueField' => 'num']);
-
+        //debug($moiss);
         $this->set(compact("clients", 'client_id', "clientss", "mois", "moiss"));
     }
 

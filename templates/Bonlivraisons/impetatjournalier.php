@@ -1,23 +1,10 @@
-<?php $this->layout = 'AdminLTE.print'; ?>
 <?php
 
-
+use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
 
 ?>
 
-
-<?php
-
-$societeTable = TableRegistry::getTableLocator()->get('Societes');
-
-$societe = $societeTable->find()->where('id=1')->first();
-
-use Cake\Core\Configure;
-use Cake\I18n\FrozenTime;
-use Cake\Datasource\ConnectionManager;
-
-?>
 
 <?php
 $connection = ConnectionManager::get('default');
@@ -158,10 +145,9 @@ function int2str($a)
 
                      </div> -->
                         </td>
-                        <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-                            <?php echo $societe->adresseEntete; ?>
-                            <br>
-                        </td>
+                       <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
+                    <?php echo $societefirst->adresseEntete; ?><br>
+                </td>
                         <td align="center" style="width: 25%;border: none;">
                             <div>
                                 <?php
@@ -211,7 +197,7 @@ function int2str($a)
             td {
                 /* border: 1px solid black; */
                 padding: 8px;
-            }
+            } 
 
             th {
                 /* background-color: #b0c24a; */

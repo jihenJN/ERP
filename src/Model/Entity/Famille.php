@@ -38,6 +38,8 @@ class Famille extends Entity
         'sousfamille1sold' => true,
         'obligatoire' => true,
         'marque_id' => true,
+        'code' => true,
+
 
 
     ];

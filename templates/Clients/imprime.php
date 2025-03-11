@@ -134,9 +134,9 @@ function int2str($a)
     }
 
 
+   
     .print-container {
-        /* background-size: cover;
-        background-position: center; */
+
         height: 1058px;
         width: 812px;
     }
@@ -193,276 +193,277 @@ $statement->execute();
 $test1 = $statement->fetchAll('assoc');
 $encours = $test1 ? $test1['0']['ttc'] : 0;
 //echo $totalPages;
-$total=$soldef+$encours;
-if ($totalPages==0) {
+$total = $soldef + $encours;
+if ($totalPages == 0) {
 
 ?>
-<div class="print-container" style="width: 100%;">
+    <div class="print-container" style="width: 100%;">
 
-<section class="content"
-    style="font-family: 'Times New Roman', Times, serif;<?php echo $page > 0 ? ' page-break' : ''; ?>">
-    <table cellpadding="0" cellspacing="0"
-        style=" border: 0px solid #002E50; border-left:none; border-right:none; border-collapse: collapse; width: 100%;">
-        <tbody>
-            <tr>
-                <td align="start" style="width: 38%;border: none;">
-                    <b style="font-size: 17px!important; display: block; margin-bottom: 0.5em;">
-                        <?php echo $societe[0]['nom']; ?>
-                    </b>
-                    <b
-                        style="font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">
-                        <?php echo 'RTE MAHDIA KM 10 3011 SFAX'; ?>
-                    </b>
-                </td>
-                <td align="end" style="width: 38%;border: none;">
-                    <b style="font-size: 17px!important; display: block; margin-bottom: 0.5em;">
-                        <?php echo ' '; ?>
-                    </b>
-                    <br>
-                    <b
-                        style="font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">
-                        <?php echo date("Y/m/d H:i"); ?>
-                    </b>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div style="display:flex;">
-        <table cellpadding="0" cellspacing="0"
-            style="border: 0px solid #002E50; border-left:none; border-right:none; border-collapse: collapse; width: 100%;">
-            <tbody>
-                <tr>
-                    <td align="center" style="width: 38%;border: none;"></td>
-                    <td align="center" style="width: 27%;border: none;height:4% !important;">
-                        <b style="font-size: 17px!important; display: block; margin-bottom: 0.5em;">
-                            <?php echo 'Fiche Client'; ?>
-                        </b>
-
-                    </td>
-                    <td align="left" style="width: 35%;border: none;font-size: 15px;height:4% !important;">
-
-                    </td>
-
-                </tr>
-            </tbody>
-        </table>
-
-
-    </div>
-    <div style="display:flex;">
-        <table cellpadding="0" cellspacing="0"
-            style="border: 0px solid #002E50; border-left:none; border-right:none; border-collapse: collapse; width: 100%;">
-            <tbody>
-                <tr>
-                    <td align="start" style="width: 50%;border: none;">
-                        <b style="display: flex;">
-                            <span style="font-size: 15px!important; display: block; margin-bottom: 0.5em;">
-                                <?php echo ' Client : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
-                                style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;"><?php echo $client->Code ?>&nbsp;
-                                &nbsp;&nbsp;<?php echo $client->Raison_Sociale; ?></span>
-                        </b>
-
-                    </td>
-                    <td align="center" style="width: 20%;border: none;height:4% !important;">
-
-                    </td>
-                    <td align="end" style="width: 30%;border: none;font-size: 15px;height:4% !important;">
-                        <b style="display: flex;    justify-content: space-between;">
-                            <span style="font-size: 14px!important; display: block; margin-bottom: 0.5em;">
-                                <?php echo ' Encours : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
-                                style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
-                                &nbsp;&nbsp;<?php echo sprintf("%01.3f", abs($encours)); ?></span>
-                        </b>
-                        <b style="display: flex;    justify-content: space-between;">
-                            <span style="font-size: 14px!important; display: block; margin-bottom: 0.5em;">
-                                <?php echo ' Solde : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
-                                style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
-                                &nbsp;&nbsp;<?php echo sprintf("%01.3f", abs($soldef)); ?></span>
-                        </b>
-                        <b style="display: flex;    justify-content: space-between;">
-                            <span style="font-size: 14px!important; display: block; margin-bottom: 0.5em;">
-                                <?php echo ' Total : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
-                                style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
-                                &nbsp;&nbsp;<?php echo sprintf("%01.3f", abs($total)); ?></span>
-                        </b>
-                        <b style="display: flex;    justify-content: space-between;">
-                            <span style="font-size: 14px!important; display: block; margin-bottom: 0.5em;">
-                                <?php echo ' Echéancier : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
-                                style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
-                                &nbsp;&nbsp;<?php echo sprintf("%01.3f", abs($echeancier)); ?></span>
-                        </b>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-
-
-    </div>
-    <div>
-        <table border="0" style="border-width: 0px;  width: 100%; border-collapse: collapse;">
-
-
-            <tbody>
-                <td style="width: 30%;">
-                    <b style="display: flex;    justify-content:  flex-start;">
-                        <span style="font-size: 14px!important; display: block; margin-bottom: 0.5em;">
-                            <?php echo ' Date Du : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
-                            style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
-                            &nbsp;&nbsp;<?php echo $date1; ?></span>
-                    </b>
-                </td>
-
-                <td style="width: 30%;">
-                    <b style="display: flex;    justify-content:  flex-start;">
-                        <span style="font-size: 14px!important; display: block; margin-bottom: 0.5em;">
-                            <?php echo ' Au : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
-                            style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
-                            &nbsp;&nbsp;<?php echo $date2; ?></span>
-                    </b>
-                </td>
-                <td style="width: 40%;">
-                    <b style="display: flex;    justify-content:  flex-start;">
-                        <span style="font-size: 14px!important; display: block; margin-bottom: 0.5em;">
-                            <?php echo ' Tel : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
-                            style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
-                            &nbsp;&nbsp;<?php echo $societe[0]['tel']; ?></span>
-                    </b>
-                </td>
-            </tbody>
-        </table>
-    </div>
-    <div style="margin-top: ;">
-        <table border="0" style="border-width: 0px;  width: 100%; border-collapse: collapse;">
-            <thead>
-                <td align="center" style="border: 1px solid #000407;width: 12%; ">Date</td>
-                <td align="center" style="border: 1px solid #000407;width: 10%;">Numéro Mvt</td>
-                <td align="center" style="border: 1px solid #000407;width: 35%;">Libellé</td>
-                <td align="center" style="border: 1px solid #000407;width: 13%;">Debit</td>
-                <td align="center" style="border: 1px solid #000407;width: 15%;">Crédit</td>
-                <td align="center" style="border: 1px solid #000407;width: 15%;">Solde</td>
-            </thead>
-
-            <tbody>
-                <?php
-                $start = $page * $maxLinesPerPage;
-                //  var_dump($page);
-                $end = min(($page + 1) * $maxLinesPerPage, $totalLines);
-                //  var_dump($end);
-                $pp = 0;
-                // echo $totalLines;
-                debug($tabligne);
-                usort($tabligne, function ($a, $b) {
-                    return strcmp($a['date'], $b['date']);
-                });
-                $solde = 0;
-                $totcredit = 0;
-                $totdebit = 0;
-                for ($i = $start; $i < $end; $i++):
-                    $pp++;
-                    $lignetab = $tabligne[$i];
-                    ///  debug( $lignecommande);
-                    //var_dump($lignetab) ;
-                    $totcredit += (float) $lignetab['credit'];
-                    $totdebit += (float) $lignetab['debit'];
-                    $solde += (float) $lignetab['debit'];
-                    $solde -= (float) $lignetab['credit'];
-                    ?>
-                    <tr height="25px" style="font-size: 15px!important;">
-
-                        <td align="center"
-                            style="vertical-align:top; border-left: 1px solid #000407;border-right: 1px solid #000407;">
-                            <b style="text-align: left;font-weight: normal;margin-left: 1% !important;">
-                                <?php
-                                echo $lignetab['date'];//->format("Y-m-d");
-                        
-                                ?>
+        <section class="content"
+            style="font-family: 'Times New Roman', Times, serif;<?php echo $page > 0 ? ' page-break' : ''; ?>">
+            <table cellpadding="0" cellspacing="0"
+                style=" border: 0px solid #002E50; border-left:none; border-right:none; border-collapse: collapse; width: 100%;">
+                <tbody>
+                    <tr>
+                        <td align="start" style="width: 38%;border: none;">
+                            <b style="font-size: 17px!important; display: block; margin-bottom: 0.5em;">
+                                <?php echo $societe[0]['nom']; ?>
                             </b>
-                        </td>
-
-                        <td align="center" style="vertical-align:top;border-right: 1px solid #000407;">
-                            <b style="font-weight: normal;">
-                                <?php
-
-                                echo $lignetab['numero']; ?>
-                            </b>
-                        </td>
-                        <td align="start" style=" vertical-align:top;border-right: 1px solid #000407;">
-                            <b style="font-weight: normal;">
-                                <?php echo $lignetab['type']; ?>
-                            </b>
-                        </td>
-
-
-                        <td align="end" style=" vertical-align:top;border-right: 1px solid #000407;">
-                            <b style="font-weight: normal;">
-                                <?php
-                                // $this->Number->format($lignecommande->punht) 
-                                echo number_format(abs((float) $lignetab['debit']), 3, ',', ' '); ?>
-                            </b>
-                        </td>
-
-
-                        <td align="end" style="vertical-align:top;border-right: 1px solid #000407;">
-                            <b style="font-weight: normal;">
-                                <?php
-                                echo number_format(abs((float) $lignetab['credit']), 3, ',', ' '); ?>
+                            <b
+                                style="font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">
+                                <?php echo $societefirst->adresse; ?><br>
 
                             </b>
                         </td>
-
-                        <td align="end" style="vertical-align:top;border-right: 1px solid #000407;">
-                            <b style="font-weight: normal;">
-                                <?php // $this->Number->format($montant)  
-                                        echo number_format((float) abs($solde), 3, ',', ' '); ?></b>
+                        <td align="end" style="width: 38%;border: none;">
+                            <b style="font-size: 17px!important; display: block; margin-bottom: 0.5em;">
+                                <?php echo ' '; ?>
+                            </b>
+                            <br>
+                            <b
+                                style="font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">
+                                <?php echo date("Y/m/d H:i"); ?>
+                            </b>
                         </td>
-
                     </tr>
+                </tbody>
+            </table>
+            <div style="display:flex;">
+                <table cellpadding="0" cellspacing="0"
+                    style="border: 0px solid #002E50; border-left:none; border-right:none; border-collapse: collapse; width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td align="center" style="width: 38%;border: none;"></td>
+                            <td align="center" style="width: 27%;border: none;height:4% !important;">
+                                <b style="font-size: 17px!important; display: block; margin-bottom: 0.5em;">
+                                    <?php echo 'Fiche Client'; ?>
+                                </b>
 
-                    <?php
-                endfor;
-                ?>
-                <tr>
-                    <td colspan="6"
-                        style="border-bottom: 1px solid #000407;border-left: 1px solid #000407;border-right: 1px solid #000407;">
-                    </td>
-                </tr>
-                <tr style="    height: 40px;">
-                    <td colspan="3" align="end">
-                        <b style="font-weight: normal;">
-                            <strong> Total :</strong>
-                        </b>
-                    </td>
-                    <td align="end"><b style="font-weight: normal;">
-                            <strong>
-                                <?php
-                                // $this->Number->format($lignecommande->punht) 
-                                echo number_format(abs((float) $totdebit), 3, ',', ' '); ?>
-                            </strong>
-                        </b></td>
-                    <td align="end"><b style="font-weight: normal;">
-                            <strong>
-                                <?php
-                                // $this->Number->format($lignecommande->punht) 
-                                echo number_format(abs((float) $totcredit), 3, ',', ' '); ?>
-                            </strong>
-                        </b></td>
-                    <td align="end"><b style="font-weight: normal;">
-                            <strong>
-                                <?php
-                                // $this->Number->format($lignecommande->punht) 
-                                echo number_format(abs((float) $solde), 3, ',', ' '); ?>
-                            </strong>
-                        </b></td>
-                </tr>
-            </tbody>
-        </table>
+                            </td>
+                            <td align="left" style="width: 35%;border: none;font-size: 15px;height:4% !important;">
+
+                            </td>
+
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+            <div style="display:flex;">
+                <table cellpadding="0" cellspacing="0"
+                    style="border: 0px solid #002E50; border-left:none; border-right:none; border-collapse: collapse; width: 100%;">
+                    <tbody>
+                        <tr>
+                            <td align="start" style="width: 50%;border: none;">
+                                <b style="display: flex;">
+                                    <span style="font-size: 15px!important; display: block; margin-bottom: 0.5em;">
+                                        <?php echo ' Client : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
+                                        style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;"><?php echo $client->Code ?>&nbsp;
+                                        &nbsp;&nbsp;<?php echo $client->Raison_Sociale; ?></span>
+                                </b>
+
+                            </td>
+                            <td align="center" style="width: 20%;border: none;height:4% !important;">
+
+                            </td>
+                            <td align="end" style="width: 30%;border: none;font-size: 15px;height:4% !important;">
+                                <b style="display: flex;    justify-content: space-between;">
+                                    <span style="font-size: 14px!important; display: block; margin-bottom: 0.5em;">
+                                        <?php echo ' Encours : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
+                                        style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
+                                        &nbsp;&nbsp;<?php echo sprintf("%01.3f", abs($encours)); ?></span>
+                                </b>
+                                <b style="display: flex;    justify-content: space-between;">
+                                    <span style="font-size: 14px!important; display: block; margin-bottom: 0.5em;">
+                                        <?php echo ' Solde : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
+                                        style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
+                                        &nbsp;&nbsp;<?php echo sprintf("%01.3f", abs($soldef)); ?></span>
+                                </b>
+                                <b style="display: flex;    justify-content: space-between;">
+                                    <span style="font-size: 14px!important; display: block; margin-bottom: 0.5em;">
+                                        <?php echo ' Total : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
+                                        style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
+                                        &nbsp;&nbsp;<?php echo sprintf("%01.3f", abs($total)); ?></span>
+                                </b>
+                                <b style="display: flex;    justify-content: space-between;">
+                                    <span style="font-size: 14px!important; display: block; margin-bottom: 0.5em;">
+                                        <?php echo ' Echéancier : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
+                                        style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
+                                        &nbsp;&nbsp;<?php echo sprintf("%01.3f", abs($echeancier)); ?></span>
+                                </b>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+            </div>
+            <div>
+                <table border="0" style="border-width: 0px;  width: 100%; border-collapse: collapse;">
+
+
+                    <tbody>
+                        <td style="width: 30%;">
+                            <b style="display: flex;    justify-content:  flex-start;">
+                                <span style="font-size: 14px!important; display: block; margin-bottom: 0.5em;">
+                                    <?php echo ' Date Du : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
+                                    style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
+                                    &nbsp;&nbsp;<?php echo $date1; ?></span>
+                            </b>
+                        </td>
+
+                        <td style="width: 30%;">
+                            <b style="display: flex;    justify-content:  flex-start;">
+                                <span style="font-size: 14px!important; display: block; margin-bottom: 0.5em;">
+                                    <?php echo ' Au : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
+                                    style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
+                                    &nbsp;&nbsp;<?php echo $date2; ?></span>
+                            </b>
+                        </td>
+                        <td style="width: 40%;">
+                            <b style="display: flex;    justify-content:  flex-start;">
+                                <span style="font-size: 14px!important; display: block; margin-bottom: 0.5em;">
+                                    <?php echo ' Tel : '; ?> </span>&nbsp;&nbsp;&nbsp; <span
+                                    style="    margin-top: 0.5%;font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
+                                    &nbsp;&nbsp;<?php echo $societe[0]['tel']; ?></span>
+                            </b>
+                        </td>
+                    </tbody>
+                </table>
+            </div>
+            <div style="margin-top: ;">
+                <table border="0" style="border-width: 0px;  width: 100%; border-collapse: collapse;">
+                    <thead>
+                        <td align="center" style="border: 1px solid #000407;width: 12%; ">Date</td>
+                        <td align="center" style="border: 1px solid #000407;width: 10%;">Numéro Mvt</td>
+                        <td align="center" style="border: 1px solid #000407;width: 35%;">Libellé</td>
+                        <td align="center" style="border: 1px solid #000407;width: 13%;">Debit</td>
+                        <td align="center" style="border: 1px solid #000407;width: 15%;">Crédit</td>
+                        <td align="center" style="border: 1px solid #000407;width: 15%;">Solde</td>
+                    </thead>
+
+                    <tbody>
+                        <?php
+                        $start = $page * $maxLinesPerPage;
+                        //  var_dump($page);
+                        $end = min(($page + 1) * $maxLinesPerPage, $totalLines);
+                        //  var_dump($end);
+                        $pp = 0;
+                        // echo $totalLines;
+                        debug($tabligne);
+                        usort($tabligne, function ($a, $b) {
+                            return strcmp($a['date'], $b['date']);
+                        });
+                        $solde = 0;
+                        $totcredit = 0;
+                        $totdebit = 0;
+                        for ($i = $start; $i < $end; $i++):
+                            $pp++;
+                            $lignetab = $tabligne[$i];
+                            ///  debug( $lignecommande);
+                            //var_dump($lignetab) ;
+                            $totcredit += (float) $lignetab['credit'];
+                            $totdebit += (float) $lignetab['debit'];
+                            $solde += (float) $lignetab['debit'];
+                            $solde -= (float) $lignetab['credit'];
+                        ?>
+                            <tr height="25px" style="font-size: 15px!important;">
+
+                                <td align="center"
+                                    style="vertical-align:top; border-left: 1px solid #000407;border-right: 1px solid #000407;">
+                                    <b style="text-align: left;font-weight: normal;margin-left: 1% !important;">
+                                        <?php
+                                        echo $lignetab['date']; //->format("Y-m-d");
+
+                                        ?>
+                                    </b>
+                                </td>
+
+                                <td align="center" style="vertical-align:top;border-right: 1px solid #000407;">
+                                    <b style="font-weight: normal;">
+                                        <?php
+
+                                        echo $lignetab['numero']; ?>
+                                    </b>
+                                </td>
+                                <td align="start" style=" vertical-align:top;border-right: 1px solid #000407;">
+                                    <b style="font-weight: normal;">
+                                        <?php echo $lignetab['type']; ?>
+                                    </b>
+                                </td>
+
+
+                                <td align="end" style=" vertical-align:top;border-right: 1px solid #000407;">
+                                    <b style="font-weight: normal;">
+                                        <?php
+                                        // $this->Number->format($lignecommande->punht) 
+                                        echo number_format(abs((float) $lignetab['debit']), 3, ',', ' '); ?>
+                                    </b>
+                                </td>
+
+
+                                <td align="end" style="vertical-align:top;border-right: 1px solid #000407;">
+                                    <b style="font-weight: normal;">
+                                        <?php
+                                        echo number_format(abs((float) $lignetab['credit']), 3, ',', ' '); ?>
+
+                                    </b>
+                                </td>
+
+                                <td align="end" style="vertical-align:top;border-right: 1px solid #000407;">
+                                    <b style="font-weight: normal;">
+                                        <?php // $this->Number->format($montant)  
+                                        echo number_format((float) abs($solde), 3, ',', ' '); ?></b>
+                                </td>
+
+                            </tr>
+
+                        <?php
+                        endfor;
+                        ?>
+                        <tr>
+                            <td colspan="6"
+                                style="border-bottom: 1px solid #000407;border-left: 1px solid #000407;border-right: 1px solid #000407;">
+                            </td>
+                        </tr>
+                        <tr style="    height: 40px;">
+                            <td colspan="3" align="end">
+                                <b style="font-weight: normal;">
+                                    <strong> Total :</strong>
+                                </b>
+                            </td>
+                            <td align="end"><b style="font-weight: normal;">
+                                    <strong>
+                                        <?php
+                                        // $this->Number->format($lignecommande->punht) 
+                                        echo number_format(abs((float) $totdebit), 3, ',', ' '); ?>
+                                    </strong>
+                                </b></td>
+                            <td align="end"><b style="font-weight: normal;">
+                                    <strong>
+                                        <?php
+                                        // $this->Number->format($lignecommande->punht) 
+                                        echo number_format(abs((float) $totcredit), 3, ',', ' '); ?>
+                                    </strong>
+                                </b></td>
+                            <td align="end"><b style="font-weight: normal;">
+                                    <strong>
+                                        <?php
+                                        // $this->Number->format($lignecommande->punht) 
+                                        echo number_format(abs((float) $solde), 3, ',', ' '); ?>
+                                    </strong>
+                                </b></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+
+        </section>
 
     </div>
-    
-
-</section>
-
-</div>
 <?php
 }
 
@@ -638,15 +639,15 @@ for ($page = 0; $page < $totalPages; $page++): ?>
                             $totdebit += (float) $lignetab['debit'];
                             $solde += (float) $lignetab['debit'];
                             $solde -= (float) $lignetab['credit'];
-                            ?>
+                        ?>
                             <tr height="25px" style="font-size: 15px!important;">
 
                                 <td align="center"
                                     style="vertical-align:top; border-left: 1px solid #000407;border-right: 1px solid #000407;">
                                     <b style="text-align: left;font-weight: normal;margin-left: 1% !important;">
                                         <?php
-                                        echo $lignetab['date'];//->format("Y-m-d");
-                                
+                                        echo $lignetab['date']; //->format("Y-m-d");
+
                                         ?>
                                     </b>
                                 </td>
@@ -685,12 +686,12 @@ for ($page = 0; $page < $totalPages; $page++): ?>
                                 <td align="end" style="vertical-align:top;border-right: 1px solid #000407;">
                                     <b style="font-weight: normal;">
                                         <?php // $this->Number->format($montant)  
-                                                echo number_format((float) abs($solde), 3, ',', ' '); ?></b>
+                                        echo number_format((float) abs($solde), 3, ',', ' '); ?></b>
                                 </td>
 
                             </tr>
 
-                            <?php
+                        <?php
                         endfor;
                         ?>
                         <tr>
@@ -731,10 +732,10 @@ for ($page = 0; $page < $totalPages; $page++): ?>
 
             </div>
             <?php     //var_dump($page);
-                //  echo $page .'=='. ($totalPages - 1) ;
-                if ($page == ($totalPages - 1)) {
+            //  echo $page .'=='. ($totalPages - 1) ;
+            if ($page == ($totalPages - 1)) {
 
-                    ?>
+            ?>
                 <!-- <div style="display:flex; margin-left:8%;    margin-top: -45px;">
 
                     <table border="0"
@@ -750,7 +751,8 @@ for ($page = 0; $page < $totalPages; $page++): ?>
                                     <b style="width: 30px;margin-left:-2!important"><?php echo 'Total TVA:'; ?><br></b>
                                     <b
                                         style="width: 30px;margin-left:-20!important;white-space:nowrap !important;"><?php echo 'Timbre:'; ?><br></b>
-                                    <b style="width: 30px;margin-left:-20!important"><?php //echo 'Total TTC:'; ?><br></b>
+                                    <b style="width: 30px;margin-left:-20!important"><?php //echo 'Total TTC:'; 
+                                                                                        ?><br></b>
                                     <b><br></b>
                                 </td>
                                 <td style="text-align: left; width: 20%; vertical-align: top;">
@@ -793,7 +795,7 @@ for ($page = 0; $page < $totalPages; $page++): ?>
                         <tr class="tr">
                             <td align="center" height="20px">
                                 <?php ///echo  'Arrêté  le présent BL  à la somme de :'; 
-                                        ?>
+                                ?>
                             </td>
                         </tr>
                         <tr class="tr">
@@ -810,7 +812,7 @@ for ($page = 0; $page < $totalPages; $page++): ?>
                     </tbody>
                 </table> -->
             <?php }
-                ?>
+            ?>
 
         </section>
 

@@ -34,7 +34,7 @@ $lien = $session->read('lien_stock' . $abrv);
 <section class="content-header">
   
     <h1>
-        Services
+        Destination achat
     </h1>
 </section>
 <section class="content" style="width: 99%">

@@ -28,7 +28,7 @@ use Cake\Datasource\ConnectionManager;
         <small><?php echo __(''); ?></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="<?php echo $this->Url->build(['action' => 'index']); ?>"><i class="fa fa-reply"></i> <?php echo __('Retour'); ?></a></li>
+        <li><a href="<?php echo $this->Url->build(['action' => 'index/'.$factureclient->type]); ?>"><i class="fa fa-reply"></i> <?php echo __('Retour'); ?></a></li>
     </ol>
 </section>
 <!-- Main content -->

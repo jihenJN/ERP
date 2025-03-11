@@ -40,18 +40,6 @@ class TypecontactsTable extends Table
         $this->setTable('typecontacts');
         $this->setDisplayField('id');
         $this->setPrimaryKey('id');
-       
-        $this->hasMany('Visites', [
-            'foreignKey' => 'type_contact_id',  
-            'dependent' => true,  // Si un Typecontact est supprimé, les Visites associées sont supprimées aussi
-        ]);
-
-        $this->hasMany('Demandeclients', [
-            'foreignKey' => 'type_contact_id',  
-            'dependent' => true,  
-        ]);
-        
-
     }
 
     /**

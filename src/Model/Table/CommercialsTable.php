@@ -42,21 +42,7 @@ class CommercialsTable extends Table
         $this->setTable('commercials');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
-        
-         
-        $this->hasMany('Visites', [
-            'foreignKey' => 'commercial_id',  
-            'dependent' => true,  // Si un commercial est supprimé, les Visites associées sont supprimées aussi
-        ]);
 
-    
-
-        $this->hasMany('Demandeclients', [
-            'foreignKey' =>'commercial_id',  
-            'dependent' => true,  
-        ]);
-        
-        
         $this->hasMany('Commandes', [
             'foreignKey' => 'commercial_id',
         ]);

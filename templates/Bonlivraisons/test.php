@@ -399,12 +399,12 @@ echo $this->Html->css('select2'); ?>
                                                 <?php if ($type == 1) { ?>
 
                                                     <div style="margin-right:2px ;">
-                                                        <a onClick="openWindow(1000, 1000, wr+'Bonlivraisons/imprimeviewbl/<?php echo $bonlivraison->id; ?>')"><button class='btn btn-xs btn-primary'><i class='fa fa-print'></i></button></a>
+                                                        <a onclick="openWindow(1000, 1000, 'https://smbm.mtd-erp.com/ERP/Bonlivraisons/imprimeviewbl/<?php echo $bonlivraison->id; ?>')"><button class='btn btn-xs btn-primary'><i class='fa fa-print'></i></button></a>
                                                     </div>
 
                                                 <?php } else { ?>
                                                     <div style="margin-right:2px ;">
-                                                        <a onClick="openWindow(1000, 1000, wr+'Bonlivraisons/imprimeview/<?php echo $bonlivraison->id; ?>')"><button class='btn btn-xs btn-primary'><i class='fa fa-print'></i></button></a>
+                                                        <a onclick="openWindow(1000, 1000, 'https://smbm.mtd-erp.com/ERP/Bonlivraisons/imprimeview/<?php echo $bonlivraison->id; ?>')"><button class='btn btn-xs btn-primary'><i class='fa fa-print'></i></button></a>
                                                     </div>
                                                 <?php } ?>
 
@@ -598,7 +598,7 @@ echo $this->Html->css('select2'); ?>
             })
 
 
-            window.open(wr+"Factureclients/addfacture/" + tab);
+            window.open("https://smbm.mtd-erp.com/ERP/Factureclients/addfacture/" + tab);
 
         });
 

@@ -261,8 +261,7 @@ $connection = ConnectionManager::get('default'); ?>
     // });
 
 
-   
-
+  
     $(document).ready(function() {
     const checkboxes = $(".facc6");
 

@@ -82,9 +82,6 @@ class CommandeclientsTable extends Table
         $this->hasMany('Lignecommandeclients', [
             'foreignKey' => 'commandeclient_id',
         ]);
-		 $this->hasMany('Notes', [
-            'foreignKey' => 'commandeclient_id',
-        ]);
     }
 
     /**

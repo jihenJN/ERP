@@ -46,13 +46,32 @@ class FournisseursController extends AppController
       $this->set(compact('clients','typeutilisateursoptions','paiementsoptions')); */
     // }
 
+    public function getfourcmd($id = null)
+    {
+        $this->loadModel('Commandes');
+        $id = $this->request->getQuery('fournisseurid');
+        $fournisseurs = 0;
+        $fournisseurs += $this->fetchTable('Commandefournisseurs')->find()->where(['Commandefournisseurs.fournisseur_id' => $id])->count();
+        $fournisseurs += $this->fetchTable('Livraisons')->find()->where(['Livraisons.fournisseur_id' => $id])->count();
+        $fournisseurs += $this->fetchTable('Factures')->find()->where(['Factures.fournisseur_id' => $id])->count();
+        $fournisseurs += $this->fetchTable('Lignereglements')->find()->where(['Lignereglements.fournisseur_id' => $id])->count();
+        $fournisseurs += $this->fetchTable('Factureavoirfrs')->find()->where(['Factureavoirfrs.fournisseur_id' => $id])->count();
+        $fournisseurs += $this->fetchTable('Adresselivraisonfournisseurs')->find()->where(['Adresselivraisonfournisseurs.fournisseur_id' => $id])->count();
+        // $articlefournisseurs = $this->fetchTable('Articlefournisseurs')->find()->where(['Articlefournisseurs.fournisseur_id' => $id])->count();
+        // Check if there are any related records
+        $fournisseurs = $this->fetchTable('Fournisseurresponsables')->find()->where(['Fournisseurresponsables.fournisseur_id' => $id])->count();
+        $fournisseurs = $this->fetchTable('Fournisseurbanques')->find()->where(['Fournisseurbanques.fournisseur_id' => $id])->count();
+
+        echo json_encode(['fournisseurs' => $fournisseurs]);
+        die;
+    }
 
 
     public function getfournisseurcmd($id = null)
     {
         $this->loadModel('Commandes');
         $id = $this->request->getQuery('idfournisseur');
-    
+
         // Count associated records for the client
         $commandeCount = $this->fetchTable('Commandefournisseurs')->find()->where(['Commandefournisseurs.fournisseur_id' => $id])->count();
         $bonlivraisonCount = $this->fetchTable('Livraisons')->find()->where(['Livraisons.fournisseur_id' => $id])->count();
@@ -65,9 +84,9 @@ class FournisseursController extends AppController
         $fournisseurresponsables = $this->fetchTable('Fournisseurresponsables')->find()->where(['Fournisseurresponsables.fournisseur_id' => $id])->count();
         $fournisseurbanques = $this->fetchTable('Fournisseurbanques')->find()->where(['Fournisseurbanques.fournisseur_id' => $id])->count();
 
-        
+
         $hasDependencies = $commandeCount + $bonlivraisonCount + $factureCount + $reglementCount  + $avoirCount + $adresseCount + $fournisseurresponsables + $fournisseurbanques > 0;
-    
+
         echo json_encode([
             "hasDependencies" => $hasDependencies,
             "success" => true
@@ -130,11 +149,11 @@ class FournisseursController extends AppController
         $totalArticles = 0;
 
         // Sum counts from different tables
-        
+
         $totalArticles += $this->fetchTable('Exonerations')->find('all')->where(['Exonerations.fournisseur_id' => $id])->count();
 
         $totalArticles += $this->fetchTable('Fournisseurresponsables')->find('all')->where(['Fournisseurresponsables.fournisseur_id' => $id])->count();
-        
+
         $totalArticles += $this->fetchTable('Fournisseurbanques')->find('all')->where(['Fournisseurbanques.fournisseur_id' => $id])->count();
 
         $totalArticles += $this->fetchTable('Adresselivraisonfournisseurs')->find('all')->where(['Adresselivraisonfournisseurs.fournisseur_id' => $id])->count();
@@ -284,11 +303,24 @@ class FournisseursController extends AppController
         $exonerations[0] = 'exonoré';
         $exonerations[1] = 'non exonoré';
         $this->set(compact('exonerations'));
+        $codeobj = $this->Fournisseurs->find()->select(["number" =>
+        'MAX(Fournisseurs.code)'])->first();
+        $num = $codeobj->number;
+        if ($num != null) {
+            $n = $num;
+            $lastnum = $n;
+            $numo = intval($lastnum) + 1;
+            $nn = (string)$numo;
+            $numero = str_pad($nn, 5, "0", STR_PAD_LEFT);
+        } else {
+            $numero = "00001";
+            //debug($numero);die;
+        }
         //$this->loadModel('Exoneration');
         $fournisseur = $this->Fournisseurs->newEmptyEntity();
         //debug($fournisseur);die;
         if ($this->request->is('post')) {
-       //  debug($this->request->getData());die;
+            //  debug($this->request->getData());die;
 
             $fournisseur = $this->Fournisseurs->patchEntity($fournisseur, $this->request->getData());
             // debug($fournisseur);die;
@@ -332,7 +364,7 @@ class FournisseursController extends AppController
                     foreach ($this->request->getData('data')['lignead'] as $i => $add) {
                         if ($responsable['sup1'] != 1) {
                             $dataaa['adresse'] = $add['adresse'];
-                           
+
                             $dataaa['fournisseur_id'] = $fournisseur_id;
                             //debug($dataa);die;
                             $adresselivraisonfournisseurs = $this->fetchTable('Adresselivraisonfournisseurs')->newEmptyEntity();
@@ -451,7 +483,7 @@ class FournisseursController extends AppController
         $pays = $this->Fournisseurs->Pays->find('list', ['limit' => 200]);
         $paiements = $this->Fournisseurs->Paiements->find('list', ['limit' => 200]);
         $devises = $this->Fournisseurs->Devises->find('list', ['limit' => 200]);
-        $this->set(compact('banques', 'fournisseur', 'typeexonerations', 'typeutilisateurs', 'typelocalisations', 'paiements', 'devises', 'pays'));
+        $this->set(compact('banques', 'fournisseur', 'typeexonerations', 'typeutilisateurs', 'typelocalisations', 'paiements', 'devises', 'pays', 'numero'));
     }
 
     /**
@@ -545,10 +577,10 @@ class FournisseursController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
 
             $fournisseur = $this->Fournisseurs->patchEntity($fournisseur, $this->request->getData());
-               /// $this->request->getData();
-          // debug($this->request->getData());//die;
+            /// $this->request->getData();
+            // debug($this->request->getData());//die;
             if ($this->Fournisseurs->save($fournisseur)) {
-               // debug($this->request->getData());//die;
+                // debug($this->request->getData());//die;
                 $fournisseur_id = $fournisseur->id;
                 $fournisseur_id = ($this->Fournisseurs->save($fournisseur)->id);
                 $this->misejour("Fournisseurs", "edit", $fournisseur_id);
@@ -749,13 +781,13 @@ class FournisseursController extends AppController
                             //S  $this->request->allowMethod(['post', 'delete']);
                             if (!empty($banque['id']))
 
-                            $fournisseurbanques = $this->fetchTable('Fournisseurbanques')->get($banque['id']);
+                                $fournisseurbanques = $this->fetchTable('Fournisseurbanques')->get($banque['id']);
                             $this->fetchTable('Fournisseurbanques')->delete($fournisseurbanques);
                         }
                     }
                 }
                 $this->set(compact("fournisseurbanques"));
-               // debug($this->request->getData('data')['lignes']);
+                // debug($this->request->getData('data')['lignes']);
                 if (isset($this->request->getData('data')['lignes']) && (!empty($this->request->getData('data')['lignes']))) {
 
                     foreach ($this->request->getData('data')['lignes'] as $i => $exon) {
@@ -886,30 +918,30 @@ class FournisseursController extends AppController
         if ($id == 1) {
             $query = $this->fetchTable('Devises')->find();
             $query->where(['id' => 4]);
-            
-        $select = "
+
+            $select = "
 
         <label class='control-label' for='devise-id'>Devise</label>
         <select name='devise_id' id='devise_id' class='form-control select2'   >
 				";
-        foreach ($query as $q) {
-            $select =  $select . "	<option value ='" . $q['id'] . "'";
-            $select =  $select . " >" . $q['name'] . "</option>";
-        }
-        $select = $select . "</select> </div> </div> ";
+            foreach ($query as $q) {
+                $select =  $select . "	<option value ='" . $q['id'] . "'";
+                $select =  $select . " >" . $q['name'] . "</option>";
+            }
+            $select = $select . "</select> </div> </div> ";
         } else {
             $query = $this->fetchTable('Devises')->find();
-            
-        $select = "
+
+            $select = "
 
         <label class='control-label' for='devise-id'>Devise</label>
         <select name='devise_id' id='devise_id' class='form-control select2'   >
 					<option value=''  selected='selected' disabled>Veuillez choisir !!</option>";
-        foreach ($query as $q) {
-            $select =  $select . "	<option value ='" . $q['id'] . "'";
-            $select =  $select . " >" . $q['name'] . "</option>";
-        }
-        $select = $select . "</select> </div> </div> ";
+            foreach ($query as $q) {
+                $select =  $select . "	<option value ='" . $q['id'] . "'";
+                $select =  $select . " >" . $q['name'] . "</option>";
+            }
+            $select = $select . "</select> </div> </div> ";
         }
         // 
 
@@ -950,7 +982,7 @@ class FournisseursController extends AppController
 
 
 
-        $this->request->allowMethod(['post', 'delete']);
+        //   $this->request->allowMethod(['post', 'delete']);
         $this->loadModel('Fournisseurbanques');
         //          $lignedemande=$this->Fournisseurbanques->find('all', [])
         //                ->where(["Lignedemandeoffredeprixes.demandeoffredeprix_id ='" . $id . "'"]);

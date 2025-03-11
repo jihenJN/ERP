@@ -132,9 +132,9 @@ function int2str($a)
     }
 
 
-
+   
     .print-container {
-    
+        
         height: 1058px;
         width: 812px;
     }

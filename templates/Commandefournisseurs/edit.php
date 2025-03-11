@@ -81,6 +81,23 @@
                             ?>
                         </div>
                         <div class="col-xs-6">
+                            <?php echo $this->Form->control('dateliv', ['label' => 'Date Livraison', 'class' => 'form-control', 'type' => 'date']); ?>
+                        </div>
+                        <div class="col-xs-6">
+                            <label> Mode de livraison </label>
+                            <select name="modeliv" class="form-control">
+                                <option value="0" <?php if ($commande->modeliv == 0) { ?> selected <?php } ?>> Partiel
+                                <option value="1" <?php if ($commande->modeliv == 1) { ?> selected <?php } ?>> Total
+                            </select>
+                        </div>
+                        <div class="col-xs-6">
+                            <label> Type de livraison </label>
+                            <select name="typeliv" class="form-control">
+                                <option value="0" <?php if ($commande->typeliv == 0) { ?> selected <?php } ?>> Interne
+                                <option value="1" <?php if ($commande->typeliv == 1) { ?> selected <?php } ?>> Externe
+                            </select>
+                        </div>
+                        <div class="col-xs-12">
                             <?php echo $this->Form->control('observation', ['label' => 'Commentaire', 'class' => 'form-control', 'type' => 'textarea']); ?>
                         </div>
                     </div>
@@ -129,7 +146,7 @@
 
                                                         <td champ="tdcode">
                                                             <input table="ligner" index="<?php echo $i ?>" class="getdesignation articleidbl1" id="article_idcode<?php echo $i ?>" champ="article_idcode"
-                                                                type="text" list="codearticle_id<?php  echo $i ?>"
+                                                                type="text" list="codearticle_id<?php echo $i ?>"
                                                                 value="<?php echo htmlspecialchars($res->article->Code, ENT_QUOTES, 'UTF-8'); ?>">
                                                             <datalist table="ligner" index="<?= h($i) ?>"
                                                                 id="codearticle_id<?php echo $i; ?>"
@@ -147,7 +164,7 @@
                                                                 champ="article_iddes" type="text" list="desarticle_id<?php echo $i ?>"
                                                                 value="<?php echo htmlspecialchars($res->article->Dsignation, ENT_QUOTES, 'UTF-8'); ?>">
                                                             <datalist table="ligner" index="<?php echo $i ?>"
-                                                                id="desarticle_id<?php echo $i?>"
+                                                                id="desarticle_id<?php echo $i ?>"
                                                                 champ="desarticle_id">
                                                                 <?php foreach ($articles as $article) { ?>
                                                                     <option style="font-size: 10px;"
@@ -160,7 +177,7 @@
 
                                                         <td align="center">
                                                             <?php
-                                                            echo $this->Form->input('article_idd', ['name' => 'data[ligner][' . $i . '][article_idd]','value'=>$res->article_id, 'id' => 'article_idd' . $i, 'champ' => 'article_idd', 'table' => 'ligner', 'index' =>  $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control']);
+                                                            echo $this->Form->input('article_idd', ['name' => 'data[ligner][' . $i . '][article_idd]', 'value' => $res->article_id, 'id' => 'article_idd' . $i, 'champ' => 'article_idd', 'table' => 'ligner', 'index' =>  $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control']);
                                                             ?>
                                                             <?php echo $this->Form->input('sup0', ['name' => 'data[ligner][' . $i . '][sup0]', 'id' => 'sup0' . $i, 'champ' => 'sup0' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control ']);
 
@@ -239,7 +256,7 @@
                                                         </datalist>
                                                     </td>
                                                     <td align="center">
-                                                    <?php
+                                                        <?php
                                                         echo $this->Form->input('article_idd', ['name' => '', 'id' => '', 'champ' => 'article_idd', 'table' => 'ligner', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control']);
                                                         ?>
                                                         <?php echo $this->Form->input('sup0', ['name' => '', 'id' => '', 'champ' => 'sup0', 'table' => 'ligner', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control']); ?>
@@ -370,6 +387,17 @@
 <?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
 <?php $this->start('scriptBottom'); ?>
 <script>
+    $('#addcmd1').on('mouseover', function() {
+        index = $('#index0').val();
+        for (j = 0; j <= index; j++) {
+            article_idcode = $('#article_idcode' + j).val();
+            if (!article_idcode) {
+                alert('Entrer article SVP');
+            }
+        }
+    });
+</script>
+<script>
     $(document).ready(function() {
         calculeachat();
     })
@@ -405,7 +433,7 @@
     })
 </script>
 <script>
-      $(document).ready(function() {
+    $(document).ready(function() {
         $('.getcode').on('change', function() {
             index = $(this).attr('index'); //alert(index);
             selectedcodename = $(this).val(); //alert(selectedcodename);

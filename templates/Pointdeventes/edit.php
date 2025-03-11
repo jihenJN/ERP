@@ -28,7 +28,7 @@
       <!-- form start -->
       <?php echo $this->Form->create($pointdevente, ['role' => 'form', 'onkeypress' => "return event.keyCode!=13"]); ?>
 
-      <div class="box ">
+      <div class="box-body">
         <div class="row">
           <div class="col-xs-6">
             <?php
@@ -50,10 +50,10 @@
           <!-- /.box-header -->
           <!-- form start -->
           <!-- /.box-body -->
-          <button type="submit" class="pull-right btn btn-success btn-sm" id="pointv" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+          <button type="submit" class="pull-right btn btn-success btn-sm" id="pointv"  style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
           <?php echo $this->Form->end(); ?>
         </div>
-
+        <!-- id="pointv" -->
       </div>
       <!-- /.box -->
     </div>

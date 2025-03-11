@@ -29,12 +29,11 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
 
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,700" rel="stylesheet">
 
-    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake']) ?>*
-    <?= $this->Html->meta('csrfToken', $this->request->getAttribute('csrfToken')); ?>
+    <?= $this->Html->css(['normalize.min', 'milligram.min', 'cake']) ?>
+
     <?= $this->fetch('meta') ?>
     <?= $this->fetch('css') ?>
     <?= $this->fetch('script') ?>
-
 </head>
 <body>
     <nav class="top-nav">

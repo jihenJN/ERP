@@ -1,29 +1,9 @@
 <?php
 
 use Cake\Datasource\ConnectionManager;
-
 ?>
 
 
-<?php
-$connection = ConnectionManager::get('default');
-?>
-<?php $this->layout = 'AdminLTE.print'; ?>
-<?php
-
-use Cake\ORM\TableRegistry;
-
-?>
-
-
-<?php
-$connection = ConnectionManager::get('default');
-
-$societeTable = TableRegistry::getTableLocator()->get('Societes');
-
-$societe = $societeTable->find()->where('id=1')->first();
-
-?>
 <?php
 $connection = ConnectionManager::get('default');
 ?>
@@ -88,8 +68,9 @@ $connection = ConnectionManager::get('default');
     </div> -->
         </td>
         <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-            <?php echo $societe->adresseEntete; ?>
-            <br>
+             <?php echo $societes->nom; ?>&nbsp;&nbsp; au Capital : <?php echo $societes->capital; ?> <br>
+             <?php echo $societes->adresse; ?> - Tél : <?php echo $societes->tel; ?>  -Fax : <?php echo $societes->fax; ?><br>
+            TVA : <?php echo $societes->codetva; ?> - E-mail : <?php echo $societes->mail; ?><br>
         </td>
         <td align="center" style="width: 25%;border: none;">
             <div>
@@ -107,7 +88,7 @@ $connection = ConnectionManager::get('default');
 
 <div align="center">
     <h3>
-        <b> BON DE COMMANDES N° : </b><?= h($commande->numero) ?> <br>
+        <b> BON DE COMMANDE N° : </b><?= h($commande->numero) ?> <br>
     </h3>
 </div>
 
@@ -120,36 +101,36 @@ Date: <?php
 <br><br>
 <div style="display:flex;margin-bottom:3px;" align="center">
     <div style="display:flex;width: 1000%;">
-        <div style="width: 10000%;border:1px solid black;border-radius: 15px;background-color:#e6ebe3;" align="left">
+        <div style="font-size:14px!important;width: 10000%;border:1px solid black;border-radius: 15px;background-color:#e6ebe3;" align="left">
             <br>
             <?php if ($commande->client_id == 12) { ?>
-                <b style="margin-left:7% ;"> Nom: </b><?php
+                <b style="margin-left:3% ;"> Nom: </b><?php
                                                         if (isset($commande->numeroidentite)) {
                                                             echo h($commande->nomprenom);
                                                         } ?> <br>
-                <b style="margin-left:7% ;"> Identifiant:</b><?php
+                <b style="margin-left:3% ;"> Identifiant:</b><?php
                                                                 if (isset($commande->numeroidentite)) {
                                                                     echo h($commande->numeroidentite);
                                                                 } ?> <br>
-                <b style="margin-left:7% ;"> Adresse : </b> <?php
+                <b style="margin-left:3% ;"> Adresse : </b> <?php
                                                             if (isset($commande->adressediv)) {
                                                                 echo  h($commande->adressediv);
                                                             } ?><br>
 
 
             <?php } else { ?>
-                <b style="margin-left:7% ;"> Code: </b><?= h($commande->client->Code) ?> <br>
-                <b style="margin-left:7% ;"> Matricule fiscale :</b><?= h($commande->client->Matricule_Fiscale) ?> <br>
-                <b style="margin-left:7% ;"> Client : </b> <?php
+                <b style="margin-left:3% ;"> Code: </b><?= h($commande->client->Code) ?> <br>
+                <b style="margin-left:3% ;"> Matricule fiscale :</b><?= h($commande->client->Matricule_Fiscale) ?> <br>
+                <b style="margin-left:3% ;"> Client : </b> <?php
                                                             if (isset($commande->client)) {
                                                                 echo  h($commande->client->Raison_Sociale);
                                                             } ?><br>
-                <b style="margin-left:7% ;"> Adresse :</b>
+                <b style="margin-left:3% ;"> Adresse :</b>
 
                 <?= h($commande->client->Adresse) ?>
 
                 <br>
-                <b style="margin-left:7% ;"> Tel : </b><?php
+                <b style="margin-left:3% ;"> Tel : </b><?php
                                                         if (isset($commande->client)) {
                                                             echo  h($commande->client->Tel);
                                                         } ?>
@@ -157,10 +138,24 @@ Date: <?php
         </div>
     </div>
     <div style="display:flex ;width:1000%;margin-left:10%;">
-        <div style="width: 10000%;border:1px solid black;border-radius: 15px;background-color:#e6ebe3;" align="left">
+        <div style="font-size:14px!important;width: 10000%;border:1px solid black;border-radius: 15px;background-color:#e6ebe3;" align="left">
             <br>
-           
-            <b style="margin-left:7% ;"> Date : </b><?= $this->Time->format(
+            <?php $offre = $connection->execute('SELECT * FROM bonlivraisons where bonlivraisons.typebl=2 and bonlivraisons.commande_id=' . $commande->id . ';')->fetchAll('assoc');
+            $integ = [];
+            if ($offre[0]['id'] != null) {
+                $integ = $connection->execute('SELECT * FROM bonlivraisons where bonlivraisons.typebl=4 and bonlivraisons.id_offredeprix=' . $offre[0]['id'] . ';')->fetchAll('assoc');
+            }
+
+            ?>
+            <!-- <b style="margin-left:7% ;"> Intégration N° : </b><?php echo ($integ[0]['numero']) ?> -->
+         
+            <?php
+
+            ?>
+            <b style="margin-left:3% ;"> Facture Proforma N° : </b><?php echo ($offre[0]['numero']) ?>
+            <br>
+            <!-- <b style="margin-left:7% ;"> BON DE COMMANDES N° : </b><?= h($commande->numero) ?> <br> -->
+            <b style="margin-left:3% ;"> Date : </b><?= $this->Time->format(
                                                         $commande->date,
                                                         'dd/MM/y'
                                                     ); ?> <br>
@@ -168,8 +163,8 @@ Date: <?php
                                                                 if (isset($commande->commercial_id)) {
                                                                     echo  h($commande->commercial->name);
                                                                 } ?> <br> -->
-            <b style="margin-left:7% ;"> Observation :</b>
-            <p style="margin-left:7% ;margin-top: 1px;">
+            <b style="margin-left:3% ;"> Observation :</b>
+            <p style="margin-left:3% ;margin-top: 1px;">
                 <?= h($commande->observation) ?>
             </p>
 
@@ -180,7 +175,7 @@ Date: <?php
 <div>
     <div class="panel-body">
         <div>
-            <table style="border:1px solid black;width: 100%;border-radius: 15px 15px 15px 15px;border-collapse: collapse;" height="550px">
+            <table style="border:1px solid black;width: 100%;border-radius: 15px 15px 15px 15px;border-collapse: collapse;" height="450px">
                 <thead>
                     <tr>
                         <td align="center" style="width: 10%;border:1px solid black;background-color:#b5d6d3;"><strong>CODE</strong></td>
@@ -214,8 +209,8 @@ Date: <?php
                                 <?php
                                 $unite = [];
                                 // print_r($lignecommande->article);
-                                if (isset($lignecommande->article->unite_id) && ($lignecommande->article->unite_id != 0)) {
-                                    $unite = $connection->execute('SELECT * FROM unites where unites.id=' . $lignecommande->article->unite_id . ';')->fetchAll('assoc');
+                                if (isset($lignecommande->article->unitearticle_id) && ($lignecommande->article->unitearticle_id != 0)) {
+                                    $unite = $connection->execute('SELECT * FROM unitearticles where unitearticles.id=' . $lignecommande->article->unitearticle_id . ';')->fetchAll('assoc');
                                     //  debug( $unite);
                                     echo ($unite[0]['name']);
                                 } else echo ''; ?>
@@ -268,14 +263,14 @@ Date: <?php
             </div>
         </div>
     </div>
-    <br>
+    
 
 
 
 
 </div>
 </div>
-<br>
+
 
 <table class="pp">
     <tr>

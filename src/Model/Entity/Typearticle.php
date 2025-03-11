@@ -27,5 +27,8 @@ class Typearticle extends Entity
     protected $_accessible = [
         'name' => true,
         'articles' => true,
+        'rang' => true,
+        'id_parent' => true,
+
     ];
 }

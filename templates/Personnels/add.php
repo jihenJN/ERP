@@ -77,7 +77,7 @@
                             <label> Image </label>
                             <input type="file" name="image_file" class="form-control" id="ArticleImage">
                         </div>
-                        <button type="submit" class="pull-right btn btn-success btn-sm " id="" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+                        <button type="submit" class="pull-right btn btn-success btn-sm " id="testper" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
                         <?php echo $this->Form->end(); ?>
                     </div>
                     <!-- /testpersonnel.box-body -->
@@ -93,6 +93,30 @@
 <?php echo $this->Html->css('AdminLTE./bower_components/select2/dist/css/select2.min', ['block' => 'css']); ?>
 <?php $this->start('scriptBottom'); ?>
 <?php echo $this->Html->script('alert'); ?>
+<script>
+    $('#testper').on('mouseover', function() {
+        pointdevente = $('#pointdevente-id').val();
+        fonction = $('#fonction-id').val();
+        nom = $('#nom').val();
+        prenom = $('#prenom').val();
+        if (pointdevente === "") {
+            alert("Veuillez saisir la point de vente !");
+            return false;
+        }else
+        if (fonction === "") {
+            alert("Veuillez saisir la fonction !");
+            return false;
+        }else
+        if (nom === "") {
+            alert("Veuillez saisir le nom !");
+            return false;
+        }else
+        if (prenom === "") {
+            alert("Veuillez saisir le prenom !");
+            return false;
+        }
+    });
+</script>
 <script>
     $('.select2').select2()
 </script>

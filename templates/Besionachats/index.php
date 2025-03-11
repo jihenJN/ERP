@@ -17,7 +17,7 @@
 
 <section class="content-header">
     <h1>
-        <center> Besoin achat </center>
+        <center> Demande d'achat </center>
         <!--<div class="pull-right"><?php echo $this->Html->link(__('Ajouter'), ['action' => 'add'], ['class' => 'btn btn-success btn-xs']) ?></div>
   </h1>-->
     </h1><br>
@@ -47,7 +47,7 @@
 
                     <div class="col-xs-6">
                         <?php
-                        echo $this->Form->control('date', ['label' => 'Date ','type'=>'date', 'value' => $this->request->getQuery('date')]); ?>
+                        echo $this->Form->control('date', ['label' => 'Date ', 'type' => 'date', 'value' => $this->request->getQuery('date')]); ?>
                     </div>
                     <div class="col-xs-6">
                         <?php
@@ -76,17 +76,17 @@
                             <th width="10%" align="center">
                                 <?= __('Demandeur') ?>
                             </th>
-                            <th  width="10%" align="center">
-                                <?= __('Besoin achat') ?>
+                            <th width="10%" align="center">
+                                <?= __("Remarque") ?>
                             </th>
-                            <th  width="10%" align="center">
+                            <th width="10%" align="center">
                                 <?= __(' Demande offre de prix ') ?>
                             </th>
 
-                            <th  width="10%" align="center">
+                            <th width="10%" align="center">
                                 <?= __('Actions') ?>
                             </th>
-                            
+
                         </tr>
                         <!-- <tr>
                             <th width="10%" align="center">
@@ -144,11 +144,13 @@
                                 </td> -->
 
                                 <td class="actions text-left">
+                                    <?= $this->Html->link(__(''), ['action' => 'imprimeview', $besionachat->id], ['class' => 'btn btn-xs btn-primary  fa fa-print']) ?>
+
                                     <?= $this->Html->link(__(''), ['action' => 'view', $besionachat->id], ['class' => 'btn btn-xs btn-success  fa fa-search']) ?>
                                     <?php if ($besionachat->demandeoffredeprixe_id == 0) {
                                     ?>
-                                    <?= $this->Html->link(__(''), ['action' => 'edit', $besionachat->id], ['class' => 'btn btn-warning btn-xs   fa fa-edit']) ?>
-                                    <?= $this->Form->postLink(__(''), ['action' => 'delete', $besionachat->id], ['confirm' => __('Veuillez vraiment supprimer cette enregistrement ? # {0}?', $besionachat->id), 'class' => 'btn btn-danger btn-xs  fa fa-trash-o']) ?>
+                                        <?= $this->Html->link(__(''), ['action' => 'edit', $besionachat->id], ['class' => 'btn btn-warning btn-xs   fa fa-edit']) ?>
+                                        <?= $this->Form->postLink(__(''), ['action' => 'delete', $besionachat->id], ['confirm' => __('Veuillez vraiment supprimer cette enregistrement ? # {0}?', $besionachat->id), 'class' => 'btn btn-danger btn-xs  fa fa-trash-o']) ?>
                                     <?php } ?>
                                 </td>
                             </tr>
@@ -275,7 +277,7 @@
             });
             client = $('.tes').val();
 
-            window.open("/ERP/demandeoffredeprixes/adddemande/" + tab+"/1")
+            window.open("/ERP/demandeoffredeprixes/adddemande/" + tab + "/1")
         });
 
 
@@ -296,7 +298,7 @@
             });
             client = $('.tes2').val();
 
-            window.open("/ERP/demandeoffredeprixes/adddemande/" + tab+"/2")
+            window.open("/ERP/demandeoffredeprixes/adddemande/" + tab + "/2")
         });
 
     });

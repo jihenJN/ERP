@@ -15,7 +15,7 @@
 <section class="content-header">
     <section class="content-header">
         <h1>
-            Ajout Besoin achat
+            Ajout Demande d'achat
             <small>
                 <?php echo __(''); ?>
             </small>
@@ -50,18 +50,18 @@
                         <?php echo $this->Form->control('personnel_id', ['label' => 'Demandeur', 'empty' => 'Veuillez choisir !!', 'options' => $personnels, 'class' => 'form-control select2 ', 'id' => 'personnel_id', 'required' => 'off']); ?>
                     </div>
                     <div class="col-xs-6">
-                        <?php echo $this->Form->control('echeance', ['label' => 'Echéance', 'empty' => true, 'id' => 'date', 'class' => "form-control"]);
+                        <?php echo $this->Form->control('echeance', ['label' => 'Date livraison souhaité', 'empty' => true, 'id' => 'date', 'class' => "form-control"]);
                         ?>
                     </div>
-                    <div class="col-xs-6" hidden>
-                        <?php echo $this->Form->control('service_id', ['label' => 'Service', 'empty' => 'Veuillez choisir !!', 'options' => $services, 'class' => 'form-control select2 ', 'id' => 'service_id', 'required' => 'off']); ?>
+                    <div class="col-xs-6" >
+                        <?php echo $this->Form->control('service_id', ['label' => 'Destiné pour', 'empty' => 'Veuillez choisir !!', 'options' => $services, 'class' => 'form-control select2 ', 'id' => 'service_id', 'required' => 'off']); ?>
                     </div>
                     <div class="col-xs-6" hidden>
                         <?php echo $this->Form->control('machine_id', ['label' => 'Machine', 'empty' => 'Veuillez choisir !!', 'options' => $machines, 'class' => 'form-control select2 ', 'id' => 'machine_id', 'required' => 'off']); ?>
                     </div>
                     <div class="col-xs-6">
                         <?php
-                        echo $this->Form->control('remarque', ['label' => 'Besoin d`achat']);
+                        echo $this->Form->control('remarque', ['label' => 'Remarque']);
                         ?>
                     </div>
                 </div>

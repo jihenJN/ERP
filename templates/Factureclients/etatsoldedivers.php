@@ -106,7 +106,8 @@ use Cake\I18n\FrozenTime;
                             foreach ($data as $client_data) :
 
                                 $soldef = ( $client_data['Debit']) -  $client_data['Credit'];
-                                $generel +=  $soldef; ?>
+                                $generel +=  $soldef;
+                                if ($soldef != 0) :  ?>
                                   <tr style="font-size: 20px;">
                                     <td><?= h($client_data['nomprenom']) ?></td>
                                     <td><?= h($client_data['numeroidentite']) ?></td>
@@ -116,7 +117,8 @@ use Cake\I18n\FrozenTime;
                                     <td><strong><?= h(str_replace(',', ' - ', $client_data['blnumeros'])) ?></strong></td>
                                     <td><?php echo sprintf("%01.3f", abs($soldef)); ?></td>
                                 </tr>
-                            <?php endforeach; ?>
+                            <?php endif;
+                        endforeach; ?>
                         </tbody>
                         <tr style="font-size: 20px;">
                             <td align="center" colspan="4" style="background-color: #72a0c1 ;"><strong>Total</strong></td>

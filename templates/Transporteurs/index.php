@@ -51,7 +51,7 @@ if ($add == 1) {
 
 
                 <div class="col-xs-6">
-                    <?php echo $this->Form->control('name', ['label' => 'Nom', 'value' => $this->request->getQuery('Name'), 'name', 'required' => 'off']); ?>
+                    <?php echo $this->Form->control('name', ['label' => 'Nom', 'value' => $this->request->getQuery('name'), 'name', 'required' => 'off']); ?>
                 </div>
 
                 <div class="col-xs-6">
@@ -121,7 +121,7 @@ if ($add == 1) {
                                                 }
                                                 ?>
                                                 <?php if ($delete == 1) { 
-                                                          echo $this->Form->postLink("<button class='deleteConfirm btn btn-xs btn-danger deletecon'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $transporteur->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $transporteur->id));
+                                                          //  echo $this->Form->postLink("<button class='deleteConfirm btn btn-xs btn-danger deletecon'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $transporteur->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $transporteur->id));
 
 
                                                } ?>
@@ -150,6 +150,47 @@ if ($add == 1) {
 
 
 
+
+            <script>
+                $(function () {
+                    $('.verifier').on('click', function () {
+                        // alert('hello');
+                        ind = $(this).attr('index');
+                        //  alert(ind);
+                        id = $('#id' + ind).val();
+                        //  alert(id);
+                        //  alert(id)
+                        $.ajax({
+                            method: "GET",
+                            url: "<?= $this->Url->build(['controller' => 'Soustransporteurille1s', 'action' => 'verif']) ?>",
+                            dataType: "json",
+                            data: {
+                                idfam: id,
+                            },
+                            headers: {
+                                'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+                            },
+                            success: function (data) {
+                                //   $('#pays').html(data.pays);
+                                //  alert(data.pays);
+                                if (data.familles != 0)
+                                {
+                                    alert('Vous ne pouvez pas supprimer cet enregistrement');
+                                } else {
+                                    if (confirm('Voulez-vous vraiment supprimer cet enregistrement?'))
+                                    {
+                                        //   alert('ok supp');
+                                        document.location = wr+"sousfamille1s/delete/" + id;
+                                    }
+                                }
+                            }
+                        })
+                    });
+                });
+
+
+
+            </script>
             <script>
                 function openWindow(h, w, url) {
                     leftOffset = (screen.width / 2) - w / 2;

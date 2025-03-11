@@ -35,8 +35,8 @@
                     <div class="row">
 
                         <div class="col-xs-6">
-                            <?php echo $this->Form->control('date', ['label' => 'Date', 'empty' => true, 'id' => 'date', 'class' => "form-control pull-right ajoutlignearticle  ajoutlignefournisseur"]);
-                            ?>
+                            <?php echo $this->Form->control('date', ['label' => 'Date', 'value' => date('Y-m-d'), 'empty' => true, 'id' => 'date', 'class' => "form-control pull-right"]);
+                           // ajoutlignearticle  ajoutlignefournisseur ?>
                         </div>
                         <div class="col-xs-6">
                             <?php echo $this->Form->control('numero', ['value' => $b, 'label' => 'Numero', 'required' => 'off', 'id' => 'datecommande', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control ', 'type' => '', 'readonly' => 'readonly']); ?>
@@ -83,7 +83,7 @@
                                                         <!-- <div id="" champ='ar1' index="" class="col-md-12"> -->
 
                                                             <!-- <div style="display: flex !important"> -->
-                                                                <?php echo $this->Form->control('a', array('label' => '', 'options' => $articles, 'index' => '', 'name' => '', 'id' => 'article_id', 'champ' => 'article_id', 'table' => 'lignea', 'empty' => 'Veuillez choisir !!', 'class' => 'form-control')); ?>
+                                                                <?php echo $this->Form->control('a', array('label' => '', 'options' => $articles, 'index' => '', 'name' => '', 'id' => 'article_id', 'champ' => 'article_id', 'table' => 'lignea', 'empty' => 'Veuillez choisir !!', 'class' => 'form-control ')); ?>
                                                                
                                                                     <!-- <span title="ajout article"> <a href="javascript:;" class="btn btn-primary b1" champ="b1" id="" index=""><i class='fa fa fa-plus'></i></a></span> -->
                                                                 

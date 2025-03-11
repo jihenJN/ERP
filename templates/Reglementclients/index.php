@@ -19,7 +19,27 @@ use Cake\Datasource\ConnectionManager;
         color: white;
     }
 </style>
-<?php if ($type == 1) { ?>
+<?php if ($type == 1) {
+    $add = "";
+    $edit = "";
+    $delete = "";
+    $view = "";
+    $session = $this->request->getSession();
+    $abrv = $session->read('abrvv');
+    $lien = $session->read('lien_vente' . $abrv);
+    //debug($lien);die;
+    foreach ($lien as $k => $liens) {
+        if (@$liens['lien'] == 'reglementclientsbl') {
+            $add = $liens['ajout'];
+            $edit = $liens['modif'];
+            $delete = $liens['supp'];
+            $imp = $liens['imprimer'];
+        }
+        //debug($liens);die;
+    }
+
+
+?>
     <section class="content-header">
         <header>
             <h1 style="text-align:center;">Réglements BL</h1>
@@ -28,7 +48,27 @@ use Cake\Datasource\ConnectionManager;
 <?php }  ?>
 
 
-<?php if ($type == 2) { ?>
+<?php if ($type == 2) {
+
+    $add = "";
+    $edit = "";
+    $delete = "";
+    $view = "";
+    $session = $this->request->getSession();
+    $abrv = $session->read('abrvv');
+    $lien = $session->read('lien_vente' . $abrv);
+    //debug($lien);die;
+    foreach ($lien as $k => $liens) {
+        if (@$liens['lien'] == 'reglementclientsfac') {
+            $add = $liens['ajout'];
+            $edit = $liens['modif'];
+            $delete = $liens['supp'];
+            $imp = $liens['imprimer'];
+        }
+        //debug($liens);die;
+    }
+
+?>
     <section class="content-header">
         <header>
             <h1 style="text-align:center;">Réglements Facture </h1>
@@ -40,14 +80,20 @@ use Cake\Datasource\ConnectionManager;
 
 <?php
 
-if ($type == 2) { ?>
+if ($type == 2) {
+
+
+?>
     <!-- <div class="pull-left" style="margin-left:25px;margin-top: 20px;display: inline-block">
         <?php echo $this->Html->link(__('Ajouter'), ['action' => 'add/' . $type . '/0/0'], ['class' => 'btn btn-success btn-sm']) ?>
     </div> -->
 
-    <div class="pull-left" style="margin-left:25px;margin-top: 20px">
-        <?php echo $this->Html->link(__('Ajouter'), ['action' => 'add/' . $type], ['class' => 'btn btn-success btn-sm']) ?>
-    </div>
+    <?php if ($add == 1) { ?>
+        <div class="pull-left" style="margin-left:25px;margin-top: 20px">
+            <?php echo $this->Html->link(__('Ajouter'), ['action' => 'add/' . $type], ['class' => 'btn btn-success btn-sm']) ?>
+        </div>
+    <?php } ?>
+
     <!-- <div class="" style="margin-left:25px;margin-top: 20px;display: inline-block">
         <?php echo $this->Html->link(__('Ajout Libre'), ['action' => 'addlibre/' . $type . '/0/0'], ['class' => 'btn btn-success btn-sm']) ?>
     </div> -->
@@ -260,17 +306,20 @@ if ($type == 2) { ?>
                                                         }
                                                     }*/
 
+                                                    if ($edit == 1) {
 
-
-                                                    echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit/' . $type, $facture->id), array('escape' => false));
-                                                    ?>
+                                                        echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit/' . $type, $facture->id), array('escape' => false));
+                                                    }  ?>
                                                 </div>
                                                 <div style="margin-right:2px ;">
                                                     <?php echo $this->Html->Link("<button class='btn btn-xs btn-purple'><i class='fa fa-print'></i></button>", array('action' => 'imprimeview/' . $type, $facture->id), array('escape' => false)); ?>
                                                 </div>
 
                                                 <div>
-                                                    <?php echo $this->Form->postLink("<button class='deleteConfirm btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete/' . $type, $facture->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $facture->id)); ?>
+                                                    <?php
+                                                    if ($delete == 1) {
+                                                        echo $this->Form->postLink("<button class='deleteConfirm btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete/' . $type, $facture->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $facture->id));
+                                                    } ?>
                                                 </div>
                                             </div>
 
@@ -304,10 +353,12 @@ if ($type == 2) { ?>
 
 
     <!----------------------------------------------------------- reglement Bon livraison where champ BL = 1 ---------------------------------------------------------------->
-
+<?php  if ($add ==1 ) { ?>
     <div class="pull-left" style="margin-left:25px;margin-top: 20px">
         <?php echo $this->Html->link(__('Ajouter'), ['action' => 'add/' . $type], ['class' => 'btn btn-success btn-sm']) ?>
     </div>
+    <?php } ?>
+
 
     <br> <br><br>
 
@@ -463,7 +514,7 @@ if ($type == 2) { ?>
                                         <td><?php echo  $this->Time->format($bonlivraison->date, 'dd/MM/y') ?></td>
 
                                         <td><?= h($bonlivraison->numeroconca) ?></td>
-                                        <td><?php  if ($bonlivraison->client_id == 12) {
+                                        <td><?php if ($bonlivraison->client_id == 12) {
                                                 echo $bonlivraison->nomprenom;
                                             } else {
                                                 echo $bonlivraison->client->Raison_Sociale;
@@ -502,14 +553,18 @@ if ($type == 2) { ?>
 
 
                                                 <div>
-                                                    <?php echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit/' . $type, $bonlivraison->id), array('escape' => false)); ?>
+                                                    <?php if ($edit == 1) {
+                                                        echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit/' . $type, $bonlivraison->id), array('escape' => false));
+                                                    } ?>
                                                 </div>
                                                 <div style="margin-right:2px ;">
                                                     <?php echo $this->Html->Link("<button class='btn btn-xs btn-purple'><i class='fa fa-print'></i></button>", array('action' => 'imprimeview/' . $type, $bonlivraison->id), array('escape' => false)); ?>
                                                 </div>
 
                                                 <div>
-                                                    <?php echo $this->Form->postLink("<button class='deleteConfirm btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete/' . $type, $bonlivraison->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $bonlivraison->id)); ?>
+                                                    <?php if ($delete == 1) {
+                                                        echo $this->Form->postLink("<button class='deleteConfirm btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete/' . $type, $bonlivraison->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $bonlivraison->id));
+                                                    } ?>
                                                 </div>
                                             </div>
 

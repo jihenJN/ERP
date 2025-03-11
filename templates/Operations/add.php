@@ -54,7 +54,7 @@
                             ?>
                         </div> 
                     </div>
-                    <button type="submit" class="pull-right btn btn-success" id="ctoperation" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+                    <button type="submit" class="pull-right btn btn-success testchamp" id="ctoperation" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
                     <?php echo $this->Form->end(); ?>
                 </div>
 
@@ -68,7 +68,36 @@
     <!-- /.row -->
 </section>
 <?php //echo $this->Html->script('alert'); ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.testchamp').on('click', function() {
 
+            num = $('#name').val();
+            datedebut = $('#datedebut').val();
+            datevaleur = $('#datevaleur').val();
+            typeoperation_id = $('#typeoperation_id').val();
+
+            if (num == '') {
+                alert("Ajouter le nom  SVP");
+                return false;
+            }
+            if (datedebut == '') {
+                alert("Ajouter la date debut  SVP");
+                return false;
+            }
+            if (datevaleur == '') {
+                alert("Ajouter la date valeur  SVP");
+                return false;
+            }
+            if (typeoperation_id == '') {
+                alert("Choisir le type d'opération  SVP");
+                return false;
+            }
+         
+
+        });
+    });
+</script>
 <script>
   $(document).ready(function() {
 

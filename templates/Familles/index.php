@@ -23,7 +23,7 @@ $lien = $session->read('lien_articles' . $abrv);
 // debug($lien);die;
 foreach ($lien as $k => $liens) {
     if (@$liens['lien'] == 'famille') {
-        
+
         $add = $liens['ajout'];
         $edit = $liens['modif'];
         $delete = $liens['supp'];
@@ -32,7 +32,7 @@ foreach ($lien as $k => $liens) {
 }
 
 if ($add == 1) {
-    ?>
+?>
     <div class="pull-left" style="margin-left:25px;margin-top: 20px">
         <?php echo $this->Html->link(__('Ajouter'), ['action' => 'add'], ['class' => 'btn btn-success btn-sm']) ?>
     </div>
@@ -57,9 +57,7 @@ if ($add == 1) {
                 <div class="col-xs-6">
                     <?php echo $this->Form->control('name', ['label' => 'Nom', 'value' => $this->request->getQuery('name'), 'name', 'required' => 'off']); ?>
                 </div>
-                <div class="col-xs-6">
-                    <?php echo $this->Form->control('marque_id', ['label' => 'Marque','options'=>$marques, 'empty' => 'Veuillez choisir !!', 'value' => $this->request->getQuery('marque_id'),'class'=>'form-control select2', 'name', 'required' => 'off']); ?>
-                </div>
+
                 <div class="pull-right" style="margin-right:50%;margin-top: 20px;">
                     <button type="submit" class="btn btn-primary btn-sm">Afficher</button>
                     <?php echo $this->Html->link(__('Afficher Tous'), ['action' => 'index'], ['class' => 'btn btn-primary btn-sm']) ?>
@@ -79,23 +77,24 @@ if ($add == 1) {
             <table id="example2" class="table table-bordered table-striped">
                 <thead>
                     <tr>
+                        <th width="20%" align="center" class="actions text-center"><?= h('Code') ?></th>
                         <th width="50%" align="center" class="actions text-center"><?= h('Nom') ?></th>
-                        <th width="40%" align="center" class="actions text-center"><?= h('Marque') ?></th>
-
                         <th width="10%" align="center" class="actions text-center"><?= h('Actions') ?></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($familles as $i => $famille): ?>
+                    <?php foreach ($familles as $i => $famille):
+
+                    ?>
                         <tr>
-                            <td hidden >
+                            <td hidden>
 
 
                                 <?php echo $this->Form->control('id', ['index' => $i, 'id' => 'id' . $i, 'value' => $famille->id, 'label' => '', 'champ' => 'id', 'class' => 'form-control']); ?>
 
                             </td>
-                            <td width="35%" align="center"><?= h($famille->Nom) ?></td>
-                            <td width="35%" align="center"><?= h($famille->marque->name) ?></td>
+                            <td  align="center"><?= h($famille->code) ?></td>
+                            <td align="center"><?= h($famille->Nom) ?></td>
 
                             <!--
                             <?php if ($famille->vente == 1) { ?>
@@ -114,8 +113,9 @@ if ($add == 1) {
                                 }
                                 ?>
                                 <?php if ($delete == 1) {
-                              echo $this->Form->postLink("<button class='deleteConfirm btn btn-xs btn-danger '><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $famille->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $famille->id)); ?>
-                                    <!-- <button index='<?php echo $i ?>' class='verifier btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button> -->
+                                    // echo $this->Form->postLink("<button class='deleteConfirm btn btn-xs btn-danger '><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $famille->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $famille->id)); 
+                                ?>
+                                    <button index='<?php echo $i ?>' class='verifiercmd btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>
 
 
                                 <?php } ?>
@@ -133,7 +133,7 @@ if ($add == 1) {
 <?php echo $this->Html->css('AdminLTE./bower_components/datatables.net-bs/css/dataTables.bootstrap.min', ['block' => 'css']); ?>
 <?php $this->start('scriptBottom'); ?>
 <script>
-    $(function () {
+    $(function() {
         $('#example1').DataTable()
         $('#example2').DataTable({
             'paging': true,
@@ -150,12 +150,12 @@ if ($add == 1) {
 <script>
     function flvFPW1() {
         var v1 = arguments,
-                v2 = v1[2].split(","),
-                v3 = (v1.length > 3) ? v1[3] : false,
-                v4 = (v1.length > 4) ? parseInt(v1[4]) : 0,
-                v5 = (v1.length > 5) ? parseInt(v1[5]) : 0,
-                v6, v7 = 0,
-                v8, v9, v10, v11, v12, v13, v14, v15, v16;
+            v2 = v1[2].split(","),
+            v3 = (v1.length > 3) ? v1[3] : false,
+            v4 = (v1.length > 4) ? parseInt(v1[4]) : 0,
+            v5 = (v1.length > 5) ? parseInt(v1[5]) : 0,
+            v6, v7 = 0,
+            v8, v9, v10, v11, v12, v13, v14, v15, v16;
         v11 = new Array("width,left," + v4, "height,top," + v5);
         for (i = 0; i < v11.length; i++) {
             v12 = v11[i].split(",");
@@ -195,43 +195,40 @@ if ($add == 1) {
     }
 
 
-
-
-
-    $(function () {
-        $('.verifier').on('click', function () {
+    $(function() {
+        $('.verifiercmd').on('click', function() {
             // alert('hello');
             ind = $(this).attr('index');
             //  alert(ind);
-            id = $('#id' + ind).val();
+            familleId = $('#id' + ind).val();
             //  alert(id);
             //  alert(id)
             $.ajax({
                 method: "GET",
-                url: "<?= $this->Url->build(['controller' => 'Familles', 'action' => 'verif']) ?>",
+                url: "<?= $this->Url->build(['controller' => 'Familles', 'action' => 'getfamillecmd']) ?>",
                 dataType: "json",
                 data: {
-                    idfam: id,
+                    familleid: familleId
                 },
                 headers: {
                     'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
                 },
-                success: function (data) {
+                success: function(data) {
                     //   $('#pays').html(data.pays);
                     //  alert(data.pays);
-                    if (data.familles != 0)
-                    {
-                        alert('Vous ne pouvez pas supprimer cet enregistrement');
+
+
+                    if (data.familles != 0) {
+                        alert("Existe dans un autre document");
+
                     } else {
-                        if (confirm('Voulez-vous vraiment supprimer cet enregistrement?'))
-                        {
-                            //   alert('ok supp');
-                            document.location = "https://codifaerp.isofterp.com/demo/familles/delete/" + id;
+                        if (confirm('Voulez vous vraiment supprimer cet enregistrement')) {
+                            document.location = wr + "familles/delete/" + familleId;
                         }
                     }
                 }
             })
         });
-    });
 
+    });
 </script>

@@ -105,15 +105,7 @@ use Cake\I18n\FrozenTime;
 
                 <br>
                 <div class="form-group">
-                    <!-- <div class="col-lg-9 col-lg-offset-3"> -->
-                        <div class="text-center">
-                            <a onClick="openWindow(1000, 1000, wr+'bonlivraisons/impchiffreaffaire')">
-                                <button class="btn btn-primary">Imprimer</button>
-                            </a>
-                            <?php echo $this->Html->link(__('Actualiser'), ['action' => '/etatchiffreaffaire'], ['class' => 'btn btn-primary ']) ?>
-
-                        </div>
-                    <!-- </div> -->
+              
 
                 </div>
             </div>

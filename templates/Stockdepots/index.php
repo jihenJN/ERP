@@ -4,7 +4,10 @@ use Cake\Datasource\ConnectionManager;
 use Cake\I18n\FrozenTime;
 
 
-echo $this->Html->css('select2'); ?>
+echo $this->Html->css('select2');
+
+$wr =  $this->Url->build('/', ['fullBase' => true]);
+?>
 <section class="content-header">
     <header>
         <h1 style="text-align:center;"> Stock depots</h1>
@@ -20,9 +23,9 @@ echo $this->Html->css('select2'); ?>
                 ?>
 
                 <div class="row">
-                
+
                     <div class="col-xs-6">
-                    <?php echo $this->Form->control('depot_id', ['label' => 'Depot ', 'options' => $depots, 'id' => 'depot_id', 'name' => 'depot_id', 'empty' => 'Veuillez choisir !!', 'class' => 'form-control select2 ', 'value' => 6]); ?>
+                        <?php echo $this->Form->control('depot_id', ['label' => 'Depot ', 'options' => $depots, 'id' => 'depot_id', 'name' => 'depot_id', 'empty' => 'Veuillez choisir !!', 'class' => 'form-control select2 ', 'value' => 6]); ?>
 
                         <!-- <label>Dépots</label>
                         <select class="form-control select2" name="depot_id" id="depot_id" value='<?php $this->request->getQuery('depot_id') ?>'>
@@ -58,12 +61,12 @@ echo $this->Html->css('select2'); ?>
                         </select>
                     </div>
 
-                  
+
 
                 </div>
                 <br>
                 <div class="row">
-             
+
 
                 </div>
 
@@ -71,9 +74,9 @@ echo $this->Html->css('select2'); ?>
                 <div class="form-group">
                     <div class="col-lg-9 col-lg-offset-3">
                         <button type="submit" class="btn btn-primary alertdep" id="">Afficher</button>
-                        <?php 
+                        <?php
                         //debug($stockdepots);
-                       if ( $stockdepots != null) {
+                        if ($stockdepots != null) {
                         ?>
                             <a onclick="openWindow(1000, 1000, wr+'Stockdepots/imp?article_id=<?php echo @$articleid; ?>&depot_id=<?php echo @$depotid; ?>&famille_id=<?php echo @$famille_id; ?>')"><button class="btn btn-primary ">Imprimer</button></a>
                         <?php }  ?>
@@ -109,48 +112,67 @@ echo $this->Html->css('select2'); ?>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php 
-                          
+                            <?php
+
                             $total = 0;
                             $dernierprix = 0;
-                            
+
                             foreach ($stockdepots as $stockdepot) :
-                            
+
                                 $articleid = $stockdepot['id'];
 
 
                                 date_default_timezone_set('Africa/Tunis');
-                                $date1 =    date("Y").'-01-01'. date(" 00:00:00");
+                                $date1 =    date("Y") . '-01-01' . date(" 00:00:00");
                                 $time = new FrozenTime('now', 'Africa/Tunis');
                                 $date2 = date("Y-m-d H:i:s");
-                              ///  debug($date2);
+                                ///  debug($date2);
                                 $connection = ConnectionManager::get('default');
                                 $month = (int)date('m');
                                 $inv = $connection->execute("select stockbassem(" . $articleid . ",'" . $date2 . "','0'," . $depotid . " ) as v")->fetchAll('assoc');
-                            
+
                                 $qtestock = $inv[0]['v'];
                                 ///debug($qtestock);
                             ?>
                                 <tr>
 
-                                <?php  if ($qtestock != 0) : ?>
+                                    <?php if ($qtestock != 0) : ?>
 
-                                    <td align="center">
-                                        <a href='/ERP/Articles/indexspec?date1=<?php echo @$date1; ?>&date2=<?php echo @$date2; ?>&depot_id=<?php echo @$depotid; ?>&article_id=<?php echo $stockdepot['id'] ?>' target="_blank">
-                                            <?php echo  $stockdepot['Code'] ?></a>
+                                        <td align="center">
+                                            <a href="<?= $this->Url->build([
+                                                            'controller' => 'Articles',
+                                                            'action' => 'indexspec',
+                                                            '?' => [
+                                                                'date1' => @$date1,
+                                                                'date2' => @$date2,
+                                                                'depot_id' => @$depotid,
+                                                                'article_id' => $stockdepot['id']
+                                                            ]
+                                                        ], ['fullBase' => true]); ?>" target="_blank">
+                                                <?= h($stockdepot['Code']) ?>
+                                            </a>
+                                        </td>
+                                        <td align="center">
+                                            <a href="<?= $this->Url->build([
+                                                            'controller' => 'Articles',
+                                                            'action' => 'indexspec',
+                                                            '?' => [
+                                                                'date1' => @$date1,
+                                                                'date2' => @$date2,
+                                                                'depot_id' => @$depotid,
+                                                                'article_id' => $stockdepot['id']
+                                                            ]
+                                                        ], ['fullBase' => true]); ?>" target="_blank">
+                                                <?= h($stockdepot['Dsignation']) ?>
+                                            </a>
+                                        </td>
 
-                                    </td>
-                                    <td align="center">
-                                        <a href='/ERP/Articles/indexspec?date1=<?php echo @$date1; ?>&date2=<?php echo @$date2; ?>&depot_id=<?php echo @$depotid; ?>&article_id=<?php echo $stockdepot['id'] ?>' target="_blank">
-                                            <?php echo  $stockdepot['Dsignation'] ?></a>
 
-                                    </td>
-
-                                    <td align="center"><?php
-                                                        echo $qtestock
-                                                        ?>
-                                    </td>
-                                    <?php endif ; ?>
+                                        <td align="center"><?php
+                                                            echo $qtestock
+                                                            ?>
+                                        </td>
+                                    <?php endif; ?>
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
@@ -287,7 +309,7 @@ echo $this->Html->css('select2'); ?>
 
                             $('.alertdep').on('mouseover', function() {
 
-                             ///   alert('hechem')
+                                ///   alert('hechem')
                                 depot = $('#depot_id').val();
                                 article = $('#article_id').val();
                                 ///  client = $('#client_id').val();

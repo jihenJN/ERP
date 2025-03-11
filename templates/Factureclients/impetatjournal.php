@@ -1,22 +1,9 @@
 <?php $this->layout = 'AdminLTE.print'; ?>
 <?php
 
-
-use Cake\ORM\TableRegistry;
-
-?>
-
-
-<?php
-
-$societeTable = TableRegistry::getTableLocator()->get('Societes');
-
-$societe = $societeTable->find()->where('id=1')->first();
-
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\Datasource\ConnectionManager;
-
 ?>
 <?php $connection = ConnectionManager::get('default'); ?>
 
@@ -69,9 +56,8 @@ use Cake\Datasource\ConnectionManager;
             </div> -->
         </td>
         <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-            <?php echo $societe->adresseEntete; ?>
-            <br>
-        </td>
+                    <?php echo $societefirst->adresseEntete; ?><br>
+                </td>
         <td align="center" style="width: 25%;border: none;">
             <div>
                 <?php
@@ -87,7 +73,7 @@ use Cake\Datasource\ConnectionManager;
 <br>
 
 <h3>
-    <div style="margin-left: 5px ;color: #a52a2a; "> <?php echo $societe->nom ?></div>
+    <div style="margin-left: 5px ;color: #a52a2a; ">  <?php echo $societefirst->nom; ?></div>
 
 
     <div align="center" style="color: #c71585 ; ">

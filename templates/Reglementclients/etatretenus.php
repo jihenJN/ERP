@@ -39,7 +39,13 @@ $connection = ConnectionManager::get('default');
                     <div class="col-xs-6">
                         <?php
                         date_default_timezone_set('Africa/Tunis');
-                         $datedebut = date('Y-01-01');
+                        if($historiquede){
+                            $datedebut = $historiquede;
+
+                        }else{
+                            $datedebut = date('Y-01-01');
+
+                        }
                         echo $this->Form->control('historiquede', [
                             'label' => 'Date début',
                             'value' =>$datedebut, //$this->request->getQuery('historiquede'),
@@ -55,7 +61,13 @@ $connection = ConnectionManager::get('default');
                     <div class="col-xs-6">
                         
                         <?php
-                         $datefin = date('Y-12-t');
+                        if($au){
+                            $datefin = $au;
+
+                        }else{
+                            $datefin = date('Y-12-t');
+
+                        }
                         echo $this->Form->control('au', [
                             'label' => 'Date fin',
                             'value' => $datefin, // $this->request->getQuery('au'),

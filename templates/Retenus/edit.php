@@ -106,7 +106,7 @@
                                                 </td>
                                                 <td align="center" table="ligner">
                                                     <?php
-                                                    echo $this->Form->input('totalttc', array('class' => ' form-control montantbrut', 'type' => 'number', 'value' => '0', 'label' => false, 'index' => '', 'champ' => 'totalttc', 'table' => 'ligner', 'name' => '', 'empty' => 'Veuillez choisir !!', 'id' => ''));
+                                                    echo $this->Form->input('totalttc', array('class' => ' form-control montantbrut',  'value' => '0', 'label' => false, 'index' => '', 'champ' => 'totalttc', 'table' => 'ligner', 'name' => '', 'empty' => 'Veuillez choisir !!', 'id' => ''));
                                                     ?>
                                                      <?php
                                                         echo $this->Form->input('timbre', array('class' => ' form-control montantbrut', 'step' => 'any', 'type' => 'hidden', 'value' => '0', 'label' => '', 'index' => '', 'champ' => 'timbre', 'table' => 'ligner', 'name' => '', 'empty' => 'Veuillez choisir !!', 'id' => ''));
@@ -296,7 +296,7 @@
                     $('#timbre_id' + index).val(data.timbre_id);
                     $('#totalttc' + index).val(parseFloat(data.ttc).toFixed(3));
                     //   $('#qteStock' + index).focus();
-
+                    calmontant();
                 }
 
             })

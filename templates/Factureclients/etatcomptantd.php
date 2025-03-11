@@ -80,7 +80,7 @@ $connection = ConnectionManager::get('default');
             <div style="text-align:center">
                 <button type="submit" style="background-color:#808080;border:#808080;" class="btn btn-primary btn-sm getcaisseName1">Afficher</button>
                 <?php echo $this->Html->link('<i class="fa fa-refresh"></i> Actualiser', ['action' => 'etatcomptant'], ['class' => 'btn btn-primary btn-sm', 'style' => 'background-color:#808080;border:#808080;', 'escape' => false]) ?>
-                <a onclick="openWindow(1000, 1000, wr+'Factureclients/impetatcomptant?&historiquede=<?php echo @$this->request->getQuery('historiquede'); ?>&au=<?php echo @$this->request->getQuery('au'); ?>&client_id=<?php echo @$this->request->getQuery('client_id'); ?>')"><button style="background-color:#808080; border:1px solid #808080; height:43%; color:white; padding:9px 19px;" class="btn btn-primary fa fa-print getcaisseName1">Imprimer</button></a>
+                <a onclick="openWindow(1000, 1000,  wr+'Factureclients/impetatcomptant?&historiquede=<?php echo @$this->request->getQuery('historiquede'); ?>&au=<?php echo @$this->request->getQuery('au'); ?>&client_id=<?php echo @$this->request->getQuery('client_id'); ?>')"><button style="background-color:#808080; border:1px solid #808080; height:43%; color:white; padding:9px 19px;" class="btn btn-primary fa fa-print getcaisseName1">Imprimer</button></a>
             </div>
         </div>
     </div>

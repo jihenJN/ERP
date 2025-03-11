@@ -1,22 +1,9 @@
 <?php $this->layout = 'AdminLTE.print'; ?>
 <?php
 
-
-use Cake\ORM\TableRegistry;
-
-?>
-
-
-<?php
-
-$societeTable = TableRegistry::getTableLocator()->get('Societes');
-
-$societe = $societeTable->find()->where('id=1')->first();
-
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\Datasource\ConnectionManager;
-
 ?>
 <?php $connection = ConnectionManager::get('default'); ?>
 
@@ -71,9 +58,8 @@ use Cake\Datasource\ConnectionManager;
             </div> -->
         </td>
         <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-            <?php echo $societe->adresseEntete; ?>
-            <br>
-        </td>
+                    <?php echo $societefirst->adresseEntete; ?><br>
+                </td>
         <td align="center" style="width: 25%;border: none;">
             <div>
                 <?php
@@ -138,7 +124,7 @@ use Cake\Datasource\ConnectionManager;
 
 
                         <tbody>
-                            <?php $generel = 0;
+                        <?php $generel = 0;
                             $soldef = 0;
                             foreach ($data as $client_data) :
 
@@ -148,20 +134,20 @@ use Cake\Datasource\ConnectionManager;
                                     <td><?= h($client_data['code']) ?></td>
                                     <td><?= h($client_data['client']) ?></td>
                                     <td><?php echo sprintf("%01.3f", abs($client_data['soldedepart'])); ?></td>
-                                    <td><?php echo sprintf("%01.3f", abs($client_data['Debit'])); ?></td>
+                                    <td><?php echo sprintf("%01.3f", abs($client_data['Debit']) ); ?></td>
                                     <td><?php echo sprintf("%01.3f", abs($client_data['Credit'])); ?></td>
                                     <td><?php echo sprintf("%01.3f", abs($soldef)); ?></td>
                                 </tr>
                             <?php endforeach; ?>
-                        </tbody>
+                    </tbody>
 
-                        <tfoot>
-                            <tr>
-                                <td align="center" colspan="5" style="background-color: #acbf60;"><strong>Total</strong></td>
-                                <td align="center"><strong><?php echo number_format(abs($generel), 3, ',', ' ');  ?></strong></td>
-                            </tr>
-                        </tfoot>
-                    </table>
+                    <tfoot>
+                        <tr>
+                            <td align="center" colspan="5" style="background-color: #acbf60;"><strong>Total</strong></td>
+                            <td align="center"><strong><?php echo number_format(abs($generel), 3, ',', ' ');  ?></strong></td>
+                        </tr>
+                    </tfoot>
+                </table>
 
                 </div>
             </div>

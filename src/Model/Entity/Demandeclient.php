@@ -21,7 +21,7 @@ use Cake\ORM\Entity;
  * @property \App\Model\Entity\Client $client
  * @property \App\Model\Entity\Typedemande $typedemande
  * @property \App\Model\Entity\Lignedemandeclient[] $lignedemandeclients
- * @property \App\Model\Entity\Typecontacts[] $typeContacts
+ * @property \App\Model\Entity\TypeContacts[] $typeContacts
  * @property \App\Model\Entity\Commercials[] $commercials
  */
 class Demandeclient extends Entity

@@ -95,6 +95,7 @@ class Facture extends Entity
         'commentaireReglement' => true,
         'facturefournisseur' => true,
         'datefournisseur' => true,
+        'timbre' => true,
 
 
 

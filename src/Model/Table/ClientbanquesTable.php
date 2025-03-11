@@ -60,44 +60,7 @@ class ClientbanquesTable extends Table
      */
     public function validationDefault(Validator $validator): Validator
     {
-        $validator
-            ->integer('banque_id')
-            ->allowEmptyString('banque_id');
-
-        $validator
-            ->scalar('agence')
-            ->maxLength('agence', 255)
-            ->allowEmptyString('agence');
-
-        $validator
-            ->scalar('code_banque')
-            ->maxLength('code_banque', 255)
-            ->allowEmptyString('code_banque');
-
-        $validator
-            ->scalar('swift')
-            ->maxLength('swift', 255)
-            ->allowEmptyString('swift');
-
-        $validator
-            ->scalar('compte')
-            ->maxLength('compte', 255)
-            ->allowEmptyString('compte');
-
-        $validator
-            ->scalar('rib')
-            ->maxLength('rib', 255)
-            ->allowEmptyString('rib');
-
-        $validator
-            ->scalar('document')
-            ->maxLength('document', 255)
-            ->allowEmptyString('document');
-
-        $validator
-            ->integer('client_id')
-            ->allowEmptyString('client_id');
-
+       
         return $validator;
     }
 

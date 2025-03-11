@@ -17,6 +17,7 @@
     </ol>
 </section>
 
+
 <!-- Main content -->
 <section class="content">
     <div class="row">
@@ -29,21 +30,28 @@
                 <?php echo $this->Form->create($compte, ['role' => 'form']); ?>
                 <div class="box-body">
                     <div style=" margin: 0 auto;  margin-left: 20px; margin-right: 20px; position: static; ">
-                        
-                    
-                    <div class="col-xs-6">
+
+
+                        <div class="col-xs-6">
                             <?php
                             echo $this->Form->control('numero', ['label' => 'Numéro']);
                             ?>
                         </div>
                         <div class="col-xs-6">
-                                    <?php echo $this->Form->control('date', ["value" => date('Y-m-d H:i:s', strtotime('+1 hour', strtotime(date('Y-m-d H:i:s'))))]) ?>
-                                </div>
+                            <?php echo $this->Form->control('date', ["value" => date('Y-m-d H:i:s', strtotime('+1 hour', strtotime(date('Y-m-d H:i:s'))))]) ?>
+                        </div>
                         <div class="col-md-6">
                             <?php
 
                             echo $this->Form->control('agence_id', array(
-                                'empty' => 'Veuillez choisir !!', 'options' => $agences, 'class' => ' form-control ', 'name' => 'agence_id', 'label' => 'Agence', 'id' => 'agence_id', 'type' => '', 'class' => 'form-control select2'
+                                'empty' => 'Veuillez choisir !!',
+                                'options' => $agences,
+                                'class' => ' form-control ',
+                                'name' => 'agence_id',
+                                'label' => 'Agence',
+                                'id' => 'agence_id',
+                                'type' => '',
+                                'class' => 'form-control select2'
                             ));
                             ?>
 
@@ -52,14 +60,21 @@
                             <?php
 
                             echo $this->Form->control('banque_id', array(
-                                'empty' => 'Veuillez choisir !!', 'options' => $banques, 'class' => ' form-control ', 'name' => 'banque_id', 'label' => 'Banque', 'id' => 'banque_id', 'type' => '', 'class' => 'form-control select2'
+                                'empty' => 'Veuillez choisir !!',
+                                'options' => $banques,
+                                'class' => ' form-control ',
+                                'name' => 'banque_id',
+                                'label' => 'Banque',
+                                'id' => 'banque_id',
+                                'type' => '',
+                                'class' => 'form-control select2'
                             ));
                             ?>
 
                         </div>
                         <div class="col-xs-6">
                             <?php
-                            echo $this->Form->control('montant', ['label' => 'Solde']);
+                            echo $this->Form->control('montant', ['value' => '0.000', 'label' => 'Solde', 'class' => 'form-control number']);
                             ?>
                         </div>
                     </div>
@@ -99,7 +114,7 @@
                                     <td align="center" table="ligner">
 
                                         <?php
-                                        echo $this->Form->control('typecredit_id', array('class' => ' form-control select2 ','options'=>$typecredits, 'label' => '', 'index' => '', 'champ' => 'typecredit_id', 'table' => 'ligner', 'name' => '', 'empty' => 'Veuillez choisir !!', 'id' => ''));
+                                        echo $this->Form->control('typecredit_id', array('class' => ' form-control select2 ', 'options' => $typecredits, 'label' => '', 'index' => '', 'champ' => 'typecredit_id', 'table' => 'ligner', 'name' => '', 'empty' => 'Veuillez choisir !!', 'id' => ''));
                                         ?>
 
 
@@ -127,7 +142,7 @@
                         <input value="-1" id="index" type="hidden">
 
                         <br>
-                        <button type="submit" class="pull-right btn btn-success" id="controlecompte" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+                        <button type="submit" class="pull-right btn btn-success testchamp" id="controlecompte" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
                         <?php echo $this->Form->end(); ?>
                     </div>
 
@@ -169,6 +184,35 @@
             $('#sup' + ind).val('1');
             $(this).parent().parent().hide();
 
+
+        });
+        $('.testchamp').on('click', function() {
+
+            num = $('#numero').val();
+            date = $('#date').val();
+            agence_id = $('#agence_id').val();
+            banque_id = $('#banque_id').val();
+            solde = $('#montant').val();
+            if (num == '') {
+                alert("Ajouter le numéro de compte SVP");
+                return false;
+            }
+            if (date == '') {
+                alert("Ajouter le date SVP");
+                return false;
+            }
+            if (agence_id == '') {
+                alert("Choisir l`agence SVP");
+                return false;
+            }
+            if (banque_id == '') {
+                alert("Choisir la banque SVP");
+                return false;
+            }
+            if (solde == '') {
+                alert("Ajouter le Solde SVP");
+                return false;
+            }
 
         });
 

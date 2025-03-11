@@ -67,12 +67,12 @@ $connection = ConnectionManager::get('default'); ?>
                             echo $this->Form->control('endosse', array('id' => 'endosse', 'empty' => 'veuillez choisir', 'div' => 'form-group', 'label' => 'Note', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control ', 'value' => $this->request->getQuery('endosse')));
                             ?>
                         </div>
-                        <div class="col-xs-6">
+                        <!-- <div class="col-xs-6">
 
                             <?php
                             echo $this->Form->control('etat_id', array('id' => 'etat_id', 'empty' => 'veuillez choisir Etat', 'div' => 'form-group', 'label' => 'Impayé', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control select2', 'options' => $etats, 'value' => $this->request->getQuery('etat_id')));
                             ?>
-                        </div>
+                        </div> -->
                     </div>
 
                     <div class="row">

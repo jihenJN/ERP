@@ -38,26 +38,16 @@
 
                         <div class="col-xs-6">
 
+                            <div class="col-xs-6">
+                                <?php echo $this->Form->control('code', ['readonly', 'label' => 'Code', 'required' => 'off', 'id' => 'code', 'class' => 'form-control']); ?>
+                            </div>
                             <?php
                             echo $this->Form->control('Nom', ['label' => 'Nom', 'readonly']); ?>
 
-                            <!-- <div class="col-xs-6" style="margin-top: 25px ; margin-right : 25px;"> -->
-                            <!-- <label class="control-label" for="unite-id" style="margin-right: 20px"> Etat</label>
-
-                                Activé <input type="radio" name="etat" value="1" id="active" class="choixcollisage" style="margin-right: 20px" <?php if ($famille->etat == 1) { ?> checked="checked" <?php } ?>>
-                                Désactivé <input type="radio" name="etat" value="0" id="desactive" class="choixcollisage" <?php if ($famille->etat == 0) { ?> checked="checked" <?php } ?>>
-                                <br><br><br> -->
-                            <!--
-                                <label class="control-label" for="unite-id" style="margin-right: 20px"> destinée à la vente</label>
-                                oui <input type="radio" name="vente" value="1" id="true" class="choixcollisage" style="margin-right: 20px" <?php if ($famille->vente == 1) { ?> checked="checked" <?php } ?>>
-                                non <input type="radio" name="vente" value="0" id="false" class="choixcollisage" <?php if ($famille->vente == 0) { ?> checked="checked" <?php } ?>>
--->
 
 
                         </div>
-                        <div class="col-xs-6">
-                            <?php echo $this->Form->control('marque_id', ['label' => 'Marque','readonly', 'options' => $marques, 'required' => 'off', 'id' => 'marque_id', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control']); ?>
-                        </div>
+
                     </div>
 
 

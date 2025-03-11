@@ -174,10 +174,10 @@ $page = 0;
 <?php for ($page = 0; $page < $totalPages; $page++) : ?>
     <section class="content" style="font-family: 'Times New Roman', Times, serif;<?php echo $page > 0 ? ' page-break' : ''; ?>">
         <div style="display:flex;">
-            <table cellpadding="0" cellspacing="0" style=" margin-top:10%; border: 0px solid #002E50;border-left:none;border-right:none;border-collapse: collapse; width: 100%; ">
+            <table cellpadding="0" cellspacing="0" style=" margin-top:0.5%; border: 0px solid #002E50;border-left:none;border-right:none;border-collapse: collapse; width: 100%; ">
                 <td align="center" style="width: 40%;border: none;">
                 </td>
-                <td align="center" style="width: 25%;border: none;">
+                <td align="center" style="width: 25%;border: 0px;">
                     <b><?php echo 'BON DE LIVRAISON'; ?></b><br>
                     <b style="font-weight: normal;">
                         <?php echo 'N° : ' . '' . $bonlivraison->numero; ?>
@@ -186,8 +186,8 @@ $page = 0;
                         <?php echo 'Date : ' . $this->Time->format($bonlivraison->date, 'dd/MM/y'); ?>
                     </b>
                 </td>
-                <td align="left" style="width: 35%;border: none;font-size: 15px;height:4% !important;">
-                    <b style="font-size: 18px!important;  display: block; margin-bottom: 0.5em;">&nbsp;
+                <td align="left" style="width: 35%;border: 0px;font-size: 15px;margin-top:1.5%!important;height:4% !important;">
+                    <b style="margin-left:11%!important;font-size: 18px!important;  display: block; margin-bottom: 0.5em;">&nbsp;
 
                         <?php
                         if (isset($bonlivraison->client)) {
@@ -215,7 +215,7 @@ $page = 0;
                         ?>
                         <?php echo $raison_sociale;   ?>
                     </b>
-                    <b style="font-size: 16px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
+                    <b style="margin-left:11%!important;font-size: 16px!important; margin-top:1.1%!important;font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
                         <?php
                         if (isset($bonlivraison->client)) {
                             if ($bonlivraison->client_id != 12) {
@@ -226,7 +226,7 @@ $page = 0;
                         }
                         ?>
                     </b>
-                    <b style="font-size: 16px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
+                    <b style="margin-left:11%!important;font-size: 16px!important;margin-top:1.5%!important; font-weight: normal; display: block; margin-bottom: 0.5em;">&nbsp;
                         <?php
                         if ($bonlivraison->client_id != 12) {
                             echo 'M.F : ';
@@ -245,7 +245,7 @@ $page = 0;
                 </td>
             </table>
         </div>
-        <div style="margin-top:-17%;">
+        <div style="margin-top:-21%;">
             <table style="border-width: 0px; border-color: #ffffff; width: 100%; border-collapse: collapse; margin-top:28%;">
                 <thead>
                     <!-- En-tête du tableau -->
@@ -300,7 +300,7 @@ $page = 0;
                                 </b>
                             </td>
                             <td align="center" style="vertical-align:top;width:9.5%;">
-                                <b style="font-weight: normal;padding-right: 40% !important;">
+                                <b style="font-weight: normal;padding-right: 40% !important;margin-left:33%!important;">
                                     <?php
                                     if ($lignecommande->remise === 0 || empty($lignecommande->remise)) {
                                         echo '';
@@ -363,12 +363,12 @@ $page = 0;
             if ($page == ($totalPages - 1)) {
 
             ?>
-                <table style="margin-top:900px">
+                <table  style="margin-top:900px">
                     <tr>
                         <td>
                             <div style="display:flex" align="center">
 
-                                <div style="width:400px;margin-right:10px; margin-top :-35%;" align="left">
+                                <div style="width:400px;margin-right:10px; margin-top :-78%;" align="left">
 
                                     <table style="width: 100%;border-collapse: collapse;border-radius: 15px;margin-top:5%">
                                         <thead>
@@ -396,7 +396,7 @@ $page = 0;
 
                                 </div>
 
-                                <div style="width: 300px;border:1px solid #ffffff;margin-top:-36%;" align="center">
+                                <div style="width: 300px;border:1px solid #ffffff;margin-top:-76%;" align="center">
 
                                     <table style="width: 80%;border-collapse: collapse;border-radius: 15px;" border="0">
                                         <thead>
@@ -406,11 +406,11 @@ $page = 0;
                                                 <td style="text-align: left; width: 50%; vertical-align: top;">
                                                     <br>
                                                     <?php if ($bonlivraison->totalremise = 0 || $bonlivraison->totalremise = '') { ?>
-                                                        <b style=" width: 100px;margin-left:-10!important; line-height: 1.5;"><?php echo 'Rem Mt:'; ?><br></b>
+                                                        <b style=" width: 100px;margin-left:27%!important; line-height: 1.5;"><?php echo 'Rem Mt:'; ?><br></b>
                                                     <?php } ?>
-                                                    <b style="width: 100px;margin-left:-10!important; line-height: 1.5;"><?php echo 'Total HT:'; ?><br></b>
-                                                    <b style="width: 100px;margin-left:-10!important; line-height: 1.5;"><?php echo 'Total TVA:'; ?><br></b>
-                                                    <b style="width: 100px;margin-left:-10!important; line-height: 1.5;"><?php //echo 'Timbre:'; 
+                                                    <b style="width: 100px;margin-left:27%!important; line-height: 1.5;"><?php echo 'Total HT:'; ?><br></b>
+                                                    <b style="width: 100px;margin-left:27%!important; line-height: 1.5;"><?php echo 'Total TVA:'; ?><br></b>
+                                                    <b style="width: 100px;margin-left:27%!important; line-height: 1.5;"><?php //echo 'Timbre:'; 
                                                                                                                             ?><br></b>
                                                     <b><br></b>
                                                 </td>
@@ -418,7 +418,7 @@ $page = 0;
                                                     <br>
                                                     <?php if ($bonlivraison->totalremise = 0 || $bonlivraison->totalremise = '') { ?>
                                                         <b style="display: inline-block; width: 130px; text-align: right; line-height: 1.5;">
-                                                            <?php echo number_format(abs($bonlivraison->totalremise), 2, ',', ' '); ?><br>
+                                                            <?php echo number_format(abs($bonlivraison->totalremise), 3, ',', ' '); ?><br>
                                                         </b>
                                                     <?php } ?>
                                                     <b style="display: inline-block; width: 130px; text-align: right; line-height: 1.5;">
@@ -428,9 +428,9 @@ $page = 0;
                                                         <?php echo number_format(abs($bonlivraison->totaltva), 3, ',', ' '); ?><br>
                                                     </b>
                                                     <b style="display: inline-block; width: 130px; text-align: right; line-height: 1.5;">
-                                                        <?php echo '0.000' ?><br>
+                                                        <?php //echo '0.000' ?><br>
                                                     </b>
-                                                    <b style="font-size: 16px!important; margin-top: -6.8px!important; font-weight: bold; display: inline-block; width: 130px; text-align: right;">
+                                                    <b style="font-size: 16px!important; margin-top: -3.5px!important; font-weight: bold; display: inline-block; width: 130px; text-align: right;">
 
                                                         <br> <?php // $this->Number->format($bonlivraison->totalttc) 
                                                                 echo number_format(abs($bonlivraison->totalttc), 3, ',', ' '); ?>
@@ -452,9 +452,9 @@ $page = 0;
                         <td>
                             <div style="display:flex" align="center">
 
-                                <div style="width: 60%; margin-top :-20%;" align="left">
+                                <div style="width: 60%; margin-top :-70%;" align="left">
 
-                                    <table style="width: 100%;border-collapse: collapse;border-radius: 15px;margin-top:5%">
+                                    <table style="width: 100%;border-collapse: collapse;border-radius: 15px;margin-top:-70%">
                                         <thead>
                                         </thead>
                                         <tbody>
@@ -462,11 +462,11 @@ $page = 0;
                                             <tr class="tr">
 
                                                 <td align="center" height="20px" style="border:1px solid #ffffff;margin-left:1% !important;">
-                                                    <b style="margin-left: -45%;font-weight: normal;">
+                                                    <b style="margin-left: 12%;font-weight: normal;">
                                                         <?php
-                                                        if (isset($bonlivraison->transporteur)) {
-                                                            if ($bonlivraison->transporteur == 3) {
-                                                                echo  h($bonlivraison->nom);
+                                                        if (!empty($bonlivraison->transporteur)) {
+                                                            if ($bonlivraison->transporteur_id == 3) {
+                                                                echo  h($bonlivraison->chauffeurname);
                                                             } else {
                                                                 echo  h($bonlivraison->transporteur->name);
                                                             }

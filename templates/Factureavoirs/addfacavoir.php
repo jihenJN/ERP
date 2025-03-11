@@ -374,7 +374,7 @@ use Cake\Datasource\ConnectionManager;
 
                                                             <?php
 
-                                                            echo $this->Form->input('qter', array('name' => 'data[Lignefacture][' . $i . '][qter]', 'value' => 0, 'label' => '', 'div' => 'form-group', 'table' => 'Lignefacture', 'index' => $i, 'id' => 'qter' . $i, 'champ' => 'qter', 'type' => 'text', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control ')); ?>
+                                                            echo $this->Form->input('qter', array('name' => 'data[Lignefacture][' . $i . '][qter]', 'value' => 0, 'label' => '', 'div' => 'form-group', 'table' => 'Lignefacture', 'index' => $i, 'id' => 'qter' . $i, 'champ' => 'qter', 'type' => 'text', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control  ')); ?>
 
                                                         </td>
                                                         <td hidden>
@@ -389,7 +389,7 @@ use Cake\Datasource\ConnectionManager;
                                                         <td>
                                                             <?php
 
-                                                            echo $this->Form->input('quantite', array('value' => $liv, 'label' => '', 'name' => 'data[Lignefacture][' . $i . '][quantite]', 'table' => 'Lignefacture', 'index' => $i, 'id' => 'qte' . $i, 'champ' => 'quantite', 'type' => 'text', 'class' => 'form-control  calculligne2 ')); ?>
+                                                            echo $this->Form->input('quantite', array('value' => $liv, 'label' => '', 'name' => 'data[Lignefacture][' . $i . '][quantite]', 'table' => 'Lignefacture', 'index' => $i, 'id' => 'qte' . $i, 'champ' => 'quantite', 'type' => 'text', 'class' => 'form-control  calculligne2  testqte')); ?>
 
                                                         </td>
                                                         <td align="center" hidden>
@@ -620,7 +620,7 @@ use Cake\Datasource\ConnectionManager;
                                 </table>
                             </div>
                         </div>
-                        <button type="submit" class="pull-right btn btn-success btn-sm " id="" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+                        <button type="submit" class="pull-right btn btn-success btn-sm " id="savebtn" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
                         <?php echo $this->Form->end(); ?>
                     </div>
                 </section>
@@ -638,6 +638,35 @@ use Cake\Datasource\ConnectionManager;
 <?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
 <?php $this->start('scriptBottom'); ?>
 <script>
+    $(document).ready(function() {
+
+        index = $('#index').val();
+            //alert(index);
+            for (j = 0; j <= Number(index); j++) {
+                calculligne2(j);
+            }
+
+        $(".testqte").on("keyup", function() {
+            const index = $(this).attr('index');
+            const qteFacture = parseFloat($("#qtee" + index).val()) || 0;
+            const qteAv = parseFloat($("#qte" + index).val()) || 0;
+
+            if (qteFacture < qteAv) {
+                alert(`Veuillez vérifier: La quantité facturée (${qteAv}) ne peut pas dépasser la quantité disponible (${qteFacture}).`);
+                $("#qte" + index).val(0);
+                calculligne2(index);
+            }
+        });
+
+        $("#savebtn").on("mouseover", function() {
+            qte = $("#qte0").val();
+
+            if (qte == 0 || qte == "") {
+                alert('Veuillez saisir une quantité');
+            }
+        })
+
+    });
     $(document).ready(function() {
         // calculeachat1();
     });

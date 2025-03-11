@@ -70,7 +70,6 @@ use Cake\I18n\FrozenTime;
                         // debug($depotalls);
                         if ($factureclients != null) {
                         ?>
-                            <!-- <a onclick="openWindow(1000, 1000, 'https://toutenrouleau.isofterp.com/AL2MPAPER/Factureclients/imprimeetat?client_id=<?php //echo @$clientid;  
                                                                                                                                                         ?>')"><button class="btn btn-primary ">Imprimer</button></a> -->
 
                             <a onclick="openWindow(1000, 1000, wr+'Factureclients/impetatjournal?date1=<?php echo @$date1; ?>&date2=<?php echo @$date2; ?>')"><button class="btn btn-primary " style="background-color: #4DAAA5;border:#4DAAA5;">Imprimer</button></a>

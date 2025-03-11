@@ -261,7 +261,6 @@ use Cake\ORM\TableRegistry;
                                         $qtecom = $result[0]['total_qte'];
 
                                         $totalreserfam += $qtecom;
-                                     
                                     } else {
                                         $qtecom = 0;
                                         $totalreserfam = 0;
@@ -292,9 +291,19 @@ use Cake\ORM\TableRegistry;
                                         <td style="font-size: 16px;"> <?php echo $art['Dsignation']; ?> </td>
 
                                         <td align="center" style="font-size: 16px; font-weight: bold;">
-                                            <a href='/ERP/Articles/indexspec?date1=<?php echo @$date1; ?>&date2=<?php echo @$datef; ?>&depot_id=<?php echo @$depotid; ?>&article_id=<?php echo $art['id']; ?>' target="_blank">
-                                                <?php echo $qtestock; ?>
+                                            <a href="<?= $this->Url->build([
+                                                            'controller' => 'Articles',
+                                                            'action' => 'indexspec',
+                                                            '?' => [
+                                                                'date1' => @$date1,
+                                                                'date2' => @$datef,
+                                                                'depot_id' => @$depotid,
+                                                                'article_id' => $art['id']
+                                                            ]
+                                                        ], ['fullBase' => true]); ?>" target="_blank">
+                                                <?= h($qtestock) ?>
                                             </a>
+
                                         </td>
 
                                         <td align="center" style="font-size: 16px; font-weight: bold;">

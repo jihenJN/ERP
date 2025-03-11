@@ -552,7 +552,7 @@ class RelevesController extends AppController
         $c1 = 'releves.exercice_id =' . $exe;
 
         $tablignedevis = array();
-        //$tablignelivraisons = array();
+        $tablignelivraisons = array();
         $tablignefactureclients = array();
         $tablignereglementlibres = array();
         $tablignepiecereglements = array();
@@ -714,7 +714,7 @@ class RelevesController extends AppController
             if ($affichebl) {
                 $bonlivraisons = $this->Bonlivraisons->find('all', array(
                     'conditions' => array(
-                        // 'Bonlivraisons.factureclient_id' => 0,
+                         'Bonlivraisons.factureclient_id' => 0,
                         $conditions,
                         @$condb1,
                         @$condb2,
@@ -1000,7 +1000,7 @@ class RelevesController extends AppController
 
 
         $cha = "TRUE";
-        $clients = $this->Clients->find("all")->where(["Clients.etat='$cha'"]);
+        $clients = $this->Clients->find("all") ; //->where(["Clients.id !=12" /*"Clients.etat='$cha'"*/]);
 
         $personnels = $this->Personnels->find('list');
         $relefes = $this->Releves->find('all', [

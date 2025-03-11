@@ -545,7 +545,7 @@ use Cake\ORM\TableRegistry;
 
                                                                 <!-- <input type="text" table="ligner" name="" index="<?php echo $i ?>" value="<?php echo $res->id ?>" readonly id="article_idd<?php echo $i ?>" champ="article_idd" class="  form-control"> -->
 
-                                                                <?php echo $this->Form->input('qte', array('label' => '', 'value' => $res->qte, 'name' => 'data[ligner][' . $i . '][qte]', 'type' => 'text', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control calculligne2 focus')); ?>
+                                                                <?php echo $this->Form->input('qte', array('label' => '', 'value' => $res->qte, 'name' => 'data[ligner][' . $i . '][qte]', 'type' => 'text', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control findtth2 focus')); ?>
                                                                 <input type="hidden" value='<?php echo $res->article->Poids ?>' table="ligner" name="" id="<?php echo 'poids' . $i ?>" champ="poids" class="calcullignecommande form-control" index="<?php echo $i ?>">
 
                                                                 <input type="hidden" table="ligner" name="" id="<?php echo 'pourcentageescompte' . $i ?>" champ="pourcentageescompte" class="calcullignecommande form-control" index="<?php echo $i ?>">
@@ -663,7 +663,7 @@ use Cake\ORM\TableRegistry;
                                                         <td align="center" table="ligner">
                                                             <input type="hidden" table="ligner" name="" readonly champ="article_idd" class="  form-control" index>
 
-                                                            <input type="number" table="ligner" name="" id="" champ="qte" type="text" class=" calculligne2 focus form-control" index>
+                                                            <input type="number" table="ligner" name="" id="" champ="qte" type="text" class=" findtth2 focus form-control" index>
                                                         </td>
 
                                                         <td align="center" table="ligner" hidden>
@@ -962,7 +962,7 @@ use Cake\ORM\TableRegistry;
                                                             <tr>
                                                                 <td>Montant</td>
                                                                 <td><?php
-                                                                    echo $this->Form->control('montant', array('class' => 'form-control differance sum-input', 'label' => '', 'champ' => 'montant', 'table' => 'pieceregelemnt', 'name' => ''));
+                                                                    echo $this->Form->control('montant', array('type'=>'number','step'=>'any','class' => 'form-control differance sum-input', 'label' => '', 'champ' => 'montant', 'table' => 'pieceregelemnt', 'name' => ''));
                                                                     ?> </td>
                                                             </tr>
                                                             <tr>
@@ -1102,7 +1102,7 @@ use Cake\ORM\TableRegistry;
                                                                 <tr>
                                                                     <td>Montant</td>
                                                                     <td><?php
-                                                                        echo $this->Form->control('montant', array('value' => $piece->montant, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control differance sum-input', 'label' => '', 'index' => $i, 'champ' => 'montant', 'id' => 'montant' . $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][montant]'));
+                                                                        echo $this->Form->control('montant', array('type'=>'number','step'=>'any','value' => $piece->montant, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control differance sum-input', 'label' => '', 'index' => $i, 'champ' => 'montant', 'id' => 'montant' . $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][montant]'));
                                                                         ?>
                                                                     </td>
                                                                 </tr>
@@ -1202,13 +1202,13 @@ use Cake\ORM\TableRegistry;
 
                         <!-- <button type="submit" class="pull-right btn btn-success btn-sm Testqtestock chauff  btnOffreprix" id="boutonlivraison" style="margin-right:51%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button> -->
                         <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 20px; margin-bottom: 20px;">
-                            <button type="submit" class=" testdiv btn btn-success btn-sm verifBonres btnOffreprix" id="boutonlivraison" name="enregistrer" style="width: 130px;">
+                            <button type="submit" class=" testbl testdiv btn btn-success btn-sm verifBonres btnOffreprix" id="boutonlivraison" name="enregistrer" style="width: 130px;">
                                 Enregistrer
                             </button>
-                            <button type="submit" class=" testdiv btn btn-primary btn-sm verifBonres btnOffreprix" id="boutonpdf" name="pdf" style="width: 70px;">
+                            <button type="submit" class="  testbl testdiv btn btn-primary btn-sm verifBonres btnOffreprix" id="boutonpdf" name="pdf" style="width: 70px;">
                                 <i class="fa fa-print"></i> PDF
                             </button>
-                            <button type="submit" class=" testdiv btn btn-xs btn-primary custom-class" id="boutonimprimer" name="enregistrer_imprimer" style="background-color: #bb3385; color: white; border-color: white; width: 40px;">
+                            <button type="submit" class="  testbl testdiv btn btn-xs btn-primary custom-class" id="boutonimprimer" name="enregistrer_imprimer" style="background-color: #bb3385; color: white; border-color: white; width: 40px;">
                                 <i class="fa fa-print"></i>
                             </button>
 
@@ -1583,7 +1583,7 @@ use Cake\ORM\TableRegistry;
 
 
                 if (selectedValue == 3) {
-                    $('#transporteur_id').val('').trigger('change');
+                   // $('#transporteur_id').val('').trigger('change');
                     $('#c1').show();
                     // $('#c2').show();
                     // $('#chauffeur_id').val('').trigger('change');
@@ -2089,25 +2089,85 @@ use Cake\ORM\TableRegistry;
 <?php $this->start('scriptBottom'); ?>
 <script>
         $(document).ready(function() {
+            $('.testbl').on('mouseover', function() {
+                // Retrieve input values
+                depot = $('#depot-id').val();
+                transporteur = $('#transporteur_id').val();
+                chauffeurname = $('#chauffeurname').val();
 
-            $(".testdiv").on("mouseover", function() {
-                var client = $("#idclient1").val();
-                var nom = $("#nomprenom").val();
-                var iden = $("#numeroidentite").val();
+                typebl = $('#typebl').val();
+                //alert(typebl);
+                //alert(transporteur)
+                client = $('#idclient1').val();
 
-                // alert(type);
-                if (client == 12) {
-                    if (nom == "") {
-                        alert("Saisie Le nom et prenom divers SVP !!");
-                        return;
-                    } else
+                nomprenom = $('#nomprenom').val();
+                numeroidentite = $('#numeroidentite').val();
+                ttc = $('#ttc').val();
 
-                    if (iden == "") {
-                        alert("Saisie Le numéro identité divers SVP !!");
-                        return;
-                    }
+                indexreg = $('#indexreg').val();
+
+
+                if (depot === "") {
+                    alert("Veuillez choisir le depot !");
+                    return false;
                 }
-            })
+
+                if (transporteur === "" && typebl == 1) {
+                    alert("Veuillez choisir le transporteur !");
+                    return false;
+                }
+
+                if (chauffeurname === "" && transporteur == 3 && typebl == 1) {
+                    alert("Veuillez saisir le chauffeur !");
+                    return false;
+                }
+                if (client === "") {
+                    alert("Veuillez choisir le client !");
+                    return false;
+                }
+                if (nomprenom === "" && client == 12) {
+                    alert("Veuillez saisir le nom et prenom divérs !");
+                    return false;
+                }
+                if (numeroidentite === "" && client == 12) {
+                    alert("Veuillez saisir le numeroidentite !");
+                    return false;
+                }
+                /*  if (indegreg === -1 && typebl == 1) {
+                      alert("Veuillez choisir un mode paiement  !");
+                      return false;
+                  }*/
+                 sum=0;
+                $(".sum-input").each(function() {
+                    if ($(this).is(":visible")) {
+                        sum += Number($(this).val()) || 0;
+                    }
+                });
+               // alert(sum);
+               // alert(ttc);
+                if (sum > ttc && typebl == 1) {
+                    alert("Ne dépassez pas le total TTC du bon de livraison !");
+                    return false;
+                }
+            });
+            // $(".testdiv").on("mouseover", function() {
+            //     var client = $("#idclient1").val();
+            //     var nom = $("#nomprenom").val();
+            //     var iden = $("#numeroidentite").val();
+
+            //     // alert(type);
+            //     if (client == 12) {
+            //         if (nom == "") {
+            //             alert("Saisie Le nom et prenom divers SVP !!");
+            //             return;
+            //         } else
+
+            //         if (iden == "") {
+            //             alert("Saisie Le numéro identité divers SVP !!");
+            //             return;
+            //         }
+            //     }
+            // })
         });
     </script>
 <script>

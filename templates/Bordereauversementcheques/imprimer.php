@@ -30,7 +30,7 @@ $societe = $connection->execute('SELECT *  FROM societes ;')->fetchAll('assoc');
           <td width="20%">
 
 
-            <?php echo $this->Html->image('logoSMBM.png', ['style' => 'max-width:150px;height:150px;']); ?>
+            <?php echo $this->Html->image('bnalogo.jpg', ['style' => 'max-width:150px;height:150px;']); ?>
 
           </td>
           <td style="width:5%!important;"> </td>
@@ -91,12 +91,13 @@ $societe = $connection->execute('SELECT *  FROM societes ;')->fetchAll('assoc');
         <table class="tbborder" style="width:100%" align="center">
           <thead>
             <tr>
-              <td class="tdborder" align="center" style="width:5%" nowrap="nowrap"></td>
-              <td class="tdborder" align="center" style="width:20%" nowrap="nowrap">Banque Payeur</td>
+              <td class="tdborder" align="center" style="width:3%" nowrap="nowrap"></td>
+              <td class="tdborder" align="center" style="width:15%" nowrap="nowrap">Banque Payeur</td>
+              <td class="tdborder" align="center" style="width:14%" nowrap="nowrap">N° Pièce</td>
+              <td class="tdborder" align="center" style="width:25%" nowrap="nowrap">Tireur (Emetteur)</td>
+              <td class="tdborder" align="center" style="width:18%" nowrap="nowrap">Echéance</td>
 
-              <td class="tdborder" align="center" style="width:20%" nowrap="nowrap">N° Pièce</td>
-              <td class="tdborder" align="center" style="width:35%" nowrap="nowrap">Tireur (Emetteur)</td>
-              <td class="tdborder" align="center" style="width:20%" nowrap="nowrap">Montant</td>
+              <td class="tdborder" align="center" style="width:17%" nowrap="nowrap">Montant</td>
 
             </tr>
           </thead>
@@ -107,11 +108,12 @@ $societe = $connection->execute('SELECT *  FROM societes ;')->fetchAll('assoc');
             //debug($lignebordereauversementcheques);die;
             foreach ($lignebordereauversementcheques as $i => $lg) {
               $f++;
-              $piece = $connection->execute('SELECT piecereglementclients.id as idp,piecereglementclients.num,piecereglementclients.montant,piecereglementclients.banque_id as bnq ,reglementclients.id as idr,reglementclients.client_id as idc,clients.Raison_Sociale as rs  FROM piecereglementclients,reglementclients,clients WHERE piecereglementclients.reglementclient_id=reglementclients.id and reglementclients.client_id=clients.id and  piecereglementclients.id=' . $lg['piecereglementclient_id'] . ';')->fetchAll('assoc');
+              $piece = $connection->execute('SELECT piecereglementclients.id as idp,piecereglementclients.num,piecereglementclients.montant ,piecereglementclients.echance,piecereglementclients.banque_id as bnq ,reglementclients.id as idr,reglementclients.client_id as idc,clients.Raison_Sociale as rs  FROM piecereglementclients,reglementclients,clients WHERE piecereglementclients.reglementclient_id=reglementclients.id and reglementclients.client_id=clients.id and  piecereglementclients.id=' . $lg['piecereglementclient_id'] . ';')->fetchAll('assoc');
               $sum += $piece[0]['montant'];
-              if ($piece['bnq']) {
-                $bnq = $connection->execute('SELECT name FROM banques WHERE banques.id=' . $piece['bnq'] . ';')->fetchAll('assoc');
+              if ($piece[0]['bnq']) {
+                $bnq = $connection->execute('SELECT name FROM banques WHERE banques.id=' . $piece[0]['bnq'] . ';')->fetchAll('assoc');
               }
+              //var_dump($piece[0]['bnq']);
             ?>
 
               <tr class="tr">
@@ -121,6 +123,8 @@ $societe = $connection->execute('SELECT *  FROM societes ;')->fetchAll('assoc');
                 <td class="tdborder" align="center">&thinsp;&thinsp;<?php echo $piece[0]['num'] ?>&thinsp;&thinsp;</td>
 
                 <td class="tdborder">&thinsp;&thinsp;<?php echo $piece[0]['rs'] ?>&thinsp;&thinsp;</td>
+                <td class="tdborder">&thinsp;&thinsp;<?php echo $piece[0]['echance'] ?>&thinsp;&thinsp;</td>
+
 
                 <td class="tdborder" align="right">&thinsp;<?php echo  h(number_format(abs($piece[0]['montant']), 3, ',', ' ')); ?>&thinsp;</td>
                 </td>

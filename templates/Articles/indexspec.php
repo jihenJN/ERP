@@ -114,7 +114,7 @@ error_reporting(E_ERROR | E_PARSE); ?>
 
 
         <h2 style="margin-left: 5px ;">
-            État historique article par KG
+            État historique article
         </h2>
 
         <div class="row">

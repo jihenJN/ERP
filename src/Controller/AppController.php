@@ -25,6 +25,7 @@ use Cake\Model\Datasource\CakeSession;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\TableRegistry;
 
+
 ini_set('memory_limit', '-1');
 
 
@@ -59,7 +60,7 @@ class AppController extends Controller
         $societesTable = TableRegistry::getTableLocator()->get('Societes');
         $societefirst = $societesTable->find()->where('id=1')->first();
         $this->set('societefirst', $societefirst); // Available in views
-        $this->societefirst = $societefirst;  
+        $this->societefirst = $societefirst;
         /*
          * Enable the following component for recommended CakePHP form protection settings.
          * see https://book.cakephp.org/4/en/controllers/components/form-protection.html
@@ -134,7 +135,7 @@ class AppController extends Controller
     }
     // function promogs($date = null, $client_id = null, $article_id = null, $qte = null)
     // {
-  
+
     //     $cond1 = "Gspromoarticles.datedebut <='" . $date . "' ";
     //     $cond2 = "Gspromoarticles.datefin >='" . $date . "' ";
 
@@ -159,98 +160,95 @@ class AppController extends Controller
 
     function promogs($date = null, $client_id = null, $article_id = null, $qte = null)
     {
-  
+
         $cond1 = "Gspromoarticles.datedebut <='" . $date . "' ";
         $cond2 = "Gspromoarticles.datefin >='" . $date . "' ";
         $cond10 = "Lignegspromoarticles.article_id = " . $article_id;
-        $cond11= "Clientgspromoarticles.client_id = " . $client_id;
-        $cond11cnd= "Clientgspromoarticles.checkk =1 ";
+        $cond11 = "Clientgspromoarticles.client_id = " . $client_id;
+        $cond11cnd = "Clientgspromoarticles.checkk =1 ";
 
-        $cli = $this->fetchtable('Clientgspromoarticles')->find('all')->where([$cond11,$cond11cnd])->group(['gspromoarticle_id']);
+        $cli = $this->fetchtable('Clientgspromoarticles')->find('all')->where([$cond11, $cond11cnd])->group(['gspromoarticle_id']);
         // $n = $this->fetchtable('Clientgspromoarticles')->find('count')->where([$cond11,$cond11cnd])->group(['gspromoarticle_id']);
-      ////  debug($cli->toarray());
+        ////  debug($cli->toarray());
         $tabb = $cli->toarray();
 
-       /// debug($tabb);
+        /// debug($tabb);
 
         $li = $this->fetchtable('Lignegspromoarticles')->find('all')->where([$cond10])->group(['gspromoarticle_id']);
-// debug($li->toArray());//;die;
-// debug($cli->toArray());//;die;
+        // debug($li->toArray());//;die;
+        // debug($cli->toArray());//;die;
 
-$list_id = "(0";
-        if(!empty($tabb)){
-        if ($cli != array()) {
-            foreach ($cli as $client) {
-               
-                $list_id = $list_id . "," . $client['gspromoarticle_id'];
+        $list_id = "(0";
+        if (!empty($tabb)) {
+            if ($cli != array()) {
+                foreach ($cli as $client) {
+
+                    $list_id = $list_id . "," . $client['gspromoarticle_id'];
+                }
             }
-        }
-        
-        if($li!=null){
-        if ($li != array()) {
-            foreach ($li as $ligne) {
-                $list_id = $list_id . "," . $ligne['gspromoarticle_id'];
+
+            if ($li != null) {
+                if ($li != array()) {
+                    foreach ($li as $ligne) {
+                        $list_id = $list_id . "," . $ligne['gspromoarticle_id'];
+                    }
+                }
             }
-        }
-        }
-              $list_id = $list_id . ",0)" ;
-       
-   // debug($list_id);//die;
+            $list_id = $list_id . ",0)";
 
-       $condd = "Gspromoarticles.id in" . $list_id;
-      
+            // debug($list_id);//die;
 
-   // debug($condd);
-       
+            $condd = "Gspromoarticles.id in" . $list_id;
 
-        $gspromo = $this->fetchTable('Gspromoarticles')->find('all')->where([$cond1,$cond2,$condd]);
-        // debug($gspromo->toArray());
-        
-         $variable=0;
 
-        if ($gspromo != null) {
-          
-            $resultat=0;
-            foreach($gspromo as $i=>$gs){
-            $cligspromo = $this->fetchTable('Clientgspromoarticles')->find('all')->where(["Clientgspromoarticles.gspromoarticle_id =" . $gs['id'], "Clientgspromoarticles.checkk = 1", $cond11]);
-           
-           // debug($cligspromo->toArray());
+            // debug($condd);
 
-            if ($cligspromo != null) {
-                
-                $lipromo = $this->fetchTable('Lignegspromoarticles')->find('all')->where(["Lignegspromoarticles.gspromoarticle_id =" . $gs['id'], $cond10]);
-            
-           // debug($lipromo->toArray());
 
-            if ($lipromo != null) {
+            $gspromo = $this->fetchTable('Gspromoarticles')->find('all')->where([$cond1, $cond2, $condd]);
+            // debug($gspromo->toArray());
 
-              foreach ($lipromo as $i=>$l){
-                $resultat=$l->value;
-              //  debug($resultat);
-                $variable=$resultat+$variable;
-                //debug($variable);
-               
-              } 
-             
-            
-            //return($variable); 
-             }
-           
-           
+            $variable = 0;
+
+            if ($gspromo != null) {
+
+                $resultat = 0;
+                foreach ($gspromo as $i => $gs) {
+                    $cligspromo = $this->fetchTable('Clientgspromoarticles')->find('all')->where(["Clientgspromoarticles.gspromoarticle_id =" . $gs['id'], "Clientgspromoarticles.checkk = 1", $cond11]);
+
+                    // debug($cligspromo->toArray());
+
+                    if ($cligspromo != null) {
+
+                        $lipromo = $this->fetchTable('Lignegspromoarticles')->find('all')->where(["Lignegspromoarticles.gspromoarticle_id =" . $gs['id'], $cond10]);
+
+                        // debug($lipromo->toArray());
+
+                        if ($lipromo != null) {
+
+                            foreach ($lipromo as $i => $l) {
+                                $resultat = $l->value;
+                                //  debug($resultat);
+                                $variable = $resultat + $variable;
+                                //debug($variable);
+
+                            }
+
+
+                            //return($variable); 
+                        }
+                    } else {
+                        $variable = 0;
+                    }
+                } //debug($variable); 
+                return ($variable);
             } else {
-                $variable=0;
+                return (0);
             }
-        } //debug($variable); 
-        return($variable);
-    } 
-        else {
-           return (0);
-    }}    
-    else {
-        
-           return (0);
+        } else {
+
+            return (0);
+        }
     }
-          }
 
 
 
@@ -260,7 +258,7 @@ $list_id = "(0";
 
 
 
-       function promonotgrandsurface($typeclient = null, $gouvernorat_id = null, $article_id = null, $date = null, $qte = null)
+    function promonotgrandsurface($typeclient = null, $gouvernorat_id = null, $article_id = null, $date = null, $qte = null)
     {
         $cond1 = "Promoarticles.datedebut <= '" . $date . "'";
         $cond2 = "Promoarticles.datefin >='" . $date . "'";
@@ -272,71 +270,69 @@ $list_id = "(0";
         $cond8 = "Lignepromoarticles.article_id=" . $article_id;
         $cond9 = "Gouvpromoarticles.gouvernorat_id=" . $gouvernorat_id;
         $cond10 = "Gouvpromoarticles.toutgouv=1";
-$nat = $this->fetchtable('Natlignepromoarticles')->find('all')->where([$cond4])->group(['promoarticle_id']);
-$li = $this->fetchtable('Lignepromoarticles')->find('all')->where([$cond8])->group(['promoarticle_id']);
+        $nat = $this->fetchtable('Natlignepromoarticles')->find('all')->where([$cond4])->group(['promoarticle_id']);
+        $li = $this->fetchtable('Lignepromoarticles')->find('all')->where([$cond8])->group(['promoarticle_id']);
 
         //debug($nat);
         $list_id = "(0";
-        if($nat!=null){
-        if ($nat != array()) {
-            foreach ($nat as $natid) {
-                $list_id = $list_id . "," . $natid['promoarticle_id'];
-               // mb_eregi(",".$natid['promoarticle_id']."," ,$list_id)
+        if ($nat != null) {
+            if ($nat != array()) {
+                foreach ($nat as $natid) {
+                    $list_id = $list_id . "," . $natid['promoarticle_id'];
+                    // mb_eregi(",".$natid['promoarticle_id']."," ,$list_id)
+                }
             }
         }
-       
-            }
-             if($li!=null){
-        if ($li != array()) {
-            foreach ($li as $natid) {
-                $list_id = $list_id . "," . $natid['promoarticle_id'];
-               // mb_eregi(",".$natid['promoarticle_id']."," ,$list_id)
+        if ($li != null) {
+            if ($li != array()) {
+                foreach ($li as $natid) {
+                    $list_id = $list_id . "," . $natid['promoarticle_id'];
+                    // mb_eregi(",".$natid['promoarticle_id']."," ,$list_id)
+                }
             }
         }
-         
-            }
-              $list_id = $list_id . ",0)" ;
-       
-     //  debug($list_id);//die;
-       $condd = "Promoarticles.id in " . $list_id;
-        $type = $this->fetchtable('Promoarticles')->find('all')->where([$cond1, $cond2, $cond3,$condd])->first();
-       // $type = $this->fetchtable('Promoarticles')->find('all')->where([$cond1, $cond2, $cond3])->first();
+        $list_id = $list_id . ",0)";
+
+        //  debug($list_id);//die;
+        $condd = "Promoarticles.id in " . $list_id;
+        $type = $this->fetchtable('Promoarticles')->find('all')->where([$cond1, $cond2, $cond3, $condd])->first();
+        // $type = $this->fetchtable('Promoarticles')->find('all')->where([$cond1, $cond2, $cond3])->first();
         //debug($type);die;
         if ($type != null) {
             //debug($type);die;
             if ($type['gouv'] == 0) {
 
                 if ($type['type'] == 0) {
-                    $tab = $this->fetchtable('Natlignepromoarticles')->find('all')->where([$cond4, $cond5, "Natlignepromoarticles.promoarticle_id =" . $type['id']])->order(["Natlignepromoarticles.qte"=>'DESC']);
-                      //  debug($tab->toArray()) ;    
-                     
-                    if ($tab != null) {
-                       // debug($tab);
-                       //$variable=[];
-                       $resultat=0;
-                        foreach ($tab as $i=>$v ){
-                            //debug($v);
-                            $val=(int)$v['qte'];
-                           /// debug($val);
-                            $value=(int)$v['value'];
-                          //  debug($value);
-                            $qte=(int)$qte ;
-                           // debug($qte);
-                            
-                                $rest = (int)($qte / $val);
-                               // debug($rest);
-                                
-                                $qte = ($qte % $val) ;
-                               // debug($qte);
+                    $tab = $this->fetchtable('Natlignepromoarticles')->find('all')->where([$cond4, $cond5, "Natlignepromoarticles.promoarticle_id =" . $type['id']])->order(["Natlignepromoarticles.qte" => 'DESC']);
+                    //  debug($tab->toArray()) ;    
 
-                                $resultat=($rest*$value)+$resultat;
-                              // debug($resultat);
-//$variable[$i]=$resultat;
-                        } 
-                       // debug($variable);
+                    if ($tab != null) {
+                        // debug($tab);
+                        //$variable=[];
+                        $resultat = 0;
+                        foreach ($tab as $i => $v) {
+                            //debug($v);
+                            $val = (int)$v['qte'];
+                            /// debug($val);
+                            $value = (int)$v['value'];
+                            //  debug($value);
+                            $qte = (int)$qte;
+                            // debug($qte);
+
+                            $rest = (int)($qte / $val);
+                            // debug($rest);
+
+                            $qte = ($qte % $val);
+                            // debug($qte);
+
+                            $resultat = ($rest * $value) + $resultat;
+                            // debug($resultat);
+                            //$variable[$i]=$resultat;
+                        }
+                        // debug($variable);
                         return ($resultat);
-                       // debug($resultat);
-                        
+                        // debug($resultat);
+
                     } else {
                         return 0;
                     }
@@ -356,16 +352,16 @@ $li = $this->fetchtable('Lignepromoarticles')->find('all')->where([$cond8])->gro
                     if ($type['type'] == 0) {
                         $tabs = $this->fetchtable('Natlignepromoarticles')->find('all')->where([$cond4, $cond5, "Natlignepromoarticles.promoarticle_id =" . $type['id']])->first();
                         if ($tabs != null) {
-                            $resultat=0;
-                            foreach ($tabs as $i=>$v ){
+                            $resultat = 0;
+                            foreach ($tabs as $i => $v) {
                                 //debug($v);
-                                $val=(int)$v['qte'];
-                                $value=(int)$v['value'];
-                                $qte=(int)$qte ;
+                                $val = (int)$v['qte'];
+                                $value = (int)$v['value'];
+                                $qte = (int)$qte;
                                 $rest = (int)($qte / $val);
-                                $qte = ($qte % $val) ;
-                                $resultat=($rest*$value)+$resultat;
-                            } 
+                                $qte = ($qte % $val);
+                                $resultat = ($rest * $value) + $resultat;
+                            }
 
                             return ($resultat);
                         } else {
@@ -389,85 +385,85 @@ $li = $this->fetchtable('Lignepromoarticles')->find('all')->where([$cond8])->gro
             return 0;
         }
     }
-//    function promonotgrandsurface($typeclient = null, $gouvernorat_id = null, $article_id = null, $date = null, $qte = null)
-//    {
-////        if($typeclient=='false'){
-////            $typeclient=10;
-////        }else{
-////           $typeclient=1;  
-////        }
-////       debug($typeclient);
-////        debug($gouvernorat_id);
-////           debug($article_id);
-////            debug($date);
-////            debug($qte);
-//        $cond1 = "Promoarticles.datedebut <= '" . $date . "'";
-//        $cond2 = "Promoarticles.datefin >='" . $date . "'";
-//        $cond3 = "Promoarticles.typeclient_id=" . $typeclient;
-//        $cond4 = "Natlignepromoarticles.article_id=" . $article_id;
-//        $cond5 = "Natlignepromoarticles.qte <=" . $qte;
-//        $cond6 = "Lignepromoarticles.min <=" . $qte;
-//        $cond7 = "Lignepromoarticles.max >=" . $qte;
-//        $cond8 = "Lignepromoarticles.article_id=" . $article_id;
-//        $cond9 = "Gouvpromoarticles.gouvernorat_id=" . $gouvernorat_id;
-//        $cond10 = "Gouvpromoarticles.toutgouv=1";
-//       // debug($cond1);
-//        //  debug($cond2);
-//        //  debug($cond3);
-//        $type = $this->fetchtable('Promoarticles')->find('all')->where([$cond1, $cond2, $cond3])->first();
-//        // debug($type);die;
-//        // debug($type['gouv']);
-//        // debug($type['type']);
-//        if ($type != null) {
-//            //debug($type);die;
-//            if ($type['gouv'] == 0) {
-//
-//                if ($type['type'] == 0) {
-//                    $tab = $this->fetchtable('Natlignepromoarticles')->find('all')->where([$cond4, $cond5, "Natlignepromoarticles.promoarticle_id =" . $type['id']])->first();
-//                    if ($tab != null) {
-//                        return ($tab->value);
-//                    } else {
-//                        return 0;
-//                    }
-//                } else {
-//                    $tabb = $this->fetchtable('Lignepromoarticles')->find('all')->where([$cond6, $cond7, $cond8, "Lignepromoarticles.promoarticle_id =" . $type['id']])->first();
-//
-//                    if ($tabb != null) {
-//                        // debug($tabb->value);
-//                        return ($tabb->value);
-//                    } else {
-//                        return 0;
-//                    }
-//                }
-//            } elseif ($type['gouv'] == 1) {
-//                $go = $this->fetchtable('Gouvpromoarticles')->find('all')->where([$cond9, $cond10, "Gouvpromoarticles.promoarticle_id =" . $type['id']])->first();
-//                if ($go != null) {
-//                    if ($type['type'] == 0) {
-//                        $tabs = $this->fetchtable('Natlignepromoarticles')->find('all')->where([$cond4, $cond5, "Natlignepromoarticles.promoarticle_id =" . $type['id']])->first();
-//                        if ($tabs != null) {
-//
-//                            return ($tabs->value);
-//                        } else {
-//                            return 0;
-//                        }
-//                    } else {
-//                        $tabbs = $this->fetchtable('Lignepromoarticles')->find('all')->where([$cond6, $cond7, $cond8, "Lignepromoarticles.promoarticle_id =" . $type['id']])->first();
-//                        // debug($tabbs->value);
-//                        if ($tabbs != null) {
-//                            // debug($tabbs->value);
-//                            return ($tabbs->value);
-//                        } else {
-//                            return 0;
-//                        }
-//                    }
-//                } else {
-//                    return 0;
-//                }
-//            }
-//        } else {
-//            return 0;
-//        }
-//    }
+    //    function promonotgrandsurface($typeclient = null, $gouvernorat_id = null, $article_id = null, $date = null, $qte = null)
+    //    {
+    ////        if($typeclient=='false'){
+    ////            $typeclient=10;
+    ////        }else{
+    ////           $typeclient=1;  
+    ////        }
+    ////       debug($typeclient);
+    ////        debug($gouvernorat_id);
+    ////           debug($article_id);
+    ////            debug($date);
+    ////            debug($qte);
+    //        $cond1 = "Promoarticles.datedebut <= '" . $date . "'";
+    //        $cond2 = "Promoarticles.datefin >='" . $date . "'";
+    //        $cond3 = "Promoarticles.typeclient_id=" . $typeclient;
+    //        $cond4 = "Natlignepromoarticles.article_id=" . $article_id;
+    //        $cond5 = "Natlignepromoarticles.qte <=" . $qte;
+    //        $cond6 = "Lignepromoarticles.min <=" . $qte;
+    //        $cond7 = "Lignepromoarticles.max >=" . $qte;
+    //        $cond8 = "Lignepromoarticles.article_id=" . $article_id;
+    //        $cond9 = "Gouvpromoarticles.gouvernorat_id=" . $gouvernorat_id;
+    //        $cond10 = "Gouvpromoarticles.toutgouv=1";
+    //       // debug($cond1);
+    //        //  debug($cond2);
+    //        //  debug($cond3);
+    //        $type = $this->fetchtable('Promoarticles')->find('all')->where([$cond1, $cond2, $cond3])->first();
+    //        // debug($type);die;
+    //        // debug($type['gouv']);
+    //        // debug($type['type']);
+    //        if ($type != null) {
+    //            //debug($type);die;
+    //            if ($type['gouv'] == 0) {
+    //
+    //                if ($type['type'] == 0) {
+    //                    $tab = $this->fetchtable('Natlignepromoarticles')->find('all')->where([$cond4, $cond5, "Natlignepromoarticles.promoarticle_id =" . $type['id']])->first();
+    //                    if ($tab != null) {
+    //                        return ($tab->value);
+    //                    } else {
+    //                        return 0;
+    //                    }
+    //                } else {
+    //                    $tabb = $this->fetchtable('Lignepromoarticles')->find('all')->where([$cond6, $cond7, $cond8, "Lignepromoarticles.promoarticle_id =" . $type['id']])->first();
+    //
+    //                    if ($tabb != null) {
+    //                        // debug($tabb->value);
+    //                        return ($tabb->value);
+    //                    } else {
+    //                        return 0;
+    //                    }
+    //                }
+    //            } elseif ($type['gouv'] == 1) {
+    //                $go = $this->fetchtable('Gouvpromoarticles')->find('all')->where([$cond9, $cond10, "Gouvpromoarticles.promoarticle_id =" . $type['id']])->first();
+    //                if ($go != null) {
+    //                    if ($type['type'] == 0) {
+    //                        $tabs = $this->fetchtable('Natlignepromoarticles')->find('all')->where([$cond4, $cond5, "Natlignepromoarticles.promoarticle_id =" . $type['id']])->first();
+    //                        if ($tabs != null) {
+    //
+    //                            return ($tabs->value);
+    //                        } else {
+    //                            return 0;
+    //                        }
+    //                    } else {
+    //                        $tabbs = $this->fetchtable('Lignepromoarticles')->find('all')->where([$cond6, $cond7, $cond8, "Lignepromoarticles.promoarticle_id =" . $type['id']])->first();
+    //                        // debug($tabbs->value);
+    //                        if ($tabbs != null) {
+    //                            // debug($tabbs->value);
+    //                            return ($tabbs->value);
+    //                        } else {
+    //                            return 0;
+    //                        }
+    //                    }
+    //                } else {
+    //                    return 0;
+    //                }
+    //            }
+    //        } else {
+    //            return 0;
+    //        }
+    //    }
     public function beforeRender(EventInterface $event)
     {
         $this->viewBuilder()->setTheme('AdminLTE');
@@ -477,7 +473,7 @@ $li = $this->fetchtable('Lignepromoarticles')->find('all')->where([$cond8])->gro
     public function getmax()
     {
 
-      
+
         $connection = ConnectionManager::get('default');
 
         $m = $connection->execute('SELECT MAX(numero) as max
@@ -487,12 +483,10 @@ $li = $this->fetchtable('Lignepromoarticles')->find('all')->where([$cond8])->gro
           SELECT numero FROM factureavoirs
         ) combined_results; ')->fetchAll('assoc');
 
-          $max = $m[0]['max'];
+        $max = $m[0]['max'];
 
-          return $max ; 
+        return $max;
 
-echo($max);
-
-
+        echo ($max);
     }
 }

@@ -47,7 +47,7 @@
 
             <div class="col-md-6">
               <?php
-              echo $this->Form->control('numero', ['label' => 'N° Fac Fournisseur']);
+              echo $this->Form->control('numero', ['label' => 'Numéro','value'=>$b,'readonly']);
 
               ?>
             </div>
@@ -282,7 +282,7 @@
             </div>
 
 
-            <button type="submit" class="pull-right btn btn-success btn-sm" id="livraisonSubmit" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+            <button type="submit" class="pull-right btn btn-success btn-sm btnajout" id="livraisonSubmit" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
             <?php echo $this->Form->end(); ?>
           </div>
         </section>
@@ -432,14 +432,20 @@
       }
     }
 
-    $('.ajoutttt').on('change', function() {
+    let ligneAjoutee = false;
 
-      $('html, body').animate({
-        scrollTop: $("#tabligne3").offset().top
-      }, 1000);
-      // ajoutermk("tabligne", "index");
-      ajouter_lignefares("tabligne3", "index3");
-    })
+$('.ajoutttt').on('change', function() {
+    if (!ligneAjoutee) {
+        ligneAjoutee = true; // Empêche les autres clics
+        $('html, body').animate({
+            scrollTop: $("#tabligne3").offset().top
+        }, 1000);
+        
+        ajouter_lignefares("tabligne3", "index3");
+        
+    }
+});
+
     $('.getcode').on('change', function() {
       index = $(this).attr('index'); //alert(index);
       selectedcodename = $(this).val(); //alert(selectedcodename);
@@ -697,6 +703,7 @@
       index = $('#index3').val();
       // alert(index)
 
+      timbre = $('#timbre_id').val();
 
 
       totalremise = 0;
@@ -704,6 +711,7 @@
       totalfodec = 0;
       totaltva = 0;
       totalttc = 0;
+      totalttcctm=0;
       for (i = 0; i <= index; i++) {
         sup = $('#sup0' + i).val() || 0;
         if (Number(sup) != 1) {
@@ -745,13 +753,13 @@
         }
       }
       //timbre=$('#timbre').val()||0;
-      //totalttc=Number(totalttc)+Number(timbre);
+      totalttcctm=Number(totalttc)+Number(timbre);
       $('#punht').val(Number(punht).toFixed(3));
       $('#remise').val(Number(totalremise).toFixed(3));
       $('#ht').val(Number(totalht).toFixed(3));
       $('#fodec').val(Number(totalfodec).toFixed(3));
       $('#tva').val(Number(totaltva).toFixed(3));
-      $('#ttc').val(Number(totalttc).toFixed(3));
+      $('#ttc').val(Number(totalttcctm).toFixed(3));
 
     }
     // $('.articleidbl1').on('change', function() {
@@ -959,18 +967,32 @@
   $('.btnajout').on('mouseover', function() {
     // alert('dalanda');
     numero = $('#numero').val();
+    date = $('#date').val();
+
     depot = $('#depot-id').val();
     fournisseur = $('#fournisseur-id').val();
     if (numero == '') {
-      alert('choisir numéro SVP !!', function() {});
+      alert('choisir numéro SVP !!');
+      return false;
     }
     if (fournisseur == '') {
-      alert('choisir fournisseur SVP !!', function() {});
+      alert('choisir fournisseur SVP !!');
+      return false;
+    }
+
+    
+    if (date == '') {
+      
+      alert('choisir date SVP !!');
+      return false;
     }
     //alert(namepv)
     if (depot == '') {
-      alert('choisir depot SVP !!', function() {});
+      
+      alert('choisir depot SVP !!');
+      return false;
     }
+
   });
 </script>
 <?php echo $this->Html->script('AdminLTE./bower_components/datatables.net/js/jquery.dataTables.min', ['block' => 'script']); ?>

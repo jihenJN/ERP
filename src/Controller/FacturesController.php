@@ -504,7 +504,9 @@ class FacturesController extends AppController
         $tim = $this->fetchTable('Timbres')->find()->select(["timbre" =>
         'MAX(Timbres.timbre)'])->first();
         $timbre = $tim->timbre;
-        $this->set(compact('lignefactures', 'articles', 'facture', 'fournisseurs', 'timbre'));
+        $societes = $this->fetchTable('Societes')->find('all')->first();
+
+        $this->set(compact('lignefactures','societes', 'articles', 'facture', 'fournisseurs', 'timbre'));
     }
     //    
     public function addindirect($tab = null)
@@ -537,7 +539,7 @@ class FacturesController extends AppController
                 'qteliv' => $lignelivraisonsTable->query()->func()->sum('Lignelivraisons.qteliv'),
             ])
             ->where('livraison_id IN (' . $tab . ')')
-            ->group(['article_id', 'prix'])
+            ->group(['Lignelivraisons.article_id', 'Lignelivraisons.prix'])
             ->contain(['Articles']);
 
         //debug($lignelivraisons->toarray());
@@ -587,7 +589,7 @@ class FacturesController extends AppController
             $b = "FC{$currentYear}00{$mm}";
 
             // $data['numero'] =  $b;
-            $data['numero'] =  $this->request->getData('numero');
+            $data['numero'] =  $b;
             $data['date'] = $this->request->getData('date');
             $data['fournisseur_id'] = $this->request->getData('fournisseur_id');
             $data['adresselivraisonfournisseur_id'] = $this->request->getData('adresselivraisonfournisseur_id');
@@ -607,6 +609,7 @@ class FacturesController extends AppController
             $data['facturefournisseur'] = $this->request->getData('facturefournisseur');
             $data['datefournisseur'] = $this->request->getData('datefournisseur');
 
+            $data['timbre'] = $this->request->getData('timbre');
 
 
 
@@ -945,7 +948,7 @@ class FacturesController extends AppController
             $mm = str_pad("$in", 4, "0", STR_PAD_LEFT);
             $b = "FC{$currentYear}00{$mm}";
 
-            $data['numero'] = $this->request->getData('numero');
+            $data['numero'] = $b;
             $data['date'] = $this->request->getData('date');
             $data['fournisseur_id'] = $this->request->getData('fournisseur_id');
             $data['typef'] = $typef;
@@ -960,6 +963,7 @@ class FacturesController extends AppController
             $data['fodec'] = $this->request->getData('fodec');
             $data['ht'] = $this->request->getData('ht');
             $data['ttc'] = $this->request->getData('ttc');
+            $data['timbre'] = $this->request->getData('timbre');
 
 
 

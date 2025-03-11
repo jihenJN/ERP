@@ -84,7 +84,6 @@ class UsersController extends AppController
 
 
         $session->delete('lien_achat' . $abrv);
-        $session->delete('lien_projet' . $abrv);
         $session->delete('lien_stock' . $abrv);
         $session->delete('lien_prévisionnement' . $abrv);
         $session->delete('lien_parametrage' . $abrv);
@@ -219,17 +218,7 @@ class UsersController extends AppController
                             $session->write('lien_stock' . $abrv, $pan);
                             //debug($pan);die;
                         }
-                        if ($utili['menu_id'] == 26) {
-                            $menu16 = $this->Liens->find('all')->where(["Liens.utilisateurmenu_id=" . $idu . " "]);
-                            //dd($menu16);
-                            foreach ($menu16 as $m => $menu) {
-                                $pan233[$m] = $menu;
-                            }
-                            $var = 'lien_projet' . $abrv;
-                            $session->write('projets' . $abrv, 'pro');
-                            $session->write('projets' . $abrv, 'pro');
-                            $session->write('lien_projet' . $abrv, $pan233);
-                        }
+
                         if ($utili['menu_id'] == 2) {
                             $menu12 = $this->Liens->find('all')->where(["Liens.utilisateurmenu_id=" . $idu . " "]);
                             //   debug($menu12);

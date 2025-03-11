@@ -43,14 +43,14 @@ use Cake\Datasource\ConnectionManager;
 
                                   ?></div>
             <div class="col-md-6"><?php
-                                  echo $this->Form->control('pointdevente_id', ['label' => "Site", 'empty' => 'Veuillez choisir !!', 'options' => $pointdeventes, 'class' => 'form-control select2']);
+                                  echo $this->Form->control('pointdevente_id', ['id' => 'site-id', 'label' => "Site", 'empty' => 'Veuillez choisir !!', 'options' => $pointdeventes, 'class' => 'form-control select2']);
 
                                   ?></div>
 
-            <div class="col-md-6"><?php
-                                  echo $this->Form->control('depot_id', ['label' => "Depot", 'empty' => 'Veuillez choisir !!', 'options' => $depots, 'class' => 'form-control select2']);
+            <div class="col-xs-6" id="divdepot"><?php
+                                                echo $this->Form->control('depot_id', ['label' => "Depot", 'empty' => 'Veuillez choisir !!', 'id' => 'depot_id', 'options' => $depots, 'class' => 'form-control select2']);
 
-                                  ?>
+                                                ?>
             </div>
             <!-- <div class="col-md-6"><?php
                                         echo $this->Form->control('typesortie_id', ['label' => "Type de sortie", 'empty' => 'Veuillez choisir !!', 'options' => $typesorties, 'class' => 'form-control select2']);
@@ -139,7 +139,7 @@ use Cake\Datasource\ConnectionManager;
                           echo $this->Form->input('qte', array('class' => ' form-control tot', 'type' => 'number', 'step' => 'any', 'value' => '', 'label' => '', 'index' => '', 'champ' => 'qte', 'table' => 'ligner', 'name' => '', 'empty' => 'Veuillez choisir !!', 'id' => ''));
                           ?>
                         </td>
-                       
+
 
                         <td align="center" table="ligner">
                           <?php
@@ -204,7 +204,7 @@ use Cake\Datasource\ConnectionManager;
                             <?php echo $this->Form->control('qte', array('class' => 'form-control tot', 'label' => '', 'value' => $li->qte, 'champ' => 'qte', 'name' => 'data[ligner][' . $i . '][qte]', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'type' => 'number', 'step' => 'any', 'min' => "0")); ?>
                             <!-- 'oninput' => "validity.valid||(value='') -->
                           </td>
-                         
+
                           <td align="center">
                             <?php echo $this->Form->control('prix', array('class' => 'form-control', 'label' => '', 'value' => $li->prix, 'champ' => 'prix', 'name' => 'data[ligner][' . $i . '][prix]', 'id' => 'prix' . $i, 'table' => 'ligner', 'index' => $i, 'type' => 'number', 'step' => 'any', 'min' => "0")); ?>
 
@@ -236,9 +236,9 @@ use Cake\Datasource\ConnectionManager;
 
 
         <div align="center" id="">
-        <button type="submit" class="pull-right btn btn-success btn-sm alertMouv" id="" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+          <button type="submit" class="pull-right btn btn-success btn-sm btncheck" id="" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
 
-           <!-- <button type="submit" id="" class="btn btn-primary alertMouv ">Enregistrer</button> -->
+          <!-- <button type="submit" id="" class="btn btn-primary alertMouv ">Enregistrer</button> -->
         </div>
         <?php echo $this->Form->end(); ?>
       </div>
@@ -259,13 +259,72 @@ use Cake\Datasource\ConnectionManager;
 </script>
 <script>
   $(function() {
+
+    $('.btncheck').on('mouseover', function() {
+      date = $('#date').val();
+      site = $('#site-id').val();
+      depot = $('#depot_id').val();
+
+      if (date == '' || date == null) {
+        alert('Veuillez choisir la date', function() {});
+        return false;
+      }
+
+      if (site == '' || site == null) {
+        alert('Veuillez choisir le site', function() {});
+        return false;
+      }
+
+      if (depot == '' || depot == null || depot == "Veuillez choisir !!") {
+        alert('Veuillez choisir le dépot', function() {});
+        return false;
+      }
+
+      index = Number($('#index').val());
+      sup = Number($('#sup').val());
+
+      if (index == -1) {
+        alert('Ajouter une ligne', function() {});
+        return false;
+      } else if (index != -1) {
+        $nb = -1;
+        for (i = 0; i <= Number(index); i++) {
+          sup = $('#sup' + i).val();
+          if (sup == 1) {
+            $nb++;
+          }
+        }
+        if ($nb == index) {
+          alert('Ajouter une ligne', function() {});
+          return false;
+
+        }
+      }
+      for (i = 0; i <= Number(index); i++) {
+        sup = $('#sup' + i).val();
+
+        article_id = $('#article_id' + i).val();
+
+        qte = $('#qte' + i).val();
+
+        if ((article_id == null || article_id == '') && (sup != 1)) {
+          alert('Selectionnez un article SVP', function() {});
+          return false;
+        } else if ((qte == 0 || qte == '') && sup != 1) {
+          alert('Ajouter une quantite SVP', function() {});
+          return false;
+        }
+      }
+
+
+    })
     $('.depot').on('change', function() {
       ///alert('hechem');
       id = $('#site-id').val();
       //alert(id)
       $.ajax({
         method: "GET",
-        url: "<?= $this->Url->build(['controller' => 'Inventaires', 'action' => 'getDepot']) ?>",
+        url: "<?= $this->Url->build(['controller' => 'Inventaires', 'action' => 'getDepotbs']) ?>",
         dataType: "json",
         data: {
           id: id,
@@ -276,7 +335,10 @@ use Cake\Datasource\ConnectionManager;
         },
         success: function(data) {
 
-          $('#depot_id').html(data.select);
+
+          $('#divdepot').html(data.select);
+          $('#depot_id').select2();
+
 
         }
 

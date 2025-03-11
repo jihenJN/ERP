@@ -377,7 +377,7 @@ use Cake\ORM\TableRegistry;
                                                     <td align="center" table="ligner">
                                                         <input type="hidden" table="ligner" name="" readonly champ="article_idd" class="  form-control" index>
 
-                                                        <input type="number" table="ligner" name="" id="" champ="qte" type="text" class=" calculligne2 form-control focus" index>
+                                                        <input type="number" table="ligner" name="" id="" champ="qte" type="text" class=" calculligne2 form-control focus findtth2  ttcligne" index>
                                                     </td>
                                                     <!-- <td align="center" table="ligner">
                                                         <input type="number" table="ligner" name="" id="qte{{index}}" champ="qte" type="text" class="calculligne2 form-control focus" index="{{index}}">
@@ -416,7 +416,7 @@ use Cake\ORM\TableRegistry;
 
                                                     <td>
                                                         <input table="ligner" readonly type="text" name="" champ="ttc" class="form-control  ttcligne " index>
-                                                        <input table="ligner" type="hidden" name="" readonly champ="ttchidden" class="form-control" index>
+                                                        <input table="ligner" type="" name="" readonly champ="ttchidden" class="form-control" index>
 
                                                     </td>
                                                     <td hidden>

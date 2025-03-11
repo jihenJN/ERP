@@ -65,36 +65,38 @@ if ($add == 1) { ?>
           <div class="form-group input text required">
             <label class="control-label" for="name">Type localisation</label>
             <select class="form-control select2" name="typelocalisation_id" id="typelocalisation_id">
-              <option value="<?php ['value' => $this->request->getQuery('typelocalisation_id')] ?>" selected="selected" disabled>Veuillez choisir !!</option>
+              <option value="" <?= empty($this->request->getQuery('typelocalisation_id')) ? 'selected' : '' ?>>Veuillez choisir !!</option>
               <?php foreach ($typelocalisations as $id => $point) { ?>
-                <option value="<?php echo $id ?>"><?php echo  $point ?></option>
+                <option value="<?= $id ?>" <?= $id == $this->request->getQuery('typelocalisation_id') ? 'selected' : '' ?>><?= $point ?></option>
               <?php } ?>
             </select>
+
           </div>
         </div>
         <div class="col-xs-2">
           <div class="form-group input text required">
             <label class="control-label" for="name">Mode paiement</label>
             <select class="form-control select2" name="paiement_id" id="paiement_id">
-              <option value="<?php ['value' => $this->request->getQuery('paiement_id')] ?>" selected="selected" disabled>Veuillez choisir !!</option>
+              <option value="" <?= empty($this->request->getQuery('paiement_id')) ? 'selected' : '' ?>>Veuillez choisir !!</option>
               <?php foreach ($paiements as $id => $point) { ?>
-                <option value="<?php echo $id ?>"><?php echo  $point ?></option>
+                <option value="<?= $id ?>" <?= $id == $this->request->getQuery('paiement_id') ? 'selected' : '' ?>><?= $point ?></option>
               <?php } ?>
             </select>
+
           </div>
         </div>
 
-        <div class="col-xs-2">
+        <!-- <div class="col-xs-2">
           <div class="form-group input text required">
             <label class="control-label" for="name">Type utilisateur</label>
             <select class="form-control select2" name="typeutilisateur_id" id="typeutilisateur_id">
-              <option value="<?php ['value' => $this->request->getQuery('typeutilisateur_id')] ?>" selected="selected" disabled>Veuillez choisir !!</option>
+              <option value="" <?= empty($this->request->getQuery('typeutilisateur_id')) ? 'selected' : '' ?>>Veuillez choisir !!</option>
               <?php foreach ($typeutilisateurs as $id => $point) { ?>
-                <option value="<?php echo $id ?>"><?php echo  $point ?></option>
+                <option value="<?= $id ?>" <?= $id == $this->request->getQuery('typeutilisateur_id') ? 'selected' : '' ?>><?= $point ?></option>
               <?php } ?>
             </select>
           </div>
-        </div>
+        </div> -->
 
 
         <div class="col-xs-2">
@@ -247,32 +249,37 @@ if ($add == 1) { ?>
 <script>
   $(function() {
     $('.verifiercmd').on('click', function() {
-      let index = $(this).attr('index');
-      let fournisseurId = $('#id' + index).val();
-
+      // alert('hello');
+      ind = $(this).attr('index');
+      //  alert(ind);
+      fournisseurId = $('#id' + ind).val();
+      //  alert(id);
+      //  alert(id)
       $.ajax({
         method: "GET",
-        url: "<?= $this->Url->build(['controller' => 'Fournisseurs', 'action' => 'getfournisseurcmd']) ?>",
+        url: "<?= $this->Url->build(['controller' => 'Fournisseurs', 'action' => 'getfourcmd']) ?>",
         dataType: "json",
         data: {
-          idfournisseur: fournisseurId
+          fournisseurid: fournisseurId
         },
         headers: {
           'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
         },
-        success: function(response) {
-          if (response.hasDependencies) {
-            alert("Existe dans autre document");
+        success: function(data) {
+          //   $('#pays').html(data.pays);
+          //  alert(data.pays);
+
+
+          if (data.fournisseurs != 0) {
+            alert("Existe dans un autre document");
+
           } else {
-            if (confirm('Voulez-vous vraiment supprimer cet enregistrement ?')) {
-              window.location.href = wr + "Fournisseurs/delete/" + fournisseurId;
+            if (confirm('Voulez vous vraiment supprimer cet enregistrement')) {
+              document.location = wr + "fournisseurs/delete/" + fournisseurId;
             }
           }
-        },
-        error: function() {
-          alert("Une erreur s'est produite. Veuillez réessayer.");
         }
-      });
+      })
     });
 
   });

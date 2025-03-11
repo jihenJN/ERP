@@ -16,18 +16,18 @@ $connection = ConnectionManager::get('default');
 <?php echo $this->Html->script('salma'); ?>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script>
 <section class="content-header">
-  
+
   <?php if ($type == 2) { ?>
     <h1>
-    Modification Bordereau versement chéque
+      Modification Bordereau versement chéque
     </h1>
   <?php } else { ?>
     <h1>
-    Modification Bordereau versement traite
+      Modification Bordereau versement traite
     </h1>
   <?php } ?>
   <ol class="breadcrumb">
-    <li><a href="<?php echo $this->Url->build(['action' => 'index/'.$type]); ?>"><i class="fa fa-reply"></i>
+    <li><a href="<?php echo $this->Url->build(['action' => 'index/' . $type]); ?>"><i class="fa fa-reply"></i>
         <?php echo __('Retour'); ?>
       </a></li>
   </ol>
@@ -50,21 +50,24 @@ $connection = ConnectionManager::get('default');
                 <?php
                 echo $this->Form->control('id', ['id' => 'id', 'type' => 'hidden']);
 
-                echo $this->Form->control('numero', ['readonly', 'label' => 'Numero']);
+                echo $this->Form->control('numero', [ 'label' => 'Numero']);
                 ?>
                 <?php
-                echo $this->Form->control('date', ['id' => 'date', 'value' => @$date, 'label' => 'Du', 'class' => 'form-control date']);
+                echo $this->Form->control('date', ['id' => 'date', 'readonly','value' => @$date, 'label' => 'Du', 'class' => 'form-control date']);
                 ?>
-                <?php
-                // echo $this->Form->control('dateimp', ['type'=>'date','value' => @$dateimp, 'label' => 'Date impression', 'class' => 'form-control']);
-                ?>
+                <div class="col-xs-6" hidden>
+                  <?php
+                  echo $this->Form->control('dateimp', ['type' => 'date', 'value' => @$dateimp, 'label' => 'Date impression', 'class' => 'form-control']);
+                  ?>
+                </div>
               </div>
               <div class="col-xs-6">
 
                 <?php echo $this->Form->control('compte_id', ['value' => @$compte_id, 'id' => 'client', 'options' => $comptes, 'empty' => 'Veuillez choisir !!', 'label' => 'Comptes', 'class' => 'form-control select2 control-label']); ?>
-
+              </div>
+              <div class="col-xs-6" hidden>
                 <?php
-                //  echo $this->Form->control('datefin', ['type'=>'date','value' => @$datefin, 'label' => 'Au', 'class' => 'form-control date']);
+                  echo $this->Form->control('datefin', ['type'=>'date','value' => @$datefin, 'readonly','label' => 'Au', 'class' => 'form-control date']);
                 ?>
 
               </div>
@@ -113,7 +116,9 @@ $connection = ConnectionManager::get('default');
 
                               <td><?php echo $piece[0]['rs'] ?></td>
                               <td><?php echo $piece[0]['montant'] ?></td>
-                              <td> <?php echo $this->Form->input('coffre', ['checked', 'label' => '', 'value' => @$piece[0]['idp'], 'id' => 'coffre' . $i, 'table' => 'lignebordereauversementcheques', 'name' => 'data[lignebordereauversementcheques][' . $i . '][coffre_id]', 'type' => 'checkbox']); ?>
+                              <td> <?php echo $this->Form->input('coffre', ['checked', 'label' => '','class'=>'testcoffre', 'value' => @$piece[0]['idp'], 'id' => 'coffre' . $i, 'table' => 'lignebordereauversementcheques', 'name' => 'data[lignebordereauversementcheques][' . $i . '][coffre_id]', 'type' => 'checkbox']);
+
+                                    echo $this->Form->input('coffre_hidden', ['id' => 'coffre_hidden' . $i, 'type' => 'hidden', 'value' => 1, 'name' => 'data[lignebordereauversementcheques][' . $i . '][coffre_id_hidden]']); ?>
                               </td>
 
                             </tr>
@@ -132,7 +137,9 @@ $connection = ConnectionManager::get('default');
 
                               <td><?php echo $clients['0']['Raison_Sociale'] ?></td>
                               <td><?php echo $v['montant'] ?></td>
-                              <td> <?php echo $this->Form->input('coffre', ['label' => '', 'value' => @$v['id'], 'id' => 'coffre' . $i, 'table' => 'lignebordereauversementcheques', 'name' => 'data[lignebordereauversementcheques][' . $i . '][coffre_id]', 'type' => 'checkbox']); ?>
+                              <td> <?php echo $this->Form->input('coffre', ['label' => '', 'class' => 'testcoffre', 'value' => @$v['id'], 'id' => 'coffre' . $i, 'table' => 'lignebordereauversementcheques', 'name' => 'data[lignebordereauversementcheques][' . $i . '][coffre_id]', 'type' => 'checkbox']);
+                                    echo $this->Form->input('coffre_hidden', ['id' => 'coffre_hidden' . $i, 'type' => 'hidden', 'value' => 1, 'name' => 'data[lignebordereauversementcheques][' . $i . '][coffre_id_hidden]']); ?>
+
                               </td>
                             </tr>
                           <?php } ?>
@@ -203,7 +210,7 @@ $connection = ConnectionManager::get('default');
         alert('Ajouter le date Impression', function() {});
         return false;
       } else {
-        window.location.href = '/demo/bordereauversementcheques/edit/' + id + '/' + compte_id + '/' + date + '/' + datefin + '/' + dateimp; // Ajoute un paramètre à l'URL
+        window.location.href = '/ERP/bordereauversementcheques/edit/' + id + '/' + compte_id + '/' + date + '/' + datefin + '/' + dateimp; // Ajoute un paramètre à l'URL
 
       }
 
@@ -225,14 +232,14 @@ $connection = ConnectionManager::get('default');
       } else if (date == "") {
         alert('Ajouter le date debut', function() {});
         return false;
-      } else if (datefin == "") {
-        alert('Ajouter le date fin', function() {});
-        return false;
-      } else if (dateimp == "") {
-        alert('Ajouter le date Impression', function() {});
-        return false;
+      /// } else if (datefin == "") {
+        // alert('Ajouter le date fin', function() {});
+        // return false;
+      // } else if (dateimp == "") {
+          //   alert('Ajouter le date Impression', function() {});
+        // return false;
       } else {
-        window.location.href = '/demo/bordereauversementcheques/edit/' + id + '/' + compte_id + '/' + date + '/' + datefin + '/' + dateimp; // Ajoute un paramètre à l'URL
+        window.location.href = '/ERP/bordereauversementcheques/edit/'+ type+ '/' + id + '/' + compte_id + '/' + date + '/' + datefin + '/' + dateimp; // Ajoute un paramètre à l'URL
 
       }
 
@@ -274,6 +281,30 @@ $connection = ConnectionManager::get('default');
         }
 
       }
+
+    });
+    $('.testcoffre').on('click', function() {
+
+      //alert('fffffffff')
+      index = $('#index').val();
+      // alert(index)
+
+
+      for (i = 0; i <= index; i++) {
+        // coffre = $('#coffre' + i).val();
+        if ($('#coffre' + i).prop('checked')) {
+          coffre = $('#coffre_hidden' + i).val(1);
+          coffrep = $('#coffre' + i).val(1);
+        } else {
+          coffre = $('#coffre_hidden' + i).val(0);
+          coffrep = $('#coffre' + i).val(1);
+        }
+      }
+      // console.log('Checkbox ' + i + ' checked: ' + $('#coffre' + i).prop('checked'));
+      // console.log('Value set for coffre' + i + ': ' + $('#coffre' + i).val());
+
+
+
 
     });
   });

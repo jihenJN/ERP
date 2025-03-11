@@ -37,7 +37,7 @@
 
             <div class="col-md-6">
               <?php
-              echo $this->Form->control('numero', ['readonly' => 'readonly', 'label' => 'Numéro']);
+              echo $this->Form->control('numero', ['readonly' => 'readonly', 'value'=>$facture->numero,'label' => 'Numéro']);
 
               ?>
             </div>
@@ -250,7 +250,7 @@
                             <input type="text" name="data[tabligne3][<?= h($indice) ?>][prix]" id="prix<?= h($indice) ?>" index="<?= h($indice) ?>" class="form-control httbc" value="<?= h($ligne->prix) ?>">
                           </td>
                           <td>
-                            <input type="text" readonly name="data[tabligne3][<?= h($indice) ?>][punht]" id="punht<?= h($indice) ?>" index="<?= h($indice) ?>" class="form-control httbc" value="<?= h($ligne->punht) ?>">
+                            <input type="text" readonly name="data[tabligne3][<?= h($indice) ?>][punht]" id="punht<?= h($indice) ?>" index="<?= h($indice) ?>" class="form-control httbc" value="<?= h($ligne->ht) ?>">
 
                           </td>
                           <td>
@@ -282,29 +282,29 @@
             </div>
             <div class="col-xs-6">
               <?php
-              echo $this->Form->control('remise', ['id' => 'totalremise', 'class' => 'form-control httbc ', 'readonly']); ?>
+              echo $this->Form->control('remise', ['id' => 'totalremise','value'=>$facture->remise, 'class' => 'form-control httbc ', 'readonly']); ?>
             </div>
             <div class="col-xs-6">
               <?php
-              echo $this->Form->control('punht', ['label' => 'Ht', 'id' => 'totalht', 'class' => 'form-control httbc ', 'readonly']); ?>
+              echo $this->Form->control('punht', ['label' => 'Ht', 'id' => 'totalht','value'=>$facture->ht, 'class' => 'form-control httbc ', 'readonly']); ?>
             </div>
 
             <div class="col-xs-6" hidden>
               <?php
-              echo $this->Form->control('fodec', ['id' => 'totalfodec', 'class' => 'form-control httbc ', 'readonly']); ?>
+              echo $this->Form->control('fodec', ['id' => 'totalfodec','value'=>$facture->fodec, 'class' => 'form-control httbc ', 'readonly']); ?>
             </div>
 
             <div class="col-xs-6">
               <?php
-              echo $this->Form->control('tva', ['id' => 'totaltva', 'class' => 'form-control httbc ', 'readonly']); ?>
+              echo $this->Form->control('tva', ['id' => 'totaltva','value'=>$facture->tva, 'class' => 'form-control httbc ', 'readonly']); ?>
             </div>
             <div class="col-xs-6">
               <?php
-              echo $this->Form->control('timbre', ['readonly' => 'readonly', 'id' => 'timbre_id', 'value' => $timbre, 'class' => 'form-control httbc ']); ?>
+              echo $this->Form->control('timbre', ['readonly' => 'readonly', 'id' => 'timbre_id', 'value' => $facture->timbre, 'class' => 'form-control httbc ']); ?>
             </div>
             <div class="col-xs-6">
               <?php
-              echo $this->Form->control('ttc', ['id' => 'totalttc', 'class' => 'form-control httbc ', 'readonly']); ?>
+              echo $this->Form->control('ttc', ['id' => 'totalttc','value'=>$facture->ttc, 'class' => 'form-control httbc ', 'readonly']); ?>
             </div>
             <?php echo $this->Form->end(); ?>
           </div>
@@ -318,7 +318,7 @@
 </section>
 <script>
   $(document).ready(function() {
-    calculeachatavctimbre();
+   // calculeachatavctimbre();
   })
   $(function() {
     $('#fournisseur-id').on('change', function() {

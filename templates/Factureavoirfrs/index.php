@@ -11,6 +11,14 @@
 
 <?php //if ($type== 1) { 
 ?>
+<section class="content-header">
+  <header>
+
+
+      <h1 style="text-align:center;"> Factures Avoir</h1>
+
+  </header>
+</section>
 <div class="pull-left" style="margin-left:25px;margin-top: 20px">
 
   <?php //echo $this->Html->link(__('Ajouter'), ['action' => 'add/1' ], ['class' => 'btn btn-success btn-sm']) 
@@ -103,6 +111,8 @@
             <th scope="col"><?= h('Date') ?></th>
             <th scope="col"><?= h('Fournisseur') ?></th>
             <th scope="col"><?= h('Facture') ?></th>
+            <th scope="col"><?= h('Total TTC') ?></th>
+
             <th scope="col" class="actions text-center"><?= __('Actions') ?></th>
           </tr>
         </thead>
@@ -121,9 +131,14 @@
                 ?></td>
               <td><?= ($factureavoirfr->fournisseur->name) ?></td>
               <td><?= ($factureavoirfr->facture->numero) ?></td>
+              <td><?= ($factureavoirfr->totalttc) ?></td>
+              
 
               <td class="actions text-right">
-
+              <?php
+                                //if ($commande['valide'] == 1) {
+                                    echo $this->Html->link("<button class='btn btn-xs btn-primary'><i class='fa fa-print'></i></button>", array('action' => 'imprimeview', $factureavoirfr->id), array('escape' => false));
+                               // } ?>
                 <?php //if ($type== 1) { 
                 ?>
                 <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $factureavoirfr->id), array('escape' => false)); ?>

@@ -20,7 +20,7 @@ $connection = ConnectionManager::get('default');
     Consultation Bordereau versement cheque
   </h1>
   <ol class="breadcrumb">
-    <li><a href="<?php echo $this->Url->build(['action' => 'index']); ?>"><i class="fa fa-reply"></i>
+    <li><a href="<?php echo $this->Url->build(['action' => 'index/'.$bordereauversementcheque->type]); ?>"><i class="fa fa-reply"></i>
         <?php echo __('Retour'); ?>
       </a></li>
   </ol>

@@ -17,7 +17,7 @@
     <h1>
 
 
-        Ajout Service
+        Ajout Destination achat
     </h1>
     <ol class="breadcrumb">
         <li><a href="<?php echo $this->Url->build(['action' => 'index']); ?>"><i class="fa fa-reply"></i>
@@ -85,7 +85,7 @@
 
 
                     <div align="center">
-                        <?php echo $this->Form->submit(__('Enregistrer'), ['id' => 'service']); ?></div>
+                        <?php echo $this->Form->submit(__('Enregistrer'), ['id' => 'service','class'=>'btn btn-sm btn-success']); ?></div>
 
                     <?php echo $this->Form->end(); ?>
                 </div>

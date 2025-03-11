@@ -85,7 +85,7 @@
                                     <?php echo $this->Html->image('imgart/' . $personnel->image, ['style' => 'max-width:100px;height:100px;']); ?>
                                 </div>
           </div>
-          <button type="submit" class="pull-right btn btn-success btn-sm " id="" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+          <button type="submit" class="pull-right btn btn-success btn-sm " id="testper" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
           <?php echo $this->Form->end(); ?>
         </div>
         <!-- testpersonnel/.box-body -->
@@ -102,5 +102,29 @@
 <?php echo $this->Html->script('alert'); ?>
 <script>
   $('.select2').select2()
+</script>
+<script>
+    $('#testper').on('mouseover', function() {
+        pointdevente = $('#pointdevente-id').val();
+        fonction = $('#fonction-id').val();
+        nom = $('#nom').val();
+        prenom = $('#prenom').val();
+        if (pointdevente === "") {
+            alert("Veuillez saisir la point de vente !");
+            return false;
+        }else
+        if (fonction === "") {
+            alert("Veuillez saisir la fonction !");
+            return false;
+        }else
+        if (nom === "") {
+            alert("Veuillez saisir le nom !");
+            return false;
+        }else
+        if (prenom === "") {
+            alert("Veuillez saisir le prenom !");
+            return false;
+        }
+    });
 </script>
 <?php $this->end(); ?>

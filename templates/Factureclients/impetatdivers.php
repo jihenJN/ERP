@@ -1,17 +1,6 @@
 <?php $this->layout = 'AdminLTE.print'; ?>
 <?php
 
-use Cake\ORM\TableRegistry;
-
-?><?php
-
-    $societeTable = TableRegistry::getTableLocator()->get('Societes');
-
-    $societe = $societeTable->find()->where('id=1')->first();
-
-    ?>
-<?php
-
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\Datasource\ConnectionManager;
@@ -69,9 +58,8 @@ use Cake\Datasource\ConnectionManager;
             </div> -->
         </td>
         <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-            <?php echo $societe->adresseEntete; ?>
-            <br>
-        </td>
+                    <?php echo $societefirst->adresseEntete; ?><br>
+                </td>
         <td align="center" style="width: 25%;border: none;">
             <div>
                 <?php
@@ -125,7 +113,7 @@ use Cake\Datasource\ConnectionManager;
                                 <th hidden width="10%" align="center" style="text-align: center; background-color: #72a0c1 ;">
                                     <span style="color: #000000; font-style: italic; font-weight: bold;"><strong>Crédit</strong></span>
                                 </th>
-                                <th width="15%" align="center" style="text-align: center; background-color: #72a0c1 ;">
+                                <th  width="15%" align="center" style="text-align: center; background-color: #72a0c1 ;">
                                     <span style="color: #000000; font-style: italic; font-weight: bold;"><strong>N° BL non réglé</strong></span>
                                 </th>
                                 <th width="8%" align="center" style="text-align: center; background-color: #72a0c1 ;">
@@ -138,9 +126,10 @@ use Cake\Datasource\ConnectionManager;
                             $soldef = 0;
                             foreach ($data as $client_data) :
 
-                                $soldef = ($client_data['Debit']) -  $client_data['Credit'];
-                                $generel +=  $soldef; ?>
-                                <tr style="font-size: 20px;">
+                                $soldef = ( $client_data['Debit']) -  $client_data['Credit'];
+                                $generel +=  $soldef; 
+                                if ($soldef != 0) :?>
+                                  <tr style="font-size: 20px;">
                                     <td><?= h($client_data['nomprenom']) ?></td>
                                     <td><?= h($client_data['numeroidentite']) ?></td>
                                     <td><?= h($client_data['adressediv']) ?></td>
@@ -149,7 +138,8 @@ use Cake\Datasource\ConnectionManager;
                                     <td><strong><?= h(str_replace(',', ' - ', $client_data['blnumeros'])) ?></strong></td>
                                     <td><?php echo sprintf("%01.3f", abs($soldef)); ?></td>
                                 </tr>
-                            <?php endforeach; ?>
+                            <?php endif;
+                         endforeach; ?>
                         </tbody>
                         <tr style="font-size: 20px;">
                             <td align="center" colspan="4" style="background-color: #72a0c1 ;"><strong>Total</strong></td>

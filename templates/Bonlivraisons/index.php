@@ -42,11 +42,13 @@ echo $this->Html->css('select2'); ?>
             $edit = "";
             $delete = "";
             $view = "";
+            $valide = "";
+            $imp = "";
             $session = $this->request->getSession();
             $abrv = $session->read('abrvv');
             $lien = $session->read('lien_vente' . $abrv);
             foreach ($lien as $k => $liens) {
-                if (@$liens['lien'] == 'offredeprix') {
+                if (@$liens['lien'] == 'factureproformats') {
                     $add = $liens['ajout'];
                     $edit = $liens['modif'];
                     $delete = $liens['supp'];
@@ -176,7 +178,7 @@ if ($add == 1) {
                     ?>
                     <div class="col-xs-1">
 
-                        <button onclick="openWindow(1000, 1000, wr+'bonlivraisons/imprimelistbl?datedebut=<?php echo @$datedebut; ?>&datefin=<?php echo @$datefin; ?>&client_id=<?php echo @$client_id; ?>&numero=<?php echo @$numero; ?>&facturee=<?php echo @$facturee; ?>')" class="btn btn-primary" style="margin-top: 25px;">
+                        <button onclick="openWindow(1000, 1000, wr+'bonlivraisons/imprimelistbl?datedebut=<?php echo @$datedebut; ?>&datefin=<?php echo @$datefin; ?>&client_id=<?php echo @$client_id; ?>&numero=<?php echo @$num; ?>&facturee=<?php echo @$facturee; ?>')" class="btn btn-primary" style="margin-top: 25px;">
                             <i class="fa fa-print"></i>
                         </button>
                     </div>
@@ -230,7 +232,7 @@ if ($add == 1) {
                 </div>
                 <div class="box-body">
                     <div class="box-header pull-right with-border" style="margin-right: 10px;">
-                        <?php if ($this->request->getQuery('datedebut') != 0 && $this->request->getQuery('datefin') != 0 && $type == 1) {  ?>
+                        <?php if ($this->request->getQuery('datedebut') != 0 && $this->request->getQuery('datefin') != 0 && $type == 1 && $this->request->getQuery('client_id') != 12) {  ?>
                             <div class="select-all-container" style="margin-right: 10px;">
                                 <button type="button" id="select-all" class="btn btn-primary select-all-button" style="background-color: #861C67;border: 1px solid #861C67;">
                                     Sélectionner Tout
@@ -278,7 +280,7 @@ if ($add == 1) {
                                     <th width="8%">Total HT</th>
                                 <?php } ?>
                                 <?php if ($bonlivraison->typebl == 2) { ?>
-                                    <th width="8%" style='text-align:center !important'>Etat </th>
+                                    <th width="8%" style='text-align:center !important'>Etat BL</th>
                                 <?php } ?>
                                 <?php if ($bonlivraison->typebl == 2) { ?>
                                     <th width="10%">Bon de Livraison </th>
@@ -437,17 +439,8 @@ if ($add == 1) {
 
                                     $bonlivraison_id = $bonlivraison->id;
                                     $bon = $connection->execute('SELECT * FROM lignebonlivraisons WHERE bonlivraison_id =' . $bonlivraison_id);
-                                    $livraisonComplete = true; // Supposons que la livraison est complète par défaut
 
-                                    foreach ($bon as $livv) {
-                                        $qtec = $livv['qte'];
-                                        $qtef = $connection->execute('SELECT SUM(quantiteliv) as ss FROM lignebonlivraisons WHERE idlignebonlivraison=' . $livv['id'])->fetch('assoc');
 
-                                        if ($qtef['ss'] < $qtec) {
-                                            $livraisonComplete = false;
-                                            // break; // Si une seule ligne n'est pas complète, on arrête la boucle
-                                        }
-                                    }
                                     ?>
                                     <?php if ($bonlivraison->client_id == 12) { ?>
                                         <td>&nbsp;&nbsp;<?php echo $bonlivraison->client->Code ?></td>
@@ -473,34 +466,7 @@ if ($add == 1) {
                                         $id = $bonlivraison->id;
                                         // debug($id);
 
-                                        $commandeTotQte = 0;
-                                        $BLTotQte = 0;
-                                        $connection = ConnectionManager::get('default');
-                                        $thisbl = $connection->execute('SELECT * FROM bonlivraisons WHERE bonlivraisons.id = ' . $id . ';')->fetchAll('assoc');
-                                        $commande_id = $thisbl[0]['commande_id'];
-                                        if (!empty($commande_id)) {
-                                            $commandeTotQte = $connection->execute('SELECT SUM(qte) AS sommeqtecmd FROM lignecommandes WHERE commande_id = :commande_id', ['commande_id' => $commande_id])
-                                                ->fetch('assoc');
-                                            //  debug($commandeTotQte);
-                                        }
-                                        if (!empty($commande_id)) {
-                                            $bls = $connection->execute('SELECT * FROM bonlivraisons WHERE bonlivraisons.commande_id = ' . $commande_id . ' AND bonlivraisons.typebl=1;')->fetchAll('assoc');
 
-                                            if (!empty($bls)) {
-                                                $blsIds = [];
-                                                foreach ($bls as $bl) {
-                                                    $blsIds[] = $bl['id'];
-                                                }
-
-                                                $blsIdsString = implode(',', $blsIds);
-
-                                                $BLTotQte = $connection
-                                                    ->execute('SELECT SUM(qte) AS sommeqtebl FROM lignebonlivraisons WHERE bonlivraison_id IN (' . $blsIdsString . ')')
-                                                    ->fetch('assoc');
-
-                                                // debug($BLTotQte);
-                                            }
-                                        }
                                         $articlesId = $connection->execute('SELECT article_id FROM lignebonlivraisons WHERE lignebonlivraisons.bonlivraison_id = ' . $id . ';')->fetchAll('assoc');
                                         $commande = $connection->execute('SELECT * FROM commandes WHERE commandes.bonlivraison_id = ' . $id . ';')->fetchAll('assoc');
 
@@ -513,14 +479,14 @@ if ($add == 1) {
                                         </td> -->
                                         <?php if ($bonlivraison->typebl == 2) { ?>
                                             <td align="center">
+                                                <!-- <button class="btn btn-sm custom-button btn-primary" type="button"  title="etatliv" onClick="openWindow(1000, 1000, '/ERP/commandes/etatliv/<?php echo $id ?>');" champ="" value="0">
+                                            <i class='fa fa-eye'></i></button> -->
                                                 <?php
-                                                if ($livraisonComplete) {
+                                                if ($bonlivraison->livre == 2) {
                                                     echo '<button class="btn btn-sm custom-button custom-button" style="background-color: #54A74D; color: white;">Livré</button>';
-                                                } elseif ($qtef['ss'] == 0) {
-                                                    // echo '<p>Quantité totale devis : ' . $qtec . '</p>';
-                                                    //  echo '<p>Quantité totale livrée : ' . $qtef['ss'] . '</p>';  
+                                                } elseif ($bonlivraison->livre == 0) {
                                                     echo '<button class="btn btn-sm custom-button custom-button" style="background-color: #F55C43; color: white;">En cours</button>';
-                                                } else {
+                                                } elseif ($bonlivraison->livre == 1) {
                                                     echo '<button class="btn btn-sm custom-button custom-button" style="background-color: #F99048; color: white;">Livré Partiel</button>';
                                                 }
                                                 ?>
@@ -539,16 +505,33 @@ if ($add == 1) {
                                             <!-- <div <?php //if ($bonlivraison->factureclient_id != 0 && empty($reg)) { 
                                                         ?> style="display:none" <?php // } 
                                                                                 ?>> -->
-                                            <div>
-                                                <?php //if (empty($reg) && $bonlivraison->factureclient_id == 0) {
-                                                if ($bonlivraison->factureclient_id == 0) { ?>
+                                            <?php if ($bonlivraison->client_id != 12) { ?>
+                                                <div>
+                                                    <?php //if($bonlivraison->totalttc > $bonlivraison->Montant_Regler &&   $bonlivraison->client_id ==12){  //
+                                                    //if (empty($reg)) {
+                                                    if ($bonlivraison->factureclient_id == 0) { ?>
 
-                                                    <input id="client_id<?= $i ?>" ligne="<?php echo $i; ?>" class="" type="hidden" value="<?= $bonlivraison->client_id ?>">
-                                                    <input id="depot_id<?= $i ?>" ligne="<?php echo $i; ?>" class="" type="hidden" value="<?= $bonlivraison->depot_id ?>">
+                                                        <input id="client_id<?= $i ?>" ligne="<?php echo $i; ?>" class="" type="hidden" value="<?= $bonlivraison->client_id ?>">
+                                                        <input id="depot_id<?= $i ?>" ligne="<?php echo $i; ?>" class="" type="hidden" value="<?= $bonlivraison->depot_id ?>">
 
-                                                    <input type="checkbox" id="checkbox6<?php echo $i; ?>" value="<?php echo $bonlivraison['id'] ?>" name="checkbox[]" ligne="<?php echo $i; ?>" class="facc6 facture6" />
-                                                <?php } ?>
-                                            </div>
+                                                        <input type="checkbox" id="checkbox6<?php echo $i; ?>" value="<?php echo $bonlivraison['id'] ?>" name="checkbox[]" ligne="<?php echo $i; ?>" class="facc6 facture6" />
+                                                    <?php }
+                                                    //} 
+                                                    ?>
+                                                </div>
+                                            <?php } else { ?>
+                                                <div>
+                                                    <?php //if($bonlivraison->totalttc > $bonlivraison->Montant_Regler &&   $bonlivraison->client_id ==12){  //
+                                                    // if (empty($reg)) {
+                                                    if ($bonlivraison->factureclient_id == 0) { ?>
+                                                        <input id="client_id<?= $i ?>" ligne="<?php echo $i; ?>" class="" type="hidden" value="<?= $bonlivraison->client_id ?>">
+                                                        <input id="depot_id<?= $i ?>" ligne="<?php echo $i; ?>" class="" type="hidden" value="<?= $bonlivraison->depot_id ?>">
+
+                                                        <input type="checkbox" id="check<?php echo $i; ?>" value="<?php echo $bonlivraison['id'] ?>" name="checkbox[]" ligne="<?php echo $i; ?>" class="blfbre" />
+                                                    <?php //}
+                                                    } ?>
+                                                </div>
+                                            <?php } ?>
 
                                         </td>
                                         <td align="center" hidden>
@@ -593,9 +576,9 @@ if ($add == 1) {
                                     <?php if ($bonlivraison->typebl == 2) { ?>
                                         <td align="center">
                                             <div>
-                                                <?php if (!$livraisonComplete && $bonlivraison->commande_id == 0) { ?>
+                                                <?php if ($bonlivraison->commande_id == 0) { ?>
                                                     <input id="client_id<?= $i ?>" ligne="<?php echo $i; ?>" class="" type="hidden" value="<?= $bonlivraison->client_id ?>">
-                                                    <input type="checkbox" id="checkbox11<?php echo $i; ?>" value="<?php echo $bonlivraison['id'] ?>" name="checkbox[]" ligne="<?php echo $i; ?>" class="facc55 facture55" />
+                                                    <input type="checkbox" id="checkbox11<?php echo $i; ?>" value="<?php echo $bonlivraison['id'] ?>" name="checkbox[]" ligne="<?php echo $i; ?>" class="facc55" />
                                                 <?php } ?>
                                             </div>
                                         </td>
@@ -611,7 +594,7 @@ if ($add == 1) {
 
                                                 <?php if ($bonlivraison->commande_id == 0 && $bonlivraison->confirme != 0) { ?>
                                                     <input id="client_id<?= $i ?>" ligne="<?php echo $i; ?>" class="" type="hidden" value="<?= $bonlivraison->client_id ?>">
-                                                    <input type="checkbox" id="check<?php echo $i; ?>" value="<?php echo $bonlivraison['id'] ?>" name="checkbox[]" ligne="<?php echo $i; ?>" class="fac" <?php if ($bonlivraison->etatliv == '1') { ?> style="display:none" <?php } ?> />
+                                                    <!-- <input type="checkbox" id="check<?php echo $i; ?>" value="<?php echo $bonlivraison['id'] ?>" name="checkbox[]" ligne="<?php echo $i; ?>" class="fac" <?php if ($bonlivraison->etatliv == '1') { ?> style="display:none" <?php } ?> /> -->
 
 
 
@@ -632,7 +615,7 @@ if ($add == 1) {
                                                     <input id="client_id<?= $i ?>" ligne="<?php echo $i; ?>" class="" type="hidden" value="<?= $bonlivraison->client_id ?>">
                                                     <input id="depot_id<?= $i ?>" ligne="<?php echo $i; ?>" class="" type="hidden" value="<?= $bonlivraison->depot_id ?>">
 
-                                                    <input type="checkbox" id="checkbox1<?php echo $i; ?>" value="<?php echo $bonlivraison['id'] ?>" name="checkbox[]" ligne="<?php echo $i; ?>" class="facc5 facture5" />
+                                                    <input type="checkbox" id="checkboxcmd<?php echo $i; ?>" value="<?php echo $bonlivraison['id'] ?>" name="checkbox[]" ligne="<?php echo $i; ?>" class="facc5 checkbox-group" />
                                                 </div>
                                                 <!-- <button style="background-color:black" class="btn btn-success btn-xs glyphicon glyphicon-edit opendialogcycle" index=<?php echo $i ?> id="<?php echo '' ?>"></button> -->
                                             <?php  } ?>
@@ -692,15 +675,11 @@ if ($add == 1) {
                                                     <div style="margin-right:2px ;">
                                                         <a onclick="openWindow(1000, 1000, wr+'Bonlivraisons/imprimeviewsmbm/<?php echo $bonlivraison->id; ?>')"><button class='btn btn-xs btn-primary ' style="background-color: #bb3385 ; color: white; border-color: white;"><i class='fa fa-print'></i></button></a>
                                                     </div>
-                                                    <!-- <div style="margin-right:2px ;">
-                                                        <a onclick="openWindow(1000, 1000, wr+'Bonlivraisons/imprimeviewbl/<?php echo $bonlivraison->id; ?>')"><button class='btn btn-xs btn-primary '><i class='fa fa-print'></i>PDF</button></a>
-                                                    </div> -->
 
-                                                <?php } else { ?>
-                                                    <div style="margin-right:2px ;">
-                                                        <a onclick="openWindow(1000, 1000, wr+ 'Bonlivraisons/imprimeview/<?php echo $bonlivraison->id; ?>')"><button class='btn btn-xs btn-primary'><i class='fa fa-print'></i>PDF</button></a>
-                                                    </div>
+
                                                 <?php } ?>
+
+
                                                 <div style="margin-right:2px ;">
 
                                                     <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $bonlivraison->id), array('escape' => false));
@@ -717,7 +696,7 @@ if ($add == 1) {
 
 
 
-                                                <?php if ($delete == 1) { ?>
+                                                <?php if ($delete == 1 && empty($reg)) { ?>
                                                     <div <?php if ($bonlivraison->factureclient_id != 0) { ?> style="display:none" <?php } ?>>
 
                                                         <?php echo $this->Form->postLink("<button class=' deleteConfirm btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $bonlivraison->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $bonlivraison->id)); ?>
@@ -759,9 +738,11 @@ if ($add == 1) {
                                                     <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $bonlivraison->id), array('escape' => false));
                                                     ?>
                                                 </div>
-                                                <div <?php if ($bonlivraison->commande_id != 0) { ?> style="display:none;margin-right:2px ;" <?php } else { ?> style="margin-right:2px ;" <?php } ?>>
+                                                <div <?php if ($bonlivraison->commande_id != 0 || $bonlivraison->livre > 0) { ?> style="display:none;margin-right:2px ;" <?php } else { ?> style="margin-right:2px ;" <?php } ?>>
 
-                                                    <?php echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $bonlivraison->id), array('escape' => false)); ?>
+                                                    <?php if ($edit == 1) {
+                                                        echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'editpro', $bonlivraison->id), array('escape' => false));
+                                                    } ?>
                                                 </div>
 
 
@@ -771,11 +752,11 @@ if ($add == 1) {
                                                     <?php echo $this->Html->Link("<button class='btn btn-xs btn-purple'><i class='fa fa-print'></i></button>", array('action' => 'imprimeviewbyfamille', $bonlivraison->id), array('escape' => false)); ?>
                                                 </div> -->
 
-                                                <div <?php if ($bonlivraison->commande_id != 0) { ?> style="display:none;margin-right:2px ;" <?php } ?>>
+                                                <div <?php if ($bonlivraison->commande_id != 0 || $bonlivraison->livre > 0) { ?> style="display:none;margin-right:2px ;" <?php } ?>>
 
-                                                    <?php
-                                                    echo ("<button type=button index= '" . $i . "' id='delete" . $i . "' class='btn btn-xs btn-danger deleteverif'><i class='fa fa-trash-o'></i></button>");
-                                                    ?>
+                                                    <?php if ($delete == 1) {
+                                                        echo ("<button type=button index= '" . $i . "' id='delete" . $i . "' class='btn btn-xs btn-danger deleteverif'><i class='fa fa-trash-o'></i></button>");
+                                                    } ?>
 
 
                                                 </div>
@@ -938,16 +919,19 @@ if ($add == 1) {
                                     <?php
                                     ?>
 
+                                    <table>
 
-                                    <div class="col-md-6  testcheck6" style="display: none;">
-                                        <input type="hidden" name="tes6" value="0" class="test6" />
-                                        <input type="hidden" name="tes6" value="0" class="test6" />
-                                        <input type="hidden" name="nombre" value="<?php echo @$i; ?>" class="nombre" />
-                                        <a class="btn btn btn-primary btnfac6" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;"> <i class="fa fa-plus-circle"></i> Créer Facture </a>
-                                    </div>
-                                    <input type="hidden" name="tab" value="" id="tabValues">
-
-                                    <!-- <div class="col-md-12  testcheck" style="display:none;">
+                                        <tr>
+                                            <td align="center">
+                                                <div class="col-md-6  testcheck6" style="display: none;">
+                                                    <input type="hidden" name="tes6" value="0" class="test6" />
+                                                    <input type="hidden" name="tes6" value="0" class="test6" />
+                                                    <input type="hidden" name="nombre" value="<?php echo @$i; ?>" class="nombre" />
+                                                    <a class="btn btn btn-primary btnfac6" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;"> <i class="fa fa-plus-circle"></i> Créer Facture </a>
+                                                </div>
+                                                <input type="hidden" name="tab" value="" id="tabValues">
+                                            </td>
+                                            <!-- <div class="col-md-12  testcheck" style="display:none;">
                                         <input type="hidden" name="tes" value="0" class="tes" />
                                         <input type="hidden" name="tes" value="0" class="tes" />
                                         <input type="hidden" name="nombre" value="<?php echo @$i; ?>" class="nombre" />
@@ -957,13 +941,28 @@ if ($add == 1) {
                                     </div> -->
 
 
-                                    <!-- <div class="col-md-6  testcheckdalanda" style="display: none;">
+                                            <!-- <div class="col-md-6  testcheckdalanda" style="display: none;">
                                         <input type="hidden" name="tesdalanda" value="0" class="testdalanda" />
                                         <input type="hidden" name="tesdalanda" value="0" class="testdalanda" />
                                         <input type="hidden" name="nombre" value="<?php echo @$i; ?>" class="nombre" />
                                         <a class="btn btn btn-warning btnfacdalanda" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;"> <i class="fa fa-plus-circle"></i> Facturation Divers </a>
                                     </div>
                                     <input type="hidden" name="tabdd" value="" id="tabValuess"> -->
+
+                                            <td align="center">
+
+                                                <div class="col-md-12  testcheck" style="display:none;">
+                                                    <input type="hidden" name="tes" value="0" class="tespv" />
+                                                    <input type="hidden" name="tes" value="0" class="tes" />
+                                                    <!-- <input type="hidden" name="tes" value="99" class="testbl" />
+                                                    <input type="hidden" name="tes" value="55" class="testp" /> -->
+                                                    <input type="hidden" name="nombre" value="<?php echo @$i; ?>" class="nombre" />
+                                                    <a class="btn btn btn-danger btnbl" id="bonliv"> <i class="fa fa-plus-circle"></i> Créer client / Facture </a>
+                                                </div>
+
+                                            </td>
+                                        </tr>
+                                    </table>
 
                                 <?php } ?>
 
@@ -1016,7 +1015,114 @@ if ($add == 1) {
 <!-- Select2 -->
 <?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
 <?php $this->start('scriptBottom'); ?>
+<script>
+    $(document).ready(function() {
+        $("#bonliv").on("click", function() {
+            /// alert("hello");
+            var tab = new Array();
 
+            conteur = $(".nombre").val();
+            // alert(conteur);
+            for (var i = 0; i <= conteur; i++) {
+                val = $("#check" + i).attr("checked");
+                //var x = ($('#check'+(i)).checked;
+                v = $("#check" + i).val();
+
+                //alert(cl)
+                if ($("#check" + i).is(":checked")) {
+                    //alert(v);
+                    tab[i] = v;
+
+                }
+            }
+            var removeItem = undefined;
+            tab = jQuery.grep(tab, function(value) {
+                return value != removeItem;
+            });
+
+
+
+            client = $(".tes").val();
+            window.open(wr + "Factureclients/addfacturedivers/" + tab);
+
+            // $(this).attr("href", "Bonlivraisons/addbonlivraison/" + tab);
+        });
+        $('.blfbre').on('click', function() {
+
+            let ligne = $(this).attr('ligne');
+            let index = $('#index').val();
+            let client = $('#client_id' + ligne).val();
+            let cont = 0;
+
+
+            for (let i = 0; i <= Number(index); i++) {
+                if ($('#check' + i).is(':checked')) {
+                    cont += 1;
+                }
+            }
+
+            if (cont > 1) {
+                alert("Veuillez choisir un seul Bon livraison de client divérs SVP !");
+                $(this).prop('checked', false);
+                return;
+            }
+
+            if (cont == 1) {
+                $('.testcheck').show();
+
+                if ($('.tes').val() == 0) {
+                    $('.tes').val(client);
+                }
+            }
+
+            // If no checkbox is selected
+            if (cont == 0) {
+                $('.tes').val(0);
+                $('.tespv').val(0);
+                $('.testcheck').hide();
+            }
+        });
+
+        $('.blfbre13012025').on('click', function() {
+
+            ligne = $(this).attr('ligne');
+            index = $('#index').val();
+            test = 0;
+            client = $('#client_id' + ligne).val();
+            cont = 0;
+
+            for (i = 0; i <= Number(index); i++) {
+                if ($('#check' + i).is(':checked')) {
+                    test = 1;
+                    cont += 1;
+
+                }
+
+            }
+            if (test == 1) {
+
+                // alert(cont)
+
+                $('.testcheck').show();
+                //alert(test)
+                //alert(client);       
+
+                if ($('.tes').val() == 0) {
+                    $('.tes').val(client);
+                }
+            }
+
+            if (test == 0) {
+                //alert("fera8");
+                $('.tes').val(0);
+                $('.tespv').val(0);
+
+                $('.testcheck').hide();
+
+            }
+        });
+    });
+</script>
 <script>
     $(document).ready(function() {
         const selectAllButton = $("#select-all");
@@ -1081,29 +1187,7 @@ if ($add == 1) {
     $(document).ready(function() {
 
 
-   
 
-
-
-
-
-        // $('.btnfac61704').on('click', function() {
-        //     var tabValues = $('#tabValues').val(); // Récupérer les valeurs des cases cochées
-
-        //     $.ajax({
-        //         method: "GET",
-        //         url: "<?= $this->Url->build(['controller' => 'Bonlivraisons', 'action' => 'getids']) ?>",
-        //         dataType: "json",
-        //         data: {
-        //             tabValues: tabValues
-        //         },
-        //         success: function(data) {
-
-        //         },
-
-        //     });
-
-        // });
         $('.btnfac6').on('click', function() {
             var tabValues = $('#tabValues').val(); // Récupérer les valeurs des cases cochées
             // Soumettre les données au serveur
@@ -1117,7 +1201,7 @@ if ($add == 1) {
                 success: function(data) {
                     alert('Factures Ajoutées avec succès')
                     // Redirect to the same page after successful AJAX request
-                    window.location.href = wr + 'Factureclients/index';
+                    window.location.href = wr + 'Factureclients/index/1';
 
                 },
                 error: function(xhr, status, error) {
@@ -1137,95 +1221,48 @@ if ($add == 1) {
 
 
 <script>
-    // $(document).ready(function() {
-    //     const selectAllButton = $("#select-all");
-    //     const checkboxes = $(".faccdalanda");
-
-    //     selectAllButton.on("click", function() {
-    //         checkboxes.prop("checked", !checkboxes.prop("checked"));
-    //         updateButtonText();
-    //         updateMyButtonVisibility();
-    //         updateTabValues(); // Mise à jour des valeurs des cases cochées
-    //     });
-
-    //     checkboxes.on("change", function() {
-    //         updateButtonText();
-    //         updateMyButtonVisibility(this);
-    //         updateTabValues(); // Mise à jour des valeurs des cases cochées
-    //     });
-
-    //     function updateButtonText() {
-    //         selectAllButton.text(checkboxes.filter(":checked").length === checkboxes.length ?
-    //             "Désélectionner Tout" :
-    //             "Sélectionner Tout"
-    //         );
-    //     }
-
-    //     function updateMyButtonVisibility(checkbox) {
-    //         if (checkboxes.filter(":checked").length > 0) {
-    //             $(".testcheckdalanda").show();
-    //         } else {
-    //             $(".testcheckdalanda").hide();
-    //         }
-    //     }
-
-    //     function updateTabValues() {
-    //         var tabValuess = [];
-    //         checkboxes.each(function() {
-    //             if ($(this).is(':checked')) {
-    //                 // Check if the corresponding factureclient_id is 0
-    //                 var index = $(this).attr('ligne');
-    //                 if ($("#factureclient_id" + index).val() == 0) {
-    //                     tabValuess.push($(this).val());
-    //                 }
-    //             }
-    //         });
-    //         var divid = tabValuess.join(',');
-    //         $("#tabValuess").val(tabValuess.join(',')); // Met à jour la valeur de l'input hidden avec les IDs des bons de livraison sélectionnés séparés par des virgules
-    //     }
-    // });
-
-
 
 </script>
 <script type="text/javascript">
+    $('.checkbox-group').on('change', function() {
+        const checkedCount = $('.checkbox-group:checked').length;
+
+        if (checkedCount > 1) {
+            $(this).prop('checked', false);
+            alert('Veuillez choisir une seule facture');
+        }
+    });
+
     $('.facc5').on('click', function() {
-        /// alert('nfskn')
-        //var tab = new Array;
         ligne = $(this).attr('ligne');
         index = $('#index').val();
-        // alert(index)
         test = 0;
+
         for (i = 0; i <= Number(index); i++) {
-            if ($('#checkbox1' + i).is(':checked')) {
-                //alert('hedh')
+            if ($('#checkboxcmd' + i).is(':checked')) {
                 test = 1;
             }
         }
+
         if (test == 1) {
             $('.testcheck1').show();
-            // depot = $('#depot_id' + ligne).val();
             client = $('#client_id' + ligne).val();
-            // fournisseur = $('#fournisseur_id' + ligne).val();
-            //alert(client);
+
             if ($('.tes1').val() == 0) {
                 $('.tes1').val(client);
             }
+
             if (($('.tes1').val() != client) && $('.tes1').val() != 0) {
-                alert('Il faut choisir des Bon Commandes Client  pour un meme Client SVP !!');
+                alert('Il faut choisir des Bon Commandes Client pour un meme Client SVP !!');
                 return false;
             }
         }
+
         if (test == 0) {
-            //alert("fera8");
             $('.tes1').val(0);
             $('.tespv1').val(0);
             $('.testcheck1').hide();
         }
-
-
-
-
     });
 
 
@@ -1237,12 +1274,12 @@ if ($add == 1) {
 
         // client = $('#client_id' + ligne).val();
         for (var i = 0; i <= conteur; i++) {
-            val = ($('#checkbox1' + i).attr('checked'));
-            v = $('#checkbox1' + i).val();
-            if ($('#checkbox1' + i).is(':checked')) {
+            val = ($('#checkboxcmd' + i).attr('checked'));
+            v = $('#checkboxcmd' + i).val();
+            if ($('#checkboxcmd' + i).is(':checked')) {
                 tab[i] = v;
                 // alert(tab[i]);
-                $('#checkbox1' + i).hide();
+                $('#checkboxcmd' + i).hide();
                 //alert('dd');
             }
         }
@@ -1264,17 +1301,6 @@ if ($add == 1) {
         $('.testcheck1').show();
 
     });
-    ////////////////facture//////////////////
-
-
-
-
-
-
-
-  
-
-
 
 
     /////////////////////////////////////
@@ -1305,11 +1331,14 @@ if ($add == 1) {
                 return false;
             }
         }
+
         if (test == 0) {
+            $('.testcheck11').hide();
+
+            // alert(test)
             //alert("fera8");
             $('.tes11').val(0);
             $('.tespv11').val(0);
-            $('.testcheck11').hide();
         }
 
 

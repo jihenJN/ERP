@@ -431,7 +431,7 @@
                                                             <input type="number" table="ligner" name="" readonly id="qteStock" champ="qteStock" type="text" class="  form-control" index>
                                                         </td>
                                                         <td align="center" table="ligner">
-                                                            <input type="number" table="ligner" name="" id="qte" champ="qte" type="text" class="verifqte  focus calculligne2  form-control focus" index>
+                                                            <input type="number" table="ligner" name="" id="qte" champ="qte" type="text" class="verifqte  focus findtth2  form-control focus" index>
                                                         </td>
                                                         <td>
                                                             <input table="ligner" readonly type="text" name="" champ="puttcapr" class="form-control    calculligne2  findtth1  ttcligne" index>
@@ -676,7 +676,7 @@
                                                                 <td>Montant</td> <!-- mnt bl -->
                                                                 <td>
                                                                     <?php
-                                                                    echo $this->Form->control('montant', array('class' => 'form-control sum-input differance', 'id' => 'montant', 'label' => '', 'index' => 0, 'champ' => 'montant', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant]'));
+                                                                    echo $this->Form->control('montant', array('type'=>'number','step'=>'any','class' => 'form-control sum-input differance', 'id' => 'montant', 'label' => '', 'index' => 0, 'champ' => 'montant', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant]'));
                                                                     ?>
                                                                 </td>
                                                             </tr>
@@ -761,13 +761,13 @@
                         <!-- <button type="submit" class="pull-right btn btn-success btn-sm verifBonres  btnOffreprix" id="boutonlivraison" style="margin-right:51%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button> -->
 
                         <div style="display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 20px; margin-bottom: 20px;">
-                            <button type="submit" class=" testdiv btn btn-success btn-sm verifBonres btnOffreprix numerobl" id="boutonlivraison" name="enregistrer" style="width: 130px;">
+                            <button type="submit" class=" testbl testdiv btn btn-success btn-sm verifBonres btnOffreprix numerobl" id="boutonlivraison" name="enregistrer" style="width: 130px;">
                                 Enregistrer
                             </button>
-                            <button type="submit" class=" testdiv btn btn-primary btn-sm verifBonres btnOffreprix numerobl" id="boutonpdf" name="pdf" style="width: 70px;">
+                            <button type="submit" class=" testbl testdiv btn btn-primary btn-sm verifBonres btnOffreprix numerobl" id="boutonpdf" name="pdf" style="width: 70px;">
                                 <i class="fa fa-print"></i> PDF
                             </button>
-                            <button type="submit" class=" testdiv btn btn-xs btn-primary custom-class numerobl" id="boutonimprimer" name="enregistrer_imprimer" style="background-color: #bb3385; color: white; border-color: white; width: 40px;">
+                            <button type="submit" class="testbl  testdiv btn btn-xs btn-primary custom-class numerobl" id="boutonimprimer" name="enregistrer_imprimer" style="background-color: #bb3385; color: white; border-color: white; width: 40px;">
                                 <i class="fa fa-print"></i>
                             </button>
 
@@ -843,32 +843,134 @@
                         alert("Numéro Bon Livraison : " + numero);
                     }
                 } else {
-                    alert("Aucun numéro manquant n'est disponible.");
+                    //alert("Aucun numéro manquant n'est disponible.");
                 }
             });
         });
     </script>
     <script>
         $(document).ready(function() {
+        $('.testbl').on('mouseover', function() {
+            // Retrieve input values
+            depot = $('#depot_id').val();
+            transporteur = $('#transporteur_id').val();
+            chauffeurname = $('#chauffeurname').val();
 
-            $(".testdiv").on("mouseover", function() {
-                var client = $("#idclient").val();
-                var nom = $("#nomprenom").val();
-                var iden = $("#numeroidentite").val();
+            typebl = $('#typebl').val();
+            //alert(typebl);
+            //alert(transporteur)
+            client = $('#idclient').val();
 
-                // alert(type);
-                if (client == 12) {
-                    if (nom == "") {
-                        alert("Saisie Le nom et prenom divers SVP !!");
-                        return;
-                    } else
+            nomprenom = $('#nomprenom').val();
+            numeroidentite = $('#numeroidentite').val();
+            ttc = $('#ttc').val();
 
-                    if (iden == "") {
-                        alert("Saisie Le numéro identité divers SVP !!");
-                        return;
+            indexreg = $('#indexreg').val();
+
+
+            if (depot === "") {
+                alert("Veuillez choisir le depot !");
+                return false;
+            }
+
+            if (transporteur === "" && typebl == 1) {
+                alert("Veuillez choisir le transporteur !");
+                return false;
+            }
+
+            if (chauffeurname === "" && transporteur == 3 && typebl == 1) {
+                alert("Veuillez saisir le chauffeur !");
+                return false;
+            }
+            if (client === "") {
+                alert("Veuillez choisir le client !");
+                return false;
+            }
+            if (nomprenom === "" && client == 12) {
+                alert("Veuillez saisir le nom et prenom divérs !");
+                return false;
+            }
+            if (numeroidentite === "" && client == 12) {
+                alert("Veuillez saisir le numeroidentite !");
+                return false;
+            }
+            /*  if (indegreg === -1 && typebl == 1) {
+                  alert("Veuillez choisir un mode paiement  !");
+                  return false;
+              }*/
+
+
+
+            index = Number($('#index').val());
+            sup = Number($('#sup').val());
+
+            if (index == -1) {
+                alert('Ajouter une ligne', function() {});
+                return false;
+            } else if (index != -1) {
+                $nb = -1;
+                for (i = 0; i <= Number(index); i++) {
+                    sup = $('#sup' + i).val();
+                    if (sup == 1) {
+                        $nb++;
                     }
                 }
-            })
+                if ($nb == index) {
+                    alert('Ajouter une ligne', function() {});
+                    return false;
+
+                }
+            }
+            for (i = 0; i <= Number(index); i++) {
+                sup = $('#sup' + i).val();
+
+                article_id = $('#article_iddes' + i).val();
+
+                qte = $('#qte' + i).val();
+
+                if ((article_id == null || article_id == '') && (sup != 1)) {
+                    alert('Selectionnez un article SVP', function() {});
+                    return false;
+                } else if ((qte == 0 || qte == '') && sup != 1) {
+                    alert('Ajouter une quantite SVP', function() {});
+                    return false;
+                }
+            }
+
+
+        
+        sum = 0;
+        $(".sum-input").each(function() {
+            if ($(this).is(":visible")) {
+                sum += Number($(this).val()) || 0;
+            }
+        });
+        // alert(sum);
+        // alert(ttc);
+        if (sum > ttc ) {
+            alert("Ne dépassez pas le total TTC du bon de livraison !");
+            return false;
+        }
+        });
+
+        // $(".testdiv").on("mouseover", function() {
+        //     var client = $("#idclient").val();
+        //     var nom = $("#nomprenom").val();
+        //     var iden = $("#numeroidentite").val();
+
+        //     // alert(type);
+        //     if (client == 12) {
+        //         if (nom == "") {
+        //             alert("Saisie Le nom et prenom divers SVP !!");
+        //             return;
+        //         } else
+
+        //         if (iden == "") {
+        //             alert("Saisie Le numéro identité divers SVP !!");
+        //             return;
+        //         }
+        //     }
+        // })
         });
     </script>
     <script>

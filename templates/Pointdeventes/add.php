@@ -9,7 +9,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script>
 <section class="content-header">
   <h1>
- Ajouter site
+    Ajouter site
     <small><?php echo __(''); ?></small>
   </h1>
   <ol class="breadcrumb">
@@ -24,17 +24,17 @@
       <!-- general form elements -->
       <?php echo $this->Form->create($pointdevente, ['role' => 'form', 'onkeypress' => "return event.keyCode!=13"]); ?>
       <div class="box ">
-        
+
         <div class="row">
           <div class="col-xs-6">
             <?php
             echo $this->Form->control('code', ['value' => $code, 'label' => 'Code', 'required' => 'off', 'id' => 'code', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control ', 'type' => '', 'readonly' => 'readonly']); ?>
           </div>
           <div class="col-xs-6">
-            <?php echo $this->Form->control('name',['label'=>'Nom']); ?>
+            <?php echo $this->Form->control('name', ['label' => 'Nom']); ?>
           </div>
-          </div>
-          <div class="row">
+        </div>
+        <div class="row">
           <div class="col-xs-6">
             <?php
             echo $this->Form->control('adresse'); ?>
@@ -44,14 +44,14 @@
             <?php
             echo $this->Form->control('matriclefiscale', ['label' => 'Matricle Fiscale']); ?>
           </div>
-          </div>
-        
-        
+
+
+
           <button type="submit" class="pull-right btn btn-success btn-sm" id="pointv" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
           <?php echo $this->Form->end(); ?>
-        
-       
 
+          <!-- id="pointv" -->
+        </div>
       </div>
       <!-- /.box -->
     </div>

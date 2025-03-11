@@ -144,7 +144,7 @@
                   <td>
                     <?= $this->Time->format(
                       $fac->date,
-                      'd/MM/y'
+                      'dd/MM/y'
                     ); ?></td>
                   <?php if ($fac->client_id == 12) { ?>
                     <td><?php echo $fac->client->Code . ' ' . $fac->nomprenom; ?></td>

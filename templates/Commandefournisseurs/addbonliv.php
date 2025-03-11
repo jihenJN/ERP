@@ -42,7 +42,7 @@ echo $this->Html->script('controle_frs'); ?>
 
                                         echo $this->Form->control('nmcmd', ['name' => 'nmcmd', 'label' => 'Commande numero', 'id' => 'nmcmd', 'value' => $nmc['num'], 'readonly' => 'readonly', 'type' => 'hidden']);
 
-                                        echo $this->Form->control('numero', array('label' => 'Numéro', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                        echo $this->Form->control('numero', array('label' => 'Numéro', 'div' => 'form-group', 'readonly','value' => $b, 'class' => 'form-control')); ?>
                                     </div>
                                     <!-- <div class="col-xs-6">
                                         <?php

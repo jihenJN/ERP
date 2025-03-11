@@ -170,7 +170,11 @@ use Cake\I18n\FrozenTime;
 
 
                             if (!empty($tablignelachats)) {
-                                $runningTotal = 0; 
+                                $runningTotal = 0;
+
+                                usort($tablignelachats, function ($a, $b) {
+                                    return strtotime($b['echance']) <=> strtotime($a['echance']);
+                                });
 
                                 foreach ($tablignelachats as $tab) :
 
@@ -207,9 +211,9 @@ use Cake\I18n\FrozenTime;
 
                                         </td>
                                         <td align="center">
-                                            <?php
-                                            echo  $tab['date'];
-                                            ?>
+
+                                            <?= $this->Time->format($tab['date'], 'dd/MM/y'); ?> <br>
+
                                         </td>
                                         <td align="center">
                                             <?php echo  $tab['banque'];
@@ -226,7 +230,7 @@ use Cake\I18n\FrozenTime;
                                         </td>
 
                                         <td align="center">
-                                        <?php echo  $runningTotal;  ?>
+                                            <?php echo  $runningTotal;  ?>
                                         </td>
 
 

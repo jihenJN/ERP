@@ -115,7 +115,6 @@ class Fournisseur extends Entity
         'codetva'=> true ,
         'soldedebut'=> true ,
         'Montant_Regler'=> true ,	
-        'responsable'=> true ,	
 
     ];
 }

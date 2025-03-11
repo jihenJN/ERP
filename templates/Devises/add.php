@@ -33,7 +33,7 @@
               ?>
                                 </div>
                          </div>
-               <button type="submit" class="pull-right btn btn-success"  style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+               <button type="submit" class="pull-right btn btn-success" id="testdevise"  style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
           <?php echo $this->Form->end(); ?>
             </div>
             
@@ -46,4 +46,14 @@
   </div>
   <!-- /.row -->
 </section>
+<script>
+  $('#testdevise').on('mouseover', function () {
+     name = $('#name').val();
+
+    if (name === "") {
+      alert("Veuillez saisir le nom !");
+      return false;
+    } 
+});
+  </script>
 <?php echo $this->Html->script('alert'); ?>

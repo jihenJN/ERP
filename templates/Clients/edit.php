@@ -106,7 +106,7 @@ echo $this->Html->script('hechem');
                                 <div class="col-xs-6" id="mat" <?php echo $matStyle; ?>>
                                     <?php echo $this->Form->control('Matricule_Fiscale', [
                                         'id' => 'matriculefis',
-                                        'label'=>'Matricule Fiscale',
+                                        'label' => 'Matricule Fiscale',
                                         'class' => 'form-control verifiermatriculefiscale',
                                         'placeholder' => "0000000XXX000"
                                     ]); ?>
@@ -115,7 +115,7 @@ echo $this->Html->script('hechem');
                                 <div class="col-xs-6" id="iden" <?php echo $idenStyle; ?>>
                                     <?php echo $this->Form->control('numidentite', [
                                         'id' => 'numidentite',
-                                        'label'=>'Num Identité',
+                                        'label' => 'Num Identité',
                                         'class' => 'form-control',
                                         'placeholder' => "00 00 00 00"
                                     ]); ?>
@@ -178,7 +178,7 @@ echo $this->Html->script('hechem');
                                         <div class="col-xs-6">
                                             <?php echo $this->Form->control('compteclient', ['id' => 'compte', 'label' => 'Compte client', 'type' => 'text']); ?>
                                         </div> -->
-                                <div class="col-xs-6">
+                                <div class="col-xs-6" hidden>
                                     <?php echo $this->Form->control('typeexoneration_id', ['label' => 'Exoneration', 'empty' => 'Veuillez choisir !!', 'options' => $typeexonerations, 'class' => 'form-control select2 control-label typeexoneration', 'id' => 'exonerations', 'required' => 'off']); ?>
 
                                 </div>
@@ -329,9 +329,6 @@ echo $this->Html->script('hechem');
                                     ?>
                                 </div>
                             <?php } ?>
-                            <div class="col-xs-6" >
-                                    <?php echo $this->Form->control('responsable', ['id' => 'responsable','label'=>'Responsable']); ?>
-                                </div>
                         </div>
                     </div>
                 </div>
@@ -1023,11 +1020,18 @@ echo $this->Html->script('hechem');
                                                     <?php echo $this->Form->input('compte', array('champ' => 'compte', 'label' => '', 'name' => '', 'type' => 'text', 'id' => '', 'table' => 'banque', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
                                                 </td>
                                                 <td align="center">
-
-                                                    <?php echo $this->Form->input('rib', array('champ' => 'rib', 'label' => '', 'name' => '', 'type' => 'text', 'id' => '', 'table' => 'banque', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                                    <div class="form-group" style="margin-top: 15%;">
+                                                        <div class="col-sm-12">
+                                                            <?php echo $this->Form->input('rib', array('champ' => 'rib', 'label' => '', 'name' => '', 'type' => 'text', 'id' => '', 'table' => 'banque', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                                        </div>
+                                                    </div>
                                                 </td>
                                                 <td align="center">
-                                                    <?php echo $this->Form->input('documen', array('champ' => 'documen', 'label' => '', 'name' => '', 'type' => 'file', 'id' => '', 'table' => 'banque', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                                    <div class="form-group" style="margin-top: 5%;">
+                                                        <div class="col-sm-12">
+                                                            <?php echo $this->Form->input('documen', array('champ' => 'documen', 'label' => '', 'name' => '', 'type' => 'file', 'id' => '', 'table' => 'banque', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                                        </div>
+                                                    </div>
                                                 </td>
 
 
@@ -1074,20 +1078,35 @@ echo $this->Html->script('hechem');
                                                         <?php echo $this->Form->input('compte', array('label' => '', 'value' => $banque->compte, 'name' => 'data[banque][' . $i . '][compte]', 'type' => 'text', 'id' => 'compte' . $i, 'table' => 'banque', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
                                                     </td>
                                                     <td align="center">
-                                                        <?php echo $this->Form->input('rib', array('label' => '', 'value' => $banque->rib, 'name' => 'data[banque][' . $i . '][rib]', 'type' => 'text', 'id' => 'rib' . $i, 'table' => 'banque', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                                        <div class="form-group" style="margin-top: 15%;">
+                                                            <div class="col-sm-12">
+                                                                <?php echo $this->Form->input('rib', array('label' => '', 'value' => $banque->rib, 'name' => 'data[banque][' . $i . '][rib]', 'type' => 'text', 'id' => 'rib' . $i, 'table' => 'banque', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                     <td align="center">
-                                                        <!-- <?php echo $this->Form->control('document'); ?> -->
-                                                        <input type="file" table="banque" champ="documen" name="data[banque][<?php echo $i; ?>][documen]" class="form-control" id="documen">
-                                                        <?php //echo $this->Html->link('' . $banque->document, ['style' => 'max-width:200px;height:200px;']); 
-                                                        ?>
-                                                        <?php echo $this->Html->link(
-                                                            $banque->document, // Le texte ou le nom du lien
-                                                            'https://sttp.mtd-erp.com/ERP/webroot/img/' . $banque->document, // L'URL du lien
-                                                            ['target' => '_blank', 'style' => 'max-width:200px;height:200px;'] // Options supplémentaires
-                                                        ); ?>
+                                                        <div class="form-group" style="margin-top: 5%;">
+                                                            <div class="col-sm-12">
+                                                                <!-- <?php echo $this->Form->control('document'); ?> -->
+                                                                <input type="file" table="banque" champ="documen" name="data[banque][<?php echo $i; ?>][documen]" class="form-control" id="documen<?php echo $i; ?>">
+                                                                <?php //echo $this->Html->link('' . $banque->document, ['style' => 'max-width:200px;height:200px;']); 
+                                                              // echo $banque->document;
+                                                               
+                                                               ?>
+                                                                <div class="iframe-container" style="position: relative; display: block; margin-top: 10px;"><iframe style="border: 1px solid #ccc; display: block;" src="/img/imgart/<?php echo $banque->document; ?>"></iframe>
+                                                                    <div onclick="openWindow(1000, 1000,'/img/imgart/<?php echo $banque->document; ?>');" style="
+                                                                            position: absolute;
+                                                                            top: 0;
+                                                                            left: 0;
+                                                                            width: 100%;
+                                                                            height: 100%;
+                                                                            background: rgba(255, 255, 255, 0);
+                                                                            cursor: pointer;"></div>
+                                                                </div>
+                                                     
 
-
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                     <td align="center"><i index="<?php echo $i ?>" class="fa fa-times supbanque" style="color: #C9302C;font-size: px;"></td>
                                                 </tr>
@@ -1250,9 +1269,8 @@ echo $this->Html->script('hechem');
 
                 <?php //debug($exoner);
                 ?>
-                <div id="exon" <?php if ($client->typeexoneration_id == 1) { ?> style='display:true' <?php } else { ?> style='display:none' <?php } ?>>
+                <!-- <div id="exon" <?php if ($client->typeexoneration_id == 1) { ?> style='display:true' <?php } else { ?> style='display:none' <?php } ?>>
 
-                    <!-- <div id="exon" style="display:true"> -->
 
                     <section class="content-header">
                         <h1 class="box-title"><?php echo __('Suspension des droits et taxe '); ?></h1>
@@ -1285,42 +1303,7 @@ echo $this->Html->script('hechem');
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <!--                                                  <tr class='tr' style="display: none !important">
-                                                        <td style="width: 8%;" align="center">
-    
-    
-    
-                                                    <?php echo $this->Form->input('sup', array('name' => '', 'id' => '', 'champ' => 'supresponsable', 'table' => 'responsable', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control'));
-                                                    ?>
-    
-    
-                                                    <?php echo $this->Form->input('id', array('champ' => 'id', 'label' => '', 'name' => '', 'type' => 'hidden', 'id' => '', 'table' => 'responsable', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
-                                                <div style="margin-top:7%">  
-                                                    <?php echo $this->Form->input('name', array('champ' => 'name', 'label' => '', 'name' => '', 'type' => 'text', 'id' => '', 'table' => 'responsable', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
-                                                  </div>
-    
-                                                        </td>
-                                                        <td align="center">
-    
-                                                    <?php echo $this->Form->input('mail', array('champ' => 'mail', 'label' => '', 'name' => '', 'type' => 'text', 'id' => '', 'table' => 'responsable', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control validationChampMail')); ?>
-                                                        </td>
-                                                        <td align="center">
-    
-                                                    <?php echo $this->Form->input('tel', array('label' => '', 'champ' => 'tel', 'name' => '', 'type' => 'text', 'id' => '', 'table' => 'responsable', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control validationChampTel')); ?>
-                                                        </td>
-                                                        <td align="center">
-    
-                                                    <?php echo $this->Form->input('poste', array('champ' => 'poste', 'label' => '', 'name' => '', 'type' => 'text', 'id' => '', 'table' => 'responsable', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
-                                                        </td>
-                                                        <td align="center"><i index="" id="" class="fa fa-times supresponsable" style="color: #C9302C;font-size: 22px;"></td>
-                                                    </tr>-->
-
-
-
-
-
-
-
+                                              
 
 
 
@@ -1400,13 +1383,12 @@ echo $this->Html->script('hechem');
                                                             ?>
                                                         </td>
                                                         <td align="center" style="margin-top:1%">
-                                                            <!-- <?php echo $this->Form->control('document'); ?> -->
                                                             <input type="file" table="lignes" champ="documenttt" name="data[lignes][<?php echo $i; ?>][documenttt]" class="form-control" id="documenttt">
                                                             <?php //echo $this->Html->link('' . $exoner->document, ['style' => 'max-width:200px;height:200px;']); 
                                                             ?>
                                                             <?php echo $this->Html->link(
                                                                 $exoner->document, // Le texte ou le nom du lien
-                                                                'https://sttp.mtd-erp.com/ERP/webroot/img/'. $exoner->document, // L'URL du lien
+                                                                '/img/' . $exoner->document, // L'URL du lien
                                                                 ['target' => '_blank', 'style' => 'max-width:200px;height:200px;'] // Options supplémentaires
                                                             ); ?>
 
@@ -1431,7 +1413,7 @@ echo $this->Html->script('hechem');
                     </section>
                     <?php //}
                     ?>
-                </div>
+                </div> -->
                 <section class="content-header">
                     <h1 class="box-title"><?php echo __('Les documents'); ?></h1>
                 </section>
@@ -1465,16 +1447,10 @@ echo $this->Html->script('hechem');
                                             </tr>
                                         </thead>
                                         <tbody>
-
-                                            <?php
-
-                                            foreach ($clientdoc as $i => $res) :
-                                                //debug($clientdoc) ; 
-                                            ?>
-                                                <tr class='tr' style="display: none !important">
+                                        <tr class='tr' style="display: none !important">
                                                     <td align="center">
 
-                                                        <?php echo $this->Form->input('sup', array('name' => '', 'id' => '', 'champ' => 'suprdoc', 'table' => 'document', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control'));
+                                                        <?php echo $this->Form->input('sup', array('name' => 'suprdoc', 'id' => 'suprdoc', 'champ' => 'suprdoc', 'table' => 'document', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control'));
                                                         ?>
 
 
@@ -1489,26 +1465,48 @@ echo $this->Html->script('hechem');
 
                                                     <td align="center"><i index="" id="" class="fa fa-times suprdoc" style="color: #C9302C;font-size: 22px;"></td>
                                                 </tr>
+                                            <?php
+
+                                            foreach ($clientdoc as $r => $res) :
+                                                //debug($clientdoc) ; 
+                                            ?>
+                                                
 
                                                 <tr>
                                                     <td style="width: 8%;" align="center" background-color="white">
+                                                    <?php echo $this->Form->input('sup', array('name' => 'data[document][' . $r . '][suprdoc]', 'id' => 'suprdoc'.$r, 'champ' => 'suprdoc', 'table' => 'document', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control'));
+                                                        ?>
+                                                        <?php echo $this->Form->input('name', array('label' => '', 'readonly', 'value' => $res->name, 'name' => 'data[document][' . $r . '][name]', 'type' => 'text', 'id' => 'name' . $r, 'table' => 'document', 'index' => $r, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                                        <?php echo $this->Form->input('id', array('label' => '', 'readonly', 'value' => $res->id, 'name' => 'data[document][' . $r . '][id]', 'type' => 'hidden', 'id' => 'id' . $r, 'table' => 'document', 'index' => $r, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
 
-                                                        <?php echo $this->Form->input('name', array('label' => '', 'readonly', 'value' => $res->name, 'name' => 'data[document][' . $i . '][name]', 'type' => 'text', 'id' => 'name' . $i, 'table' => 'document', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
                                                     </td>
 
                                                     <td align="center">
                                                         <?php $url = $_SERVER['HTTP_HOST']; ?>
-                                                        <?php echo $this->Form->input('fichier', array('label' => '', 'readonly', 'name' => 'data[document][' . $i . '][fichier]', 'type' => 'file', 'id' => 'name' . $i, 'table' => 'document', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
-                                                        <a onclick="openWindow(1000, 1000,''https://sttp.mtd-erp.com/ERP/webroot/img/<?php echo $res->fichier; ?>');">
-                                                            <i class="fa fa fa-file" style="color:success;font-size: 20px;"></i></a>
+                                                        <?php echo $this->Form->input('fichier', array('label' => '', 'readonly', 'name' => 'data[document][' . $r . '][fichier]', 'type' => 'file', 'id' => 'name' . $r, 'table' => 'document', 'index' => $r, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                                        
+                                                        <?php //echo $res->fichier;?>
+                                                        
+                                                        <div class="iframe-container" style="position: relative; display: block; margin-top: 10px;"><iframe style="border: 1px solid #ccc; display: block;" src="/img/logo/<?php echo $res->fichier; ?>"></iframe>
+                                                            <div onclick="openWindow(1000, 1000,'/img/logo/<?php echo $res->fichier; ?>');" style="
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(255, 255, 255, 0);
+                        cursor: pointer;
+                    "></div>
+                                                        </div>
+                                                        
                                                     </td>
-                                                    <td align="center"><i index="" id="" class="fa fa-times suprdoc" style="color: #C9302C;font-size: 22px;"></td>
+                                                    <td align="center"><i index="<?php echo $r ?>" id="" class="fa fa-times suprdoc" style="color: #C9302C;font-size: 22px;"></td>
 
                                                 </tr>
                                             <?php endforeach; ?>
                                         </tbody>
                                     </table>
-                                    <input type="hidden" value="<?php $i ?>" id="indexdoc">
+                                    <input type="hidden" value="<?php echo $r ?>" id="indexdoc">
                                     <br />
                                 </div>
                             </div>
@@ -1527,7 +1525,7 @@ echo $this->Html->script('hechem');
 
 
             <div align="center">
-                <button type="submit" class="pull-right btn btn-success    alertcode" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+                <button type="submit" class="pull-right btn btn-success   testobgclient alertcode" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
 
             </div>
             <?php /* echo $this->Form->submit(__('Enregistrer')); */ ?>
@@ -1542,6 +1540,126 @@ echo $this->Html->script('hechem');
 
 
 <script type="text/javascript">
+    $('.testobgclient').on('mouseover', function() {
+        // Retrieve input values
+        const rai = $('#raison-sociale').val().trim();
+        const mail = $('#email').val().trim();
+
+        const type = $('#type_id').val().trim();
+        const mat = $('#matriculefis').val().trim();
+
+        const numidentite = $('#numidentite').val().trim();
+        const tel = $('#tel').val().trim();
+
+        if (rai === "") {
+            alert("Veuillez saisir le Raison Sociale !");
+            return false;
+        }
+
+        if (type === "") {
+            alert("Veuillez choisir le type client !");
+            return false;
+        }
+
+        if (mat === "" && type == 1) {
+            alert("Veuillez saisir la matricule fiscale !");
+            return false;
+        }
+        if (numidentite === "" && type == 2) {
+            alert("Veuillez saisir le numéro identité !");
+            return false;
+        }
+
+        if (tel === "") {
+            alert("Veuillez saisir le numéro de téléphone 1 !");
+            return false;
+        }
+
+        // Validate phone number format
+        const phoneRegex = /^\d{8}$/;
+        if (!phoneRegex.test(tel)) {
+            alert("Le numéro de téléphone doit contenir exactement 8 chiffres !");
+            return false;
+        }
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+        if (!emailRegex.test(mail)) {
+            alert("Veuillez saisir une adresse e-mail valide !");
+            return false;
+        }
+        if (mail === "") {
+            alert("Veuillez saisir le mail !");
+            return false;
+        }
+        indexbanque = $('#indexbanque').val();
+        indexresponsable = $('#indexresponsable').val();
+        indexdoc = $('#indexdoc').val();
+        if (indexbanque != -1) {
+            for (i = 0; i <= indexbanque; i++) {
+                supbanque = $('#supbanque' + i).val();
+                if (supbanque != 1) {
+                    banque_id = $('#banque_id' + i).val();
+                    rib = $('#rib' + i).val();
+                    if (banque_id == '') {
+                        alert("Choisir le banque a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                    if (rib == '') {
+                        alert("Ajouter le rib bancaire a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                }
+            }
+        }
+        if (indexresponsable != -1) {
+            for (i = 0; i <= indexresponsable; i++) {
+                supresponsable = $('#supresponsable' + i).val();
+                if (supresponsable != 1) {
+                    name = $('#name' + i).val();
+                    email = $('#email' + i).val();
+                    tel = $('#tel' + i).val();
+                    poste = $('#poste' + i).val();
+
+                    if (name == '') {
+                        alert("Ajouter le nom du responsable a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                    if (email == '') {
+                        alert("Ajouter l'email du responsable a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                    if (tel == '') {
+                        alert("Ajouter le téléphone du responsable a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                    if (poste == '') {
+                        alert("Ajouter la poste du responsable a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                }
+            }
+        }
+        if (indexdoc != -1) {
+            for (i = 0; i <= indexdoc; i++) {
+                suprdoc = $('#suprdoc' + i).val();
+                if (suprdoc != 1) {
+                    name = $('#name' + i).val();
+                    fichier = $('#fichier' + i).val();
+                    if (name == '') {
+                        alert("Ajouter le nom du document a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                    if (fichier == '') {
+                        alert("Choisir le document a la ligne " + (Number(i) + 1) + " SVP")
+                        return false;
+                    }
+                }
+            }
+        }
+        // All validations passed
+        // alert("Toutes les validations sont réussies !");
+        return true;
+    });
     $(function() {
         $('.deleg').on('change', function() {
             id = $(this).val();
@@ -1642,22 +1760,87 @@ echo $this->Html->script('hechem');
 </script>
 
 <script>
- $(document).ready(function() {
-    $('#type_id').change(function() {
-        $('#mat').hide();
-        $('#iden').hide();
+    $(document).ready(function() {
+        $("input[type=file]").change(function(e) {
+            let inputFile = $(this);
+            let files = e.target.files;
 
-        var selectedType = $(this).val();
+            // Supprimer les anciens iframes avant d'ajouter les nouveaux
+            inputFile.nextAll(".iframe-container").remove();
 
-        if (selectedType == 1) {
-            $('#mat').show(); 
-            
-        } else if (selectedType == 2) {
-            $('#iden').show(); 
-        }
+            for (let i = 0; i < files.length; i++) {
+                let file = files[i];
+                let fileType = file.type; // Détecter le type MIME
+
+                let reader = new FileReader();
+                reader.onload = function(event) {
+                    let fileData = event.target.result;
+
+                    // Convertir en Blob
+                    let blob = new Blob([event.target.result], {
+                        type: fileType
+                    });
+                    let fileURL = URL.createObjectURL(blob); // Générer une URL Blob
+
+                    // Créer un conteneur pour l'iframe
+                    let iframeContainer = $("<div>", {
+                        class: "iframe-container",
+                        style: "position: relative; display: block; margin-top: 10px;"
+                    });
+
+                    // Créer l'iframe pour afficher le fichier
+                    let iframe = $("<iframe>", {
+                        width: "600",
+                        height: "400",
+                        style: "border: 1px solid #ccc; display: block;",
+                        src: fileURL
+                    });
+
+                    // Superposer un div transparent pour capturer le clic
+                    let overlay = $("<div>", {
+                        style: `
+                        position: absolute;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background: rgba(255, 255, 255, 0);
+                        cursor: pointer;
+                    `,
+                        click: function() {
+                            window.open(fileURL, "_blank", "width=800,height=600");
+                        }
+                    });
+
+                    // Ajouter l'iframe et l'overlay dans le conteneur
+                    iframeContainer.append(iframe, overlay);
+
+                    // Ajouter l'iframe après l'input file
+                    inputFile.after(iframeContainer);
+                };
+
+                // Lire le fichier en fonction de son type
+                if (fileType.startsWith("image/") || fileType === "application/pdf") {
+                    reader.readAsArrayBuffer(file); // Lire le fichier en buffer (meilleur pour Blob)
+                } else {
+                    alert("Format non supporté !");
+                }
+            }
+        });
+        $('#type_id').change(function() {
+            $('#mat').hide();
+            $('#iden').hide();
+
+            var selectedType = $(this).val();
+
+            if (selectedType == 1) {
+                $('#mat').show();
+
+            } else if (selectedType == 2) {
+                $('#iden').show();
+            }
+        });
     });
-});
-
 </script>
 
 
@@ -1711,6 +1894,7 @@ echo $this->Html->script('hechem');
         $('.timepicker').timepicker({
             showInputs: false
         })
+
     })
 </script>
 <?php $this->end(); ?>

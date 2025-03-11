@@ -23,7 +23,7 @@ $abrv = $session->read('abrvv');
 $lien = $session->read('lien_vente' . $abrv);
 //debug($lien);die;
 foreach ($lien as $k => $liens) {
-    if (@$liens['lien'] == 'bonlivraisons') {
+    if (@$liens['lien'] == 'facturecomptants') {
         $add = $liens['ajout'];
         $edit = $liens['modif'];
         $delete = $liens['supp'];
@@ -32,12 +32,12 @@ foreach ($lien as $k => $liens) {
     //debug($liens);die;
 }
 
-// if ($add == 1) { 
+if ($add == 1) { 
 ?>
 <div class="pull-left" style="margin-left:25px;margin-top: 20px">
-    <?php echo $this->Html->link(__('Ajouter'), ['action' => 'addf/2'], ['class' => 'btn btn-success btn-sm']) ?>
+    <?php echo $this->Html->link(__('Ajouter'), ['action' => 'addf/'.$type], ['class' => 'btn btn-success btn-sm']) ?>
 </div>
-<?php //} 
+<?php } 
 ?>
 <br><br>
 
@@ -158,15 +158,9 @@ foreach ($lien as $k => $liens) {
                         </button>
                     </div>
                 <?php } ?>
-                <!-- <div class="col-xs-1">
-                <a onClick="openWindow(1000, 1000, wr+'factureclients/imprimelistefactureclient?datedebut=<?php echo @$datedebut; ?>&datefin=<?php echo @$datefin; ?>&client_id=<?php echo @$client_id; ?>&numdeb=<?php echo @$numdeb; ?>&numfin=<?php echo @$numfin;
-                                                                                                                                                                                                                                                                            ?>')" class="btn btn-primary">Imprimer recherche</a>
-
-
-
-                </div> -->
+              
                 <div class="col-xs-1" style="text-align: center; margin-top: 25px;">
-                    <?php echo $this->Html->link(__(''), ['action' => 'index'], ['class' => 'btn btn-default btn-large fa fa-remove', 'style' => 'width: 37px; height: 35px; display: flex; justify-content: center; align-items: center;']) ?>
+                    <?php echo $this->Html->link(__(''), ['action' => 'indexf/'.$type], ['class' => 'btn btn-default btn-large fa fa-remove', 'style' => 'width: 37px; height: 35px; display: flex; justify-content: center; align-items: center;']) ?>
                 </div>
 
                 <?php echo $this->Form->end(); ?>
@@ -178,7 +172,7 @@ foreach ($lien as $k => $liens) {
     </div>
     <br>
     <div class="row">
-        <div class="col-xs-12">
+        <div class="col-xs-12">  
             <div class="box">
                 <div class="box-header with-border">
                     <h3 class="box-title">Facture</h3>
@@ -333,7 +327,7 @@ foreach ($lien as $k => $liens) {
                                             ); ?>
 
 
-                                            <!-- <a onclick="openWindow(1000, 1000, wr+'Factureclients/imprimeviewf/<?php echo $facture->id; ?>')"><button class='btn btn-xs btn-warning' style='background-color: #cb4154; color: white; border: 1px solid #cb4154;'><i class='fa fa-print'></i>PDF</button></a> -->
+                                            <a onclick="openWindow(1000, 1000, wr+'Factureclients/imprimeviewf/<?php echo $facture->id; ?>')"><button class='btn btn-xs btn-warning' style='background-color: #cb4154; color: white; border: 1px solid #cb4154;'><i class='fa fa-print'></i>PDF</button></a>
 
                                          
 
@@ -506,7 +500,7 @@ foreach ($lien as $k => $liens) {
     });
 
 
-   
+    
 </script>
 
 <script>

@@ -14,7 +14,7 @@ use Cake\Datasource\ConnectionManager;
 <?php echo $this->fetch('script'); ?>
 <section class="content-header">
   <h1>
-  Modification Réglement Achat
+    Modification Réglement Achat
     <small><?php echo __(''); ?></small>
   </h1>
   <ol class="breadcrumb">
@@ -297,7 +297,7 @@ use Cake\Datasource\ConnectionManager;
 
 
 
-                                  <select table="pieceregelemnt" index="" champ="paiement_id" class="  modereglement2 form-control montantbrut
+                                  <select table="pieceregelemnt" index="" champ="paiement_id" class=" differance  modereglement2 form-control montantbrut
                              select selectized">
                                     <option value="" selected="selected" disabled>Veuillez choisir !!</option>
 
@@ -327,7 +327,7 @@ use Cake\Datasource\ConnectionManager;
                               <tr>
                                 <td>Montant</td>
                                 <td><?php
-                                    echo $this->Form->control('montant', array('div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control mnt bl calculmontantt differance  calculmontantt2 ', 'label' => '', 'index' => 0, 'champ' => 'montant', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant]'));
+                                    echo $this->Form->control('montant', array('div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control sum-input mnt bl  differance  calculmontantt2 ', 'label' => '', 'index' => 0, 'champ' => 'montant', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant]'));
                                     ?> </td>
                               </tr>
                               <tr>
@@ -471,7 +471,7 @@ use Cake\Datasource\ConnectionManager;
                                         'div' => 'form-group',
                                         'between' => '<div class="col-sm-10">',
                                         'after' => '</div>',
-                                        'class' => 'form-control modereglement select  ',
+                                        'class' => 'modereglement2 form-control montantbrut differance select  ',
                                         'label' => '',
                                         'index' => $i,
                                         'id' => 'paiement_id' . $i,
@@ -485,43 +485,43 @@ use Cake\Datasource\ConnectionManager;
 
                                   </td>
                                 </tr>
-                                <tr <?php if ($piece->paiement_id != 5) { ?> style="display:none" <?php } ?> id="trmontantbrut<?php echo $i  ?>">
-                                  <td name="data[piece][<?php echo $i  ?>][trmontantbrut]" id="trmontantbruta<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantbruta" table="piece" class="modecheque">Montant brut</td>
-                                  <td name="data[piece][<?php echo $i  ?>][trmontantbrut]" id="trmontantbrutb<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantbrutb" table="piece" class="modecheque"><?php
+                                <tr  id="trmontantbrut<?php echo $i  ?>">
+                                  <td <?php if ($piece->paiement_id != 5) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i  ?>][trmontantbrut]" id="trmontantbruta<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantbruta" table="piece" class="modecheque">Montant brut</td>
+                                  <td <?php if ($piece->paiement_id != 5) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i  ?>][trmontantbrut]" id="trmontantbrutb<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantbrutb" table="piece" class="modecheque"><?php
                                                                                                                                                                                                                   echo $this->Form->control('montant_brut', array('value' => $piece->montant_brut, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control editmontantbrut', 'label' => '', 'type' => 'text', 'index' => $i, 'champ' => 'montantbrut', 'id' => 'montantbrut' . $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][montant_brut]'));
                                                                                                                                                                                                                   ?> </td>
                                 </tr>
-                                <tr <?php if ($piece->paiement_id != 5) { ?> style="display:none" <?php } ?> id="trtaux<?php echo $i  ?>">
-                                  <td name="data[piece][<?php echo $i  ?>][trtaux]" id="trtauxa<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trtauxa" table="piece" class="modecheque">Taux</td>
-                                  <td name="data[piece][<?php echo $i  ?>][trtaux]" id="trtauxb<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trtauxb" table="piece" class="modecheque"><?php
-                                                                                                                                                                                              echo $this->Form->control('valeur_id', array('value' => $piece->to_id, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control select editmontantbrut', 'label' => '', 'index' => $i, 'champ' => 'taux', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][taux]', 'id' => 'taux' . $i, 'empty' => 'Veuillez choisir'));
+                                <tr  id="trtaux<?php echo $i  ?>">
+                                  <td <?php if ($piece->paiement_id != 5) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i  ?>][trtaux]" id="trtauxa<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trtauxa" table="piece" class="modecheque">Taux</td>
+                                  <td <?php if ($piece->paiement_id != 5) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i  ?>][trtaux]" id="trtauxb<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trtauxb" table="piece" class="modecheque"><?php
+                                                                                                                                                                                              echo $this->Form->control('valeur_id', array('value' => $piece->to_id, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control select montantbrut editmontantbrut', 'label' => '', 'index' => $i, 'champ' => 'taux', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][taux]', 'id' => 'taux' . $i, 'empty' => 'Veuillez choisir'));
                                                                                                                                                                                               ?> </td>
                                 </tr>
                                 <tr>
                                   <td>Montant</td>
                                   <td><?php
-                                      echo $this->Form->control('montant', array('value' => $piece->montant, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control mnt calculmontantt differance  calculmontantt2', 'label' => '', 'index' => $i, 'champ' => 'montant', 'id' => 'montant' . $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][montant]'));
+                                      echo $this->Form->control('montant', array('value' => $piece->montant, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control mnt sum-input differance  calculmontantt2', 'label' => '', 'index' => $i, 'champ' => 'montant', 'id' => 'montant' . $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][montant]'));
                                       //echo $this->Form->input('montantdevise',array('value'=>$piece['Piecereglement']['montantdevise'],'type'=>'hidden','div'=>'form-group','between'=>'<div class="col-sm-10">','after'=>'</div>','class'=>'form-control','label'=>'','index'=>$i,'champ'=>'montantdevise','id'=>'montantdevise'.$i,'table'=>'pieceregelemnt','name'=>'data[pieceregelemnt]['.$i.'][montantdevise]') );   
                                       ?>
                                   </td>
                                 </tr>
-                                <tr <?php if ($piece->paiement_id != 5) { ?> style="display:none" <?php } ?> id="trmontantnet<?php echo $i  ?>">
-                                  <td name="data[piece][<?php echo $i  ?>][trmontantnet]" id="trmontantneta<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantneta" table="piece" class="modecheque">Montant Net</td>
-                                  <td name="data[piece][<?php echo $i  ?>][trmontantnet]" id="trmontantnetb<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantnetb" table="piece" class="modecheque"><?php
+                                <tr  id="trmontantnet<?php echo $i  ?>">
+                                  <td <?php if ($piece->paiement_id != 5) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i  ?>][trmontantnet]" id="trmontantneta<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantneta" table="piece" class="modecheque">Montant Net</td>
+                                  <td <?php if ($piece->paiement_id != 5) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i  ?>][trmontantnet]" id="trmontantnetb<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantnetb" table="piece" class="modecheque"><?php
                                                                                                                                                                                                                 echo $this->Form->control('montant_net', array('value' => $piece->montant_net, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control', 'label' => '', 'type' => 'text', 'index' => $i, 'id' => 'montantnet' . $i, 'champ' => 'montantnet', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][montantnet]'));
                                                                                                                                                                                                                 ?> </td>
                                 </tr>
-                                <tr <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 7)) { ?> style="display:none" <?php } ?> id="trechances<?php echo $i  ?>">
-                                  <td name="data[piece][<?php echo $i ?>][trechance]" id="trechancea[<?php echo $i ?>" index="[<?php echo $i ?>" champ="trechancea" table="piece" class="modecheque">Echéance</td>
-                                  <td name="data[piece][<?php echo $i ?>][trechance]" id="trechanceb[<?php echo $i ?>" index="[<?php echo $i ?>" champ="trechanceb" table="piece" class="modecheque"><?php
+                                <tr  id="trechances<?php echo $i  ?>">
+                                  <td <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 7)) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i ?>][trechance]" id="trechancea[<?php echo $i ?>" index="[<?php echo $i ?>" champ="trechancea" table="piece" class="modecheque">Echéance</td>
+                                  <td <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 7)) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i ?>][trechance]" id="trechanceb[<?php echo $i ?>" index="[<?php echo $i ?>" champ="trechanceb" table="piece" class="modecheque"><?php
                                                                                                                                                                                                       echo $this->Form->control('echance', array('value' => $piece->echance, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control datetimepicker', 'label' => '', 'type' => 'date', 'id' => 'echance' . $i, 'index' => $i, 'champ' => 'echance', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][echance]'));
                                                                                                                                                                                                       ?> </td>
                                 </tr>
                                 <!-- //***************************************************--->
                                 <!-- //***************************************************--->
-                                <tr <?php if ($piece->paiement_id != 2) { ?> style="display:none" <?php } ?> id="trbanque<?php echo $i  ?>">
-                                  <td name="data[piece][<?php echo $i ?>][trbanque]" id="trbanquea<?php echo $i ?>" index="<?php echo $i ?>" champ="trbanquea" table="piece" class="modecheque">Banque</td>
-                                  <td name="data[piece][<?php echo $i ?>][trbanque]" id="trbanqueb<?php echo $i ?>" index="<?php echo $i ?>" champ="trbanqueb" table="piece" class="modecheque"><?php
+                                <tr  id="trbanque<?php echo $i  ?>">
+                                  <td <?php if ($piece->paiement_id != 2) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i ?>][trbanque]" id="trbanquea<?php echo $i ?>" index="<?php echo $i ?>" champ="trbanquea" table="piece" class="modecheque">Banque</td>
+                                  <td <?php if ($piece->paiement_id != 2) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i ?>][trbanque]" id="trbanqueb<?php echo $i ?>" index="<?php echo $i ?>" champ="trbanqueb" table="piece" class="modecheque"><?php
                                                                                                                                                                                                 echo $this->Form->control('banque_id', array(
 
                                                                                                                                                                                                   'value' => $piece->banque_id,
@@ -540,9 +540,9 @@ use Cake\Datasource\ConnectionManager;
                                                                                                                                                                                                 ));
                                                                                                                                                                                                 ?></td>
                                 </tr>
-                                <tr <?php if ($piece->paiement_id != 2) { ?> style="display:none" <?php } ?> id="trcompte<?php echo $i  ?>">
-                                  <td name="data[piece][<?php echo $i ?>][trcompte]" id="trcompte<?php echo $i ?>" index="<?php echo $i ?>" champ="trcomptea" table="piece" class="modecheque">Compte</td>
-                                  <td name="data[piece][<?php echo $i ?>][trcompte]" id="trcompte<?php echo $i ?>" index="<?php echo $i ?>" champ="trcompteb" table="piece" class="modecheque">
+                                <tr  id="trcompte<?php echo $i  ?>">
+                                  <td <?php if ($piece->paiement_id != 2) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i ?>][trcompte]" id="trcompte<?php echo $i ?>" index="<?php echo $i ?>" champ="trcomptea" table="piece" class="modecheque">Compte</td>
+                                  <td <?php if ($piece->paiement_id != 2) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i ?>][trcompte]" id="trcompte<?php echo $i ?>" index="<?php echo $i ?>" champ="trcompteb" table="piece" class="modecheque">
 
 
                                     <div name="data[<?php echo $i ?>][divsous]" id="divsous<?php echo $i ?>" index="<?php echo $i ?>"><?php
@@ -564,9 +564,9 @@ use Cake\Datasource\ConnectionManager;
                                                                                                                                       ?></div>
                                   </td>
                                 </tr>
-                                <tr <?php if ($piece->paiement_id != 2) { ?> style="display:none" <?php } ?> id="trcarnetnum<?php echo $i  ?>">
-                                  <td name="data[piece][<?php echo $i ?>][trcarnetnum]" id="trcarnetnuma<?php echo $i ?>" index="<?php echo $i ?>" champ="trcarnetnuma" table="piece" class="modecheque">Numéro de carnet</td>
-                                  <td name="data[piece][<?php echo $i ?>][trcarnetnum]" id="trcarnetnumb<?php echo $i ?>" index="<?php echo $i ?>" champ="trcarnetnumb" table="piece" class="modecheque">
+                                <tr  id="trcarnetnum<?php echo $i  ?>">
+                                  <td <?php if ($piece->paiement_id != 2) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i ?>][trcarnetnum]" id="trcarnetnuma<?php echo $i ?>" index="<?php echo $i ?>" champ="trcarnetnuma" table="piece" class="modecheque">Numéro de carnet</td>
+                                  <td <?php if ($piece->paiement_id != 2) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i ?>][trcarnetnum]" id="trcarnetnumb<?php echo $i ?>" index="<?php echo $i ?>" champ="trcarnetnumb" table="piece" class="modecheque">
                                     <div name="data[<?php echo $i ?>][divsoussous]" id="divsoussous<?php echo $i ?>" index="<?php echo $i ?>">
                                       <?php
                                       echo $this->Form->control('carnetcheque_id', array(
@@ -586,9 +586,9 @@ use Cake\Datasource\ConnectionManager;
                                       ?></div>
                                   </td>
                                 </tr>
-                                <tr <?php if ($piece->paiement_id != 2) { ?> style="display:none" <?php } ?> id="trcheque<?php echo $i  ?>">
-                                  <td name="data[piece][<?php echo $i ?>][trcheque]" id="trchequea<?php echo $i ?>" index="<?php echo $i ?>" champ="trchequea" table="piece" class="modecheque">Numéro Cheque</td>
-                                  <td name="data[piece][<?php echo $i ?>][trcheque]" id="trchequeb<?php echo $i ?>" index="<?php echo $i ?>" champ="trchequeb" table="piece" class="modecheque">
+                                <tr id="trcheque<?php echo $i  ?>">
+                                  <td  <?php if ($piece->paiement_id != 2) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i ?>][trcheque]" id="trchequea<?php echo $i ?>" index="<?php echo $i ?>" champ="trchequea" table="piece" class="modecheque">Numéro Cheque</td>
+                                  <td  <?php if ($piece->paiement_id != 2) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i ?>][trcheque]" id="trchequeb<?php echo $i ?>" index="<?php echo $i ?>" champ="trchequeb" table="piece" class="modecheque">
                                     <div name="data[<?php echo $i ?>][divsoussoussous]" id="divsoussoussous<?php echo $i ?>" index="<?php echo $i ?>"><?php
 
                                                                                                                                                       echo $this->Form->control('cheque_id', array(
@@ -610,8 +610,8 @@ use Cake\Datasource\ConnectionManager;
                                 </tr>
                                 <!-- //***************************************************--->
                                 <!-- //***************************************************--->
-                                <tr <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 7)) { ?> style="display:none" <?php } ?> id="trnums<?php echo $i  ?>">
-                                  <td name="data[piece][<?php echo $i ?>][trnum]" id="trnuma<?php echo $i ?>" index="<?php echo $i ?>" champ="trnuma" table="piece" class="modecheque">Numéro pièce</td>
+                                <tr  id="trnums<?php echo $i  ?>">
+                                  <td <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 7)) { ?> style="display:none" <?php } ?><?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 7)) { ?> style="display:none" <?php } ?> name="data[piece][<?php echo $i ?>][trnum]" id="trnuma<?php echo $i ?>" index="<?php echo $i ?>" champ="trnuma" table="piece" class="modecheque">Numéro pièce</td>
 
                                   <!--                                                <td  name="data[piece][<?php echo $i ?>][trnum]" id="trnumb0" index="<?php echo $i ?>"  champ="trnumb" table="piece"   class="modecheque"></td>-->
                                   <div class='form-group' id="divnumc<?php echo $i ?>" index="<?php echo $i ?>" champ="divnumc" table="piece" <?php if ($piece->paiement_id != 2) { ?> style="display:none" <?php } ?>>
@@ -638,11 +638,11 @@ use Cake\Datasource\ConnectionManager;
 
 
                                   <td>
-                                    <!-- <div class='form-group ' id="divnump<?php echo $i ?>" index="<?php echo $i ?>"  champ="divnump" table="piece"  <?php if ($piece->paiement_id != 2) { ?>   style="display:none" <?php } ?> > -->
-                                    <!-- <div class='col-sm-12'> -->
+                                    <div class='form-group ' id="divnump<?php echo $i ?>" index="<?php echo $i ?>"  champ="divnump" table="piece"  <?php if ($piece->paiement_id != 2) { ?>   style="display:none" <?php } ?> >
+                                    <div class='col-sm-12'>
                                     <?php echo $this->Form->control('num_piece', array('value' => $piece->num, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control ', 'label' => '', 'type' => 'text', 'index' => $i, 'id' => 'num_piece' . $i, 'champ' => 'num_piece', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][num_piece]')); ?>
-                                    <!-- </div> -->
-                                    <!-- </div> -->
+                                    </div>
+                                    </div>
                                   </td>
                                 </tr>
 
@@ -687,13 +687,14 @@ use Cake\Datasource\ConnectionManager;
         <!-- /.box -->
       </div>
     </div>
-    <button type="submit" class="pull-right btn btn-success btn-sm " id="testpersonnel" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+    <button type="submit" class="pull-right btn btn-success btn-sm  testmnt" id="testpersonnel" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
     <?php echo $this->Form->end(); ?>
   </div>
   <!-- /.row -->
 </section>
 
 <?php echo $this->Html->script('alert'); ?>
+
 
 <script>
   $('#diff').on('change', function() {
@@ -726,14 +727,14 @@ use Cake\Datasource\ConnectionManager;
     }
   })
 
-  $('.calculmontantt').on('change keyup', function() {
-    ttb = Number($('#ttpayerbon').val());
-    // ttf = Number($('#ttpayer').val())
-    $('#Montant').val((ttb).toFixed(3));
-    $('#difference').val(($('#Montant').val() - $('#mtotal').val()).toFixed(3));
+  /*  $('.calculmontantt').on('change keyup', function() {
+        ttb = Number($('#ttpayerbon').val());
+        // ttf = Number($('#ttpayer').val())
+        $('#Montant').val((ttb).toFixed(3));
+        $('#difference').val(($('#Montant').val() - $('#mtotal').val()).toFixed(3));
 
 
-  })
+    })*/
   $('.chekreglementfac').on('change keyup', function() {
     function chekreglementfac() {
       $('#ttpayerbon').val(0.000);
@@ -839,41 +840,23 @@ use Cake\Datasource\ConnectionManager;
       //alert('hhhh');
       type = $('#type').val();
 
-      if (type == 1) {
-        total = $('#ttpayerbon').val();
-        //alert(total)
-        max = $('#index').val();
-        /*  sup = $('#sup'+index).val(); */
-        variable1 = 0;
 
+      variable1 = 0;
 
-        for (i = 0; i <= max; i++) {
-          if ($('#sup' + i).val() != 1)
-            variable1 = Number($('#montant' + i).val()) + variable1
+      total = $('#ttpayer').val();
+      // alert(total)
+      max = $('#index').val();
+      /*  sup = $('#sup'+index).val(); */
+      variable1 = 0;
+      for (i = 0; i <= max; i++) {
+        if ($('#sup' + i).val() != 1)
+          variable1 = Number($('#montant' + i).val()) + variable1
 
-        }
-
-        $('#mtotal').val(variable1.toFixed(3));
-        $('#difference').val(($('#ttpayerbon').val() - $('#mtotal').val()).toFixed(3));
-
-      } else {
-
-        variable1 = 0;
-
-        total = $('#ttpayer').val();
-        //alert(total)
-        max = $('#index').val();
-        /*  sup = $('#sup'+index).val(); */
-        variable1 = 0;
-        for (i = 0; i <= max; i++) {
-          if ($('#sup' + i).val() != 1)
-            variable1 = Number($('#montant' + i).val()) + variable1
-
-        }
-
-        $('#mtotal').val(variable1.toFixed(3));
-        $('#difference').val(($('#ttpayer').val() - $('#mtotal').val()).toFixed(3));
       }
+
+      $('#mtotal').val(variable1.toFixed(3));
+      $('#difference').val(($('#ttpayer').val() - $('#mtotal').val()).toFixed(3));
+
 
 
     })
@@ -899,10 +882,7 @@ use Cake\Datasource\ConnectionManager;
 
     });
   });
-</script>
 
-
-<script>
   // $('.afficheinputmontantreglementclient2').on('click', function() {
   //     index = $(this).attr('index');
   //     // alert(index)
@@ -913,7 +893,7 @@ use Cake\Datasource\ConnectionManager;
   //     }
   // })
 
-  $('.calculmontantt2').on('change keyup', function() {
+  $('.calculmontantt').on('change keyup', function() {
     ttb = Number($('#ttpayer').val());
     // ttf = Number($('#ttpayer').val())
     $('#Montant').val((ttb).toFixed(3));
@@ -975,7 +955,7 @@ use Cake\Datasource\ConnectionManager;
     if (montantlivraison < val)
       $('#montantlivraison' + index).val(montantlivraison);
     aaaa2();
-    tot2();
+    // tot2();
 
 
 
@@ -986,7 +966,7 @@ use Cake\Datasource\ConnectionManager;
       ttb = Number($('#ttpayerbon').val());
       ttf = Number($('#ttpayer').val())
       $('#Montant').val((ttf).toFixed(3));
-      $('#difference').val(($('#Montant').val() - $('#mtotal').val()).toFixed(3));
+      // $('#difference').val(($('#Montant').val() - $('#mtotal').val()).toFixed(3));
       $('#mtotal').val(ttb.toFixed(3));
 
     }
@@ -1014,7 +994,7 @@ use Cake\Datasource\ConnectionManager;
     if (montantlivraison < val)
       $('#Montantregler' + index).val(montantlivraison);
     chekreglementfacdalanda();
-    tot2();
+    // tot2();
 
 
 
@@ -1153,9 +1133,6 @@ use Cake\Datasource\ConnectionManager;
     });
   }
 
-
-
-
   $(function() {
     $('.mnt').on('blur', function() {
       // alert("hay");
@@ -1168,7 +1145,7 @@ use Cake\Datasource\ConnectionManager;
 
       for (i = 0; i <= v; i++) {
         th = $('#montant' + i).val() || 0;
-        //alert(th);
+        // alert(th);
         tt = (Number(tt) + Number(th)).toFixed(3);
         //  ttpayer2=(Number(ttpayer2)-Number(th)).toFixed(3);
       }
@@ -1193,9 +1170,10 @@ use Cake\Datasource\ConnectionManager;
       }
       console.log(tt);
       $('#Montant').val(tt);
+      $('#mtotal').val(tt);
     });
     $('.modereglement2').on('change', function() {
-      //alert();
+      //alert();                        
       index = $(this).attr('index');
       val = $(this).val();
       // alert(val);
@@ -1203,12 +1181,12 @@ use Cake\Datasource\ConnectionManager;
       //$('#montant'+index).val('');
       nb = 0;
       // if(index!=0){
-      //     for(j=0;j<=i;j++){
-      //       if($('#paiement_id'+j).val()==5)  {
+      //     for(j=0;j<=i;j++){    
+      //       if($('#paiement_id'+j).val()==5)  {          
       //         nb++;  
-      //       }
-      //     }
-      //     if(nb>1){
+      //       }              
+      //     }       
+      //     if(nb>1){  
       //      $('#btnenr').prop("disabled", true);
       //        bootbox.alert('interdit de choisi le mode retenue une autre fois', function (){});
       //        return false   
@@ -1216,7 +1194,6 @@ use Cake\Datasource\ConnectionManager;
       //       $('#btnenr').prop("disabled", false);  
       //     }
       // }
-      console.log(index);
       if (Number(val) == 1) {
         //alert();
         //$('#trechance'+index).attr('class','') ;
@@ -1238,17 +1215,24 @@ use Cake\Datasource\ConnectionManager;
         $('#trnumb' + index).hide()
         $('#banque_idb' + index).hide(); // modifiction amin pr pag mpreglement
         $('#banque_ida' + index).hide(); // modifiction amin
+        $('#divnump' + index).hide();
+
+        // $('#trcarnetnuma' + index).hide();
+        // $('#trcarnetnumb' + index).hide();
+
+
+
+
         $('#trcarnetnuma' + index).hide();
         $('#trcarnetnumb' + index).hide();
-
-
-
         $('#trcomptea' + index).hide();
         $('#trcompteb' + index).hide();
         $('#trbanquea' + index).hide();
         $('#trbanqueb' + index).hide();
         $('#trchequea' + index).hide();
         $('#trchequeb' + index).hide();
+
+
       } else if (Number(val) == 22) {
         // alert();
         //$('#trechance'+index).attr('class','') ;
@@ -1273,13 +1257,15 @@ use Cake\Datasource\ConnectionManager;
         $('#trcarnetnuma' + index).hide();
         $('#trcarnetnumb' + index).hide();
 
-
         $('#trcomptea' + index).hide();
         $('#trcompteb' + index).hide();
         $('#trbanquea' + index).hide();
         $('#trbanqueb' + index).hide();
         $('#trchequea' + index).hide();
         $('#trchequeb' + index).hide();
+
+
+
       } else if (Number(val) == 2) {
         //  alert('cheque');
         $('#trmontantbruta' + index).hide();
@@ -1298,16 +1284,24 @@ use Cake\Datasource\ConnectionManager;
         $('#trnuma' + index).show();
         $('#trnumb' + index).show();
         //ajouter select carnet trnumb0
+
+
         $('#trcarnetnuma' + index).show();
         $('#trcarnetnumb' + index).show();
 
-
+        // $('#trcarnetnuma' + index).show();
+        // $('#trcarnetnumb' + index).show();
         $('#trcomptea' + index).show();
         $('#trcompteb' + index).show();
         $('#trbanquea' + index).show();
         $('#trbanqueb' + index).show();
         $('#trchequea' + index).show();
         $('#trchequeb' + index).show();
+
+
+
+
+
         $('#divnumc' + index).show();
 
         $('#divnump' + index).show();
@@ -1337,6 +1331,7 @@ use Cake\Datasource\ConnectionManager;
 
 
 
+
         $('#trcomptea' + index).hide();
         $('#trcompteb' + index).hide();
         $('#trbanquea' + index).hide();
@@ -1363,15 +1358,8 @@ use Cake\Datasource\ConnectionManager;
         $('#trtauxa' + index).hide();
         $('#trtauxb' + index).hide();
         //******************
-
         $('#trcarnetnuma' + index).hide();
         $('#trcarnetnumb' + index).hide();
-        $('#trcomptea' + index).hide();
-        $('#trcompteb' + index).hide();
-        $('#trbanquea' + index).hide();
-        $('#trbanqueb' + index).hide();
-        $('#trchequea' + index).hide();
-        $('#trchequeb' + index).hide();
         $('#divnumc' + index).hide();
         $('#trechancea' + index).show();
         $('#trechanceb' + index).show();
@@ -1384,6 +1372,16 @@ use Cake\Datasource\ConnectionManager;
         $('#trnumb' + index).show();
 
         $('#divnump' + index).show();
+
+
+
+
+        $('#trcomptea' + index).hide();
+        $('#trcompteb' + index).hide();
+        $('#trbanquea' + index).hide();
+        $('#trbanqueb' + index).hide();
+        $('#trchequea' + index).hide();
+        $('#trchequeb' + index).hide();
         //$('#trnum'+index).attr('class','display:none') ;  
       }
 
@@ -1397,18 +1395,19 @@ use Cake\Datasource\ConnectionManager;
         $('#trtauxb' + index).hide();
         $('#trechancea' + index).hide();
         $('#trechanceb' + index).hide();
-        $('#trbanquea' + index).show();
-        $('#trbanqueb' + index).show();
+
+
 
         $('#trnbrmoins' + index).show();
         $('#trnuma' + index).hide();
         $('#trnumb' + index).hide()
         $('#banque_idb' + index).hide(); // modifiction amin pr pag mpreglement
         $('#banque_ida' + index).hide(); // modifiction amin
+
+
+
         $('#trcarnetnuma' + index).hide();
         $('#trcarnetnumb' + index).hide();
-
-
         $('#trcomptea' + index).hide();
         $('#trcompteb' + index).hide();
         $('#trbanquea' + index).hide();
@@ -1420,36 +1419,79 @@ use Cake\Datasource\ConnectionManager;
 
 
     });
+
+    $('.sum-input').on('keyup change', function() {
+      let indexString = $('#index').val(); // Assuming this is a comma-separated string of indexes.
+      let ttpayer = Number($('#ttpayer').val()) || 0; // Convert to number and handle empty value.
+      let tt = 0; // Initialize total amount.
+
+      if (indexString) {
+        let indexes = indexString.split(','); // Split into an array if it's comma-separated.
+        indexes.forEach(function(i) {
+          let th = Number($('#montant' + i).val()) || 0; // Retrieve the value or default to 0.
+          tt += th; // Accumulate total.
+        });
+      }
+
+      tt = tt.toFixed(3);
+
+      if (ttpayer < tt) {
+        alert('Ne dépassez pas le total des factures !');
+      }
+    });
+
+    $('.testmnt').on('mouseover', function() {
+      let ttpayer = Number($('#ttpayer').val()) || 0; // Get total from #ttpayer
+      let tt = 0; // Initialize total amount
+
+      $('.sum-input:visible').each(function() {
+        let th = Number($(this).val()) || 0; // Get montant value or default to 0
+        tt += th; // Accumulate total
+      });
+
+      
+
+      tt = tt.toFixed(3); // Format to 3 decimal places     
+     
+
+      if (tt > ttpayer) {
+        alert('Le montant total dépasse le total de la facture !');
+      } else if (tt < ttpayer) {
+        alert('Le montant total est inférieur au total de la facture.');
+      } else {
+        //alert('Le montant total est égal au total de la facture.');
+      }
+    });
+
     $('.montantbrut').on('keyup change', function() {
       index = $(this).attr('index');
-      //   alert(index);
       montantbrut = $('#montantbrut' + index).val() || 0;
-      //   alert()
+      // alert(montantbrut);
       t = $('#taux' + index).val() || 0;
-      // alert(t);
-      if (t == '1') {
-        taux = 1.5
-      };
-      if (t == '4') {
-        taux = 5
-      };
-      if (t == '3') {
-        taux = 15
-      };
-      if (t == '5') {
-        taux = 10
-      };
-      if (t == '6') {
-        taux = 3
-      };
-      if (t == '7') {
-        taux = 7
-      };
-      if (t == '8') {
-        taux = 1
-      };
+      //   alert(t);
+      // if (t == '1') {
+      //     taux = 1.5
+      // };
+      // if (t == '4') {
+      //     taux = 5
+      // };
+      // if (t == '3') {
+      //     taux = 15
+      // };
+      // if (t == '5') {
+      //     taux = 10
+      // };
+      // if (t == '6') {
+      //     taux = 3
+      // };
+      // if (t == '7') {
+      //     taux = 7
+      // };
+      // if (t == '8') {
+      //     taux = 1
+      // };
       //alert(taux);
-      retenue = (montantbrut * (taux / 100)).toFixed(3);
+      retenue = (montantbrut * (t / 100)).toFixed(3);
       $('#montant' + index).val(retenue);
       // $('#Montant').val(retenue);
       net = (montantbrut - retenue).toFixed(3);
@@ -1471,18 +1513,27 @@ use Cake\Datasource\ConnectionManager;
 
     });
   });
-</script>
-<script>
+
   $(function() {
 
     $('.fournisseurreglement').on('change', function() {
       val = $('#fournisseur_id').val() || 0;
-      val2 = $('#pointdevente_id').val() || 0;
+      // val2=$('#pointdevente_id').val()||0;
       //alert(val);
       if (val != 0)
-        ulr = 'https://codifaerp.isofterp.com/codifa2022/reglements/add';
-      // alert(ulr);
-      $(location).attr('href', ulr + "/" + val + "/" + val2);
+
+        var currentUrl = window.location.href;
+      var parentUrl = currentUrl.split('/').slice(0, -2).join('/');
+      var link = wr+"reglements/add/" + val;
+
+
+
+
+
+
+
+     
+      $(location).attr('href', link);
 
     });
 
@@ -1535,9 +1586,17 @@ use Cake\Datasource\ConnectionManager;
               $('#divnumc' + index).hide();
               $('#trechancea' + index).show();
               $('#trechanceb' + index).show();
-              $('#trbanquea' + index).show();
 
+
+
+
+              $('#trcomptea' + index).show();
+              $('#trcompteb' + index).show();
+              $('#trbanquea' + index).show();
               $('#trbanqueb' + index).show();
+              $('#trchequea' + index).show();
+              $('#trchequeb' + index).show();
+
 
               $('#banque_idb' + index).show();
               $('#banque_ida' + index).show();
@@ -1600,7 +1659,7 @@ use Cake\Datasource\ConnectionManager;
       for (i = 0; i <= max; i++) {
         if ($('#bonreception_id' + i).is(':checked')) { //alert();
           testt = true;
-          ttbl = Number($('#bonreception_id' + i).attr('mnttounssi')) + Number(ttbl);
+          ttbl = Number($('#bonreception_id' + i).attr('mnt')) + Number(ttbl);
           ttounsi = Number($('#bonreception_id' + i).attr('mnttounssi')) + Number(ttounsi);
           if (typefrs != 1) {
             ttdv = Number($('#devise' + i).val()) + Number(ttdv);
@@ -1697,9 +1756,14 @@ use Cake\Datasource\ConnectionManager;
               $('#divnumc' + index).hide();
               $('#trechancea' + index).show();
               $('#trechanceb' + index).show();
-              $('#trbanquea' + index).show();
 
+              $('#trcomptea' + index).show();
+              $('#trcompteb' + index).show();
+              $('#trbanquea' + index).show();
               $('#trbanqueb' + index).show();
+              $('#trchequea' + index).show();
+              $('#trchequeb' + index).show();
+
 
               $('#banque_idb' + index).show();
               $('#banque_ida' + index).show();
@@ -1754,7 +1818,7 @@ use Cake\Datasource\ConnectionManager;
       for (i = 0; i <= max; i++) {
         if ($('#facture_id' + i).is(':checked')) { //alert();
           testt = true;
-          ttbl = Number($('#facture_id' + i).attr('mnttounssi')) + Number(ttbl);
+          ttbl = Number($('#facture_id' + i).attr('mnt')) + Number(ttbl);
           ttounsi = Number($('#facture_id' + i).attr('mnttounssi')) + Number(ttounsi);
           if (typefrs != 1) {
             ttdv = Number($('#devise' + i).val()) + Number(ttdv);
@@ -1828,6 +1892,7 @@ use Cake\Datasource\ConnectionManager;
     //    ajouter_lignee(table, index);
     //  });
     $(".ajouterligne").on('click', function() {
+      // alert('ddddddd')
       table = $(this).attr('table'); //id table
       index = $(this).attr('index'); // id max compteur
       tr = $(this).attr('tr'); //class class type
@@ -1884,6 +1949,10 @@ use Cake\Datasource\ConnectionManager;
         format: 'd/m/Y'
       });
       $('#' + table).find('tr:last').show();
+      $("#paiement_id" + ind).select2({
+        width: '100%' // need to override the changed default
+      });
+
       // $('#'+table).find('tr:last').attr('style','');
       //		for(j=0;j<=i;j++){
       //		uniform_select(tabb[j]);
@@ -1909,6 +1978,7 @@ use Cake\Datasource\ConnectionManager;
     //    console.log(tt);
     //    $('#Montant').val(tt);
     //        });
+
   });
 </script>
 
@@ -1940,4 +2010,189 @@ use Cake\Datasource\ConnectionManager;
     //$('#' + index + 'agio').val(agio);
 
   }
+</script>
+
+<script>
+  $(function() {
+    //Initialize Select2 Elements
+    $('.select2').select2()
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', {
+      'placeholder': 'dd/mm/yyyy'
+    })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', {
+      'placeholder': 'mm/dd/yyyy'
+    })
+    //Money Euro
+    $('[data-mask]').inputmask()
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({
+      timePicker: true,
+      timePickerIncrement: 30,
+      format: 'MM/DD/YYYY h:mm A'
+    })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker({
+        ranges: {
+          'Today': [moment(), moment()],
+          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month': [moment().startOf('month'), moment().endOf('month')],
+          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate: moment()
+      },
+      function(start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass: 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass: 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass: 'iradio_flat-green'
+    })
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
+</script>
+<?php $this->end(); ?>
+
+
+<?php echo $this->Html->css('AdminLTE./bower_components/bootstrap-daterangepicker/daterangepicker', ['block' => 'css']); ?>
+<!-- bootstrap datepicker -->
+<?php echo $this->Html->css('AdminLTE./bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min', ['block' => 'css']); ?>
+<!-- iCheck for checkboxes and radio inputs -->
+<?php echo $this->Html->css('AdminLTE./plugins/iCheck/all', ['block' => 'css']); ?>
+<!-- Bootstrap Color Picker -->
+<?php echo $this->Html->css('AdminLTE./bower_components/bootstrap-colorpicker/dist/css/bootstrap-colorpicker.min', ['block' => 'css']); ?>
+<!-- Bootstrap time Picker -->
+<?php echo $this->Html->css('AdminLTE./plugins/timepicker/bootstrap-timepicker.min', ['block' => 'css']); ?>
+<!-- Select2 -->
+<?php echo $this->Html->css('AdminLTE./bower_components/select2/dist/css/select2.min', ['block' => 'css']); ?>
+<!-- Select2 -->
+<?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
+<!-- InputMask -->
+<?php echo $this->Html->script('AdminLTE./plugins/input-mask/jquery.inputmask', ['block' => 'script']); ?>
+<?php echo $this->Html->script('AdminLTE./plugins/input-mask/jquery.inputmask.date.extensions', ['block' => 'script']); ?>
+<?php echo $this->Html->script('AdminLTE./plugins/input-mask/jquery.inputmask.extensions', ['block' => 'script']); ?>
+<!-- date-range-picker -->
+<?php echo $this->Html->script('AdminLTE./bower_components/moment/min/moment.min', ['block' => 'script']); ?>
+<?php echo $this->Html->script('AdminLTE./bower_components/bootstrap-daterangepicker/daterangepicker', ['block' => 'script']); ?>
+<!-- bootstrap datepicker -->
+<?php echo $this->Html->script('AdminLTE./bower_components/bootstrap-datepicker/dist/js/bootstrap-d    a        t              epicker.min', ['block' => 'script']); ?>
+<!-- bootstrap color picker -->
+<?php echo $this->Html->script('AdminLTE./bower_components/bootstrap-colorpicker/dist/js/bootstrap-colorpicker.min', ['block' => 'script']); ?>
+<!-- bootstrap time picker -->
+<?php echo $this->Html->script('AdminLTE./plugins/timepicker/bootstrap-timepicker.min', ['block' => 'script']); ?>
+<!-- iCheck 1.0.1 -->
+<?php echo $this->Html->script('AdminLTE./plugins/iCheck/icheck.min', ['block' => 'script']); ?>
+<?php $this->start('scriptBottom'); ?>
+<script>
+  $(function() {
+
+    //Initialize Select2 Elements
+    $('.select2').select2()
+    //Datemask dd/mm/yyyy
+    $('#datemask').inputmask('dd/mm/yyyy', {
+      'placeholder': 'dd/mm/yyyy'
+    })
+    //Datemask2 mm/dd/yyyy
+    $('#datemask2').inputmask('mm/dd/yyyy', {
+      'placeholder': 'mm/dd/yyyy'
+    })
+    //Money Euro
+    $('[data-mask]').inputmask()
+    //Date range picker
+    $('#reservation').daterangepicker()
+    //Date range picker with time picker
+    $('#reservationtime').daterangepicker({
+      timePicker: true,
+      timePickerIncrement: 30,
+      format: ' MM/DD/YYYY h:mm A'
+    })
+    //Date range as a button
+    $('#daterange-btn').daterangepicker({
+        ranges: {
+          'Today': [moment(), moment()],
+          'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+          'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+          'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+          'This Month': [moment().startOf('month'), moment().endOf('month')],
+          'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+        },
+        startDate: moment().subtract(29, 'days'),
+        endDate: moment()
+      },
+      function(start, end) {
+        $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+      }
+    )
+    //Date picker
+    $('#datepicker').datepicker({
+      autoclose: true
+    })
+    //iCheck for checkbox and radio inputs
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass: 'iradio_minimal-blue'
+    })
+    //Red color scheme for iCheck
+    $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+      checkboxClass: 'icheckbox_minimal-red',
+      radioClass: 'iradio_minimal-red'
+    })
+    //Flat red color scheme for iCheck
+    $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-green',
+      radioClass: 'iradio_flat-green'
+    })
+    //Colorpicker
+    $('.my-colorpicker1').colorpicker()
+    //color picker with addon
+    $('.my-colorpicker2').colorpicker()
+    //Timepicker
+    $('.timepicker').timepicker({
+      showInputs: false
+    })
+  })
+</script>
+<?php $this->end(); ?>
+
+<script>
+  $('.afficherancienclient').on('click', function() {
+    //    alert("tt");
+    //        if ($('#non').is(':checked')) { //alert('non is checked');
+    //            $('#afficher').attr('style', "display:true;");
+    //        } else
+    if ($('#oui').is(':checked')) {
+      alert("true is checked");
+      $('#afficher').attr('style', "display:none;");
+    }
+
+  });
 </script>

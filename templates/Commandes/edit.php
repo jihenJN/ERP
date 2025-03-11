@@ -523,7 +523,7 @@ use Cake\ORM\TableRegistry;
                                                             <td align="center">
                                                                 <?php echo $this->Form->input('article_idd', array('label' => '', 'readonly' => 'readonly', 'value' => $res->article_id, 'name' => 'data[ligner][' . $i . '][article_idd]', 'type' => 'hidden', 'id' => 'article_idd' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control calculligne2 focus', 'index')); ?>
 
-                                                                <?php echo $this->Form->input('qte', array('label' => '', 'value' => $res->qte, 'name' => 'data[ligner][' . $i . '][qte]', 'type' => 'number', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control calculligne2 focus', 'index')); ?>
+                                                                <?php echo $this->Form->input('qte', array('label' => '', 'value' => $res->qte, 'name' => 'data[ligner][' . $i . '][qte]', 'type' => 'number', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control findtth2 focus', 'index')); ?>
 
                                                                 <input type="hidden" table="ligner" name="" id="<?php echo 'pourcentageescompte' . $i ?>" champ="pourcentageescompte" class="calcullignecommande form-control" index="<?php echo $i ?>">
                                                             </td>
@@ -627,7 +627,7 @@ use Cake\ORM\TableRegistry;
                                                         <td align="center" table="ligner">
                                                             <input type="hidden" table="ligner" name="" readonly champ="article_idd" class="  form-control" index>
 
-                                                            <input type="number" table="ligner" name="" id="" champ="qte" type="text" class=" calculligne2 form-control focus" index>
+                                                            <input type="number" table="ligner" name="" id="" champ="qte" type="text" class=" findtth2 form-control focus" index>
                                                         </td>
 
                                                         <td align="center" table="ligner" hidden>
@@ -1578,10 +1578,10 @@ use Cake\ORM\TableRegistry;
 </script>
 <script>
     $(document).ready(function() {
-
-        Calcul();
+        Calcul2();
+       // Calcul();
         $(".boutonlivraison").on("keyup", function() {
-            Calcul();
+           // Calcul();
         });
 
 
@@ -1622,7 +1622,7 @@ use Cake\ORM\TableRegistry;
                     $('#fodec' + index).val(response['donnearticle']["fodec"]);
                     $('#remise' + index).val(response['donnearticle']["remise"]);
                     $('#qte' + index).focus();
-                    Calcul();
+                  //  Calcul();
                 }
             })
         });

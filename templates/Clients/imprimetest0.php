@@ -134,10 +134,8 @@ function int2str($a)
     }
 
 
-  
     .print-container {
-        /* background-size: cover;
-        background-position: center; */
+    
         height: 1058px;
         width: 812px;
     }
@@ -215,7 +213,8 @@ for ($page = 0; $page < $totalPages; $page++): ?>
                             </b>
                             <b
                                 style="font-size: 13px!important; font-weight: normal; display: block; margin-bottom: 0.5em;">
-                                <?php echo 'RTE MAHDIA KM 10 3011 SFAX'; ?>
+                                <?php echo $societefirst->adresse; ?><br>
+
                             </b>
                         </td>
                         <td align="end" style="width: 38%;border: none;">

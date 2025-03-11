@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Typecredit $typecredit
@@ -34,7 +35,7 @@
                         </div>
                         <div class="col-xs-6">
                             <?php
-                            echo $this->Form->control('montant', ['label' => 'Montant']);
+                            echo $this->Form->control('montant', ['label' => 'Montant','class' => 'form-control number']);
                             ?>
                         </div>
                         <!-- <div class="col-xs-6">
@@ -58,37 +59,44 @@
                             ?>
                         </div> -->
                         <div class="col-xs-6">
-                        <?php
-                                    echo $this->Form->control('frequence_id', array(
-                                        'empty' => 'Veuillez choisir !!', 'options' => $frequences, 'class' => ' form-control ', 'name' => 'frequence_id', 'label' => 'Fréquence', 'id' => 'frequence_id', 'type' => '', 'class' => 'form-control select2  fournisseurreglement2'
-                                    ));
-                                    ?>
-                        </div> 
+                            <?php
+                            echo $this->Form->control('frequence_id', array(
+                                'empty' => 'Veuillez choisir !!',
+                                'options' => $frequences,
+                                'class' => ' form-control ',
+                                'name' => 'frequence_id',
+                                'label' => 'Fréquence',
+                                'id' => 'frequence_id',
+                                'type' => '',
+                                'class' => 'form-control select2  fournisseurreglement2'
+                            ));
+                            ?>
+                        </div>
 
                         <div class="col-xs-6">
                             <?php
-                            echo $this->Form->control('montantcredit', ['label' => 'Montant Crédit']);
+                            echo $this->Form->control('montantcredit', ['label' => 'Montant Crédit','class' => 'form-control number']);
                             ?>
                         </div>
                         <div class="col-xs-6">
                             <?php
-                            echo $this->Form->control('taux', ['label' => 'Taux d\'intérêt']);
+                            echo $this->Form->control('taux', ['label' => 'Taux d\'intérêt','class' => 'form-control number']);
 
-                          //  echo $this->Form->control('taux', ['label' => 'Taux d intérét']);
+                            //  echo $this->Form->control('taux', ['label' => 'Taux d intérét']);
                             ?>
                         </div>
                         <div class="col-xs-6">
                             <?php
-                            echo $this->Form->control('montantremb', ['label' => 'Montant Remboursement']);
+                            echo $this->Form->control('montantremb', ['label' => 'Montant Remboursement','class' => 'form-control number']);
 
-                          //  echo $this->Form->control('taux', ['label' => 'Taux d intérét']);
+                            //  echo $this->Form->control('taux', ['label' => 'Taux d intérét']);
                             ?>
                         </div>
                     </div>
-                    <button type="submit" class="pull-right btn btn-success" id="controlecredit" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+                    <button type="submit" class="pull-right btn btn-success testchamp" id="controlecredit" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
                     <?php echo $this->Form->end(); ?>
                 </div>
- 
+
                 <!-- /.box-body -->
 
 
@@ -99,3 +107,44 @@
     <!-- /.row -->
 </section>
 <?php echo $this->Html->script('alert'); ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.testchamp').on('click', function() {
+
+            num = $('#name').val();
+            date = $('#date').val();
+            frequence_id = $('#frequence_id').val();
+            montantcredit = $('#montantcredit').val();
+            solde = $('#montant').val();
+            taux = $('#taux').val();
+            montantremb = $('#montantremb').val();
+            if (num == '') {
+                alert("Ajouter le nom  SVP");
+                return false;
+            }
+           
+            if (frequence_id == '') {
+                alert("Choisir le fréquence SVP");
+                return false;
+            }
+           
+            if (solde == '') {
+                alert("Ajouter le montant SVP");
+                return false;
+            }
+            if (montantcredit == '') {
+                alert("Ajouter le montant credit SVP");
+                return false;
+            }
+            if (taux == '') {
+                alert("Ajouter le taux d`intérêt SVP");
+                return false;
+            }
+            if (montantremb == '') {
+                alert("Ajouter le Montant Remboursement SVP");
+                return false;
+            }
+
+        });
+    });
+</script>

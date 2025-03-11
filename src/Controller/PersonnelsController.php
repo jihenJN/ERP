@@ -17,10 +17,6 @@ class PersonnelsController extends AppController {
      *
      * @return \Cake\Http\Response|null|void Renders view
      */
-    public function detail()
-    {
-
-    }
       public function verif() {
         $id = $this->request->getQuery('idfam');
         $familles = $this->fetchTable('Users')->find('all')->where(['Users.personnel_id=' . $id])->count();

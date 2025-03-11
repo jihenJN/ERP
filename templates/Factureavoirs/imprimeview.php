@@ -166,7 +166,7 @@ function int2str($a)
 </div><br>
 <!-- <h5 align="center"> www.toutenrouleau.tn</h5> -->
 <div align="left">
-    <h3><span style="margin-left:7%;">DATE : </span><?= $this->Time->format($facture->date, 'dd/MM/y'); ?></h3>
+    <h3><span style="margin-left:7%;">SOUASSI LE : </span><?= $this->Time->format($facture->date, 'dd/MM/y'); ?></h3>
 </div>
 <!-- <h3 align="left" style="margin-left:4% ;"> Facture Avoir N° <?php echo $facture->numero ?></h3> -->
 <div style="display:flex;margin-bottom:3px;margin-left:25px;" align="center">
@@ -401,22 +401,22 @@ function int2str($a)
                                 <!-- <td align="center" style="border:1px solid black;  border-top: none; border-bottom: none; vertical-align:top;">
                                 <?= $this->Number->format($lignecommande->fodec) ?>
                             </td> -->
-                                <td align="left" style="border:1px solid black;  border-top: none; border-bottom: none; vertical-align:top;text-align:left">
+                                <!-- <td align="left" style="border:1px solid black;  border-top: none; border-bottom: none; vertical-align:top;text-align:left">
                                     <div style="margin-left: 25% ;"> <?php // $this->Number->format($lignecommande->prix) 
                                                                         echo number_format(abs($lignecommande->prix), 3, ',', ' ');  ?>
                                     </div>
-                                </td>
+                                </td> -->
 
 
-                                <!--<td hidden align="center" style="border:1px solid black;  border-top: none; border-bottom: none; vertical-align:top;">
+                                <!-- <td hidden align="center" style="border:1px solid black;  border-top: none; border-bottom: none; vertical-align:top;">
                                 <?= $this->Number->format($lignecommande->remiseclient) ?> %
-                            </td>
+                            </td> -->
                             <td align="center" style="border:1px solid black;  border-top: none; border-bottom: none;  vertical-align:top;">
                                 <?= $this->Number->format($lignecommande->tva_id) ?>
-                            </td> -->
+                            </td>
                                 <td align="center" style="border:1px solid black;  border-top: none; border-bottom: none; vertical-align:top;text-align:right">
                                     <div style="margin-right: 25%;"> <?php //$this->Number->format($lignecommande->ttc) 
-                                                                        echo number_format(abs($lignecommande->totalttc), 3, ',', ' ');  ?> </div>
+                                                                        echo number_format(abs($lignecommande->prix), 3, ',', ' ');  ?> </div>
                                 </td>
                                 <?php if ($facture->totalrem != 0) { ?>
                                     <td align="center" style="border:1px solid black;  border-top: none; border-bottom: none;  vertical-align:top;">
@@ -504,11 +504,11 @@ function int2str($a)
                                 <td align="right" style="border:1px solid black;">
 
                                     <div style="margin-right: 10% ;"><?php // $this->Number->format($commande->brut) 
-                                                                        echo number_format(abs($sql[0]['total']), 3, ',', ' ');  ?> </div>
+                                                                        echo number_format(abs($facture->total), 3, ',', ' ');  ?> </div>
                                 </td>
                             </tr>
                             <?php  // debug($facture->toarray());
-                            if ($facture->totalrem != 0) { ?>
+                            if ($facture->remise != 0) { ?>
                                 <tr>
                                     <td style="border:1px solid black;">
                                         <div style="margin-left: 6%;"><strong> Remise </strong></div>
@@ -516,7 +516,7 @@ function int2str($a)
                                     <td style="border:1px solid black;" align="right">
                                         <div style="margin-right: 10% ;"><?php
                                                                             // $this->Number->format($commande->remise) commande->brut
-                                                                            echo number_format(abs($facture->totalrem), 3, ',', ' ');  ?></div>
+                                                                            echo number_format(abs($facture->remise), 3, ',', ' ');  ?></div>
                                     </td>
                                 </tr>
                             <?php } ?>
@@ -527,7 +527,7 @@ function int2str($a)
                                 </td>
                                 <td style="border:1px solid black;" align="right">
                                     <div style="margin-right: 10% ;"><?php //$this->Number->format($commande->total)
-                                                                        echo number_format(abs($facture->totalht), 3, ',', ' '); ?></div>
+                                                                           echo number_format(abs($facture->total-$facture->remise), 3, ',', ' '); ?></div>
                                 </td>
                             </tr>
 
@@ -588,8 +588,4 @@ function int2str($a)
 
 
 </div>
-<!-- <p> - Nos prix seront révisible a toute augmentation des matiére premiére (ciment, Gravier, Sable, et énergie) </p> -->
 </div> <br> <br> <br> <br> <br> <br> <br> <br>
-<!-- <div class="box">
-    <p align="centrer"> SARL. au capital de 1.284.000 Dinars - Usine : Route de Gabés GP1 - PK 396 Ghannouche </p>
-</div> -->

@@ -185,7 +185,7 @@ class FactureavoirsController extends AppController
     {
 
         $factureavoir = $this->Factureavoirs->newEmptyEntity();
-        
+
         $facture = $this->fetchTable('Factureclients')->get($id, [
             'contain' => [
                 'Clients',
@@ -212,7 +212,7 @@ class FactureavoirsController extends AppController
             $data['client_id'] = $this->request->getdata('client_id');
             $depot = $data['depot_id'] = $this->request->getdata('depot_id');
             $data['totalremise'] = $this->request->getdata('remise');
-            $data['remise'] = $this->request->getdata('remise');
+            $data['remise'] = $this->request->getdata('remisee');
 
             $data['depot_id'] = $this->request->getdata('depot_id');
             $data['fodec1'] = $this->request->getdata('fodec');
@@ -244,7 +244,7 @@ class FactureavoirsController extends AppController
                     foreach ($this->request->getData('data')['Lignefacture'] as $i => $f) {
                         if (!empty($f['article_id']) && !empty($f['quantite'])) {
                             //debug($f);
-                            if ($f['quantite'] != 0 && $f['sup'] != 1 ) {
+                            if ($f['quantite'] != 0 && $f['sup'] != 1) {
                                 $lignef = $this->fetchTable('Lignefactureavoirs')->newEmptyEntity();
 
                                 $Lignefac['factureavoir_id'] = $fac_id;
@@ -397,33 +397,36 @@ class FactureavoirsController extends AppController
         // $tim = $this->fetchTable('Timbres')->find()->select(["timbre" =>
         // 'MAX(Timbres.timbre)'])->first();
         // $timbre = $tim->timbre;
+        $tim =[];
+        if ($facture->timbre_id!=null){
         $tim = $this->fetchTable('Timbres')->find('list', ['keyfield' => 'id', 'valueField' => 'timbre'])
 
-        ->where(['Timbres.id' => $facture->timbre_id])
-        ->toArray();
-   /***************************bloc info client******************************************* */
+            ->where(['Timbres.id' => $facture->timbre_id])
+            ->toArray();
+        }
+        /***************************bloc info client******************************************* */
 
-   $clientid = $facture->client_id;
-   $lignebloc = $this->fetchTable('Clients')->get($clientid, [
-       'contain' => ['Types'],
-   ]);
-   $typeclients = $this->fetchTable('Clients')->get($clientid, [
-       'contain' => ['Typeclients', 'Gouvernorats', 'Types']
-   ]);
+        $clientid = $facture->client_id;
+        $lignebloc = $this->fetchTable('Clients')->get($clientid, [
+            'contain' => ['Types'],
+        ]);
+        $typeclients = $this->fetchTable('Clients')->get($clientid, [
+            'contain' => ['Typeclients', 'Gouvernorats', 'Types']
+        ]);
 
-   $typeclientid = $typeclients->type->id;
-   if ($typeclientid  == null) {
-       $typeclientid = ' ';
-   }
+        $typeclientid = $typeclients->type->id;
+        if ($typeclientid  == null) {
+            $typeclientid = ' ';
+        }
 
-   $typeclientname = $typeclients->type->name;
-   $adresses = $this->fetchTable('Adresselivraisonclients')->find('all', [
-       'contain' => ['Clients']
-   ])
-       ->where(["Adresselivraisonclients.client_id = " . $facture->client_id . ""])->first();
-   $adresse = $adresses->adresse;
-   /********************************************************************** */
-        $this->set(compact('factureclient','adresse','typeclientname','typeclientid','lignebloc', 'tim', 'lignefactures', 'art', 'depots', 'numspecial', 'factureavoir', 'clients', 'rz', 'es', 'remcli', 'remes', 'clientc', 'not', 'gs', 'BL', 'cl'));
+        $typeclientname = $typeclients->type->name;
+        $adresses = $this->fetchTable('Adresselivraisonclients')->find('all', [
+            'contain' => ['Clients']
+        ])
+            ->where(["Adresselivraisonclients.client_id = " . $facture->client_id . ""])->first();
+        $adresse = $adresses->adresse;
+        /********************************************************************** */
+        $this->set(compact('factureclient', 'adresse', 'typeclientname', 'typeclientid', 'lignebloc', 'tim', 'lignefactures', 'art', 'depots', 'numspecial', 'factureavoir', 'clients', 'rz', 'es', 'remcli', 'remes', 'clientc', 'not', 'gs', 'BL', 'cl'));
     }
     public function addfacavoirdd($id = null)
     {
@@ -437,7 +440,7 @@ class FactureavoirsController extends AppController
             ]
         ]);
         if ($this->request->is(['post'])) {
-          // debug($this->request->getdata());die;
+            // debug($this->request->getdata());die;
             $num = $this->Factureavoirs->find()->select(["num" =>
             'MAX(Factureavoirs.numero)'])->first();
             // debug($num);
@@ -448,7 +451,7 @@ class FactureavoirsController extends AppController
             $numspecial = str_pad("$in", 6, "0", STR_PAD_LEFT);
             //  debug($factureavoir);
 
-      
+
             $data['factureclient_id'] = $facture->id;
 
             $data['numero'] = $numspecial;;
@@ -649,11 +652,11 @@ class FactureavoirsController extends AppController
         // $timbre_id = $tim->id;
         $tim = $this->fetchTable('Timbres')->find('list', ['keyfield' => 'id', 'valueField' => 'timbre'])
 
-        ->where(['Timbres.id' => $facture->timbre_id])
-        ->toArray();
+            ->where(['Timbres.id' => $facture->timbre_id])
+            ->toArray();
 
-        
-        $this->set(compact('factureclient','facture', 'tim', 'lignefactures', 'art', 'depots', 'numspecial', 'factureavoir', 'clients', 'rz', 'es', 'remcli', 'remes', 'clientc', 'not', 'gs', 'BL', 'cl'));
+
+        $this->set(compact('factureclient', 'facture', 'tim', 'lignefactures', 'art', 'depots', 'numspecial', 'factureavoir', 'clients', 'rz', 'es', 'remcli', 'remes', 'clientc', 'not', 'gs', 'BL', 'cl'));
     }
 
 
@@ -676,10 +679,10 @@ class FactureavoirsController extends AppController
 
 
         if ($datedebut) {
-            $cond1 = 'Factureavoirs.date >= ' . "'" . $datedebut . "'";
+            $cond1 = 'Date(Factureavoirs.date) >= ' . "'" . $datedebut . "'";
         }
         if ($datefin) {
-            $cond2 = 'Factureavoirs.date <= ' . "'" . $datefin . "'";
+            $cond2 = 'Date(Factureavoirs.date) <= ' . "'" . $datefin . "'";
         }
         if ($client_id) {
             $cond3 = "Factureavoirs.client_id  =  '" . $client_id . "' ";
@@ -778,31 +781,31 @@ class FactureavoirsController extends AppController
         // $timbre = $tim->timbre;
         $tim = $this->fetchTable('Timbres')->find('list', ['keyfield' => 'id', 'valueField' => 'timbre'])
 
-        ->where(['Timbres.id' => $factureavoir->timbre_id])
-        ->toArray();
-  /***************************bloc info client******************************************* */
+            ->where(['Timbres.id' => $factureavoir->timbre_id])
+            ->toArray();
+        /***************************bloc info client******************************************* */
 
-  $clientid = $factureavoir->client_id;
-  $lignebloc = $this->fetchTable('Clients')->get($clientid, [
-      'contain' => ['Types'],
-  ]);
-  $typeclients = $this->fetchTable('Clients')->get($clientid, [
-      'contain' => ['Typeclients', 'Gouvernorats', 'Types']
-  ]);
+        $clientid = $factureavoir->client_id;
+        $lignebloc = $this->fetchTable('Clients')->get($clientid, [
+            'contain' => ['Types'],
+        ]);
+        $typeclients = $this->fetchTable('Clients')->get($clientid, [
+            'contain' => ['Typeclients', 'Gouvernorats', 'Types']
+        ]);
 
-  $typeclientid = $typeclients->type->id;
-  if ($typeclientid  == null) {
-      $typeclientid = ' ';
-  }
+        $typeclientid = $typeclients->type->id;
+        if ($typeclientid  == null) {
+            $typeclientid = ' ';
+        }
 
-  $typeclientname = $typeclients->type->name;
-  $adresses = $this->fetchTable('Adresselivraisonclients')->find('all', [
-      'contain' => ['Clients']
-  ])
-      ->where(["Adresselivraisonclients.client_id = " . $factureavoir->client_id . ""])->first();
-  $adresse = $adresses->adresse;
-  /********************************************************************** */
-        $this->set(compact('factureavoir','tim','adresse','typeclientname','lignebloc','typeclientid', 'clients', 'typefactures', 'lignefactureavoirs', 'art', 'depots', 'type', 'tvas', 'fodecs', 'tv', 'fod', 'typefac', 'articles', 'commercials', 'commercial'));
+        $typeclientname = $typeclients->type->name;
+        $adresses = $this->fetchTable('Adresselivraisonclients')->find('all', [
+            'contain' => ['Clients']
+        ])
+            ->where(["Adresselivraisonclients.client_id = " . $factureavoir->client_id . ""])->first();
+        $adresse = $adresses->adresse;
+        /********************************************************************** */
+        $this->set(compact('factureavoir', 'tim', 'adresse', 'typeclientname', 'lignebloc', 'typeclientid', 'clients', 'typefactures', 'lignefactureavoirs', 'art', 'depots', 'type', 'tvas', 'fodecs', 'tv', 'fod', 'typefac', 'articles', 'commercials', 'commercial'));
     }
 
 

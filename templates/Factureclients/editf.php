@@ -32,7 +32,7 @@ use Cake\Datasource\ConnectionManager;
         <small><?php echo __(''); ?></small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="<?php echo $this->Url->build(['action' => 'indexf/2']); ?>"><i class="fa fa-reply"></i> <?php echo __('Retour'); ?></a></li>
+        <li><a href="<?php echo $this->Url->build(['action' => 'indexf/'.$factureclient->type]); ?>"><i class="fa fa-reply"></i> <?php echo __('Retour'); ?></a></li>
     </ol>
 </section>
 <!-- Main content -->
@@ -510,7 +510,7 @@ use Cake\Datasource\ConnectionManager;
                                                             <td align="center">
                                                                 <?php echo $this->Form->input('article_idd', array('label' => '', 'readonly' => 'readonly', 'value' => $res->article_id, 'name' => 'data[ligner][' . $i . '][article_idd]', 'type' => 'hidden', 'id' => 'article_idd' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control calculligne2 focus', 'index')); ?>
 
-                                                                <?php echo $this->Form->input('qte', array('label' => '', 'value' => $res->qte, 'name' => 'data[ligner][' . $i . '][qte]', 'type' => 'text', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control calculligne2 focus ', 'index')); ?>
+                                                                <?php echo $this->Form->input('qte', array('label' => '', 'value' => $res->qte, 'name' => 'data[ligner][' . $i . '][qte]', 'type' => 'text', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control findtth2 focus ', 'index')); ?>
                                                                 <input type="hidden" value='<?php echo $res->article->Poids ?>' table="ligner" name="" id="<?php echo 'poids' . $i ?>" champ="poids" class="calcullignecommande form-control" index="<?php echo $i ?>">
 
                                                                 <input type="hidden" table="ligner" name="" id="<?php echo 'pourcentageescompte' . $i ?>" champ="pourcentageescompte" class="calcullignecommande form-control" index="<?php echo $i ?>">
@@ -633,7 +633,7 @@ use Cake\Datasource\ConnectionManager;
                                                         <td align="center" table="ligner">
                                                             <input type="hidden" table="ligner" name="" readonly champ="article_idd" class="  form-control" index>
 
-                                                            <input type="number" table="ligner" name="" id="" champ="qte" type="text" class=" calculligne2 form-control focus" index>
+                                                            <input type="number" table="ligner" name="" id="" champ="qte" type="text" class=" findtth2 form-control focus" index>
                                                         </td>
 
                                                         <td hidden align="center" table="ligner">

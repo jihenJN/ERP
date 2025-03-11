@@ -115,6 +115,7 @@ use Cake\ORM\TableRegistry;
                         <th scope="col"><?= h('Total TTC') ?></th>
                         <th scope="col"><?= h('Validation') ?></th>
                         <th scope="col"><?= h('Bon livraison') ?></th>
+                        <th scope="col"><?= h('Envoi mail') ?></th>
 
                         <th scope="col" class="actions text-center"><?= __('Actions') ?></th>
                     </tr>
@@ -291,7 +292,14 @@ use Cake\ORM\TableRegistry;
 
 
                             </td>
-
+                            <td>
+                                <!-- <a href="javascript:void(0);" class="btn btn-xl envoyerbuttonfr"
+                                    style="background-color:#A19F9F; border: transparent;color: #fff;margin-right: 10px;"
+                                    title='envoyer email' fmail="<?php echo $commande->fournisseur->mail; ?>" namecl="<?php echo $commande->fournisseur->nom; ?>" idcl="<?php echo $commande['fournisseur_id']; ?>">
+                                    <i class="fa fa-envelope"></i>
+                                </a> -->
+                                <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-envelope'></i></button>", array('action' => 'envoyer', $commande->id, $commande->fournisseur_id), array('escape' => false)); ?>
+                            </td>
                             <td class="actions text-right" align="center">
                                 <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $commande->id), array('escape' => false)); ?>
                                 <?php
@@ -374,6 +382,9 @@ use Cake\ORM\TableRegistry;
 <!-- iCheck 1.0.1 -->
 <?php echo $this->Html->script('AdminLTE./plugins/iCheck/icheck.min', ['block' => 'script']); ?>
 <?php $this->start('scriptBottom'); ?>
+<script>
+
+</script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const numeroInput = document.querySelector('input[name="numero"]');

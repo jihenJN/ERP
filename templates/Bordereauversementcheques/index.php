@@ -42,12 +42,14 @@ echo $this->Html->script('salma');
 
   //if ($add == 1) { 
   ?>
+  <?php if ($type == 2) { ?>
+    <div class="pull-left"><?php echo $this->Html->link(__('Ajouter'), ['action' => 'add/' . $type], ['class' => 'btn btn-success btn-xs']) ?></div>
 
-  <div class="pull-left"><?php echo $this->Html->link(__('Ajouter'), ['action' => 'add/' . $type], ['class' => 'btn btn-success btn-xs']) ?></div>
+  <?php } else { ?>
+    <div class="pull-left"><?php echo $this->Html->link(__('Ajouter'), ['action' => 'addtr/' . $type], ['class' => 'btn btn-success btn-xs']) ?></div>
+
+  <?php  } ?>
 </section>
-<?php  //} 
-?>
-
 <br> <br><br>
 
 
@@ -125,9 +127,15 @@ echo $this->Html->script('salma');
 </section>
 <!-- Main content -->
 <section class="content-header">
-  <h1>
-    Bordereau versement chéques
-  </h1>
+  <?php if ($type == 2) { ?>
+    <h1>
+      Bordereau versement chéques
+    </h1>
+  <?php } else { ?>
+    <h1>
+      Bordereau versement Traite
+    </h1>
+  <?php } ?>
 </section>
 
 
@@ -143,8 +151,7 @@ echo $this->Html->script('salma');
               <tr>
                 <th width="10%" align="center"><?= ('Numero') ?></th>
                 <th width="10%" align="center"><?= ('Compte') ?></th>
-                <th width="10%" align="center"><?= ('Date debut') ?></th>
-                <th width="10%" align="center"><?= ('Date fin') ?></th>
+                <th width="10%" align="center"><?= ('Date ') ?></th>
                 <th width="10%" align="center"><?= ('Montant total') ?></th>
                 <th width="10%" align="center"><?= ('Nomberpiece') ?></th>
                 <th width="10%" align="center"><?= ('Situation') ?></th>
@@ -170,10 +177,7 @@ echo $this->Html->script('salma');
                         $agence->date,
                         'dd/MM/y'
                       ) ?></td>
-                  <td><?php echo $this->Time->format(
-                        $agence->datefin,
-                        'dd/MM/y'
-                      ) ?></td>
+
                   <td>
                     <?= h(number_format(abs($montant[0]['m']), 3, ',', ' ')); ?>
                   </td>
@@ -183,24 +187,51 @@ echo $this->Html->script('salma');
                   <td>
                     <?= h($agence->situation) ?>
                   </td>
-                  <td class="actions text" align="center">
-                    <?php
-                    $basePath = $this->request->getAttribute('base');
-                    ?>
 
-                    <a onclick="openWindow(1000, 1000, '<?= $basePath ?>/Bordereauversementcheques/imprimer/<?php echo $agence->id; ?>')"><button class='btn btn-xs btn-primary'><i class='fa fa-print'></i></button></a>
 
-                    <?php //echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $agence->id), array('escape' => false)); 
-                    ?>
-                    <?php //if ($edit == 1) { 
-                    echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $agence->id), array('escape' => false)); //}
-                    ?>
-                    <?php //if ($delete == 1) { 
-                    echo $this->Form->postLink("<button class='btn btn-xs btn-danger deleteConfirm'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $agence->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $agence->id)); ?>
-                    <!-- <button index='<?php echo $i ?>' class='btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button> -->
-                    <?php //} 
-                    ?>
-                  </td>
+                  <?php if ($type == 2) { ?>
+                    <td class="actions text" align="center">
+                      <?php
+                      $basePath = $this->request->getAttribute('base');
+                      ?>
+
+                      <a onclick="openWindow(1000, 1000, '<?= $basePath ?>/Bordereauversementcheques/imprimer/<?php echo $agence->id; ?>')"><button class='btn btn-xs btn-primary'><i class='fa fa-print'></i></button></a>
+
+
+                      <?php //if ($edit == 1) { 
+                      echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $agence->id), array('escape' => false)); //}
+                      ?>
+                      <?php //if ($edit == 1) { 
+                      echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $agence->id), array('escape' => false)); //}
+                      ?>
+                      <?php //if ($delete == 1) { 
+                      echo $this->Form->postLink("<button class='btn btn-xs btn-danger deleteConfirm'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $agence->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $agence->id)); ?>
+                      <!-- <button index='<?php echo $i ?>' class='btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button> -->
+                      <?php //} 
+                      ?>
+                    </td>
+                  <?php } else { ?>
+                    <td class="actions text" align="center">
+                      <?php
+                      $basePath = $this->request->getAttribute('base');
+                      ?>
+
+                      <a onclick="openWindow(1000, 1000, '<?= $basePath ?>/Bordereauversementcheques/imprimertr/<?php echo $agence->id; ?>')"><button class='btn btn-xs btn-primary'><i class='fa fa-print'></i></button></a>
+
+                      <?php //if ($edit == 1) { 
+                      echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'viewtr', $agence->id), array('escape' => false)); //}
+                      ?>
+                      <?php //if ($edit == 1) { 
+                      echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edittr', $agence->id), array('escape' => false)); //}
+                      ?>
+                      <?php //if ($delete == 1) { 
+                      echo $this->Form->postLink("<button class='btn btn-xs btn-danger deleteConfirm'><i class='fa fa-trash-o'></i></button>", array('action' => 'deletetr', $agence->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $agence->id)); ?>
+                      <!-- <button index='<?php echo $i ?>' class='btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button> -->
+                      <?php //} 
+                      ?>
+                    </td>
+                  <?php } ?>
+
 
                 </tr>
               <?php endforeach; ?>
@@ -222,6 +253,37 @@ echo $this->Html->script('salma');
 <script>
   $('.select2').select2();
 </script>
+<script>
+  document.addEventListener("DOMContentLoaded", function() {
+    // Récupérer les paramètres de l'URL
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.has('print')) {
+      let type = "<?= h($type) ?>"; // Récupérer la variable PHP $type
+      const id = urlParams.get('id'); // Récupère la valeur de id
+
+      // Déterminer l'URL d'impression en fonction du type
+      let printUrl = "";
+      if (type == 1) {
+        printUrl = "<?= $this->Url->build(['action' => 'imprimertr']) ?>/" + id;
+      } else if (type == 2) {
+        printUrl = "<?= $this->Url->build(['action' => 'imprimer']) ?>/" + id;
+      }
+
+      if (printUrl) {
+        // alert(printUrl)
+        // Ouvrir une nouvelle fenêtre d'impression
+        window.open(printUrl, '_blank', `width=${1000},height=${1000},scrollbars=yes,resizable=yes`);
+
+        // Supprimer le paramètre 'print' de l'URL après redirection
+        /*  let newUrl = window.location.href.split('?')[0];
+         window.history.replaceState({}, document.title, newUrl);  */
+      }
+    }
+  });
+</script>
+
+
 <script>
   function openWindow(h, w, url) {
     leftOffset = (screen.width / 2) - w / 2;

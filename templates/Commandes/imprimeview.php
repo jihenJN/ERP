@@ -132,9 +132,9 @@ function int2str($a)
     }
 
 
-    
+   
     .print-container {
-        background-image: url('https://sttp.mtd-erp.com/ERP/img/facturedalinda.jpg') !important;
+        background-image: url('/img/facturedalinda.jpg') !important;
         background-size: cover;
         background-position: center;
         height: 1050px;
@@ -462,7 +462,7 @@ $totalPages = ceil($totalLines / $maxLinesPerPage);
                             $query = $lignestable->find();
                             $query->select([
                                 'tva' => 'Lignecommandes.tva',
-                                'base' => $query->func()->sum('(qte*ml*prix - (qte*ml*prix)* (remise / 100) + (qte*ml*prix - (qte*ml*prix)* (remise / 100)) * ifnull(fodec,0) / 100)'),
+                                'base' => $query->func()->sum('(qte*ml*prix)'),
                                 'total' => $query->func()->sum('((qte*ml*prix - (qte*ml*prix)* (remise / 100) + (qte*ml*prix - (qte*ml*prix)* (remise / 100)) * ifnull(fodec,0) / 100)) * tva / 100')
                             ])
                                 ->where(['Lignecommandes.commande_id' => $commande->id])
@@ -495,7 +495,7 @@ $totalPages = ceil($totalLines / $maxLinesPerPage);
                                                 <?= $this->Number->format($rrr->tva) ?>
                                             </b>
                                             <b style="margin-left: 18% !important; font-weight: normal; font-size:15px; display: block; margin-top: -0.2px;">
-                                                <?php echo number_format(abs($rrr->total), 3, ',', ' '); ?>
+                                                <?php echo number_format(abs($rrr->base), 3, ',', ' '); ?>
                                             </b>
                                         </td>
 

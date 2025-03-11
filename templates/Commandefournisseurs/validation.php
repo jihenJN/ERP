@@ -1,7 +1,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script>
 <?php echo $this->Html->script('controle_frs'); ?>
 <?php echo $this->Html->css('select2'); ?>
+<?php
 
+use Cake\ORM\TableRegistry;
+?>
 <!-- Content Header (Page header) -->
 <section class="content-header">
   <h1>
@@ -43,13 +46,30 @@
                 <div class="row">
 
                   <div class="col-xs-6">
-                    <?php echo $this->Form->control('depot_id', ['options' => $depot, 'label' => 'Depot', 'class' => 'form-control select2 control-label', 'id' => 'depot_id']); ?>
+                    <?php echo $this->Form->control('depot_id', ['options' => $depot, 'label' => 'Depot', 'class' => 'form-control select2 control-label', 'id' => 'depot_id', 'style' => 'pointer-events:none;']); ?>
                   </div>
 
                   <div class="col-xs-6">
                     <?php
-                    echo $this->Form->control('fournisseur_id', ['readonly' => 'readonly', 'options' => $fournisseurs, 'class' => 'form-control select2 control-label',]);
+                    echo $this->Form->control('fournisseur_id', ['readonly' => 'readonly', 'options' => $fournisseurs, 'class' => 'form-control select2 control-label', 'style' => 'pointer-events:none;']);
                     ?>
+                  </div>
+                  <div class="col-xs-6">
+                    <?php echo $this->Form->control('dateliv', ['label' => 'Date Livraison', 'class' => 'form-control', 'type' => 'date']); ?>
+                  </div>
+                  <div class="col-xs-6">
+                    <label> Mode de livraison </label>
+                    <select name="modeliv" class="form-control">
+                      <option value="0" <?php if ($commande->modeliv == 0) { ?> selected <?php } ?>> Partiel
+                      <option value="1" <?php if ($commande->modeliv == 1) { ?> selected <?php } ?>> Total
+                    </select>
+                  </div>
+                  <div class="col-xs-6">
+                    <label> Type de livraison </label>
+                    <select name="typeliv" class="form-control">
+                      <option value="0" <?php if ($commande->typeliv == 0) { ?> selected <?php } ?>> Interne
+                      <option value="1" <?php if ($commande->typeliv == 1) { ?> selected <?php } ?>> Externe
+                    </select>
                   </div>
                 </div>
 
@@ -82,7 +102,7 @@
                           <td align="center" style="width: 10%;"><strong>PrixHT</strong></td>
                           <td align="center" style="width: 10%;"><strong>PUNHT</strong></td>
                           <td align="center" style="width: 5%;"><strong>Remise</strong></td>
-                          <td align="center"  hidden style="width: 5%;"><strong>Fodec</strong></td>
+                          <td align="center" hidden style="width: 5%;"><strong>Fodec</strong></td>
                           <td align="center" style="width: 5%;"><strong>Tva</strong></td>
                           <td align="center" style="width: 10%;"><strong>TTC</strong></td>
                         </tr>
@@ -110,9 +130,11 @@
                               echo $this->Form->input('designiationA', array('readonly' => 'readonly', 'value' => $ligne['article']['Code'], 'label' => '', 'name' => 'data[ligner][' . $i . '][designiationA]', 'id' => 'designiationA' . $i, 'champ' => 'designiationA', 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
                               ?>
                             </td>
-                            
+
+
+
                             <td align="center">
-                             <?php echo $this->Form->input('designiationA', array('readonly' => 'readonly', 'value' => $ligne['article']['Dsignation'], 'label' => '', 'name' => 'data[ligner][' . $i . '][designiationA]', 'id' => 'designiationA' . $i, 'champ' => 'designiationA', 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
+                              <?php echo $this->Form->input('designiationA', array('readonly' => 'readonly', 'value' => $ligne['article']['Dsignation'], 'label' => '', 'name' => 'data[ligner][' . $i . '][designiationA]', 'id' => 'designiationA' . $i, 'champ' => 'designiationA', 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
                               ?>
                             </td>
                             <!--                                <td align="center">
@@ -158,6 +180,69 @@
                               ?>
                             </td>
 
+                          </tr>
+                          <br>
+
+                          <tr>
+                            <?php
+                            $paramarticleTable = TableRegistry::getTableLocator()->get('Parametrearticles');
+                            $criteresTable = TableRegistry::getTableLocator()->get('Criteres');
+
+                            $paramarticle = $paramarticleTable->find()
+                              ->where(['article_id' => $ligne['article']['id']]);
+
+                            foreach ($paramarticle  as $p => $param) {
+                              $critere = $criteresTable->find()->where(['id' => $param->critere_id])->first();
+                              // $criteres = $criteresTable->find()->where(['id' => $param->critere_id])->first();
+
+                            ?>
+                            <td>
+                              <br>
+                              <input type="checkbox" id="critere" name="critere" value="">
+                              <label for="critere"> <?php echo $critere->name ?></label><br><br>
+                            </td>
+                            <?php
+                            }
+                            ?>
+
+
+                          </tr>
+                          <tr height="35px">
+                            <td colspan= "8">
+                            <label for="critere"> Réclamation</label><br>
+
+                            <textarea class="form-control" type="" id="reclamation" name="reclamation" value=""></textarea>
+
+                            </td>
+                          </tr>
+
+                          <tr>
+
+
+                         
+                          <td>
+                            <br>
+                          <input type="checkbox" id="critere" name="critere" value="">
+                          <label for="critere"> <?php echo "Accepté DG" ?></label><br>
+                          </td>
+
+                          <td>
+                          <br>
+                          <input type="checkbox" id="critere" name="critere" value="">
+                          <label for="critere"> <?php echo "Refus entier" ?></label><br>
+                          </td>
+
+                          <td>
+                          <br>
+                          <input type="checkbox" id="critere" name="critere" value="">
+                          <label for="critere"> <?php echo "Refus Partiel" ?></label><br>
+                          </td>
+
+                          <td>
+                          <br>
+                          <input type="checkbox" id="critere" name="critere" value="">
+                          <label for="critere"> <?php echo "Article à changer" ?></label><br>
+                          </td>
                           </tr>
                         <?php } ?>
 

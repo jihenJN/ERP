@@ -1,23 +1,12 @@
 <?php $this->layout = 'AdminLTE.print'; ?>
 <?php
 
-
-use Cake\ORM\TableRegistry;
-
-?>
-
-
-<?php
-
-$societeTable = TableRegistry::getTableLocator()->get('Societes');
-
-$societe = $societeTable->find()->where('id=1')->first();
-
 use Cake\Core\Configure;
 use Cake\I18n\FrozenTime;
 use Cake\Datasource\ConnectionManager;
-
 ?>
+<?php $connection = ConnectionManager::get('default'); ?>
+
 
 <style>
     /* Define your table border style here */
@@ -70,8 +59,7 @@ use Cake\Datasource\ConnectionManager;
                          </div> -->
                         </td>
                         <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-                            <?php echo $societe->adresseEntete; ?>
-                            <br>
+                            <?php echo $societefirst->adresseEntete; ?><br>
                         </td>
                         <td align="center" style="width: 25%;border: none;">
                             <div>
@@ -95,7 +83,7 @@ use Cake\Datasource\ConnectionManager;
     <tr>
         <td>
             <h3>
-                <div style="margin-left: 5px ;color: #a52a2a; "> <?php echo $societe->nom ?></div>
+                <div style="margin-left: 5px ;color: #a52a2a; "> </div>
 
 
                 <div align="center" style="color: #c71585 ; ">
@@ -286,9 +274,8 @@ use Cake\Datasource\ConnectionManager;
                                                     <td align="center" style="font-size: 16px; font-weight: bold;"> <?php echo $qtestockentre; ?> </td>
                                                     <td align="center" style="font-size: 16px; font-weight: bold;"> <?php echo $qtestocksortie; ?> </td>
                                                     <td align="center" style="font-size: 16px; font-weight: bold;">
-                                                        <a href='/ERP/Articles/indexspec?date1=<?php echo @$date1; ?>&date2=<?php echo @$datef; ?>&depot_id=<?php echo @$depotid; ?>&article_id=<?php echo $art['id']; ?>' target="_blank">
-                                                            <?php echo $qtestock; ?>
-                                                        </a>
+                                                        <?php echo $qtestock; ?>
+
                                                     </td>
                                                 </tr>
 

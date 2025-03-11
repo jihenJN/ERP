@@ -48,35 +48,6 @@ class Commandefournisseur extends Entity
      * @var array<string, bool>
      */
     protected $_accessible = [
-        'demandeoffredeprix_id' => true,
-        'numero' => true,
-        'date' => true,
-        'fournisseur_id' => true,
-       // 'pointdevente_id' => true,
-        'depot_id' => true,
-        'cartecarburant_id' => true,
-        'materieltransport_id' => true,
-        'chauffeur' => true,
-        'convoyeur' => true,
-        'valide' => true,
-        'remise' => true,
-        'tva' => true,
-        'fodec' => true,
-        'ttc' => true,
-        'ht' => true,
-        'livraison_id' => true,
-        'etatliv' => true,
-        'demandeoffredeprix' => true,
-        'fournisseur' => true,
-        'pointdevente' => true,
-        'depot' => true,
-        'cartecarburant' => true,
-        'materieltransport' => true,
-        'livraison' => true,
-        'typecommande' => true,
-        'service_id' => true,
-        'machine_id' => true,
-        'observation' => true,
-
+        '*' => true,
     ];
 }

@@ -139,18 +139,18 @@ if ($add == 1) { ?>
 
                                         </div>  -->
                     <div style="margin-right: 10px;">
-                      <button class="btn btn-sm btn-primary" type="button" style="margin-left:10%;" title="mode" onClick="openWindow(1000, 1000,wr+ 'reglements/modepaie/<?php echo $reglement->id ?>');" champ="orderr" value="0">
+                      <button class="btn btn-sm btn-primary" type="button" style="margin-left:10%;" title="mode" onClick="openWindow(1000, 1000, wr+'reglements/modepaie/<?php echo $reglement->id ?>');" champ="orderr" value="0">
                         Mode Paiement
                       </button>
                     </div>
                   </td>
                   <td class="actions text" align="center">
-                     <a onclick="openWindow(1000, 1000, '/ERP/reglements/imprimeview/<?= $reglement->id ?>')">
-                        <button class="btn btn-xs btn-primary" style="background-color: #940c89; border-color: #940c89;">
-                          <i class="fa fa-print"></i>
-                        </button>
-                      </a>
-                  
+                    <a onclick="openWindow(1000, 1000, '/ERP/reglements/imprimeview/<?= $reglement->id ?>')">
+                      <button class="btn btn-xs btn-primary" style="background-color: #940c89; border-color: #940c89;">
+                        <i class="fa fa-print"></i>
+                      </button>
+                    </a>
+
                     <!-- <div style="margin-right: 2px;">
                                                 <a onclick="openWindow(1000, 1000, '/totenroulour/reglements/imprimeview/<?= $type ?>/<?= $bonlivraison->id ?>')">
                                                     <button class="btn btn-xs btn-primary" style="background-color: #940c89; border-color: #940c89;">
@@ -166,14 +166,14 @@ if ($add == 1) { ?>
                     // } 
                     ?>
                     <?php //if ($delete == 1) {
-                    echo $this->Form->postLink("<button class='btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $reglement->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $reglement->id));
+                    echo $this->Form->postLink("<button class='btn btn-xs btn-danger deletecon'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $reglement->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $reglement->id));
                     //} 
                     ?>
                   </td>
                 </tr>
               <?php endforeach; ?>
             </tbody>
-          </table>
+          </table>  
         </div>
         <!-- /.box-body -->
       </div>
@@ -189,6 +189,11 @@ if ($add == 1) { ?>
 <!-- Select2 -->
 <?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
 <?php $this->start('scriptBottom'); ?>
+<script>
+  $(".deletecon").on("click", function() {
+    return confirm("voulez vous supprimer cet enregistrement !!");
+  });
+</script>
 <script>
   document.addEventListener('DOMContentLoaded', function() {
     // const numeroInput = document.querySelector('input[name="numero"]');

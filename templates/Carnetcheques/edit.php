@@ -74,7 +74,7 @@
                         ?>
                     </div>
 
-                    <button type="submit" class="pull-right btn btn-success" id="controlecheque" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+                    <button type="submit" class="pull-right btn btn-success testchamp" id="controlecheque" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
                     <?php echo $this->Form->end(); ?>
                 </div>
 
@@ -88,7 +88,43 @@
     <!-- /.row -->
 </section>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.testchamp').on('click', function() {
 
+            
+            numero = $('#numero').val();
+
+            // index = Number($('#index').val());
+
+            compte = $('#compte_id').val();
+            nombre = $('#nombre').val();
+            debut = $('#debut').val();
+            taille = $('#taille').val();
+            // ajouterId = $('#ajouter_lignebanque').val();
+
+            if (numero == "") {
+                alert('Ajouter le numero');
+                return false;
+            } else if (compte == "") {
+                alert('Ajouter un compte');
+                return false;
+            } else if (nombre == "") {
+                alert('Ajouter le nombre');
+                return false;
+            } else if (debut == "") {
+                alert('Ajouter le debut');
+                return false;
+            } else if (taille == "") {
+                alert('Ajouter le taille');
+                return false;
+            }
+
+
+
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function() {

@@ -226,21 +226,22 @@ use Cake\ORM\TableRegistry;
                     } else {
                         $stylee = "display:none;";
                     }
-                   /// if (/*$bonlivraison->typebl == 1 &&*/$bonlivraison->client_id == 12) {
+                    /// if (/*$bonlivraison->typebl == 1 &&*/$bonlivraison->client_id == 12) {
 
                     ?>
-                        <div class="col-xs-4" id="divnomprenom" style="<?php echo $stylee; ?>">
-                            <?php echo $this->Form->control('nomprenom', ['label' => 'Nom / Prénom', 'readonly' => 'readonly', 'value' => $bonlivraison->nomprenom, 'required' => 'off', 'class' => 'form-control focus']); ?>
+                    <div class="col-xs-4" id="divnomprenom" style="<?php echo $stylee; ?>">
+                        <?php echo $this->Form->control('nomprenom', ['label' => 'Nom / Prénom', 'readonly' => 'readonly', 'value' => $bonlivraison->nomprenom, 'required' => 'off', 'class' => 'form-control focus']); ?>
 
-                        </div>
-                        <div class="col-xs-4" id="divnumeroident" style="<?php echo $stylee; ?>">
-                            <?php echo $this->Form->control('numeroidentite', ['label' => 'Numéro identité', 'readonly' => 'readonly', 'value' => $bonlivraison->numeroidentite, 'required' => 'off', 'class' => 'form-control focus']); ?>
+                    </div>
+                    <div class="col-xs-4" id="divnumeroident" style="<?php echo $stylee; ?>">
+                        <?php echo $this->Form->control('numeroidentite', ['label' => 'Numéro identité', 'readonly' => 'readonly', 'value' => $bonlivraison->numeroidentite, 'required' => 'off', 'class' => 'form-control focus']); ?>
 
-                        </div>
-                        <div class="col-xs-4" id="divadresseclt" style="<?php echo $stylee; ?>">
-                            <?php echo $this->Form->control('adressediv', ['label' => 'Adresse', 'required' => 'off', 'readonly' => 'readonly', 'value' => $bonlivraison->adressediv, 'class' => 'form-control focus']); ?>
-                        </div>
-                    <?php //} ?>
+                    </div>
+                    <div class="col-xs-4" id="divadresseclt" style="<?php echo $stylee; ?>">
+                        <?php echo $this->Form->control('adressediv', ['label' => 'Adresse', 'required' => 'off', 'readonly' => 'readonly', 'value' => $bonlivraison->adressediv, 'class' => 'form-control focus']); ?>
+                    </div>
+                    <?php //} 
+                    ?>
 
                     <input type="hidden" name="fodecclient" id="fodecclient" class="" style="margin-right: 20px">
                     <input type="hidden" name="fodecclientexo" id="fodecclientexo" class="" style="margin-right: 20px">
@@ -511,7 +512,7 @@ use Cake\ORM\TableRegistry;
 
                                                         <td align="center">
 
-                                                            <?php echo $this->Form->input('qte', array('label' => '',  'value' => $res->qte, 'name' => 'data[ligner][' . $i . '][qte]', 'type' => 'number', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control calculligne2 ', 'index')); ?>
+                                                            <?php echo $this->Form->input('qte', array('readonly','label' => '',  'value' => $res->qte, 'name' => 'data[ligner][' . $i . '][qte]', 'type' => 'number', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control findtth2 ', 'index')); ?>
 
                                                             <input type="hidden" table="ligner" name="" id="<?php echo 'pourcentageescompte' . $i ?>" champ="pourcentageescompte" class="calcullignecommande form-control" index="<?php echo $i ?>">
                                                         </td>
@@ -571,7 +572,7 @@ use Cake\ORM\TableRegistry;
 
                                                         <td align="center">
 
-                                                            <i index="<?php echo $i ?>" class="fa fa-times supLignearticle2" style="color: #C9302C;font-size: 22px;">
+                                                            <!-- <i index="<?php echo $i ?>" class="fa fa-times supLignearticle2" style="color: #C9302C;font-size: 22px;"> -->
                                                         </td>
 
                                                         </td>
@@ -627,7 +628,7 @@ use Cake\ORM\TableRegistry;
                                                     </td>
 
                                                     <td align="center" hidden>
-                                                        <i index id="" class="fa fa-times supLignearticle2" style="color: #c9302c;font-size: 22px;"></i>
+                                                        <!-- <i index id="" class="fa fa-times supLignearticle2" style="color: #c9302c;font-size: 22px;"></i> -->
                                                     </td>
                                                 </tr>
                                                 <input type="hidden" value="<?php echo $i ?>" id="index">
@@ -643,37 +644,7 @@ use Cake\ORM\TableRegistry;
                 <section class="content" style="width: 99%">
                     <div class="row" id="sec">
                         <div class="row">
-                            <!-- <div style=" position: static;">
-                                <div class="col-xs-4">
-                                    <?php echo $this->Form->control('total', ['id' => 'totalht', 'value' => $bonlivraison->totalht, 'readonly' => 'readonly', 'label' => 'Total HT', 'name', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4">
-                                    <?php echo $this->Form->control('remisee', ['value' => $bonlivraison->totalremise, 'id' => 'totalremise', 'readonly' => 'readonly', 'label' => 'Total remise', 'name', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4" hidden>
-                                    <?php echo $this->Form->control('remiseee', ['id' => 'totalremise1', 'class' => 'form-control',  'readonly' => 'readonly', 'label' => 'test remise', 'name' => 'remiseee', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4" hidden>
-                                    <?php echo $this->Form->control('totalapres', ['id' => 'totalhtapres', 'value' => $bonlivraison->totalht - $bonlivraison->totalremise, 'readonly' => 'readonly', 'label' => 'Total HT après remise', 'name', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4">
-                                    <?php echo $this->Form->control('tva', ['id' => 'totaltva', 'value' => $bonlivraison->totaltva, 'readonly' => 'readonly', 'label' => 'Total TVA', 'name', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4" hidden>
-                                    <?php echo $this->Form->control('fodec', ['id' => 'totalfodec', 'value' => $bonlivraison->totalfodec, 'readonly' => 'readonly', 'label' => 'Total Fodec', 'name', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4" hidden>
-                                    <?php echo $this->Form->control('totalputtc', ['id' => 'totalputtc', 'value' => $bonlivraison->totalputtc, 'class' => 'form-control ontrol-label', 'readonly' => 'readonly', 'label' => 'Total puttc', 'name', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4">
-                                    <?php echo $this->Form->control('totalttc', ['value' => $bonlivraison->totalttc - $bonlivraison->timbre->timbre, 'id' => 'ttc', 'class' => 'form-control calculinversetot', 'label' => 'Total ttc', 'name', 'required' => 'off']); ?>
-                                </div>
-                                <div class="col-xs-4" hidden>
-                                    <?php echo $this->Form->control('totalttctest', ['id' => 'ttctest', 'readonly' => 'readonly', 'label' => 'test ttc', 'name', 'class' => 'form-control verifttctotal calculinversetot', 'required' => 'off']); ?>
-                                </div>
-                    
 
-                            </div> -->
                             <div style=" position: static;">
                                 <table style="width:55%;margin-left:70%;">
                                     <tr>
@@ -682,7 +653,7 @@ use Cake\ORM\TableRegistry;
                                         </td>
                                         <td>
                                             <div class="col-xs-4">
-                                                <?php echo $this->Form->control('total', ['id' => 'totalht', 'value' => sprintf("%01.3f", str_replace(",", ".", $bonlivraison->total)),  'class' => 'form-control', 'readonly' => 'readonly', 'label' => false, 'name', 'required' => 'off']); ?>
+                                                <?php echo $this->Form->control('total', ['id' => 'totalht', 'class' => 'form-control', 'readonly' => 'readonly', 'label' => false, 'name', 'required' => 'off']); ?>
                                             </div>
                                         </td>
                                     </tr>
@@ -692,7 +663,7 @@ use Cake\ORM\TableRegistry;
                                         </td>
                                         <td>
                                             <div class="col-xs-4">
-                                                <?php echo $this->Form->control('remisee', ['id' => 'totalremise', 'value' => sprintf("%01.3f", str_replace(",", ".", $bonlivraison->remise)),  'class' => 'form-control', 'readonly' => 'readonly', 'label' =>false, 'name', 'required' => 'off']); ?>
+                                                <?php echo $this->Form->control('remisee', ['id' => 'totalremise',   'class' => 'form-control', 'readonly' => 'readonly', 'label' => false, 'name', 'required' => 'off']); ?>
                                             </div>
                                         </td>
                                     </tr>
@@ -702,7 +673,7 @@ use Cake\ORM\TableRegistry;
                                         </td>
                                         <td>
                                             <div class="col-xs-4">
-                                                <?php echo $this->Form->control('tva', ['id' => 'totaltva', 'value' => sprintf("%01.3f", str_replace(",", ".", $bonlivraison->tva)), 'class' => 'form-control', 'readonly' => 'readonly', 'label' => false, 'name', 'required' => 'off']); ?>
+                                                <?php echo $this->Form->control('tva', ['id' => 'totaltva',  'class' => 'form-control', 'readonly' => 'readonly', 'label' => false, 'name', 'required' => 'off']); ?>
                                             </div>
                                         </td>
                                     </tr>
@@ -710,7 +681,7 @@ use Cake\ORM\TableRegistry;
                                         <td> <strong> Total TTC </strong> </td>
                                         <td>
                                             <div class="col-xs-4">
-                                                <?php echo $this->Form->control('totalttc', ['class' => 'form-control verifttctotal calculinversetot', 'value' => sprintf("%01.3f", str_replace(",", ".", $bonlivraison->totalttc)),  'id' => 'ttc', 'label' => false, 'name', 'required' => 'off']); ?>
+                                                <?php echo $this->Form->control('totalttc', ['class' => 'form-control verifttctotal calculinversetot',   'id' => 'ttc', 'label' => false, 'name', 'required' => 'off']); ?>
                                             </div>
                                         </td>
                                     </tr>
@@ -730,7 +701,7 @@ use Cake\ORM\TableRegistry;
                                         <td>test remise</td>
                                         <td>
                                             <div class="col-xs-4">
-                                                <?php echo $this->Form->control('remiseee', ['id' => 'totalremise1', 'value' => sprintf("%01.3f", str_replace(",", ".", $bonlivraison->remise)), 'class' => 'form-control',  'readonly' => 'readonly', 'label' => 'test remise', 'name' => 'remiseee', 'required' => 'off']); ?>
+                                                <?php echo $this->Form->control('remiseee', ['id' => 'totalremise1', 'value' => sprintf("%01.3f", str_replace(",", ".", $bonlivraison->totalremise)), 'class' => 'form-control',  'readonly' => 'readonly', 'label' => 'test remise', 'name' => 'remiseee', 'required' => 'off']); ?>
                                             </div>
                                         </td>
                                     </tr>
@@ -738,7 +709,7 @@ use Cake\ORM\TableRegistry;
                                         <td>Total HT après remise</td>
                                         <td>
                                             <div class="col-xs-4">
-                                                <?php echo $this->Form->control('totalapres', ['id' => 'totalhtapres', 'value' => sprintf("%01.3f", str_replace(",", ".", $bonlivraison->total -  $bonlivraison->remise)),  'class' => 'form-control', 'readonly' => 'readonly', 'label' => 'Total HT après remise', 'name', 'required' => 'off']); ?>
+                                                <?php echo $this->Form->control('totalapres', ['id' => 'totalhtapres', 'value' => sprintf("%01.3f", str_replace(",", ".", $bonlivraison->totalht -  $bonlivraison->totalremise)),  'class' => 'form-control', 'readonly' => 'readonly', 'label' => 'Total HT après remise', 'name', 'required' => 'off']); ?>
                                             </div>
                                         </td>
                                     </tr>
@@ -747,7 +718,7 @@ use Cake\ORM\TableRegistry;
                                         <td>Total Fodec</td>
                                         <td>
                                             <div class="col-xs-4">
-                                                <?php echo $this->Form->control('fodec', ['id' => 'totalfodec', 'value' => sprintf("%01.3f", str_replace(",", ".", $bonlivraison->fodec)), 'class' => 'form-control', 'readonly' => 'readonly', 'label' => 'Total Fodec', 'name', 'required' => 'off']); ?>
+                                                <?php echo $this->Form->control('fodec', ['id' => 'totalfodec', 'value' => sprintf("%01.3f", str_replace(",", ".", $bonlivraison->totalfodec)), 'class' => 'form-control', 'readonly' => 'readonly', 'label' => 'Total Fodec', 'name', 'required' => 'off']); ?>
                                             </div>
                                         </td>
                                     </tr>
@@ -760,7 +731,7 @@ use Cake\ORM\TableRegistry;
                                         </td>
                                     </tr>
                                     <tr hidden>
-                                        <td >test ttc</td>
+                                        <td>test ttc</td>
                                         <td>
                                             <div class="col-xs-4">
                                                 <?php echo $this->Form->control('totalttctest', ['id' => 'ttctest', 'value' => sprintf("%01.3f", str_replace(",", ".", $bonlivraison->totalttc)),  'readonly' => 'readonly', 'label' => 'test ttc', 'name', 'class' => 'form-control verifttctotal calculinversetot', 'required' => 'off']); ?>
@@ -798,6 +769,12 @@ use Cake\ORM\TableRegistry;
 
 <script>
     $(document).ready(function() {
+
+        index = $('#index').val();
+        //alert(index);
+        for (j = 0; j <= Number(index); j++) {
+            calculligne2(j);
+        }
 
         $('.testdepqte').on('mouseover', function() {
             // index = $('#ligne0').val() || 0;

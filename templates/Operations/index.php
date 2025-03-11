@@ -15,7 +15,9 @@
 
 <!-- Content Header (Page header) -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script>
-
+<?php
+echo $this->Html->script('salma');
+?>
 
 <?php echo $this->fetch('script'); ?>
 <section class="content-header">
@@ -133,9 +135,9 @@
                   <?php //} 
                   ?>
                   <?php // if ($delete == 1) { 
-                  ?>
-                  <?php echo $this->Form->postLink("<button class='btn btn-xs btn-danger '><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $operation->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $operation->id)); ?>
-                  <?php //} 
+                  
+                      echo $this->Form->postLink("<button class='btn btn-xs btn-danger deleteConfirm'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $operation->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $operation->id)); ?>
+<?php //} 
                   ?>
                 </td>
               </tr>

@@ -172,7 +172,7 @@
 
 
 
-          <button type="submit" class="pull-right btn btn-success " style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+          <button type="submit" class="pull-right btn btn-success testchamp" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
           <?php echo $this->Form->end(); ?>
         </div>
         <!-- /.box-body -->
@@ -187,7 +187,35 @@
 <?php echo $this->Html->script('alert'); ?>
 <script type="text/javascript">
   $(document).ready(function() {
+    $('.testchamp').on('click', function() {
 
+num = $('#numero').val();
+date = $('#date').val();
+agence_id = $('#agence_id').val();
+banque_id = $('#banque_id').val();
+solde = $('#montant').val();
+if (num == '') {
+    alert("Ajouter le numéro de compte SVP");
+    return false;
+}
+if (date == '') {
+    alert("Ajouter le date SVP");
+    return false;
+}
+if (agence_id == '') {
+    alert("Choisir l`agence SVP");
+    return false;
+}
+if (banque_id == '') {
+    alert("Choisir la banque SVP");
+    return false;
+}
+if (solde == '') {
+    alert("Ajouter le Solde SVP");
+    return false;
+}
+
+});
     $('.supLigne3').on('click', function() {
 
       index = $('#index').val();

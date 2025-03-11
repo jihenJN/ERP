@@ -87,7 +87,7 @@ use Cake\I18n\FrozenTime;
                         // debug($depotalls);
                         if ($depotalls != null || $articless != null) {
                         ?>
-                            <a onClick="openWindow(1000, 1000, wr+'Stockdepots/impdep?article_id=<?php echo @$articleid; ?>&depot_id=<?php echo @$depotid; ?>&famille_id=<?php echo @$famille_id; ?>')"><button class="btn btn-primary ">Imprimer</button></a>
+                            <a onclick="openWindow(1000, 1000, wr+'Stockdepots/impdep?article_id=<?php echo @$articleid; ?>&depot_id=<?php echo @$depotid; ?>&famille_id=<?php echo @$famille_id; ?>')"><button class="btn btn-primary ">Imprimer</button></a>
                         <?php }  ?>
                         <?php echo $this->Html->link(__('Actualiser'), ['action' => '/indexpardepot'], ['class' => 'btn btn-primary ']) ?>
 
@@ -123,17 +123,17 @@ use Cake\I18n\FrozenTime;
                         <tr style=" background-color: #a9a9a9; color: #000000 ; font-style: italic;font-weight: bold;">
 
 
-                            <td style="font-size: 14px; "colspan="2" align="center">Article</td>
+                            <td style="font-size: 14px; " colspan="2" align="center">Article</td>
 
                             <td style="font-size: 14px; " colspan="3" align="center">Quantité</td>
                         </tr>
                         <tr style=" background-color: #add8e6; color: #0000ff; font-style: italic;font-weight: bold;">
 
 
-                            <td style="font-size: 14px; "align="center">Code</td>
+                            <td style="font-size: 14px; " align="center">Code</td>
 
                             <td style="font-size: 14px; " align="center">Désignation</td>
-                            <td style="font-size: 14px; "width="14%" align="center">Stock</td>
+                            <td style="font-size: 14px; " width="14%" align="center">Stock</td>
 
                             <td style="font-size: 14px; " width="14%" align="center">Réserver</td>
                             <td style="font-size: 14px; " width="12%" align="center">Total</td>
@@ -149,10 +149,10 @@ use Cake\I18n\FrozenTime;
                             $familleExist = false;
                             $total = 0;
                             $final = 0;
-                            $ss=0;
-                            $qtecom=0;
-                            
-                            ?>
+                            $ss = 0;
+                            $qtecom = 0;
+
+                        ?>
 
                             <?php foreach ($articless as $stockdepot) : ?>
                                 <?php if ($stockdepot['famille_id'] == $famille->id) :
@@ -167,17 +167,17 @@ use Cake\I18n\FrozenTime;
                                     $result = $connection->execute($commander)->fetchAll('assoc');
                                     if ($result[0]['total_qte'] != 0) {
                                         $qtecom = $result[0]['total_qte'];
-                                        $ss=$ss + $result[0]['total_qte'];
+                                        $ss = $ss + $result[0]['total_qte'];
                                     } else {
                                         $qtecom = 0;
-                                        $ss = 0 ;
+                                        $ss = 0;
                                     }
                                 ?>
                                     <tr style="background-color: <?php echo ($qtecom != 0) ? '#D2FFD2' : 'transparent'; ?>">
                                         <td style="font-size: 16px;"><?php echo $stockdepot['Code']; ?></td>
                                         <td style="font-size: 16px;"><?php echo $stockdepot['Dsignation']; ?></td>
                                         <?php
-                                       
+
                                         date_default_timezone_set('Africa/Tunis');
                                         $datef = date('Y-m-d H:i:s');
                                         $date1 = date("Y") . '-01-01' . date(" 00:00:00");
@@ -188,9 +188,9 @@ use Cake\I18n\FrozenTime;
                                             $totalFamille += $st[0]['v'];
                                             $totalGeneral += $st[0]['v'];
 
-                                            $ttfam =  $totalFamille - $ss  ;
+                                            $ttfam =  $totalFamille - $ss;
 
-                                            $qtestock=  $st[0]['v'];
+                                            $qtestock =  $st[0]['v'];
                                             $total =  $st[0]['v'] - $qtecom;
                                             $final =  $final + $total;
                                         } else {
@@ -214,9 +214,19 @@ use Cake\I18n\FrozenTime;
 
                                         ?>
                                         <td align="center" style="font-size: 16px; font-weight: bold;">
-                                            <a href='/ERP/Articles/indexspec?date1=<?php echo @$date1; ?>&date2=<?php echo @$datef; ?>&depot_id=<?php echo @$depotid; ?>&article_id=<?php echo $stockdepot['id']; ?>' target="_blank">
-                                                <?php echo $qtestock; ?>
+                                            <a href="<?= $this->Url->build([
+                                                            'controller' => 'Articles',
+                                                            'action' => 'indexspec',
+                                                            '?' => [
+                                                                'date1' => @$date1,
+                                                                'date2' => @$datef,
+                                                                'depot_id' => @$depotid,
+                                                                'article_id' => $stockdepot['id']
+                                                            ]
+                                                        ], ['fullBase' => true]); ?>" target="_blank">
+                                                <?= h($qtestock) ?>
                                             </a>
+
                                         </td>
                                         <td align="center" style="font-size: 16px; font-weight: bold;">
                                             <?php echo $qtecom; ?>

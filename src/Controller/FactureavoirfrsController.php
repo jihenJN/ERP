@@ -121,6 +121,47 @@ class FactureavoirfrsController extends AppController
 
 		$this->set(compact('factureavoirfrs', 'tvas', 'art', 'articles', 'lignefactureavoirfrs',  'fournisseurs',  'factures',  'typefactures', 'depots'));
 	}
+	public function imprimeview($id = null)
+	{
+
+		$this->loadModel('Factureavoirfrs');
+		$this->loadModel('Articles');
+		$this->loadModel('Depots');
+		$this->loadModel('Lignefactureavoirfrs');
+		$this->loadModel('Lignefactures');
+		$this->loadModel('Factures');
+		$this->loadModel('Fournisseurs');
+		$this->loadModel('Tvas');
+
+		$factureavoirfr = $this->Factureavoirfrs->get($id, [
+			'contain' => ['Fournisseurs'],
+		]);
+		//debug($factureavoirfrs);
+
+
+		$lignefactureavoirfrs = $this->Lignefactureavoirfrs->find('all')->contain(['Articles'])->where(['Lignefactureavoirfrs.factureavoirfr_id=' . $id]);
+
+		//	if ($type == 1) {
+		$fournisseurs = $this->Factureavoirfrs->Fournisseurs->find('list');
+		//, array('conditions' => array('Fournisseurs.devise_id =1')));
+		// } else if ($type == 2) {
+		// 	$fournisseurs = $this->Factureavoirfrs->Fournisseurs->find('list', array('conditions' => array('Fournisseurs.devise_id != 1')));
+		// }
+
+		//if ($type == 1) {
+		$factures = $this->Factures->find('list', ['keyfield' => 'id', 'valueField' => 'numero']);
+		//->where('Factures.typef = 1');
+		// } else if ($type == 2) {
+		// 	$factures = $this->Factures->find('list', ['keyfield' => 'id', 'valueField' => 'numero'])->where('Factures.typef = 2');
+		// }
+		$tvas = $this->Tvas->find('list', ['keyfield' => 'id', 'valueField' => 'valeur']);
+		$articles = $this->Articles->find('list', ['keyfield' => 'id', 'valueField' => 'designation']);
+		$art = $this->Articles->find('all'); //, ['keyfield' => 'id', 'valueField' => 'Dsignation']);
+		$depots = $this->Depots->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+        $societes = $this->fetchTable('Societes')->find('all')->first();
+
+		$this->set(compact('factureavoirfr','societes', 'tvas', 'art', 'articles', 'lignefactureavoirfrs',  'fournisseurs',  'factures',  'typefactures', 'depots'));
+	}
 
 	/**
 	 * Add method

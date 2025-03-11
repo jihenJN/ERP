@@ -40,9 +40,9 @@ $connection = ConnectionManager::get('default');
                         <td align="center" style="width: 10%;border: none;">
 
                         </td>
-                        <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-                            <?php echo $societefirst->adresseEntete; ?><br>
-                        </td>
+                       <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
+                    <?php echo $societefirst->adresseEntete; ?><br>
+                </td>
                         <td align="center" style="width: 25%;border: none;">
                             <div>
                                 <?php
@@ -154,7 +154,10 @@ $connection = ConnectionManager::get('default');
                                         <?php
                                         if (($dataItem->etat_id == 1) || ($dataItem->etat_id == 0)) {
                                             echo 'En Attente';
-                                        } elseif ($dataItem->etat_id == 2) {
+                                        }  elseif ($dataItem->etat_id == 13) {
+                                            echo 'Escompte';
+                                        }
+                                        elseif ($dataItem->etat_id == 2) {
                                             echo 'Payé';
                                         } else {
                                             echo 'Impayé';

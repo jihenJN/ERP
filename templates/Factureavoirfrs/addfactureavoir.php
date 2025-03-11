@@ -190,7 +190,7 @@ $index = 'index';
                             <td>
                               <?php
 
-                              echo $this->Form->input('quantite', array('value' => '0', 'label' => '', 'name' => 'data[Lignefacture][' . $i . '][quantite]', 'table' => $ligne_model, 'index' => $i, 'id' => 'qte' . $i, 'champ' => 'quantite', 'type' => 'text', 'class' => 'form-control  htbavoir number')); ?>
+                              echo $this->Form->input('quantite', array('value' => '0', 'label' => '', 'name' => 'data[Lignefacture][' . $i . '][quantite]', 'table' => $ligne_model, 'index' => $i, 'id' => 'qte' . $i, 'champ' => 'quantite', 'type' => 'text', 'class' => 'form-control  testqte htbavoir number')); ?>
 
                             </td>
                             <td>
@@ -269,6 +269,19 @@ $index = 'index';
 <?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
 <?php $this->start('scriptBottom'); ?>
 <script>
+     $(document).ready(function() {
+        $(".testqte").on("keyup", function() {
+            const index = $(this).attr('index');
+            const qteFacture = parseFloat($("#qtea" + index).val()) || 0;
+            const qteAv = parseFloat($("#qte" + index).val()) || 0;
+
+            if (qteFacture < qteAv) {
+                alert(`Veuillez vérifier: La quantité facturée (${qteFacture}) ne peut pas être inférieure à la quantité disponible (${qteAv}).`);
+                $("#qte" + index).val(0);
+            }
+        });
+
+    });
   $(document).ready(function() {
     calculeavoir();
     $('.htbavoir').on('keyup', function() {

@@ -79,6 +79,10 @@ class ArticlesTable extends Table {
         $this->belongsTo('Unites', [
             'foreignKey' => 'unite_id',
         ]);
+
+        $this->belongsTo('Typearticles', [
+            'foreignKey' => 'typearticle_id',
+        ]);
         $this->hasMany('ArticleClient', [
             'foreignKey' => 'article_id',
         ]);

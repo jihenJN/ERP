@@ -182,7 +182,7 @@
                                                     <!-- <div id="" champ='ar1' index="" class="col-md-12"> -->
 
                                                         <!-- <div style="display: flex !important"> -->
-                                                            <?php echo $this->Form->input('article_id', array('label' => false, 'options' => $articless, 'index' => '', 'name' => '', 'id' => 'article_id', 'champ' => 'article_id', 'table' => 'lignea', 'empty' => 'Veuillez choisir !!', 'class' => 'form-control ')); ?>
+                                                            <?php echo $this->Form->control('article_id', array('label' => false, 'options' => $articless, 'index' => '', 'name' => '', 'id' => 'article_id', 'champ' => 'article_id', 'table' => 'lignea', 'empty' => 'Veuillez choisir !!', 'class' => 'form-control ')); ?>
 
                                                             <!-- <span title="ajout article"> <a href="javascript:;" class="btn btn-primary b1" champ="b1" id="" index=""><i class='fa fa fa-plus'></i></a></span> -->
 

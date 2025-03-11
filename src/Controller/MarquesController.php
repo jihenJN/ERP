@@ -105,7 +105,7 @@ class MarquesController extends AppController
      */
     public function delete($id = null)
     {
-        // $this->request->allowMethod(['post', 'delete']);
+        //$this->request->allowMethod(['post', 'delete']);
         $marque = $this->Marques->get($id);
         if ($this->Marques->delete($marque)) {
            // $this->Flash->success(__('The marque has been deleted.'));

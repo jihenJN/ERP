@@ -633,23 +633,47 @@
   }
 
 
+  let ligneAjoutee = false;
 
+  $('#depot_id').on('change', function() {
+    if (!ligneAjoutee) {
+      ligneAjoutee = true; // Empêche les autres clics
+      $('html, body').animate({
+        scrollTop: $("#tabligne").offset().top
+      }, 1000);
+
+      // Ajouter une nouvelle ligne
+      ajouter("tabligne", "index");
+
+    
+    }
+  });
+  $('#depot_id').on('blur', function () {
+  ligneAjoutee = false;
+});
   $(function() {
 
-    $('#depot_id').on('change', function() {
+    $('.ajouttt').on('keydown', function (event) {
+        // alert('aller')
+        if (event.key === "Enter" && event.ctrlKey) {
 
-      $('html, body').animate({
-        scrollTop: $("#tabligne").offset().top
-      }, 1000);
-      ajouter("tabligne", "index");
-    })
-    $('.ajouttt').on('change', function() {
+            event.preventDefault();
+            $(this).val($(this).val() + "\n");
+        } else if (event.key === "Enter") {
 
-      $('html, body').animate({
-        scrollTop: $("#tabligne").offset().top
-      }, 1000);
-      ajouter("tabligne", "index");
-    })
+            ajouter("tabligne", "index");
+
+            // });
+        }
+    });
+  
+    // $('.ajouttt').on('change', function() {
+
+    //   $('html, body').animate({
+    //     scrollTop: $("#tabligne").offset().top
+    //   }, 1000);
+    //   ajouter("tabligne", "index");
+    // })
 
     $('.depot').on('change', function() {
       //  alert('hello');

@@ -1,24 +1,10 @@
 <?php $this->layout = 'AdminLTE.print'; ?>
 <?php
 
-
-use Cake\ORM\TableRegistry;
-
+use Cake\Core\Configure;
+use Cake\I18n\FrozenTime;
+use Cake\Datasource\ConnectionManager;
 ?>
-
-
-<?php
-
-$societeTable = TableRegistry::getTableLocator()->get('Societes');
-
-$societe = $societeTable->find()->where('id=1')->first();
-
-?><?php
-
-    use Cake\Core\Configure;
-    use Cake\I18n\FrozenTime;
-    use Cake\Datasource\ConnectionManager;
-    ?>
 <?php $connection = ConnectionManager::get('default'); ?>
 
 
@@ -70,8 +56,7 @@ $societe = $societeTable->find()->where('id=1')->first();
             </div> -->
         </td>
         <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-            <?php echo $societe->adresseEntete; ?>
-            <br>
+            <?php echo $societefirst->adresseEntete; ?><br>
         </td>
         <td align="center" style="width: 25%;border: none;">
             <div>
@@ -88,27 +73,19 @@ $societe = $societeTable->find()->where('id=1')->first();
 <br>
 
 <h3>
-    <div style="margin-left: 5px ;color: #a52a2a; "> <?php echo $societe->nom ?></div>
+    <div style="margin-left: 5px ;color: #a52a2a; ">  <?php echo $societefirst->nom; ?></div>
 
 
     <div align="center" style="color: #8b008b; ">
         ETAT DE STOCK GLOBAL</div>
 </h3>
 
-<h5 align="center">
-    <h5 align="center"> <strong> DU </strong><?= $this->Time->format(
-                                                    $this->request->getQuery('datedebut'),
-                                                    'dd/MM/y'
-                                                ); ?><strong> &nbsp;&nbsp;&nbsp;&nbsp; AU </strong><?= $this->Time->format(
-                                                                                                                $this->request->getQuery('datefin'),
-                                                                                                                'dd/MM/y'
-                                                                                                            ); ?></h5>
-    <!-- <strong> DU </strong>01/01/2022 <strong> &nbsp;&nbsp;&nbsp;&nbsp; AU </strong>11/03/2024</h6> -->
+<h5 align="center"> <strong> DU </strong><?php echo $this->Time->format($datedebut, 'dd/MM/y'); ?> <strong> &nbsp;&nbsp;&nbsp;&nbsp; AU </strong><?php echo $this->Time->format($datefin, 'dd/MM/y'); ?></h6>
     <div class="row">
         <div class="col-md-12">
             <div class="panel panel-default">
                 <div class="panel-body">
-                    <table class="table table-bordered table-striped table-bottomless" id="example1" border="1">
+                    <table class="table " id="example1" border="1">
                         <thead>
                             <tr>
                                 <td style="font-size: 16px;"><strong>Depot</strong></td>
@@ -246,28 +223,30 @@ $societe = $societeTable->find()->where('id=1')->first();
                                                 <td hidden rowspan="<?php echo $sousfamilleRowSpan + 1; ?>" style="font-size: 16px; text-align: center; writing-mode: vertical-lr; transform: rotate(180deg);">
                                                     <?php echo $fami['Nom']; ?>
                                                 </td>
-                                            <?php $firstSousFamilleRow = false;
-                                            endif; ?>
+                                                <?php $firstSousFamilleRow = false;
+                                            endif;
 
-                                            <td style="font-size: 16px;"> <?php echo $art['Code']; ?> </td>
-                                            <td style="font-size: 16px;"> <?php echo $art['Dsignation']; ?> </td>
+                                            $wr =  $this->Url->build('/', ['fullBase' => true]) ?>;
+                                                ?>
 
-                                            <td align="center" style="font-size: 16px; font-weight: bold;">
-                                                <a href='/ERP/Articles/indexspec?date1=<?php echo @$date1; ?>&date2=<?php echo @$datef; ?>&depot_id=<?php echo @$depotid; ?>&article_id=<?php echo $art['id']; ?>' target="_blank">
+                                                <td style="font-size: 16px;"> <?php echo $art['Code']; ?> </td>
+                                                <td style="font-size: 16px;"> <?php echo $art['Dsignation']; ?> </td>
+
+                                                <td align="center" style="font-size: 16px; font-weight: bold;">
                                                     <?php echo $qtestock; ?>
-                                                </a>
-                                            </td>
 
-                                            <td align="center" style="font-size: 16px; font-weight: bold;">
-                                                <?php echo $qtecom;
-                                                ?>
+                                                </td>
 
-                                            </td>
-                                            <td align="center" style="font-size: 16px; font-weight: bold;">
-                                                <?php echo ($qtestock - $qtecom);
-                                                ?>
+                                                <td align="center" style="font-size: 16px; font-weight: bold;">
+                                                    <?php echo $qtecom;
+                                                    ?>
 
-                                            </td>
+                                                </td>
+                                                <td align="center" style="font-size: 16px; font-weight: bold;">
+                                                    <?php echo ($qtestock - $qtecom);
+                                                    ?>
+
+                                                </td>
                                         </tr>
 
                                     <?php endforeach;

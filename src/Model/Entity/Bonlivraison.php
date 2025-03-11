@@ -133,6 +133,9 @@ class Bonlivraison extends Entity
         'timbre_id'=>true,
 
         'adresse'=>true,
+        'livre'=>true,
+        'id_proformat'=>true,
+
 
     ];
 }

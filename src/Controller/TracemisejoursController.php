@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -18,44 +19,49 @@ class TracemisejoursController extends AppController
      */
     public function index()
     {
-        
+
         $model = $this->request->getQuery('model');
-        $operation = $this->request->getQuery('operation');
+
+     
+        $historiquede = $this->request->getQuery('historiquede') ?? date('Y-m-d');
+        $au = $this->request->getQuery('au') ?? date('Y-m-d');
         $user_id = $this->request->getQuery('user_id');
-        $historiquede=$this->request->getQuery('historiquede');
-        $au=$this->request->getQuery('au');
-    
+        $operation = $this->request->getQuery('operation');
+       // debug($operation);
+       // debug($user_id);
         $cond1 = '';
-		$cond2 = '';
+        $cond2 = '';
         $cond3 = '';
-		$cond4 = '';
+        $cond4 = '';
         $cond5 = '';
         if ($model) {
             $cond1 = "Tracemisejours.model like  '%" . $model . "%' ";
         }
         if ($operation) {
-            $cond2 = "Tracemisejours.operation   like  '%" . $operation . "%' ";
+            $cond2 = "Tracemisejours.operation like  '%" . $operation . "%' ";
+
+            //$cond2 = "Tracemisejours.operation like '%" . $operation . "%' ";
         }
         if ($user_id) {
-            $cond3 = "Tracemisejours.user_id   =  '" . $user_id . "' ";
-        } 
-        if ($historiquede) {
-            $cond2="Tracemisejours.date >= '".$historiquede."'";
+            $cond3 = "Tracemisejours.user_id = '" . $user_id . "'";
         }
-       if ($au) {
-           $cond3= "Tracemisejours.date <='".$au."'";
-       }
+        if ($historiquede) {
+            $cond2 = "Tracemisejours.date >= '" . $historiquede . "'";
+        }
+        if ($au) {
+            $cond3 = "Tracemisejours.date <='" . $au . "'";
+        }
 
-        $query = $this->Tracemisejours->find('all')->where([$cond1, $cond2,$cond3,$cond4,$cond5])->contain(['Utilisateurs','Users'])->order(["Tracemisejours.id" => 'desc']);
+        $query = $this->Tracemisejours->find('all')->where([$cond1, $cond2, $cond3, $cond4, $cond5])->contain(['Utilisateurs', 'Users'])->order(["Tracemisejours.id" => 'desc']);
         $tracemisejours = $this->paginate($query);
         $recherches = $this->paginate($query);
         $utilisateurs = $this->Tracemisejours->Utilisateurs->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
-        $users=$this->Tracemisejours->Users->find('list', ['keyfield' => 'id', 'valueField' => 'login']);
+        $users = $this->Tracemisejours->Users->find('list', ['keyfield' => 'id', 'valueField' => 'login']);
         //debug($utilisateurs);
         $this->paginate = [
-            'contain' => ['Utilisateurs','Users'],
+            'contain' => ['Utilisateurs', 'Users'],
         ];
-        $this->set(compact('users','utilisateurs','tracemisejours','recherches')); 
+        $this->set(compact('users', 'historiquede', 'au', 'utilisateurs', 'tracemisejours', 'recherches'));
     }
 
     /**

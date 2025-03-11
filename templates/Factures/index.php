@@ -224,6 +224,17 @@ if ($add == 1) { ?>
                 $BLTotQte = !empty($BLTotQteResult['sommeqtebl']) ? $BLTotQteResult['sommeqtebl'] : 0;
               }
             }
+
+
+            /////////////////////////////test reg
+            $testreg=0;
+            $reg = $connection->execute( 'SELECT * FROM lignereglements WHERE facture_id = :facture_id',
+              ['facture_id' => $id]
+            )->fetchAll('assoc');
+            if(!empty($reg)){
+              $testreg=1;
+            }
+
           ?>
 
 
@@ -249,7 +260,7 @@ if ($add == 1) { ?>
                   <?php echo ($this->Time->format($facture->datefournisseur, 'dd/MM/y HH:mm:ss')); ?>
                 </td> -->
               <td style="text-align:right">
-                <?php echo sprintf("%01.3f", $facture->ttc + $timbre) ?>
+                <?php echo sprintf("%01.3f", $facture->ttc) ?>
               </td>
               <td hidden style="text-align:center">
                 <?php if ($facture->valide != 1) { ?>
@@ -307,9 +318,11 @@ if ($add == 1) { ?>
                 <?php if ($edit == 1  && $BLTotQte == 0) {
                   echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $facture->id), array('escape' => false));
                 } ?>
-                <?php if ($delete == 1 && $BLTotQte == 0) {
+                <?php if($testreg ==0){
+                 if ($delete == 1 && $BLTotQte == 0) {
                   echo $this->Form->postLink("<button class='btn btn-xs btn-danger deleteConfirm'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $facture->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $facture->id));
-                } ?>
+                }
+               } ?>
 
 
 

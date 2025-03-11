@@ -51,7 +51,7 @@ foreach ($lien as $k => $liens) {
 if ($add == 1) {
 ?>
     <div class="pull-left" style="margin-left:25px;margin-top: 20px">
-        <?php echo $this->Html->link(__('Ajouter'), ['action' => 'add'], ['class' => 'btn btn-success btn-sm']) ?>
+        <?php echo $this->Html->link(__('Ajouter'), ['action' => 'add/'.$type], ['class' => 'btn btn-success btn-sm']) ?>
     </div>
 <?php } ?>
 <br> <br><br>
@@ -129,7 +129,7 @@ if ($add == 1) {
 
                 <div class="pull-right" style="margin-right:50%;margin-top: 20px;">
                     <button type="submit" class="btn btn-primary btn-sm">Afficher</button>
-                    <?php echo $this->Html->link(__('Afficher Tous'), ['action' => 'index'], ['class' => 'btn btn-primary btn-sm']) ?>
+                    <?php echo $this->Html->link(__('Afficher Tous'), ['action' => 'index/'.$type], ['class' => 'btn btn-primary btn-sm']) ?>
                 </div>
             </div>
             <?php echo $this->Form->end(); ?>
@@ -145,16 +145,15 @@ if ($add == 1) {
                         <thead>
                             <tr>
                                 <th scope="col"><?= ('Code') ?></th>
+                                <th scope="col"><?= ('Type article') ?></th>
+
                                 <th scope="col"><?= ('Désignation') ?></th>
                                 <th scope="col"><?= ('Famille') ?></th>
                                 <th scope="col"><?= ('Sous famille') ?></th>
-                                <th scope="col"><?= ('Marque') ?></th>
 
                                 <!-- <th scope="col"><?= ('Sous sous famille') ?></th> -->
                                 <th scope="col"><?= ('Etat') ?></th>
                                 <th scope="col"><?= ('Prix') ?></th>
-                                <th scope="col"><?= ('Image') ?></th>
-                                <th scope="col"><?= ('Duplication') ?></th>
 
                                 <th scope="col" class="actions text-center"><?= __('Actions') ?></th>
                             </tr>
@@ -164,11 +163,13 @@ if ($add == 1) {
                             foreach ($articles as $i => $article) :
                             ?>
                                 <tr>
-                                    <td>
+                                    <td align="right" style="padding:2px">
                                         <?php echo $this->Form->control('id', ['type' => 'hidden', 'index' => $i, 'id' => 'id' . $i, 'value' => $article->id, 'label' => '', 'champ' => 'id', 'class' => 'form-control']); ?>
                                         <?= h($article->Code) ?></td>
-                                    <td><?= h($article->Dsignation) ?></td>
-                                    <td><?= ($article->famille->Nom) ?></td>
+                                    <td style="padding:2px"><?= h($article->typearticle->name) ?></td>
+
+                                    <td style="padding:2px"><?= h($article->Dsignation) ?></td>
+                                    <td style="padding:2px"><?= ($article->famille->Nom) ?></td>
 
                                     <td>
                                         <?php foreach ($datehs as $dateh) : ?>
@@ -177,7 +178,6 @@ if ($add == 1) {
                                             }; ?>
                                         <?php endforeach; ?>
                                     </td>
-                                    <td><?= ($article->marque->name) ?></td>
 
                                     <!-- <td>
                                         < ?php foreach ($datehss as $datehh) : ?>
@@ -190,24 +190,17 @@ if ($add == 1) {
                                     // debug($article->sousfamille1_id);die; 
                                     ?>
                                     <?php if ($article->etat == 0) { ?>
-                                        <td align="center"> Activé </td>
+                                        <td style="padding:2px" align="center"> Activé </td>
                                     <?php } ?>
                                     <?php if ($article->etat == 1) { ?>
-                                        <td align="center"> Désactivé </td>
+                                        <td style="padding:2px" align="center"> Désactivé </td>
                                     <?php } ?>
-                                    <td><?= h($article->Prix_LastInput) ?></td>
-                                    <td>
+                                    <td style="padding:2px"><?= h($article->Prix_LastInput) ?></td>
+                                    <!-- <td>
                                         <?php echo $this->Html->image('imgart/' . $article->image, ['style' => 'max-width:80px;height:80px;']); ?>
-                                    </td>
-                                    <td> <?php
-                                            echo $this->Html->link(
-                                                "<button class='btn btn-xs btn-primary'><i class='fa fa-copy'></i></button>",
-                                                array('action' => 'dupliquer', $article->id),
-                                                array('escape' => false)
-                                            );
-                                            ?>
-                                    </td>
-                                    <td class="actions text" style="text-align:center">
+                                    </td> -->
+                                   
+                                    <td class="actions text" style="text-align:center;padding:2px">
                                         <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $article->id), array('escape' => false)); ?>
                                         <!-- <?= $this->Html->link(__(''), ['action' => 'view', $article->id], ['class' => 'fa fa-search ']) ?> -->
                                         <?php if ($edit == 1) {
@@ -215,9 +208,10 @@ if ($add == 1) {
                                         } ?>
                                         <!-- <?= $this->Html->link(__('Edit'), ['action' => 'edit', $article->id], ['class' => 'btn btn-warning btn-xs']) ?> -->
                                         <?php if ($delete == 1) { ?>
-                                            <?php echo $this->Form->postLink("<button class=' verifiercmd btn btn-xs btn-danger deletecon'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $article->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $article->id)); ?>
+                                            <?php //echo $this->Form->postLink("<button class=' verifiercmd btn btn-xs btn-danger deletecon'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $article->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $article->id)); 
+                                            ?>
 
-                                            <!-- <button index='<?php echo $i ?>' class='verifier btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button> -->
+                                            <button index='<?php echo $i ?>' class='verifiercmd btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>
                                         <?php } ?>
 
 
@@ -312,9 +306,12 @@ if ($add == 1) {
 <script>
     $(function() {
         $('.verifiercmd').on('click', function() {
-            let index = $(this).attr('index');
-            let articleId = $('#id' + index).val();
-
+            // alert('hello');
+            ind = $(this).attr('index');
+            //  alert(ind);
+            articleId = $('#id' + ind).val();
+            //  alert(id);
+            //  alert(id)
             $.ajax({
                 method: "GET",
                 url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'getarticlecmd']) ?>",
@@ -325,20 +322,23 @@ if ($add == 1) {
                 headers: {
                     'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
                 },
-                success: function(response) {
-                    if (response.hasDependencies) {
-                        alert("Existe dans autre document");
+                success: function(data) {
+                    //   $('#pays').html(data.pays);
+                    //  alert(data.pays);
+
+
+                    if (data.articles != 0) {
+                        alert("Existe dans un autre document");
+
                     } else {
-                        if (confirm('Voulez-vous vraiment supprimer cet enregistrement ?')) {
-                            window.location.href = wr + "articles/delete/" + articleId;
+                        if (confirm('Voulez vous vraiment supprimer cet enregistrement')) {
+                            document.location = wr + "articles/delete/" + articleId;
                         }
                     }
-                },
-                error: function() {
-                    alert("Une erreur s'est produite. Veuillez réessayer.");
                 }
-            });
+            })
         });
+
 
     });
     //Select pays/ville

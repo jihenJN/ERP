@@ -91,9 +91,56 @@ class FamillesController extends AppController
         }
 
         $famille = $this->Familles->newEmptyEntity();
+
+
+
+        
+        $numeroobj = $this->Familles->find()->select(["numerox" =>
+        'MAX(Familles.code)'])->first();
+        $numero = $numeroobj->numerox;
+        if ($numero != null) {
+            // debug($numero);
+
+            $n = $numero;
+
+            $lastnum = $n;
+            $nume = intval($lastnum) + 1;
+            $nn = (string)$nume;
+
+            $code = str_pad($nn, 2, "0", STR_PAD_LEFT);
+            // debug($code);die;
+
+        } else {
+            $code = "01";
+        }
+
+
         if ($this->request->is('post')) {
 
+
+            
+        $numeroobj = $this->Familles->find()->select(["numerox" =>
+        'MAX(Familles.code)'])->first();
+        $numero = $numeroobj->numerox;
+        if ($numero != null) {
+            // debug($numero);
+
+            $n = $numero;
+
+            $lastnum = $n;
+            $nume = intval($lastnum) + 1;
+            $nn = (string)$nume;
+
+            $code = str_pad($nn, 2, "0", STR_PAD_LEFT);
+            // debug($code);die;
+
+        } else {
+            $code = "01";
+        }
+
+
             $famille = $this->Familles->patchEntity($famille, $this->request->getData());
+            $famille->code=$code;
             if ($this->Familles->save($famille)) {
                 $famille_id = ($this->Familles->save($famille)->id);
                 $this->misejour("Familles", "add", $famille_id);
@@ -103,7 +150,7 @@ class FamillesController extends AppController
         }
         $marques = $this->fetchTable('Marques')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
 
-        $this->set(compact('famille', 'marques'));
+        $this->set(compact('code','famille', 'marques'));
     }
 
     /**
@@ -175,7 +222,17 @@ class FamillesController extends AppController
 
         $this->set(compact('famille', 'articles','marques'));
     }
+    public function getfamillecmd($id = null)
+    {
+        $id = $this->request->getQuery('familleid');
+        $familles = 0;
+        
+        $familles += $this->fetchTable('Articles')->find()->where(['Articles.famille_id' => $id])->count();
+        $familles += $this->fetchTable('Sousfamille1s')->find()->where(['Sousfamille1s.famille_id' => $id])->count();
 
+        echo json_encode(['familles' => $familles]);
+        die;
+    }
     /**
      * Delete method
      *

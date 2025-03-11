@@ -1,18 +1,6 @@
-<?php $this->layout = 'AdminLTE.print'; ?>
-<?php
+<?php $this->layout = 'AdminLTE.print';
 
-use Cake\ORM\TableRegistry;
-
-?>
-
-
-<?php
-
-$societeTable = TableRegistry::getTableLocator()->get('Societes');
-
-$societe = $societeTable->find()->where('id=1')->first();
-
-?>
+use Cake\ORM\TableRegistry; ?>
 <br>
 <style>
     body {
@@ -25,8 +13,6 @@ $societe = $societeTable->find()->where('id=1')->first();
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script>
 <?php echo $this->Html->script('alert'); ?>
-
-
 <div style="display:flex;">
     <table border="1" cellpadding="0" cellspacing="0" style="border: 2px solid #002E50; border-left:none;border-right:none;border-collapse: collapse; width: 100%; ">
 
@@ -45,9 +31,8 @@ $societe = $societeTable->find()->where('id=1')->first();
             </div> -->
         </td>
         <td align="center" style="width: 50%; border: none; color: #002E50; font-weight: bold;">
-            <?php echo $societe->adresseEntete; ?>
-            <br>
-        </td>
+                    <?php echo $societefirst->adresseEntete; ?><br>
+                </td>
         <td align="center" style="width: 25%;border: none;">
             <!-- <div>
                 <?php
@@ -60,43 +45,7 @@ $societe = $societeTable->find()->where('id=1')->first();
         </td>
     </table>
 </div>
-<!-- <div style="display:flex;">
-    <table border="1" cellpadding="0" cellspacing="0" style="border: 3px solid black; border-left:none;border-right:none;border-collapse: collapse; width: 100%; ">
-
-
-        <td align="center" style="width: 25%;border: none;">
-            <div>
-                <?php
-                echo $this->Html->image('logo-sirep.png', ['alt' => 'CakePHP', 'height' => '80px', 'width' => '100%']); ?>
-            </div>
-        </td>
-        <td align="center" style="width: 50%;border: none;"><strong>
-                USINE : Route de Gabes Km 86 - BP 61 Skira 3050 - Sfax<br>
-                Tél : 79 700 235 &nbsp;&nbsp;&nbsp;Fax : 79 701 006<br>
-                E-mail : contact@sirep-prefa.com.tn<br>
-                S.web : www.sirep-prefa.com.tn
-				<br>
-				M.F: 1001267P/NW000<br>
-				R.C: 80827832007<br></strong>
-        </td>
-        <td align="center" style="width: 25%;border: none;">
-            <div>
-                <?php
-                echo $this->Html->image('ISO-9001.png', ['alt' => 'CakePHP', 'height' => '50px', 'width' => '100%']); ?>
-
-            </div>
-        </td>
-
-        </td>
-    </table>
-</div> -->
-
-
-
 <br>
-
-
-
 
 
 Date: <?php
@@ -115,20 +64,12 @@ Date: <?php
 
     <div style="display:flex;width: 1000%;">
         <div style="width: 10000%;" class="box" align="left">
-            <b> BL N° : </b><?= h($livraison->numero) ?> <br>
-            <b> Date : </b><?=
-                            $this->Time->format(
-                                $livraison->date,
-                                'dd/MM/y'
-                            )
-
-
-
+            <b> Bon Livraison N° : </b><?= h($livraison->numero) ?> <br>
+            <b> Date : </b><?= h($this->Time->format($livraison->date, 'dd/MM/y'));
                             ?> <br>
-
-
-            <b> Remise : </b><?= h($livraison->remise) ?> <br>
-
+           
+            <!-- <b> Remise : </b><?= h($livraison->remise) ?> <br> -->
+            <!-- <b> Mode paiement : </b><br> -->
         </div>
     </div>
 
@@ -139,9 +80,8 @@ Date: <?php
                                                                                             echo  h($livraison->fournisseur->name);
                                                                                         } ?><br>
             <b> Code postal: </b><?= h($livraison->fournisseur->codepostal) ?> <br>
-            <b> N° BL Fournisseur: </b><?= h($livraison->blfournisseur) ?> <br>
 
-
+            <b> Telephone : </b><?= h($livraison->fournisseur->Tel) ?> <br>
 
         </div>
     </div>
@@ -151,13 +91,14 @@ Date: <?php
         <div>
             <table border="1">
                 <thead>
-                    <tr>
-                        <!--                        <td align="center" style="width: 11%;"><strong>Code</strong></td>-->
+                    <tr style="font-size:15px;">
+
                         <td align="center" style="width: 20%;"><strong>Article</strong></td>
                         <td align="center"><strong>Qte</strong></td>
                         <td align="center"><strong>Prix</strong></td>
                         <td align="center"><strong>Total HT</strong></td>
                         <td align="center" hidden><strong>Fodec </strong></td>
+
                         <td align="center"><strong>TVA </strong></td>
                         <td align="center"><strong>Total TTC</strong></td>
                     </tr>
@@ -169,24 +110,21 @@ Date: <?php
                     foreach ($lignelivraisons as $lignecommande) :
                     ?>
 
-                        <tr class="tr">
-                            <!--                            <td style="width: 11%;vertical-align:top" align="center">
-                                <?php //($lignecommande->article->Code) 
-                                ?>
-                            </td>-->
-                            <td><?php
-                                if (isset($lignecommande->article)) {
-                                    echo  h($lignecommande->article->Dsignation);
-                                }
-                                ?></td>
+                        <tr class="tr" style="font-size:14px;">
+
+                            <td style="width: 6%;vertical-align:top" align="center"><?php
+                                                                                    if (isset($lignecommande->article)) {
+                                                                                        echo  h($lignecommande->article->Dsignation);
+                                                                                    }
+                                                                                    ?></td>
                             <td style="width: 6%;vertical-align:top" align="center">
-                                <?= $this->Number->format($lignecommande->qteliv) ?>
+                                <?= $this->Number->format($lignecommande->qte) ?>
                             </td>
                             <td style="width: 8%;vertical-align:top" align="center">
                                 <?php echo  sprintf("%01.3f", $lignecommande->prix) ?>
                             </td>
                             <td style="width: 10%;vertical-align:top" align="center">
-                                <?php echo  sprintf("%01.3f", $lignecommande->prix * $lignecommande->qte) ?>
+                                <?php echo  sprintf("%01.3f", $lignecommande->ht) ?>
                             </td>
                             <td hidden style="width: 6%;vertical-align:top" align="center">
                                 <?= $this->Number->format($lignecommande->fodec)  ?>
@@ -203,93 +141,145 @@ Date: <?php
                 </tbody>
             </table>
 
-
             <div style="display:flex ; margin-top:25px;">
-                <table class="table table-bordered table-striped table-bottomless" style="margin-right:40px;width: 250px;">
-                    <thead>
-                        <tr>
-                            <td align="center" style="width: 25%;"><strong>Taxe</strong></td>
-                            <td align="center" style="width: 20%;"><strong>Taux </strong></td>
-                            <td align="center" style="width: 25%;"><strong>Assiette</strong></td>
-                            <td align="center" style="width: 20%;"><strong>Montant</strong></td>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <div style="width: 50%!important;height:80%!important;">
+                    <table style="margin-right:40px;width: 100%!important;;height: 100%!important;">
+                        <thead>
+                            <tr height="30px" style="font-size:15px;">
+                                <td align="center" style="width: 25%;border:1px solid black;"><strong>Taxe</strong></td>
+                                <td align="center" style="width: 20%;border:1px solid black;"><strong>Taux </strong></td>
+                                <td align="center" style="width: 25%;border:1px solid black;"><strong>Assiette</strong></td>
+                                <td align="center" style="width: 20%;border:1px solid black;"><strong>Montant</strong></td>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                        <!-- <tr class="tr">
-                            <td style="width: 25%;height: 20px" align="center">
+                            <?php $lignestable = TableRegistry::getTableLocator()->get('Lignelivraisons');
 
-                                Fodec
-                            </td>
+                            $query = $lignestable->find();
+                            $query->select([
+                                'tva' => 'Lignelivraisons.tva',
+                                'base' => $query->func()->sum('(qte*prix - (qte*prix)* (ifnull(remise,0) / 100) + (qte*prix - (qte*prix)* (ifnull(remise,0) / 100)) * ifnull(fodec,0) / 100)'),
+                                'total' => $query->func()->sum('((qte*prix - (qte*prix)* (ifnull(remise,0) / 100) + (qte*prix - (qte*prix)* (ifnull(remise,0) / 100)) * ifnull(fodec,0) / 100)) * tva / 100')
+                            ])
+                                ->where(['Lignelivraisons.livraison_id' => $livraison->id])
+                                ->group('Lignelivraisons.tva');
 
-                            <td style="width: 20%;height: 20px" align="center">
-                                <?= $this->Number->format($lignecommande->fodec)  ?>
-
-                            </td>
-
-
-                            <td style="width: 25%;height: 20px" align="center">
-                               <?php echo  sprintf("%01.3f", $livraison->ht) ?>
-
-                            </td>
-                            <td style="width: 20%;height: 20px" align="center">
-                               <?php echo  sprintf("%01.3f", $livraison->fodec) ?>
-
-                            </td>
-
-                        </tr> -->
+                            // Execute the query
+                            $results = $query->toArray();
 
 
-                        <tr class="tr">
-                            <td style="width: 25%;height: 20px" align="center">
+                            /*   $fodquery = $lignestable->find();
+                        $fodquery->select([
+                            'fodec' => 'Lignelivraisons.fodec',
+                            'base' => $query->func()->sum('qte*prix - (qte*prix)* (remise / 100)'),
+                            'total' => $query->func()->sum('(qte*prix - (qte*prix)* (remise / 100)) *ifnull(fodec,0) / 100')
+                        ])
+                            ->where(['Lignelivraisons.livraison_id' => $livraison->id])
+                            ->group('Lignelivraisons.fodec');
 
-                                TVA
-                            </td>
+                        // Execute the query
+                        $fodresults = $fodquery->toArray();*/
+                            // print_r($results);
 
-                            <td style="width: 20%;height: 20px" align="center">
-                                <?= $this->Number->format($lignecommande->tva)  ?>
+                            foreach ($results as $rrr) {
+                                if ($rrr->tva != 0) {
+                            ?>
 
-                            </td>
+                                    <tr class="tr" height="56px" style="font-size:14px;">
+
+                                        <td align="center" style="border:1px solid black;">
+                                            TVA
+                                        </td>
+
+                                        <td align="center" style="border:1px solid black;">
+                                            <?= $this->Number->format($rrr->tva) ?>
+
+                                        </td>
+                                        <td align="center" style="border:1px solid black;">
+                                            <?php echo sprintf("%01.3f", $rrr->base) ?>
 
 
-                            <td style="width: 25%;height: 20px" align="center">
-                                <?php echo  sprintf("%01.3f", $livraison->ht + $livraison->fodec) ?>
-
-                            </td>
-                            <td style="width: 20%;height: 20px" align="center">
-                                <?php echo  sprintf("%01.3f", $livraison->tva) ?>
-
-                            </td>
-
-                        </tr>
+                                        </td>
+                                        <td align="center" style="border:1px solid black;width: 20%;">
+                                            <?php echo sprintf("%01.3f", $rrr->total) ?>
+                                        </td>
+                                    </tr>
 
 
+                            <?php }
+                            } ?>
 
-                    </tbody>
-                </table>
-                <!--<div style="margin-right:40px;width: 99% ; border: dashed;height: 150px" class="box ">
+                            <?php
+                            // foreach ($fodresults as $frrr) {
+                            //     if ($frrr->fodec != 0) {
+                            ?>
+
+                            <tr hidden class="tr">
+
+                                <td align="center" height="20px" style="border:1px solid black;">
+                                    FODEC
+                                </td>
+
+                                <td align="center" style="border:1px solid black;">
+                                    <?= $this->Number->format($frrr->fodec) ?>
+
+                                </td>
+                                <td align="center" style="border:1px solid black;">
+                                    <?php echo sprintf("%01.3f", $frrr->base) ?>
+
+
+                                </td>
+                                <td align="center" style="border:1px solid black;width: 20%;">
+                                    <?php echo sprintf("%01.3f", $frrr->total) ?>
+                                </td>
+                            </tr>
+
+
+                            <?php // }
+                            // }
+                            ?>
+
+                        </tbody>
+                    </table>
+                    <!--<div style="margin-right:40px;width: 99% ; border: dashed;height: 150px" class="box ">
                     <h5 align="center">Signature</h5>
 
                 </div>-->
-                <div style="display:flex">
-                    <div class="table-bordered box" style="width: 100px; display:flex ;   margin-left:250px" align=" left"><strong>Total HT <br><br>
+                </div>
+                <div style="display:flex" style="font-size:14px;">
+                    <div class="table-bordered box" style="width: 150px; display:flex ;   margin-left:100px" align=" left">
+                        <strong>Total HT <br>
                             <!-- Total Fodec <br><br> -->
-                            Total TVA <br><br>
-                            Total TTC</strong>
-                    </div>
-                    <div class="table-bordered box" style="width: 100px; " align="right">
-                        <?php  ?>
-                        <?php echo  sprintf("%01.3f", $livraison->ht) ?><br><br>
-                        <!-- <?php echo  sprintf("%01.3f", $livraison->fodec) ?><br><br> -->
+                            <strong>Total Remise</strong><br>
 
-                        <?php echo  sprintf("%01.3f", $livraison->tva) ?><br><br>
+                            <strong>Total TVA</strong> <br>
+                            <strong>Total TTC</strong>
+
+                    </div>
+                    <div class="table-bordered box" style="width: 150px; " align="right">
+                        <?php  ?>
+                        <?php echo  sprintf("%01.3f", $livraison->ht) ?><br>
+                        <!-- <?php //echo  sprintf("%01.3f", $livraison->fodec) 
+                                ?><br><br> -->
+                        <?php echo sprintf("%01.3f",$livraison->remise) ?> <br>
+                        <?php echo  sprintf("%01.3f", $livraison->tva) ?><br>
                         <?php echo  sprintf("%01.3f", $livraison->ttc) ?>
                     </div>
                 </div>
             </div>
+
+
+
+
+
+
+
+
         </div>
     </div>
 </div>
+
 
 <br>
 

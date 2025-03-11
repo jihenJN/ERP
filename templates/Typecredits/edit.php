@@ -89,7 +89,7 @@
                             ?>
                         </div>
                      </div>
-               <button type="submit" class="pull-right btn btn-success "  style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+               <button type="submit" class="pull-right btn btn-success testchamp"  style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
           <?php echo $this->Form->end(); ?>
             </div>
             <!-- /.box-body -->
@@ -102,3 +102,44 @@
   <!-- /.row -->
 </section>
 <?php echo $this->Html->script('alert'); ?>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.testchamp').on('click', function() {
+
+            num = $('#name').val();
+            date = $('#date').val();
+            frequence_id = $('#frequence_id').val();
+            montantcredit = $('#montantcredit').val();
+            solde = $('#montant').val();
+            taux = $('#taux').val();
+            montantremb = $('#montantremb').val();
+            if (num == '') {
+                alert("Ajouter le nom  SVP");
+                return false;
+            }
+           
+            if (frequence_id == '') {
+                alert("Choisir le fréquence SVP");
+                return false;
+            }
+           
+            if (solde == '') {
+                alert("Ajouter le montant SVP");
+                return false;
+            }
+            if (montantcredit == '') {
+                alert("Ajouter le montant credit SVP");
+                return false;
+            }
+            if (taux == '') {
+                alert("Ajouter le taux d`intérêt SVP");
+                return false;
+            }
+            if (montantremb == '') {
+                alert("Ajouter le Montant Remboursement SVP");
+                return false;
+            }
+
+        });
+    });
+</script>

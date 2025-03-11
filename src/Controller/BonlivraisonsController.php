@@ -11,6 +11,8 @@ use Cake\ORM\TableRegistry;
 
 use Cake\Core\Configure;
 
+// Configure::write('debug', true);
+
 /**
  * Bonlivraisons Controller
  *
@@ -429,7 +431,7 @@ class BonlivraisonsController extends AppController
             //debug(  $mm );
             //  debug($this->request->getData());die;
             $data['user_id'] = $result['id'];
-          
+
 
             $data['numero'] = $this->request->getData('numero');
             $data['date'] = $this->request->getData('date');
@@ -460,12 +462,13 @@ class BonlivraisonsController extends AppController
             $data['matricule'] = $this->request->getData('matricule');
             $data['totalputtc'] = $this->request->getData('totalputtc');
             $data['timbre'] = $this->request->getData('timbre');
+            $data['timbre_id'] = $this->request->getData('timbre_id');
             $data['user_id'] = $result['id'];
             $data['nomprenom'] = $this->request->getData('nomprenom');
             $data['numeroidentite'] = $this->request->getData('numeroidentite');
             $data['adressediv'] = $this->request->getData('adressediv');
 
-            $data['timbre_id'] = $this->request->getData('timbre_id');
+
             $data['adresse'] = $this->request->getData('adresse');
 
             // debug($this->request->getData());die;
@@ -505,73 +508,75 @@ class BonlivraisonsController extends AppController
                         }
                     }
                 }
-                if ($this->request->getData('Montant_Regler') != '0' || $this->request->getData('Montant_Regler') != 0) {
-                    /*******enregistrement reglement******************************/
-                    $numeroobj = $this->fetchTable('Reglementclients')->find()->select(["numero" =>
-                    'MAX(Reglementclients.numeroconca)'])->where(['Reglementclients.type=1'])->first();
-                    $numero = $numeroobj->numero;
-                    if ($numero != null) {
+                if ($type == 1) {
+                    if ($this->request->getData('Montant_Regler') != '0' || $this->request->getData('Montant_Regler') != 0) {
+                        /*******enregistrement reglement******************************/
+                        $numeroobj = $this->fetchTable('Reglementclients')->find()->select(["numero" =>
+                        'MAX(Reglementclients.numeroconca)'])->where(['Reglementclients.type=1'])->first();
+                        $numero = $numeroobj->numero;
+                        if ($numero != null) {
 
-                        $n = $numero;
-                        $lastnum = $n;
-                        $nume = intval($lastnum) + 1;
-                        $nn = (string)$nume;
-                        $code = str_pad($nn, 5, "0", STR_PAD_LEFT);
-                    } else {
-                        $code = "00001";
-                    }
-                    $ligne = $this->fetchTable('Reglementclients')->newEmptyEntity();
-                    $tab2['client_id'] = $bonlivraison->client_id;
-                    $tab2['nomprenom'] = $this->request->getData('nomprenom');
-                    $tab2['numeroidentite'] = $this->request->getData('numeroidentite');
-                    $tab2['adressediv'] = $this->request->getData('adressediv');
-                    $tab2['numero'] = $bonlivraison->numero;
-                    $tab2['numeroconca'] = $code;
-                    $frozenTime = FrozenTime::now();
-                    $tab2['date'] = $frozenTime;
-                    $tab2['Montant'] = $this->request->getData('Montant_Regler');
-                    $tab2['type'] = 1;
-                    $tab2['user_id'] = $result['id'];
+                            $n = $numero;
+                            $lastnum = $n;
+                            $nume = intval($lastnum) + 1;
+                            $nn = (string)$nume;
+                            $code = str_pad($nn, 5, "0", STR_PAD_LEFT);
+                        } else {
+                            $code = "00001";
+                        }
+                        $ligne = $this->fetchTable('Reglementclients')->newEmptyEntity();
+                        $tab2['client_id'] = $bonlivraison->client_id;
+                        $tab2['nomprenom'] = $this->request->getData('nomprenom');
+                        $tab2['numeroidentite'] = $this->request->getData('numeroidentite');
+                        $tab2['adressediv'] = $this->request->getData('adressediv');
+                        $tab2['numero'] = $bonlivraison->numero;
+                        $tab2['numeroconca'] = $code;
+                        $frozenTime = FrozenTime::now();
+                        $tab2['date'] = $frozenTime;
+                        $tab2['Montant'] = $this->request->getData('Montant_Regler');
+                        $tab2['type'] = 1;
+                        $tab2['user_id'] = $result['id'];
 
-                    $ligne = $this->fetchTable('Reglementclients')->patchEntity($ligne, $tab2);
-                    $this->fetchTable('Reglementclients')->save($ligne);
-                    /*******enregistrement lignereglement******************************/
-                    $reglement_id = $ligne->id;
-                    $ligner = $this->fetchTable('Lignereglementclients')->newEmptyEntity();
-                    $t['reglementclient_id'] = $reglement_id;
-                    $t['bonlivraison_id'] = $bonlivraison_id;
-                    $t['Montant'] = $this->request->getData('Montant_Regler');
-                    $ligner = $this->fetchTable('Lignereglementclients')->patchEntity($ligner, $t);
-                    $this->fetchTable('Lignereglementclients')->save($ligner);
-                    /******************************piece reglement*****************************************/
-                    if (isset($this->request->getData('data')['pieceregelemnt']) && (!empty($this->request->getData('data')['pieceregelemnt']))) {
+                        $ligne = $this->fetchTable('Reglementclients')->patchEntity($ligne, $tab2);
+                        $this->fetchTable('Reglementclients')->save($ligne);
+                        /*******enregistrement lignereglement******************************/
                         $reglement_id = $ligne->id;
-                        foreach ($this->request->getData('data')['pieceregelemnt'] as $j => $p) {
-                            if (isset($p['sup2']) && $p['sup2'] != 1) {
-                                $table = $this->fetchTable('Piecereglementclients')->newEmptyEntity();
-                                $table['reglementclient_id'] = $reglement_id;
-                                $table['caisse_id'] = $p['caisse_id'];
-                                $table['porteurcheque'] = $p['porteurcheque'];
-                                $table['rib'] = $p['rib'];
-                                $table['paiement_id'] = $p['paiement_id'];
-                                if (isset($p['montant'])) {
-                                    if (strpos($p['montant'], ',') !== false) {
-                                        $table['montant'] = str_replace(',', '.', $p['montant']);
-                                    } else {
-                                        $table['montant'] = $p['montant'];
+                        $ligner = $this->fetchTable('Lignereglementclients')->newEmptyEntity();
+                        $t['reglementclient_id'] = $reglement_id;
+                        $t['bonlivraison_id'] = $bonlivraison_id;
+                        $t['Montant'] = $this->request->getData('Montant_Regler');
+                        $ligner = $this->fetchTable('Lignereglementclients')->patchEntity($ligner, $t);
+                        $this->fetchTable('Lignereglementclients')->save($ligner);
+                        /******************************piece reglement*****************************************/
+                        if (isset($this->request->getData('data')['pieceregelemnt']) && (!empty($this->request->getData('data')['pieceregelemnt']))) {
+                            $reglement_id = $ligne->id;
+                            foreach ($this->request->getData('data')['pieceregelemnt'] as $j => $p) {
+                                if (isset($p['sup2']) && $p['sup2'] != 1) {
+                                    $table = $this->fetchTable('Piecereglementclients')->newEmptyEntity();
+                                    $table['reglementclient_id'] = $reglement_id;
+                                    $table['caisse_id'] = $p['caisse_id'];
+                                    $table['porteurcheque'] = $p['porteurcheque'];
+                                    $table['rib'] = $p['rib'];
+                                    $table['paiement_id'] = $p['paiement_id'];
+                                    if (isset($p['montant'])) {
+                                        if (strpos($p['montant'], ',') !== false) {
+                                            $table['montant'] = str_replace(',', '.', $p['montant']);
+                                        } else {
+                                            $table['montant'] = $p['montant'];
+                                        }
                                     }
+                                    $table['montant_brut'] = $p['montantbrut'];
+                                    $table['to_id'] = $p['taux'];
+                                    $table['montant_net'] = $p['montantnet'];
+                                    $table['num'] = $p['num_piece'];
+                                    if ($p['paiement_id'] != 1) {
+                                        $table['echance'] = $p['echance'];
+                                    }
+                                    $table['banque_id'] = $p['banque'];
+                                    $table['acomptetype'] = 1;
+                                    $table['proprietaire'] = $p['taux'];
+                                    $this->fetchTable('Piecereglementclients')->save($table);
                                 }
-                                $table['montant_brut'] = $p['montantbrut'];
-                                $table['to_id'] = $p['taux'];
-                                $table['montant_net'] = $p['montantnet'];
-                                $table['num'] = $p['num_piece'];
-                                if ($p['paiement_id'] != 1) {
-                                    $table['echance'] = $p['echance'];
-                                }
-                                $table['banque_id'] = $p['banque'];
-                                $table['acomptetype'] = 1;
-                                $table['proprietaire'] = $p['taux'];
-                                $this->fetchTable('Piecereglementclients')->save($table);
                             }
                         }
                     }
@@ -1859,7 +1864,6 @@ class BonlivraisonsController extends AppController
         //debug($cartecarburant_id);
         $convoyeur_id = $this->request->getQuery('convoyeur_id');
         $num = $this->request->getQuery('numero');
-        // debug($convoyeur_id);
 
         $zone = $this->request->getQuery('zone_id');
         $bonlivraison_id = $this->request->getQuery('bonlivraison_id');
@@ -2007,11 +2011,11 @@ class BonlivraisonsController extends AppController
         // $query = $this->Bonlivraisons->find('all')->where([$condtyp,$condnn,$condff, $cond1, $cond2, $cond3, $cond4, $cond6, $cond8, $cond9, $cond10, $cond11, $cond12, $condcommercial, 'Bonlivraisons.factureclient_id=0'])->order(['Bonlivraisons.id' => 'DESC'])->contain(['Clients', 'Depots', 'Personnels', 'Commercials', 'Users']);
         // }else{
         // debug($facturee);
-        if ($facturee == 2) {
-            $query = $this->Bonlivraisons->find('all')->where([$cond1, 'Bonlivraisons.factureclient_id =0', 'Bonlivraisons.typebl=1', $cond2, $cond3, $cond4, $cond6, $cond8, $cond9, $cond10, $cond11, $cond12, $condcommercial])->order(['Bonlivraisons.id' => 'DESC'])->contain(['Clients', 'Depots', 'Personnels', 'Commercials', 'Users']);
-        } else {
-            $query = $this->Bonlivraisons->find('all')->where([$cond1, 'Bonlivraisons.factureclient_id !=0', 'Bonlivraisons.typebl=1', $cond2, $cond3, $cond4, $cond6, $cond8, $cond9, $cond10, $cond11, $cond12, $condcommercial])->order(['Bonlivraisons.id' => 'DESC'])->contain(['Clients', 'Depots', 'Personnels', 'Commercials', 'Users']);
-        }
+        // if ($facturee == 2) {
+        $query = $this->Bonlivraisons->find('all')->where([$cond1, 'Bonlivraisons.typebl=1', $cond2, $cond3, $cond4, $cond6, $cond8, $cond9, $cond10, $cond11, $cond12, $condcommercial])->order(['Bonlivraisons.id' => 'DESC'])->contain(['Clients', 'Depots', 'Personnels', 'Commercials', 'Users']);
+        // } else {
+        // $query = $this->Bonlivraisons->find('all')->where([$cond1, 'Bonlivraisons.factureclient_id !=0', 'Bonlivraisons.typebl=1', $cond2, $cond3, $cond4, $cond6, $cond8, $cond9, $cond10, $cond11, $cond12, $condcommercial])->order(['Bonlivraisons.id' => 'DESC'])->contain(['Clients', 'Depots', 'Personnels', 'Commercials', 'Users']);
+        // }
 
         //}
 
@@ -5335,6 +5339,8 @@ class BonlivraisonsController extends AppController
         $cond11 = '';
         $cond12 = '';
         $blfac = '';
+        $numero = '';
+
         $datedebut = $this->request->getQuery('datedebut');
         // debug($datedebut);
         $datefin = $this->request->getQuery('datefin');
@@ -6867,7 +6873,7 @@ class BonlivraisonsController extends AppController
             ->where(["Adresselivraisonclients.client_id = " . $bonlivraison->client_id . ""])->first();
         $adresse = $adresses->adresse;
         /******************************************************** */
-        $this->set(compact('lignereglements', 'tim','lignebloc','typeclientname','typeclientid','adresse', 'transporteurs', 'echanciere', 'echancierebl', 'solde', 'encours', 'lignereglementcmds', 'agents', 'typetransports', 'piecereglementclients', 'paiements', 'valeurs', 'caisses', 'banques', 'BL', 'not', 'gs', 'cl', 'commercials', 'tab', 'commercial', 'exotpe', 'exotva', 'exofodec', 'exotimbre', 'bonus', 'type', 'clientc', 'lignebonlivraisons', 'articles', 'bonlivraison', 'clients', 'depots', 'materieltransports', 'cartecarburants', 'chauffeurs', 'conffaieurs', 'adresselivraisonclients', 'es', 'rz', 'remcli', 'remes', 'cmde', 'commande'));
+        $this->set(compact('lignereglements', 'tim', 'lignebloc', 'typeclientname', 'typeclientid', 'adresse', 'transporteurs', 'echanciere', 'echancierebl', 'solde', 'encours', 'lignereglementcmds', 'agents', 'typetransports', 'piecereglementclients', 'paiements', 'valeurs', 'caisses', 'banques', 'BL', 'not', 'gs', 'cl', 'commercials', 'tab', 'commercial', 'exotpe', 'exotva', 'exofodec', 'exotimbre', 'bonus', 'type', 'clientc', 'lignebonlivraisons', 'articles', 'bonlivraison', 'clients', 'depots', 'materieltransports', 'cartecarburants', 'chauffeurs', 'conffaieurs', 'adresselivraisonclients', 'es', 'rz', 'remcli', 'remes', 'cmde', 'commande'));
     }
 
     public function viewm($id = null)
@@ -7394,12 +7400,8 @@ class BonlivraisonsController extends AppController
 
 
 
-
-
-
-
     public function edit($id = null)
-    { //Configure::write('debug', true);
+    {
         error_reporting(E_ERROR | E_PARSE);
         $this->loadModel('Personnels');
         $this->loadModel('Commandes');
@@ -7547,18 +7549,122 @@ class BonlivraisonsController extends AppController
                             $this->fetchTable('Lignebonlivraisons')->delete($lignebonlivraison);
                         }
 
-                        if ($bonlivraison['typebl'] == 1 &&  $bonlivraison->commande_id) {
+                        if ($bonlivraison['typebl'] == 1) {
+                            if ($bonlivraison->commande_id) {
 
-                            $lignecommandes = $this->fetchTable('Lignecommandes')->find('all', [])
-                                ->where(['commande_id=' . $commande->id]);
+                                $lignecommandes = $this->fetchTable('Lignecommandes')->find('all', [])
+                                    ->where(['commande_id=' . $commande->id]);
 
-                            foreach ($lignecommandes as $lignecommande) {
-                                if ($l['article_id'] == $lignecommande['article_id']) {
-                                    $ligneupdate = $this->fetchTable('Lignecommandes')->get($lignecommande['id']);
+                                foreach ($lignecommandes as $lignecommande) {
+                                    if ($l['article_id'] == $lignecommande['article_id']) {
+                                        $ligneupdate = $this->fetchTable('Lignecommandes')->get($lignecommande['id']);
 
-                                    $ligneupdate->quantiteliv = $l['quantiteliv'];
-                                    $this->fetchTable('Lignecommandes')->save($ligneupdate);
+                                        $ligneupdate->quantiteliv = $l['quantiteliv'];
+                                        $this->fetchTable('Lignecommandes')->save($ligneupdate);
+                                    }
                                 }
+                            }
+
+
+                            if ($bonlivraison->commande_id != 0) {
+                                $commandefirst = $this->fetchTable('Commandes')->find('all', [])
+                                    ->where(['Commandes.id=' . $bonlivraison->commande_id])->first();
+
+                                $commandeTotQte = 0;
+                                $BLTotQte = 0;
+                                $connection = ConnectionManager::get('default');
+                                if (!empty($commandefirst->id)) {
+                                    $commandeTotQte = $connection->execute('SELECT SUM(qte) AS sommeqtecmd FROM lignecommandes WHERE commande_id = :commande_id', ['commande_id' => $commandefirst->id])
+                                        ->fetch('assoc');
+                                    //  debug($commandeTotQte);
+                                }
+                                if (!empty($commandefirst->id)) {
+                                    $bls = $connection->execute('SELECT * FROM bonlivraisons WHERE bonlivraisons.commande_id = ' . $commandefirst->id . ' AND bonlivraisons.typebl=1;')->fetchAll('assoc');
+
+                                    if (!empty($bls)) {
+                                        $blsIds = [];
+                                        foreach ($bls as $bl) {
+                                            $blsIds[] = $bl['id'];
+                                        }
+
+                                        $blsIdsString = implode(',', $blsIds);
+
+                                        $BLTotQte = $connection
+                                            ->execute('SELECT SUM(qte) AS sommeqtebl FROM lignebonlivraisons WHERE bonlivraison_id IN (' . $blsIdsString . ')')
+                                            ->fetch('assoc');
+
+                                        // debug($BLTotQte);
+                                    }
+                                }
+
+                                $sum_qtebl = $BLTotQte['sommeqtebl'];
+                                $sum_qtecmd = $commandeTotQte['sommeqtecmd'];
+
+
+                                if ($sum_qtebl == $sum_qtecmd && $sum_qtebl != 0) {
+                                    // debug('Livré');
+                                    $commandefirst->livre = 2;
+                                } elseif ($sum_qtebl == 0) {
+                                    // debug('En cours');
+                                    $commandefirst->livre = 0;
+                                } elseif ($sum_qtebl < $sum_qtecmd) {
+                                    // debug('Livré Partiel');
+                                    $commandefirst->livre = 1;
+                                }
+                                $this->fetchTable('Commandes')->save($commandefirst);
+                            }
+
+                            // debug($bonlivraison->id_proformat);
+                            if ($bonlivraison->id_proformat != 0) {
+
+                                $blproformatfirst = $this->fetchTable('Bonlivraisons')->find('all', [
+                                    'contain' => ['Clients', 'Lignebonlivraisons']
+                                ])
+                                    ->where(['Bonlivraisons.id=' . $bonlivraison->id_proformat])->first();
+
+
+                                $commandeTotQte = 0;
+                                $BLTotQte = 0;
+                                $connection = ConnectionManager::get('default');
+                                if (!empty($blproformatfirst->id)) {
+                                    $commandeTotQte = $connection->execute('SELECT SUM(qte) AS sommeqtecmd FROM lignebonlivraisons WHERE bonlivraison_id = :bonlivraison_id', ['bonlivraison_id' => $blproformatfirst->id])
+                                        ->fetch('assoc');
+                                    //  debug($commandeTotQte);
+                                }
+                                if (!empty($blproformatfirst->id)) {
+                                    $bls = $connection->execute('SELECT * FROM bonlivraisons WHERE bonlivraisons.id_proformat = ' . $blproformatfirst->id . ' AND bonlivraisons.typebl=1;')->fetchAll('assoc');
+
+                                    if (!empty($bls)) {
+                                        $blsIds = [];
+                                        foreach ($bls as $bl) {
+                                            $blsIds[] = $bl['id'];
+                                        }
+
+                                        $blsIdsString = implode(',', $blsIds);
+
+                                        $BLTotQte = $connection
+                                            ->execute('SELECT SUM(qte) AS sommeqtebl FROM lignebonlivraisons WHERE bonlivraison_id IN (' . $blsIdsString . ')')
+                                            ->fetch('assoc');
+
+                                        // debug($BLTotQte);
+                                    }
+                                }
+
+                                $sum_qtebl = $BLTotQte['sommeqtebl'];
+                                $sum_qtecmd = $commandeTotQte['sommeqtecmd'];
+
+
+                                if ($sum_qtebl == $sum_qtecmd && $sum_qtebl != 0) {
+                                    // debug('Livré');
+                                    $blproformatfirst->livre = 2;
+                                } elseif ($sum_qtebl == 0) {
+                                    // debug('En cours');
+                                    $blproformatfirst->livre = 0;
+                                } elseif ($sum_qtebl < $sum_qtecmd) {
+                                    // debug('Livré Partiel');
+                                    $blproformatfirst->livre = 1;
+                                }
+                                $this->fetchTable('Bonlivraisons')->save($blproformatfirst);
                             }
                         }
                     }
@@ -7665,7 +7771,7 @@ class BonlivraisonsController extends AppController
                         /*******enregistrement reglement******************************/
 
                         $numeroobj = $this->fetchTable('Reglementclients')->find()->select(["numero" =>
-                        'MAX(Reglementclients.numeroconca)'])->first();
+                        'MAX(Reglementclients.numeroconca)'])->where(['Reglementclients.type=1'])->first();
                         $numero = $numeroobj->numero;
                         if ($numero != null) {
                             // debug($numero);
@@ -8254,6 +8360,869 @@ class BonlivraisonsController extends AppController
         $this->set(compact('lignereglementcmds', 'typeclientid', 'typeclientname', 'adresse', 'lignebloc', 'tim', 'echanciere', 'transporteurs', 'echancierebl', 'solde', 'encours', 'lignereglements', 'agents', 'typetransports', 'banques', 'piecereglementclients', 'paiements', 'valeurs', 'caisses', 'BL', 'not', 'gs', 'cl', 'commercials', 'tab', 'commercial', 'exotpe', 'exotva', 'exofodec', 'exotimbre', 'bonus', 'type', 'clientc', 'lignebonlivraisons', 'articles', 'bonlivraison', 'clients', 'depots', 'materieltransports', 'cartecarburants', 'chauffeurs', 'conffaieurs', 'adresselivraisonclients', 'es', 'rz', 'remcli', 'remes', 'cmde', 'commande'));
     }
 
+
+
+    public function editpro($id = null)
+    {
+        error_reporting(E_ERROR | E_PARSE);
+        $this->loadModel('Personnels');
+        $this->loadModel('Commandes');
+        $this->loadModel('Lignebonlivraisons');
+
+        $result = $this->request->getAttribute('authentication')->getIdentity();
+
+        $bonlivraison = $this->Bonlivraisons->get($id, [
+            'contain' => ['Clients'],
+        ]);
+        /// debug($bonlivraison);
+
+        if ($bonlivraison->typebl == '1') {
+            $commande = $this->fetchTable('Commandes')->find('all', [])
+                ->where(['Commandes.bonlivraison_id=' . $id]);
+            //debug($commande);
+            foreach ($commande as $com) {
+                $date = $com->date;
+            }
+
+            // debug($clientc);
+        }
+
+
+        //debug($cmde);
+
+        //debug($bonlivraison);
+        if ($bonlivraison->commercial_id) {
+            $commercial = $this->fetchTable('Commercials')->get($bonlivraison->commercial_id);
+            // debug($commercial);
+        }
+
+
+
+        $valeur = $this->fetchTable('Bonusnouvclients')->find()->select(["valeur" =>
+        'MAX(Bonusnouvclients.valeur)'])->first();
+        // debug($num);
+
+        $bonus = $valeur->valeur;
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            //debug($this->request->getData());
+            // debug($this->request->getData());die;
+            $data['user_id'] = $result['id'];
+            $data['nomprenom'] = $this->request->getData('nomprenom');
+
+            $data['numero'] = $this->request->getData('numero');
+            $data['date'] = $this->request->getData('date');
+            $data['client_id'] = $this->request->getData('client_id');
+            $data['materieltransport_id'] = $this->request->getData('materieltransport_id');
+            // $data['adresselivraisonclient_id'] = $this->request->getData('adresse');
+            $data['chauffeur_id'] = $this->request->getData('chauffeur_id');
+            $data['convoyeur_id'] = $this->request->getData('convoyeur_id');
+            $data['depot_id'] = $this->request->getData('depot_id');
+            $data['cartecarburant_id'] = $this->request->getData('cartecarburant_id');
+            $data['totalht'] = $this->request->getData('total');
+            $data['totaltva'] = $this->request->getData('tva');
+            $data['totalfodec'] = $this->request->getData('totalfodec');
+            $data['totalremise'] = $this->request->getData('remisee');
+            $data['escompte'] = $this->request->getData('escompte');
+            $data['escompte'] = $this->request->getData('tpecommande');
+            $data['escompte'] = $this->request->getData('escompte');
+            $data['totalttc'] = $this->request->getData('totalttc');
+            $data['payementcomptant'] = $this->request->getData('checkpayement');
+            $data['poste'] = $this->request->getData('poste');
+            $data['bl'] = $this->request->getData('bl');
+            $data['chauffeur_id'] = $this->request->getData('chauffeur_id');
+            $data['materieltransport_id'] = $this->request->getData('materieltransport_id');
+            $data['destination'] = $this->request->getData('destination');
+            $data['qtepalette'] = $this->request->getData('qtepalette');
+            $data['personnel_id'] = $this->request->getData('personnel_id');
+            $data['typetransport_id'] = $this->request->getData('typetransport_id');
+            $data['Montant_Regler'] = $this->request->getData('Montant_Regler');
+            $data['transporteur_id'] = $this->request->getData('transporteur_id');
+
+            $data['chauffeurname'] = $this->request->getData('chauffeurname');
+            $data['matricule'] = $this->request->getData('matricule');
+            $data['observation'] = $this->request->getData('observation');
+            $data['totalputtc'] = $this->request->getData('totalputtc');
+            $data['timbre'] = $this->request->getData('timbre');
+            $data['numeroidentite'] = $this->request->getData('numeroidentite');
+            $data['adressediv'] = $this->request->getData('adressediv');
+
+            $data['timbre_id'] = $this->request->getData('timbre_id');
+            $data['adresse'] = $this->request->getData('adresse');
+
+
+
+
+
+            $bonlivraison = $this->Bonlivraisons->patchEntity($bonlivraison, $data);
+
+            //debug($bonlivraison);
+            if ($this->Bonlivraisons->save($bonlivraison)) {
+
+
+
+                // debug($this->request->getData());die;
+                $this->misejour("Bonlivraisons", "edit", $id);
+
+                if ($bonlivraison['typebl'] == 1 && $bonlivraison->commande_id) {
+                    $commande = $this->fetchTable('Commandes')->get($bonlivraison->commande_id);
+                }
+                if (isset($this->request->getData('data')['ligner']) && (!empty($this->request->getData('data')['ligner']))) {
+                    foreach ($this->request->getData('data')['ligner'] as $i => $l) {
+                        if ($l['sup'] != 1 && (!empty($l['article_idd']))) {
+                            $tab['bonlivraison_id'] = $bonlivraison->id;
+                            $tab['article_id'] = $l['article_idd'];
+                            $tab['qte'] = $l['qte'];
+                            $tab['ml'] = $l['ml'];
+                            $tab['qtestock'] = $l['qteStock'];
+                            $tab['punht'] = $l['prix'];
+                            $tab['remise'] = $l['remise'];
+                            $tab['totaltva'] = $l['monatantlignetva'];
+                            $tab['remise'] = $l['remise'];
+                            $tab['fodec'] = $l['fodec'];
+                            $tab['tva'] = $l['tva'];
+                            $tab['prixht'] = $l['ht'];
+                            $tab['ttc'] = $l['ttc'];
+                            $tab['puttc'] = $l['puttc'];
+                            $tab['puttcapr'] = $l['puttcapr'];
+                            $tab['ttchidden'] = $l['ttchidden'];
+
+
+                            $tab['quantiteliv'] = $l['quantiteliv'];
+                            $tab['totremiseclient'] = $l['totremiseclient'];
+                            $tab['remiseclient'] = $l['remiseclient'];
+                            if (isset($l['id']) && (!empty($l['id']))) {
+                                $lignebonlivraison = $this->fetchTable('Lignebonlivraisons')->get($l['id'], [
+                                    'contain' => ['Articles']
+                                ]);
+                                // debug($this->request->getData());
+                            } else {
+                                $lignebonlivraison = $this->fetchTable('Lignebonlivraisons')->newEmptyEntity();
+                            }
+
+                            $lignebonlivraison = $this->fetchTable('Lignebonlivraisons')->patchEntity($lignebonlivraison, $tab);
+                            // debug($this->request->getData());
+                            $this->fetchTable('Lignebonlivraisons')->save($lignebonlivraison);
+                        } else if (!empty($l['id'])) {
+                            //S  $this->request->allowMethod(['post', 'delete']);
+                            //  debug(intval($l['id']));
+                            $lignebonlivraison = $this->fetchTable('Lignebonlivraisons')->get($l['id']);
+
+                            $this->fetchTable('Lignebonlivraisons')->delete($lignebonlivraison);
+                        }
+
+                        if ($bonlivraison['typebl'] == 1 &&  $bonlivraison->commande_id) {
+
+                            $lignecommandes = $this->fetchTable('Lignecommandes')->find('all', [])
+                                ->where(['commande_id=' . $commande->id]);
+
+                            foreach ($lignecommandes as $lignecommande) {
+                                if ($l['article_id'] == $lignecommande['article_id']) {
+                                    $ligneupdate = $this->fetchTable('Lignecommandes')->get($lignecommande['id']);
+
+                                    $ligneupdate->quantiteliv = $l['quantiteliv'];
+                                    $this->fetchTable('Lignecommandes')->save($ligneupdate);
+                                }
+                            }
+                        }
+                    }
+                }
+
+
+
+
+                /******************************piece reglement*****************************************/
+                //  debug($this->request->getData());
+                if (isset($this->request->getData('data')['pieceregelemnt']) && (!empty($this->request->getData('data')['pieceregelemnt']))) {
+                    // debug($this->request->getData('data')['pieceregelemnt']);
+
+
+
+
+
+                    $ligneregs = $this->fetchTable('Lignereglementclients')->find()->where(["Lignereglementclients.bonlivraison_id=" . $id]);
+                    $lignereg = $this->fetchTable('Lignereglementclients')->find()->where(["Lignereglementclients.bonlivraison_id=" . $id])->first();
+                    $reglement_id = $lignereg->reglementclient_id;
+
+
+
+                    // debug($ligneregs->toArray());die;
+
+                    if ($ligneregs->count() > 0) {
+                        $reg = $this->fetchTable('Reglementclients')->find()->where('Reglementclients.id=' . $reglement_id)->first();
+                        $reg->Montant = $this->request->getData('Montant_Regler');
+                        $this->fetchTable('Reglementclients')->save($reg);
+                        foreach ($ligneregs as $item) {
+
+
+                            if ($item['Bonlivraison_id'] != null) {
+                                $mtg = $this->fetchTable('Bonlivraisons')->find()->select(["mtreg" =>
+                                'Bonlivraisons.Montant_Regler'])->where(['Bonlivraisons.id =' . $item['bonlivraison_id']])->first();
+                                $MontantRegler = $mtg->mtreg;
+                                $fact = $this->fetchTable('Bonlivraisons')->get($item['bonlivraison_id']);
+                                $fact->Montant_Regler = $MontantRegler - $item['Montanttt'];
+                                $this->Bonlivraisons->save($fact);
+                            }
+
+                            $this->fetchTable('Lignereglementclients')->delete($item);
+                        }
+                        $lignes2 = [];
+                        if ($reglement_id) {
+                            $lignes2 = $this->fetchTable('Piecereglementclients')->find()->where(["Piecereglementclients.reglementclient_id =" . $reglement_id]);
+                        }
+                        foreach ($lignes2 as $item) {
+                            $this->fetchTable('Piecereglementclients')->delete($item);
+                        }
+
+                        // debug($reglement_id);
+                        $ligner = $this->fetchTable('Lignereglementclients')->newEmptyEntity();
+                        // debug($ligner);die;
+                        $t['reglementclient_id'] = $reglement_id;
+                        $t['bonlivraison_id'] = $id;
+                        $t['Montant'] = $this->request->getData('Montant_Regler');
+                        //    debug($t);
+                        $ligner = $this->fetchTable('Lignereglementclients')->patchEntity($ligner, $t);
+                        //debug($t);
+                        $this->fetchTable('Lignereglementclients')->save($ligner);
+
+
+
+
+
+
+
+                        foreach ($this->request->getData('data')['pieceregelemnt'] as $j => $p) {
+                            if (isset($p['sup2']) && $p['sup2'] != 1) {
+                                $table = $this->fetchTable('Piecereglementclients')->newEmptyEntity();
+
+                                $table['reglementclient_id'] = $reglement_id;
+                                $table['caisse_id'] = $p['caisse_id'];
+                                $table['porteurcheque'] = $p['porteurcheque'];
+                                $table['rib'] = $p['rib'];
+                                $table['paiement_id'] = $p['paiement_id'];
+                                if (isset($p['montant'])) {
+                                    if (strpos($p['montant'], ',') !== false) {
+                                        // Replace comma with dot if it exists
+                                        $table['montant'] = str_replace(',', '.', $p['montant']);
+                                    } else {
+                                        // No comma found, use the original value
+                                        $table['montant'] = $p['montant'];
+                                    }
+                                }
+
+                                $table['montant_brut'] = $p['montantbrut'];
+                                $table['to_id'] = $p['taux'];
+                                $table['montant_net'] = $p['montantnet'];
+                                $table['num'] = $p['num_piece'];
+                                $table['echance'] = $p['echance'];
+                                $table['banque_id'] = $p['banque_id'];
+
+                                $table['proprietaire'] = $p['taux'];
+                                //   debug($table);die;
+                                // dd(json_encode($table)) ;
+                                // dd(json_encode($p)) ;
+                                //  debug($lignes);
+                                $this->fetchTable('Piecereglementclients')->save($table);
+                            }
+                        }
+                    } else {
+                        /*******enregistrement reglement******************************/
+
+                        $numeroobj = $this->fetchTable('Reglementclients')->find()->select(["numero" =>
+                        'MAX(Reglementclients.numeroconca)'])->where(['Reglementclients.type=1'])->first();
+                        $numero = $numeroobj->numero;
+                        if ($numero != null) {
+                            // debug($numero);
+
+                            $n = $numero;
+
+                            $lastnum = $n;
+                            $nume = intval($lastnum) + 1;
+                            $nn = (string)$nume;
+
+                            $code = str_pad($nn, 5, "0", STR_PAD_LEFT);
+                        } else {
+                            $code = "00001";
+                        }
+
+
+                        $ligne = $this->fetchTable('Reglementclients')->newEmptyEntity();
+                        //debug($l);die;
+                        // $ligne['utilisateur_id'] = $result['utilisateur_id'];
+                        //  $tab['reglement_id'] = $reglement_id;
+                        // $tab2['bonlivraison_id'] = $bonlivraison->id;
+                        $tab2['client_id'] = $data['client_id'];
+                        $tab2['nomprenom'] = $data['nomprenom'];
+                        $tab2['numeroidentite'] = $data['numeroidentite'];
+                        $tab2['adressediv'] = $data['adressediv'];
+                        $tab2['numero'] =  $data['numero'];
+                        $tab2['numeroconca'] = $code;
+                        $tab2['user_id'] = $result['id'];
+                        $frozenTime = FrozenTime::now();
+                        $tab2['date'] = $frozenTime;
+                        $tab2['Montant'] = $this->request->getData('Montant_Regler');
+                        $tab2['type'] = 1;
+                        //    debug($tab2);
+                        $ligne = $this->fetchTable('Reglementclients')->patchEntity($ligne, $tab2);
+                        // debug($ligne);
+                        $this->fetchTable('Reglementclients')->save($ligne);
+                        // debug($ligne);
+
+
+
+                        $reglement_id = $ligne->id;
+                        // debug($reglement_id);die;
+                        $ligner = $this->fetchTable('Lignereglementclients')->newEmptyEntity();
+                        // debug($ligner);die;
+                        $t['reglementclient_id'] = $reglement_id;
+                        $t['bonlivraison_id'] = $id;
+                        $t['Montant'] = $this->request->getData('Montant_Regler');
+                        //    debug($t);
+                        $ligner = $this->fetchTable('Lignereglementclients')->patchEntity($ligner, $t);
+                        //debug($t);
+                        $this->fetchTable('Lignereglementclients')->save($ligner);
+
+
+
+
+                        /******************************piece reglement*****************************************/
+                        // debug($this->request->getData());die;
+                        if (isset($this->request->getData('data')['pieceregelemnt']) && (!empty($this->request->getData('data')['pieceregelemnt']))) {
+                            // debug($this->request->getData('data')['pieceregelemnt']);die;
+                            $reglement_id = $ligne->id;
+                            foreach ($this->request->getData('data')['pieceregelemnt'] as $j => $p) {
+                                if (isset($p['sup2']) && $p['sup2'] != 1) {
+                                    $table = $this->fetchTable('Piecereglementclients')->newEmptyEntity();
+
+                                    $table['reglementclient_id'] = $reglement_id;
+                                    $table['caisse_id'] = $p['caisse_id'];
+                                    $table['porteurcheque'] = $p['porteurcheque'];
+                                    $table['rib'] = $p['rib'];
+                                    $table['paiement_id'] = $p['paiement_id'];
+                                    if (isset($p['montant'])) {
+                                        if (strpos($p['montant'], ',') !== false) {
+                                            // Replace comma with dot if it exists
+                                            $table['montant'] = str_replace(',', '.', $p['montant']);
+                                        } else {
+                                            // No comma found, use the original value
+                                            $table['montant'] = $p['montant'];
+                                        }
+                                    }
+
+                                    $table['montant_brut'] = $p['montantbrut'];
+                                    $table['to_id'] = $p['taux'];
+                                    $table['montant_net'] = $p['montantnet'];
+                                    $table['num'] = $p['num_piece'];
+                                    if ($p['paiement_id'] != 1) {
+                                        $table['echance'] = $p['echance'];
+                                    }
+                                    $table['banque_id'] = $p['banque'];
+                                    $table['acomptetype'] = 1;
+                                    $table['proprietaire'] = $p['taux'];
+                                    //   debug($table);die;
+                                    // dd(json_encode($table)) ;
+                                    // dd(json_encode($p)) ;
+                                    //  debug($lignes);
+                                    $this->fetchTable('Piecereglementclients')->save($table);
+                                }
+                            }
+                        }
+                    }
+                }
+                // if ($this->request->getData('action') === 'saveAndImprime') {
+                //     return $this->redirect(['controller' => 'Bonlivraisons', 'action' => 'imprimeviewsmbm/' . $bonlivraison['id']]);
+                // } else {
+                //     return $this->redirect(['action' => 'index/' . $bonlivraison['typebl']]);
+                // }
+
+
+
+                if ($bonlivraison->typebl == '1') {
+                    if ($this->request->getData('action') === 'saveAndImprime') {
+                        return $this->redirect(['controller' => 'Bonlivraisons', 'action' => 'imprimeviewsmbm/' . $bonlivraison['id']]);
+                    } else if ($this->request->getData('action') === 'saveAndImprimepdf') {
+                        return $this->redirect(['controller' => 'Bonlivraisons', 'action' => 'imprimeviewbl/' . $bonlivraison['id']]);
+                    } else {
+                        return $this->redirect(['action' => 'index/' . $bonlivraison['typebl']]);
+                    }
+                } else {
+
+                    if ($this->request->getData('action') === 'saveAndImprime') {
+                        return $this->redirect(['controller' => 'Bonlivraisons', 'action' => 'imprimeproforma/' . $bonlivraison['id']]);
+                    } else if ($this->request->getData('action') === 'saveAndImprimepdf') {
+                        return $this->redirect(['controller' => 'Bonlivraisons', 'action' => 'imprimebacg/' . $bonlivraison['id']]);
+                    } else {
+                        return $this->redirect(['action' => 'index/' . $bonlivraison['typebl']]);
+                    }
+                }
+                //return $this->redirect(['action' => 'index/' . $bonlivraison['typebl']]);
+            }
+            //  $this->Flash->error(__('The {0} could not be saved. Please, try again.', 'Bonlivraison'));
+        }
+        $lignebonlivraisons = $this->fetchTable('Lignebonlivraisons')->find('all', [
+            'contain' => ['Articles']
+        ])
+            ->where(['bonlivraison_id =' . $id]);
+
+        //debug($lignebonlivraisons);
+        //debug($bonlivraison);die;
+
+        $client_id = $bonlivraison->client_id;
+
+        $type = $bonlivraison->typebl;
+
+        $this->loadModel('Clients');
+
+        //        $clientc = $this->fetchTable('Clients')->get($bonlivraison->client_id, [
+        //            'contain' => ['Localites', 'Delegations']
+        //        ]);
+        $this->loadModel('Clients');
+        $clientc = $this->fetchTable('Clients')->get($bonlivraison->client_id, [
+            'contain' => ['Localites', 'Delegations', 'Typeclients']
+        ]);
+        $BL = $clientc->bl;
+        $typecl = $clientc->typeclient->grandsurface;
+        // debug($clientc->typeclient->grandsurface);//die;
+        if ($typecl == 'false') {
+            $cl = 'false';
+        } else {
+            $cl = 'true';
+        }
+
+
+        $escom = $clientc->typeescompte;
+        if ($escom == TRUE) {
+            $es = 'avec palier';
+        }
+
+        if ($escom == FALSE) {
+            $es = 'sans palier';
+        }
+
+
+        $esremise = $clientc->typeremise;
+        //debug($esremise) ;
+        if ($esremise == TRUE) {
+            $rz = 'avec palier';
+        }
+
+        if ($esremise == FALSE) {
+            $rz = 'sans palier';
+        }
+
+
+        $this->loadModel('Remiseclients');
+        $remiseclient = 0;
+        if ($clientc->typeclient->id != null) {
+            $remiseclient = $this->fetchTable('Remiseclients')->find('all', [])->where('Remiseclients.typeclient_id = ' . $clientc->typeclient->id)->first();
+        } else {
+            $remiseclient == null;
+        }
+        if ($remiseclient != null) {
+            $remcli = $remiseclient->id;
+        } else {
+            $remcli = 0;
+        }
+
+
+        $this->loadModel('Remiseescomptes');
+        $remiseescompte = 0;
+        if ($clientc->typeclient->id != null) {
+            $remiseescompte = $this->fetchTable('Remiseescomptes')->find('all', [])->where('Remiseescomptes.typeclient_id = ' . $clientc->typeclient->id)->first();
+        } else {
+            $remiseescompte == null;
+        }
+        if ($remiseescompte != null) {
+            $remes = $remiseescompte->id;
+        } else {
+            $remes = 0;
+        }
+
+        //$commande = $this->fetchTable('Commandes')->get($bonlivraison->commande_id);
+        $date = $bonlivraison->date;
+        // debug($clientc);
+        $date = $date->i18nFormat('yyyy-MM-dd');
+
+        $this->loadModel('Promoarticles');
+        $this->loadModel('Gspromoarticles');
+        $cond1 = "Promoarticles.datedebut <= '" . $date . "'";
+        //debug($cond1);
+        $cond2 = "Promoarticles.datefin >='" . $date . "'";
+        $cond3 = "Promoarticles.typeclient_id=" . $clientc->typeclient->id;
+        $cond4 = "Gspromoarticles.datedebut <= '" . $date . "'";
+        $cond5 = "Gspromoarticles.datefin >='" . $date . "'";
+
+
+        $notgrandsurface = 0;
+        if ($clientc->typeclient->id != null) {
+            $notgrandsurface = $this->fetchTable('Promoarticles')->find('all', [])->where([$cond1, $cond2, $cond3]);
+        } else {
+            $notgrandsurface == null;
+        }
+        $not = "";
+        if ($notgrandsurface != null) {
+            if ($notgrandsurface != array()) {
+                foreach ($notgrandsurface as $ng) {
+                    $not = $not . $ng['id'] . ",";
+                }
+            }
+        }
+        $not = $not . "0";
+
+        $grandsurface = 0;
+        if ($clientc->typeclient->id != null) {
+            $grandsurface = $this->fetchTable('Gspromoarticles')->find('all', [])->where([$cond4, $cond5]);
+        } else {
+            $grandsurface == null;
+        }
+        $gs = "";
+        if ($grandsurface != null) {
+            if ($grandsurface != array()) {
+                foreach ($grandsurface as $n) {
+                    $gs = $gs . $n['id'] . ",";
+                }
+            }
+        }
+        $gs = $gs . "0";
+        // debug($gs);
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //
+        //
+        //
+        //
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+        $clients = $this->Bonlivraisons->Clients->find('all'); ///->where(["Clients.etat " => 'TRUE']);
+
+
+        $depots = $this->Bonlivraisons->Depots->find('list');
+
+        $cartecarburants = $this->Bonlivraisons->Cartecarburants->find('list');
+        // $chauffeurs = $this->Bonlivraisons->Chauffeurs->find('list');
+        //$convoyeurs = $this->Bonlivraisons->Convoyeurs->find('list');
+        $adresselivraisonclients = $this->Bonlivraisons->Adresselivraisonclients->find('list', ['keyfield' => 'id', 'valueField' => 'adresse'])->where(['client_id' => $client_id]);
+
+        $articles = $this->fetchTable('Articles')->find('all');
+
+        $time = $bonlivraison->date;
+        $m = $time->i18nFormat('Y-MM-d');
+        // debug($m);
+
+        $cond1 = "Clientexonerations.date_debut <= '" . $m . "' ";
+        $cond2 = "Clientexonerations.date_fin >= '" . $m . "' ";
+        $cond3 = "Clientexonerations.client_id = '" . $bonlivraison->client_id . "' ";
+
+        $exo = $this->fetchTable('Clientexonerations')->find('all', [
+            'contain' => ['Typeexons']
+        ])->where([$cond3, $cond1, $cond2]);
+        // debug($exo);
+
+        $exotpe = '';
+        $exotimbre = '';
+        $exofodec = '';
+        $exotva = '';
+
+        foreach ($exo as $ex) {
+            // debug($ex);
+            // die;
+            if (strtoupper($ex->typeexon->name) == 'TVA')
+                $exotva = $ex->typeexon->name;
+
+            if (strtoupper($ex->typeexon->name) == 'FODEC')
+                $exofodec = $ex->typeexon->name;
+
+            if (strtoupper($ex->typeexon->name) == 'TIMBRE')
+                $exotimbre = $ex->typeexon->name;
+
+            if (strtoupper($ex->typeexon->name) == 'TPE')
+                $exotpe = $ex->typeexon->name;
+        }
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        $allclients = $this->fetchTable('Clients')->find('all')->order(['Clients.id' => 'DESC']);
+
+        /** ken l client 3andou ancien client yodkhel lel if */
+        /*         * det nhot fiha id mtaa commande->client_id */
+        $dett1 = '' . $client_id;
+        //  debug($dett1);
+
+        /** ken l client 3andou ancien client yodkhel lel if */
+        if ($clientc->client_id != 0) {
+
+            $dett1 = $dett1 . ',' . $clientc->client_id;
+            /*             * det nzid fiha id ancien client */
+            $c = $this->fetchTable('Clients')->get($clientc->client_id);
+            foreach ($allclients as $cli) {
+                if ($cli->client_id == $c->id && $c->client_id != 0) {
+
+                    $dett1 = $dett1 . ',' . $c->client_id;
+                    $c = $this->fetchTable('Clients')->get($cli->client_id);
+                    // debug($c);
+                }
+            }
+        }
+        //debug($dett1);
+
+        /*         * *****fin */ //
+
+
+        $cond3 = 'Commandes.client_id in ( ' . $dett1 . ')';
+
+        $comclient = $this->fetchTable('Commandes')->find('all')
+            ->where([$cond3]);
+        //debug($comclient);
+        // $nbjour = 0;
+
+        $lignecommandes = $this->fetchTable('Commandes')->Lignecommandes->find('all', [
+            'contain' => ['Articles']
+        ])
+            ->where(['commande_id' => $bonlivraison->commande_id]);
+
+        foreach ($lignecommandes as $li) {
+            $ligness = $this->fetchTable('Commandes')->Lignecommandes->find('all', [
+                'contain' => ['Articles']
+            ])
+                ->where(['article_id' => $li->article_id]);
+            //  ->order(['Lignecommandes.commande_id' => 'DESC']);;
+            $dett = '0';
+            foreach ($ligness as $f) {
+                // debug($f->commande_id); //die;
+                $dett = $dett . ',' . $f->commande_id;
+
+                //$dett = implode(", ", $f->commande_id);
+            }
+            // $dett=implode(',',$fam);
+            // debug($dett);
+            if ($dett != '') {
+                $cond100 = 'Commandes.id in (' . $dett . ')';
+            }
+            $cond101 = 'Commandes.client_id in ( ' . $dett1 . ')';
+
+            //   debug($dett);
+            $coms = $this->fetchTable('Commandes')->find()
+                ->select(["date" => 'Min(Commandes.date)'])
+                ->where([$cond100, $cond101]);
+
+            //   debug($coms);
+            //debug($coms->select(["date" => 'Min(Commandes.date)']));
+            $d = '';
+            foreach ($coms as $c) {
+                // debug($c->date);
+
+                $d = $c->date;
+                // debug($d);
+            }
+
+
+            // debug($d);
+
+            $time = new FrozenTime($d);
+
+            $m = $time->i18nFormat('Y-MM-d');
+            //  debug($m);
+            $aujourdhui = date("Y-m-d");
+            // debug($aujourdhui);
+            //debug($li->article->nbjour);
+
+
+            $date1 = date("Y-m-d", strtotime($m . '+  2 days'));
+            //  debug($date1);
+            //  debug($aujourdhui);
+            // $sumdate=$aujourdhui+$m;
+            // debug($sumdate);
+            if ($aujourdhui > $date1) {
+                //debug('hh');
+                $coeff = 0;
+            } else {
+                //debug('kk');
+                $coeff = $li->article->coefficient;
+                //  break;
+                // exit;
+            }
+
+
+            // debug($m);
+            $tab[$li->article_id] = [
+                'majarticle' => $coeff
+            ];
+            // 'date' => $m,
+            //            debug($tab);
+
+
+
+
+
+
+        }
+
+
+
+        $lignereglementclient = $this->fetchTable('Lignereglementclients')->find('all')->where(['Lignereglementclients.bonlivraison_id =' . $id])->first();
+        //    debug($lignereglementclient);die;
+        $piecereglementclients = [];
+        if ($lignereglementclient->reglementclient_id != null) {
+            $piecereglementclients = $this->fetchTable('Piecereglementclients')->find('all')->where(['Piecereglementclients.reglementclient_id =' . $lignereglementclient->reglementclient_id]);
+        }
+        // $paiements = $this->fetchTable('Paiements')->find('list')->where('type=0');
+        $paiements = $this->fetchTable('Paiements')->find('list')->where(['id NOT IN' => [3, 4, 5, 6, 7, 8, 9]]);
+
+        $valeurs = $this->fetchTable('Tos')->find('list');
+        $caisses = $this->fetchTable('Caisses')->find('list');
+        $banques = $this->fetchTable('Banques')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+
+        $materieltransports = $this->fetchTable('Materieltransports')->find('list', ['keyfield' => 'id', 'valueField' => 'matricule']);
+        $chauffeurs = $this->fetchTable('Personnels')->find('list', [
+            'keyField' => 'id',
+            'valueField' => function ($row) {
+                return $row['nom'] . ' ' . $row['prenom'];
+            }
+        ])->where(["Personnels.fonction_id" => 5]);
+
+        $commercials = $this->Bonlivraisons->Commercials->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+
+        $typetransports = $this->fetchTable('Typetransports')->find('list');
+        $agents = $this->fetchTable('Personnels')->find('list', [
+            'keyField' => 'id',
+            'valueField' => function ($row) {
+                return $row['nom'] . ' ' . $row['prenom'];
+            }
+        ]);
+
+        $this->loadModel('Piecereglementclients');
+        $this->loadModel('Lignereglementclients');
+        $this->loadModel('Commandes');
+        $bonlivraison = $this->Bonlivraisons->find()->where('Bonlivraisons.id=' . $id)->contain('Clients')->first();
+        $commande = $this->Commandes->find()->where('id=' . $bonlivraison->commande_id)->first();
+        $lignereglements = $this->Lignereglementclients->find()->where(['Lignereglementclients.bonlivraison_id' => $id]);
+
+        $lignereglementcmds = [];
+        if ($commande->id != 0) {
+            $lignereglementcmds = $this->Lignereglementclients->find()->where(['Lignereglementclients.commande_id' => $commande->id]);
+        }
+
+
+
+        $clientid = $bonlivraison->client_id;
+
+        if ($clientid) {
+            /////////////echanciere//////// 
+            $reglementsf = $this->fetchTable('Reglementclients')->find('all')->where(['Reglementclients.client_id' => $clientid, 'Reglementclients.type=2'])->toArray();
+            $echanciere = 0;
+            if ($reglementsf) {
+                foreach ($reglementsf as $reg) {
+                    $pieces = $this->fetchTable('Piecereglementclients')->find('all')->where([
+                        'reglementclient_id' => $reg->id,
+                        'paiement_id' => 2,
+                        'situation' => 'En attente'
+                    ])->toArray();
+                    $montantTotal = 0;
+
+                    foreach ($pieces as $piece) {
+                        $montantTotal += $piece->montant;
+                    }
+                    $echanciere += $montantTotal;
+                }
+            }
+
+            /////////////echancierebl////////
+            $reglementsbl = $this->fetchTable('Reglementclients')->find('all')->where(['Reglementclients.client_id' => $clientid, 'Reglementclients.type=1'])->toArray();
+            $echancierebl = 0;
+            if ($reglementsbl) {
+                foreach ($reglementsbl as $regg) {
+                    $piecesr = $this->fetchTable('Piecereglementclients')->find('all')->where([
+                        'reglementclient_id' => $regg->id,
+                        'paiement_id' => 2,
+                        'situation' => 'En attente'
+                    ])->toArray();
+                    $mont = 0;
+
+                    foreach ($piecesr as $piece) {
+                        $mont += $piece->montant;
+                    }
+                    $echancierebl += $mont;
+                }
+            }
+
+
+            ////////////encours///////////
+            $bl = $this->fetchTable('Bonlivraisons')->find('all')->where([
+                'client_id' => $clientid,
+                'factureclient_id' => 0,
+                'typebl' => 1
+            ]);
+            //debug($bl);die;
+            $encours = 0;
+            if ($bl) {
+                $total = 0;
+                foreach ($bl as $ff) {
+                    $total += $ff->totalttc;
+                }
+                $encours += $total;
+            }
+            //////////////////////////
+
+
+            $date = date("Y-m-d");
+            // 'solde' => $ss,
+            $connection = ConnectionManager::get('default');
+            $scl = $connection->execute("select soldeclient(" . $clientid . ", '" . $date . "') as s")->fetchAll('assoc');
+            $solde = $scl[0]['s'];
+            /// debug($ss);die;
+            $data = $this->fetchTable('Clients')->find('all')->where(['Clients.id' => $clientid])->first();
+        }
+
+
+        $transporteurs = $this->fetchTable('Transporteurs')->find('list', [
+            'keyField' => 'id',
+            'valueField' => function ($row) {
+                return $row['matricule'] . ' ' . $row['name'];
+            }
+        ]);
+        if ($bonlivraison->timbre_id) {
+            $tim = $this->fetchTable('Timbres')->find('list', ['keyfield' => 'id', 'valueField' => 'timbre'])
+
+                ->where(['Timbres.id' => $bonlivraison->timbre_id])
+                ->toArray();
+        } else {
+            $tim = $this->fetchTable('Timbres')->find('list', ['keyfield' => 'id', 'valueField' => 'timbre'])
+                ->toArray();
+        }
+        // $tim = $this->fetchTable('Timbres')->find()->select(["timbre" =>
+        // 'MAX(Timbres.timbre)'])->first();
+        // $timbre = $tim->timbre;
+        /***************************bloc client info************************** */
+
+        $lignebloc = $this->fetchTable('Clients')->get($clientid, [
+            'contain' => ['Types'],
+        ]);
+        $typeclients = $this->fetchTable('Clients')->get($clientid, [
+            'contain' => ['Typeclients', 'Gouvernorats', 'Types']
+        ]);
+
+        $typeclientid = $typeclients->type->id;
+        if ($typeclientid  == null) {
+            $typeclientid = ' ';
+        }
+
+        $typeclientname = $typeclients->type->name;
+        $adresses = $this->fetchTable('Adresselivraisonclients')->find('all', [
+            'contain' => ['Clients']
+        ])
+            ->where(["Adresselivraisonclients.client_id = " . $bonlivraison->client_id . ""])->first();
+        $adresse = $adresses->adresse;
+        /******************************************************** */
+        $timbbb = $this->fetchTable('Timbres')->find()
+            ->select(['id', 'timbre' => 'MAX(Timbres.timbre)'])
+            ->first();
+
+        $timbre_max = $timbbb->timbre;
+        $timbre_id = $timbbb->id;
+
+
+        $this->set(compact('timbre_id', 'lignereglementcmds', 'typeclientid', 'typeclientname', 'adresse', 'lignebloc', 'tim', 'echanciere', 'transporteurs', 'echancierebl', 'solde', 'encours', 'lignereglements', 'agents', 'typetransports', 'banques', 'piecereglementclients', 'paiements', 'valeurs', 'caisses', 'BL', 'not', 'gs', 'cl', 'commercials', 'tab', 'commercial', 'exotpe', 'exotva', 'exofodec', 'exotimbre', 'bonus', 'type', 'clientc', 'lignebonlivraisons', 'articles', 'bonlivraison', 'clients', 'depots', 'materieltransports', 'cartecarburants', 'chauffeurs', 'conffaieurs', 'adresselivraisonclients', 'es', 'rz', 'remcli', 'remes', 'cmde', 'commande'));
+    }
+
     /**
      * Delete method
      *
@@ -8340,11 +9309,122 @@ class BonlivraisonsController extends AppController
 
 
         $bonlivraison = $this->Bonlivraisons->get($id);
+        $typebl = $bonlivraison->typebl;
+        $cmd_id = $bonlivraison->commande_id;
+        $id_proformat = $bonlivraison->id_proformat;
+
 
         if ($this->Bonlivraisons->delete($bonlivraison)) {
             $this->misejour("Bonlivraisons", "delete", $id);
             foreach ($lignelivraisons as $l) {
                 $this->Bonlivraisons->Lignebonlivraisons->delete($l);
+            }
+
+            if ($typebl == 1) {
+                if ($cmd_id != 0) {
+                    $commandefirst = $this->fetchTable('Commandes')->find('all', [])
+                        ->where(['Commandes.id=' .  $cmd_id])->first();
+
+                    $commandeTotQte = 0;
+                    $BLTotQte = 0;
+                    $connection = ConnectionManager::get('default');
+                    if (!empty($commandefirst->id)) {
+                        $commandeTotQte = $connection->execute('SELECT SUM(qte) AS sommeqtecmd FROM lignecommandes WHERE commande_id = :commande_id', ['commande_id' => $commandefirst->id])
+                            ->fetch('assoc');
+                        //  debug($commandeTotQte);
+                    }
+                    if (!empty($commandefirst->id)) {
+                        $bls = $connection->execute('SELECT * FROM bonlivraisons WHERE bonlivraisons.commande_id = ' . $commandefirst->id . ' AND bonlivraisons.typebl=1;')->fetchAll('assoc');
+
+                        if (!empty($bls)) {
+                            $blsIds = [];
+                            foreach ($bls as $bl) {
+                                $blsIds[] = $bl['id'];
+                            }
+
+                            $blsIdsString = implode(',', $blsIds);
+
+                            $BLTotQte = $connection
+                                ->execute('SELECT SUM(qte) AS sommeqtebl FROM lignebonlivraisons WHERE bonlivraison_id IN (' . $blsIdsString . ')')
+                                ->fetch('assoc');
+
+                            // debug($BLTotQte);
+                        }
+                    }
+
+                    $sum_qtebl = isset($BLTotQte['sommeqtebl']) ? $BLTotQte['sommeqtebl'] : 0;
+                    $sum_qtecmd = isset($commandeTotQte['sommeqtecmd']) ? $commandeTotQte['sommeqtecmd'] : 0;
+                    // debug( $sum_qtebl);
+                    // debug( $sum_qtecmd);
+
+
+
+
+                    if ($sum_qtebl == $sum_qtecmd && $sum_qtebl != 0) {
+                        //Livré
+                        $commandefirst->livre = 2;
+                    } elseif ($sum_qtebl == 0) {
+                        //En cours
+                        $commandefirst->livre = 0;
+                    } elseif ($sum_qtebl < $sum_qtecmd) {
+                        //Livré Partiel
+                        $commandefirst->livre = 1;
+                    }
+                    $this->fetchTable('Commandes')->save($commandefirst);
+                    // debug($commandefirst);
+                }
+                if ($id_proformat != 0) {
+                    $proformatfirst = $this->fetchTable('Bonlivraisons')->find('all', [])
+                        ->where(['Bonlivraisons.id=' .  $id_proformat])->first();
+
+                    $proformaTotQte = 0;
+                    $BLTotQte = 0;
+                    $connection = ConnectionManager::get('default');
+                    if (!empty($proformatfirst->id)) {
+                        $proformaTotQte = $connection->execute('SELECT SUM(qte) AS sommeqtecmd FROM lignebonlivraisons WHERE bonlivraison_id = :bonlivraison_id', ['bonlivraison_id' => $proformatfirst->id])
+                            ->fetch('assoc');
+                        //  debug($proformaTotQte);
+                    }
+                    if (!empty($proformatfirst->id)) {
+                        $bls = $connection->execute('SELECT * FROM bonlivraisons WHERE bonlivraisons.id_proformat = ' . $proformatfirst->id . ' AND bonlivraisons.typebl=1;')->fetchAll('assoc');
+
+                        if (!empty($bls)) {
+                            $blsIds = [];
+                            foreach ($bls as $bl) {
+                                $blsIds[] = $bl['id'];
+                            }
+
+                            $blsIdsString = implode(',', $blsIds);
+
+                            $BLTotQte = $connection
+                                ->execute('SELECT SUM(qte) AS sommeqtebl FROM lignebonlivraisons WHERE bonlivraison_id IN (' . $blsIdsString . ')')
+                                ->fetch('assoc');
+
+                            // debug($BLTotQte);
+                        }
+                    }
+
+                    $sum_qtebl = isset($BLTotQte['sommeqtebl']) ? $BLTotQte['sommeqtebl'] : 0;
+                    $sum_qtecmd = isset($proformaTotQte['sommeqtecmd']) ? $proformaTotQte['sommeqtecmd'] : 0;
+                    // debug( $sum_qtebl);
+                    // debug( $sum_qtecmd);
+
+
+
+
+                    if ($sum_qtebl == $sum_qtecmd && $sum_qtebl != 0) {
+                        //Livré
+                        $proformatfirst->livre = 2;
+                    } elseif ($sum_qtebl == 0) {
+                        //En cours
+                        $proformatfirst->livre = 0;
+                    } elseif ($sum_qtebl < $sum_qtecmd) {
+                        //Livré Partiel
+                        $proformatfirst->livre = 1;
+                    }
+                    $this->fetchTable('Bonlivraisons')->save($proformatfirst);
+                    // debug($proformatfirst);
+                }
             }
         } else {
         }
@@ -8461,6 +9541,9 @@ class BonlivraisonsController extends AppController
         ])
             ->where(['Commandes.id   in (' . $ids . ')   '])->first();
 
+        if ($commfirst) {
+            $proformatfirst = $this->fetchTable('Bonlivraisons')->find()->where('typebl=2')->where('commande_id=' . $commfirst->id)->first();
+        }
         /// debug($commande->toarray());
 
         foreach ($commande as $i => $com) {
@@ -8538,7 +9621,7 @@ class BonlivraisonsController extends AppController
 
             $data['user_id'] = $result['id'];
             $data['typebl'] = 1;
-
+            $data['id_proformat'] =   $proformatfirst->id;
             $data['numero'] =   $mm;
             $data['date'] = $this->request->getData('date');
             $data['client_id'] = $this->request->getData('client_id');
@@ -8681,6 +9764,65 @@ class BonlivraisonsController extends AppController
                                 $cmde->etatliv = '1';
                                 $this->fetchTable('Commandes')->save($cmde);
                             }
+
+                            $commandefirst = $this->fetchTable('Commandes')->find('all', [
+                                'contain' => ['Clients', 'Lignecommandes']
+                            ])
+                                ->where(['Commandes.id   in (' . $ids . ')   '])->first();
+
+                            // debug($commandefirst);
+
+                            $commandeTotQte = 0;
+                            $BLTotQte = 0;
+                            $connection = ConnectionManager::get('default');
+                            if (!empty($commandefirst->id)) {
+                                $commandeTotQte = $connection->execute('SELECT SUM(qte) AS sommeqtecmd FROM lignecommandes WHERE commande_id = :commande_id', ['commande_id' => $commandefirst->id])
+                                    ->fetch('assoc');
+                                //  debug($commandeTotQte);
+                            }
+                            if (!empty($commandefirst->id)) {
+                                $bls = $connection->execute('SELECT * FROM bonlivraisons WHERE bonlivraisons.commande_id = ' . $commandefirst->id . ' AND bonlivraisons.typebl=1;')->fetchAll('assoc');
+
+
+                                $blcmd = $this->fetchTable('Bonlivraisons')->find()
+                                    ->where(['Bonlivraisons.commande_id=' . $ids])->where('Bonlivraisons.typebl=2')->first();
+
+
+                                if (!empty($bls)) {
+                                    $blsIds = [];
+                                    foreach ($bls as $bl) {
+                                        $blsIds[] = $bl['id'];
+                                    }
+
+                                    $blsIdsString = implode(',', $blsIds);
+
+                                    $BLTotQte = $connection
+                                        ->execute('SELECT SUM(qte) AS sommeqtebl FROM lignebonlivraisons WHERE bonlivraison_id IN (' . $blsIdsString . ')')
+                                        ->fetch('assoc');
+
+                                    // debug($BLTotQte);
+                                }
+                            }
+
+                            $sum_qtebl = $BLTotQte['sommeqtebl'];
+                            $sum_qtecmd = $commandeTotQte['sommeqtecmd'];
+
+
+                            if ($sum_qtebl == $sum_qtecmd && $sum_qtebl != 0) {
+                                //  debug('Livré');
+                                $commandefirst->livre = 2;
+                                $blcmd->livre = 2;
+                            } elseif ($sum_qtebl == 0) {
+                                // debug('En cours'); 
+                                $commandefirst->livre = 0;
+                                $blcmd->livre = 0;
+                            } elseif ($sum_qtebl < $sum_qtecmd) {
+                                // debug('Livré Partiel');
+                                $commandefirst->livre = 1;
+                                $blcmd->livre = 1;
+                            }
+                            $this->fetchTable('Commandes')->save($commandefirst);
+                            $this->fetchTable('Bonlivraisons')->save($blcmd);
                         }
                     }
                 }
@@ -9278,30 +10420,30 @@ class BonlivraisonsController extends AppController
         $valeurs = $this->fetchTable('Tos')->find('list');
 
 
-           /***************************bloc info client******************************************* */
+        /***************************bloc info client******************************************* */
 
-       $clientid = $commfirst->client_id;
-       $lignebloc = $this->fetchTable('Clients')->get($clientid, [
-           'contain' => ['Types'],
-       ]);
-       $typeclients = $this->fetchTable('Clients')->get($clientid, [
-           'contain' => ['Typeclients', 'Gouvernorats', 'Types']
-       ]);
+        $clientid = $commfirst->client_id;
+        $lignebloc = $this->fetchTable('Clients')->get($clientid, [
+            'contain' => ['Types'],
+        ]);
+        $typeclients = $this->fetchTable('Clients')->get($clientid, [
+            'contain' => ['Typeclients', 'Gouvernorats', 'Types']
+        ]);
 
-       $typeclientid = $typeclients->type->id;
-       if ($typeclientid  == null) {
-           $typeclientid = ' ';
-       }
+        $typeclientid = $typeclients->type->id;
+        if ($typeclientid  == null) {
+            $typeclientid = ' ';
+        }
 
-       $typeclientname = $typeclients->type->name;
-       $adresses = $this->fetchTable('Adresselivraisonclients')->find('all', [
-           'contain' => ['Clients']
-       ])
-           ->where(["Adresselivraisonclients.client_id = " . $commfirst->client_id . ""])->first();
-       $adresse = $adresses->adresse;
-       /********************************************************************** */
+        $typeclientname = $typeclients->type->name;
+        $adresses = $this->fetchTable('Adresselivraisonclients')->find('all', [
+            'contain' => ['Clients']
+        ])
+            ->where(["Adresselivraisonclients.client_id = " . $commfirst->client_id . ""])->first();
+        $adresse = $adresses->adresse;
+        /********************************************************************** */
 
-        $this->set(compact('agents','lignebloc','typeclientid','typeclientname','adresse', 'commfirst', 'echanciere', 'mm', 'valeurs', 'banques', 'paiements', 'transporteurs', 'echancierebl', 'solde', 'typetransports', 'encours', '', 'payment', 'nv_client', 'remes', 'remcli', 'BL', 'not', 'gs', 'es', 'rz', 'cl', 'exotva', 'exofodec', 'exotpe', 'tab', 'bonus', 'commercial', 'clientc', 'lignecommandes', 'commande', 'mm', 'articles', 'bonlivraison', 'clients', 'depots', 'materieltransports', 'cartecarburants', 'chauffeurs', 'conffaieurs', 'factureclients', 'adresselivraisonclients', 'client_id', 'depot_id', 'tab'));
+        $this->set(compact('agents', 'lignebloc', 'typeclientid', 'typeclientname', 'adresse', 'commfirst', 'echanciere', 'mm', 'valeurs', 'banques', 'paiements', 'transporteurs', 'echancierebl', 'solde', 'typetransports', 'encours', '', 'payment', 'nv_client', 'remes', 'remcli', 'BL', 'not', 'gs', 'es', 'rz', 'cl', 'exotva', 'exofodec', 'exotpe', 'tab', 'bonus', 'commercial', 'clientc', 'lignecommandes', 'commande', 'mm', 'articles', 'bonlivraison', 'clients', 'depots', 'materieltransports', 'cartecarburants', 'chauffeurs', 'conffaieurs', 'factureclients', 'adresselivraisonclients', 'client_id', 'depot_id', 'tab'));
     }
     public function addbonlivraisond($ids = null)
     {
@@ -9319,6 +10461,21 @@ class BonlivraisonsController extends AppController
             'contain' => ['Clients']
         ])
             ->where(['Bonlivraisons.id   in (' . $ids . ')   ']);
+
+
+        $sommetva = 0;
+        $sommettc = 0;
+        $sommeht = 0;
+        $sommeremise = 0;
+
+
+        foreach ($bonlivraison as $b => $bll) {
+            $sommetva += $bll->totaltva;
+            $sommettc += $bll->totalttc;
+            $sommeht += $bll->totalht;
+            $sommeremise += $bll->totalremise;
+        }
+
         $bonlivraisonfirst = $this->fetchTable('Bonlivraisons')->find('all', [
             'contain' => ['Clients', 'Timbres']
         ])
@@ -9442,7 +10599,7 @@ class BonlivraisonsController extends AppController
             $data['totalttc'] = $this->request->getData('totalttc');
             $data['payementcomptant'] = $this->request->getData('checkpayement');
             $data['poste'] = $this->request->getData('poste');
-            $data['commande_id'] = $ids;
+            $data['id_proformat'] = $ids;
             $data['commercial_id'] = $this->request->getData('commercial_id');
             $data['nbligne'] = $this->request->getData('nbligne');
             $data['Poids'] = $this->request->getData('Poids');
@@ -9462,7 +10619,7 @@ class BonlivraisonsController extends AppController
             $data['matricule'] = $this->request->getData('matricule');
             $data['totalputtc'] = $this->request->getData('totalputtc');
 
-            
+
             $data['nomprenom'] = $this->request->getData('nomprenom');
             $data['numeroidentite'] = $this->request->getData('numeroidentite');
             $data['adressediv'] = $this->request->getData('adressediv');
@@ -9583,6 +10740,56 @@ class BonlivraisonsController extends AppController
                                 // $cmde->etatliv = '1';
                                 $this->fetchTable('Bonlivraisons')->save($cmde);
                             }
+
+
+                            $blproformatfirst = $this->fetchTable('Bonlivraisons')->find('all', [
+                                'contain' => ['Clients', 'Lignebonlivraisons']
+                            ])
+                                ->where(['Bonlivraisons.id   in (' . $ids . ')   '])->first();
+
+
+                            $commandeTotQte = 0;
+                            $BLTotQte = 0;
+                            $connection = ConnectionManager::get('default');
+                            if (!empty($blproformatfirst->id)) {
+                                $commandeTotQte = $connection->execute('SELECT SUM(qte) AS sommeqtecmd FROM lignebonlivraisons WHERE bonlivraison_id = :bonlivraison_id', ['bonlivraison_id' => $blproformatfirst->id])
+                                    ->fetch('assoc');
+                                //  debug($commandeTotQte);
+                            }
+                            if (!empty($blproformatfirst->id)) {
+                                $bls = $connection->execute('SELECT * FROM bonlivraisons WHERE bonlivraisons.id_proformat = ' . $blproformatfirst->id . ' AND bonlivraisons.typebl=1;')->fetchAll('assoc');
+
+                                if (!empty($bls)) {
+                                    $blsIds = [];
+                                    foreach ($bls as $bl) {
+                                        $blsIds[] = $bl['id'];
+                                    }
+
+                                    $blsIdsString = implode(',', $blsIds);
+
+                                    $BLTotQte = $connection
+                                        ->execute('SELECT SUM(qte) AS sommeqtebl FROM lignebonlivraisons WHERE bonlivraison_id IN (' . $blsIdsString . ')')
+                                        ->fetch('assoc');
+
+                                    // debug($BLTotQte);
+                                }
+                            }
+
+                            $sum_qtebl = $BLTotQte['sommeqtebl'];
+                            $sum_qtecmd = $commandeTotQte['sommeqtecmd'];
+
+
+                            if ($sum_qtebl == $sum_qtecmd && $sum_qtebl != 0) {
+                                //  debug('Livré');
+                                $blproformatfirst->livre = 2;
+                            } elseif ($sum_qtebl == 0) {
+                                // debug('En cours'); 
+                                $blproformatfirst->livre = 0;
+                            } elseif ($sum_qtebl < $sum_qtecmd) {
+                                // debug('Livré Partiel');
+                                $blproformatfirst->livre = 1;
+                            }
+                            $this->fetchTable('Bonlivraisons')->save($blproformatfirst);
                         }
                     }
                 }
@@ -10177,29 +11384,32 @@ class BonlivraisonsController extends AppController
 
         $t = $this->fetchTable('Banques')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $valeurs = $this->fetchTable('Tos')->find('list');
-      /***************************bloc info client******************************************* */
+        /***************************bloc info client******************************************* */
 
-      $clientid = $bonlivraisonfirst->client_id;
-      $lignebloc = $this->fetchTable('Clients')->get($clientid, [
-          'contain' => ['Types'],
-      ]);
-      $typeclients = $this->fetchTable('Clients')->get($clientid, [
-          'contain' => ['Typeclients', 'Gouvernorats', 'Types']
-      ]);
+        $clientid = $bonlivraisonfirst->client_id;
+        $lignebloc = $this->fetchTable('Clients')->get($clientid, [
+            'contain' => ['Types'],
+        ]);
+        $typeclients = $this->fetchTable('Clients')->get($clientid, [
+            'contain' => ['Typeclients', 'Gouvernorats', 'Types']
+        ]);
 
-      $typeclientid = $typeclients->type->id;
-      if ($typeclientid  == null) {
-          $typeclientid = ' ';
-      }
+        $typeclientid = $typeclients->type->id;
+        if ($typeclientid  == null) {
+            $typeclientid = ' ';
+        }
 
-      $typeclientname = $typeclients->type->name;
-      $adresses = $this->fetchTable('Adresselivraisonclients')->find('all', [
-          'contain' => ['Clients']
-      ])
-          ->where(["Adresselivraisonclients.client_id = " . $bonlivraisonfirst->client_id . ""])->first();
-      $adresse = $adresses->adresse;
-      /********************************************************************** */
-        $this->set(compact('agents','lignebloc','typeclientid','typeclientname','adresse', 'typetransports', 'banques', 'mm', 'paiements', 'valeurs', 'bonlivraisonfirst', 'transporteurs', 'encours', 'echancierebl', 'solde', 'echanciere', 'dataclient', 'payment', 'nv_client', 'remes', 'remcli', 'BL', 'not', 'gs', 'es', 'rz', 'cl', 'exotva', 'exofodec', 'exotpe', 'tab', 'bonus', 'commercial', 'clientc', 'lignebonlivraisons', 'bonlivraison', 'mm', 'articles', 'bonlivraison', 'clients', 'depots', 'materieltransports', 'cartecarburants', 'chauffeurs', 'conffaieurs', 'factureclients', 'adresselivraisonclients', 'client_id', 'depot_id', 'tab'));
+        $typeclientname = $typeclients->type->name;
+        $adresses = $this->fetchTable('Adresselivraisonclients')->find('all', [
+            'contain' => ['Clients']
+        ])
+            ->where(["Adresselivraisonclients.client_id = " . $bonlivraisonfirst->client_id . ""])->first();
+        $adresse = $adresses->adresse;
+        /********************************************************************** */
+
+
+
+        $this->set(compact('sommeremise', 'sommetva', 'sommettc', 'sommeht', 'agents', 'lignebloc', 'typeclientid', 'typeclientname', 'adresse', 'typetransports', 'banques', 'mm', 'paiements', 'valeurs', 'bonlivraisonfirst', 'transporteurs', 'encours', 'echancierebl', 'solde', 'echanciere', 'dataclient', 'payment', 'nv_client', 'remes', 'remcli', 'BL', 'not', 'gs', 'es', 'rz', 'cl', 'exotva', 'exofodec', 'exotpe', 'tab', 'bonus', 'commercial', 'clientc', 'lignebonlivraisons', 'bonlivraison', 'mm', 'articles', 'bonlivraison', 'clients', 'depots', 'materieltransports', 'cartecarburants', 'chauffeurs', 'conffaieurs', 'factureclients', 'adresselivraisonclients', 'client_id', 'depot_id', 'tab'));
     }
     //////////////////////////////////
 
@@ -11922,7 +13132,7 @@ class BonlivraisonsController extends AppController
 
 
         // *****************************************************************//
-        $transfertdeparts = $this->fetchTable('Transferecaisses')->find()->where([$conditionstransfert])->all();
+        // $transfertdeparts = $this->fetchTable('Transferecaisses')->find()->where([$conditionstransfert])->all();
 
         $reglements = $this->Piecereglementclients->find()->select(['montant', 'reglementclient_id', 'paiement_id', 'num'])->where([$condp1])->all();
 
@@ -11965,12 +13175,12 @@ class BonlivraisonsController extends AppController
             ->where([$conditionstransfertdebut])->toArray();
 
 
-        $transfertdepartstot  = $this->fetchTable('Transferecaisses')->find()->where(['caisse_id' => 5])->all();
+        /*  $transfertdepartstot  = $this->fetchTable('Transferecaisses')->find()->where(['caisse_id' => 5])->all();
 
         foreach ($transfertdepartstot as $transfertdepart) {
 
             $credit_all += $transfertdepart->montant;
-        }
+        } */
 
 
         $soldeini = $thiscaisse->montant + $pieceregini[0]['total'] - $transfertarrivesini[0]['total'];
@@ -12112,7 +13322,7 @@ class BonlivraisonsController extends AppController
         }
 
         //////////////////////////////////////
-        foreach ($transfertdeparts as $transfertdepart) {
+        /*    foreach ($transfertdeparts as $transfertdepart) {
 
             //  debug($transfertdepart);
             $paiement = [];
@@ -12140,7 +13350,7 @@ class BonlivraisonsController extends AppController
                 'index' => '4',
 
             ];
-        }
+        } */
 
 
         //}

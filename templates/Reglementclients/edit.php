@@ -147,29 +147,29 @@ use Cake\Datasource\ConnectionManager;
                                 if ($mon[0]['mont'] == null) {
                                   $montreg = 0;
                                 } else {
-                                  $montreg = $mon[0]['mont'] ;
+                                  $montreg = $mon[0]['mont'];
                                 }
 
                                 $reste = $liv['totalttc'] - $montreg;
                                 // debug($reglement) ;
-                                if (($mon[0]['mont']) != $liv['totalttc']) {
+                                // if (($mon[0]['mont']) != $liv['totalttc']) {
                             ?>
 
-                                  <tr>
-                                    <td><?= h($liv['numero']) ?></td>
-                                    <td><?= h($liv['date']) ?></td>
-                                    <td><?= h($liv['totalttc']) ?></td>
-                                    <td><?= h($montreg) ?></td>
-                                    <td></td>
-                                    <td><?= $reste ?></td>
-                                    <td>
-                                      <input type="checkbox" <?php if ($lig) { ?> checked <?php } ?> name="data[Lignereglementclient][<?php echo $i; ?>][bonreception_id]" id="facture_id<?php echo $i; ?>" index="<?php echo $i; ?>" class=" calculmontantt calculereglementclient afficheinputmontantreglementclient" value="<?php echo $liv['id'] ?>" mnttounssi="<?php echo $liv['totalttc']; ?>" mnt="<?php echo $reste; ?>">
-                                      <?php
-                                      echo @$this->Form->input('Montanttt', array('value' => $lig[0]['Montant'], 'style' => $style, 'index' => $i, 'name' => 'data[Lignereglementclient][' . $i . '][Montanttt]', 'id' => 'Montantregler' . $i, 'label' => '',  'type' => 'text', 'class' => 'form-control testmontantreglementclient  chekreglementfac checkmaxfac number calculmontantt '));
-                                      ?>
-                                    </td>
-                                  </tr>
-                              <?php }
+                                <tr>
+                                  <td><?= h($liv['numero']) ?></td>
+                                  <td><?= h($liv['date']) ?></td>
+                                  <td><?= h($liv['totalttc']) ?></td>
+                                  <td><?= h($montreg) ?></td>
+                                  <td></td>
+                                  <td><?= $reste ?></td>
+                                  <td>
+                                    <input type="checkbox" <?php if ($lig) { ?> checked <?php } ?> name="data[Lignereglementclient][<?php echo $i; ?>][bonreception_id]" id="facture_id<?php echo $i; ?>" index="<?php echo $i; ?>" class=" calculmontantt calculereglementclient afficheinputmontantreglementclient" value="<?php echo $liv['id'] ?>" mnttounssi="<?php echo $liv['totalttc']; ?>" mnt="<?php echo $reste; ?>">
+                                    <?php
+                                    echo @$this->Form->input('Montanttt', array('value' => $lig[0]['Montant'], 'style' => $style, 'index' => $i, 'name' => 'data[Lignereglementclient][' . $i . '][Montanttt]', 'id' => 'Montantregler' . $i, 'label' => '',  'type' => 'text', 'class' => 'form-control testmontantreglementclient  chekreglementfac checkmaxfac number calculmontantt '));
+                                    ?>
+                                  </td>
+                                </tr>
+                              <?php //}
                               } ?>
                               <input type="hidden" name="max" value="<?php echo @$i; ?>" id="max"> <?php } ?>
                             <tr id="totalbon" style="color: #3C8DBC ; font-weight: bold;">
@@ -514,7 +514,7 @@ use Cake\Datasource\ConnectionManager;
                         <tr>
                           <td>Montant</td>
                           <td><?php
-                              echo $this->Form->control('montant', array('class' => 'form-control differance ', 'label' => '', 'index' => 0, 'champ' => 'montant', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant]'));
+                              echo $this->Form->control('montant', array('class' => 'form-control differanceedit sum-input', 'label' => '', 'index' => 0, 'champ' => 'montant', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][0][montant]'));
                               ?> </td>
                         </tr>
                         <tr>
@@ -649,7 +649,7 @@ use Cake\Datasource\ConnectionManager;
                       </td>
                       </tr>
                       <?php $read = "";
-                     // $i = -1;
+                      // $i = -1;
                       foreach ($piecereglementclients as $i => $piece) {
                         /// debug($piece);
                         $connection = ConnectionManager::get('default');
@@ -673,163 +673,164 @@ use Cake\Datasource\ConnectionManager;
                             $style = '';
                           }
                         }
-                        if($piece->paiement_id !=9){
+                        if ($piece->paiement_id != 9) {
                           $i++;
                       ?>
-                        <tr>
-                          <td colspan="8" style="vertical-align: top;">
-                            <table>
-                              <tr <?php if (($piece->paiement_id == 7) || ($piece->paiement_id == 6) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trechances<?php echo $i  ?>">
-                                <td>Mode de paiement </td>
-                                <td><?php
-                                    echo $this->Form->control('paiement_id', array(
-                                      'value' => $piece->paiement_id,
-                                      'class' => 'form-control montantbrut  modereglement2 ',
-                                      'label' => '',
-                                      // 'style' => $style,
-                                      'readonly' => $readonly,
-                                      'index' => $i,
-                                      'id' => 'paiement_id' . $i,
-                                      'table' => 'pieceregelemnt',
-                                      'name' => 'data[pieceregelemnt][' . $i . '][paiement_id]'
-                                    ));
-                                    ?>
-                                  <?php echo $this->Form->input('id', array('value' => $piece->id, 'name' => 'data[pieceregelemnt][' . $i . '][id]', 'id' => 'id' . $i, 'champ' => 'id', 'table' => 'pieceregelemnt', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'type' => 'hidden', 'after' => '</div>', 'class' => 'form-control', 'label' => 'Nom')); ?>
-                                  <?php echo $this->Form->input('sup', array('name' => 'data[pieceregelemnt][' . $i . '][sup]', 'id' => 'sup' . $i, 'champ' => 'sup', 'table' => 'pieceregelemnt', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'type' => 'hidden', 'after' => '</div>', 'class' => 'form-control', 'label' => 'Nom')); ?>
+                          <tr>
+                            <td colspan="8" style="vertical-align: top;">
+                              <table>
+                                <tr <?php if (($piece->paiement_id == 7) || ($piece->paiement_id == 6) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trechances<?php echo $i  ?>">
+                                  <td>Mode de paiement </td>
+                                  <td><?php
+                                      echo $this->Form->control('paiement_id', array(
+                                        'value' => $piece->paiement_id,
+                                        'class' => 'form-control montantbrut  modereglement2 ',
+                                        'label' => '',
+                                        // 'style' => $style,
+                                        'readonly' => $readonly,
+                                        'index' => $i,
+                                        'id' => 'paiement_id' . $i,
+                                        'table' => 'pieceregelemnt',
+                                        'name' => 'data[pieceregelemnt][' . $i . '][paiement_id]'
+                                      ));
+                                      ?>
+                                    <?php echo $this->Form->input('id', array('value' => $piece->id, 'name' => 'data[pieceregelemnt][' . $i . '][id]', 'id' => 'id' . $i, 'champ' => 'id', 'table' => 'pieceregelemnt', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'type' => 'hidden', 'after' => '</div>', 'class' => 'form-control', 'label' => 'Nom')); ?>
+                                    <?php echo $this->Form->input('sup', array('name' => 'data[pieceregelemnt][' . $i . '][sup]', 'id' => 'sup' . $i, 'champ' => 'sup', 'table' => 'pieceregelemnt', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'type' => 'hidden', 'after' => '</div>', 'class' => 'form-control', 'label' => 'Nom')); ?>
 
-                                </td>
+                                  </td>
 
-                              </tr>
-                              <tr <?php if ($piece->factureavoir_id == null) { ?> style="display:none ; " <?php } ?>>
-                                <td> Facture </td>
+                                </tr>
+                                <tr <?php if ($piece->factureavoir_id == null) { ?> style="display:none ; " <?php } ?>>
+                                  <td> Facture </td>
 
-                                <td>
-                                  <select table="pieceregelemnt" index="" champ="paiement_id" class="modereglement2 form-control select selectized">
-                                    <option value="" selected="selected" disabled>Veuillez choisir !!</option>
+                                  <td>
+                                    <select table="pieceregelemnt" index="" champ="paiement_id" class="modereglement2 form-control select selectized">
+                                      <option value="" selected="selected" disabled>Veuillez choisir !!</option>
 
-                                    <?php foreach ($facturesav as $f) {
+                                      <?php foreach ($facturesav as $f) {
 
 
-                                    ?>
-                                      <option <?php if ($piece->factureavoir_id == $f->id) { ?> selected="selected" <?php } ?> value="<?php echo $f->id; ?>"><?php echo $f->numero . '-' . $f->totalttc ?></option>
-                                    <?php } ?>
-                                  </select>
-                                </td>
-                              </tr>
-                              <tr <?php if ($piece->paiement_id != 5) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trmontantbrut<?php echo $i  ?>">
-                                <td name="data[piece][<?php echo $i  ?>][trmontantbrut]" id="trmontantbruta<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantbruta" table="piece" class="modecheque">Montant brut</td>
-                                <td name="data[piece][<?php echo $i  ?>][trmontantbrut]" id="trmontantbrutb<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantbrutb" table="piece" class="modecheque"><?php
-                                                                                                                                                                                                                echo $this->Form->control('montant_brut', array('value' => $piece->montant_brut, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control montantbrut', 'label' => '', 'type' => 'text', 'index' => $i, 'champ' => 'montantbrut', 'id' => 'montantbrut' . $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][montant_brut]'));
+                                      ?>
+                                        <option <?php if ($piece->factureavoir_id == $f->id) { ?> selected="selected" <?php } ?> value="<?php echo $f->id; ?>"><?php echo $f->numero . '-' . $f->totalttc ?></option>
+                                      <?php } ?>
+                                    </select>
+                                  </td>
+                                </tr>
+                                <tr <?php if ($piece->paiement_id != 5) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trmontantbrut<?php echo $i  ?>">
+                                  <td name="data[piece][<?php echo $i  ?>][trmontantbrut]" id="trmontantbruta<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantbruta" table="piece" class="modecheque">Montant brut</td>
+                                  <td name="data[piece][<?php echo $i  ?>][trmontantbrut]" id="trmontantbrutb<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantbrutb" table="piece" class="modecheque"><?php
+                                                                                                                                                                                                                  echo $this->Form->control('montant_brut', array('value' => $piece->montant_brut, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control montantbrut', 'label' => '', 'type' => 'text', 'index' => $i, 'champ' => 'montantbrut', 'id' => 'montantbrut' . $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][montant_brut]'));
+                                                                                                                                                                                                                  ?> </td>
+                                </tr>
+                                <tr <?php if ($piece->paiement_id != 5) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trtaux<?php echo $i  ?>">
+                                  <td name="data[piece][<?php echo $i  ?>][trtaux]" id="trtauxa<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trtauxa" table="piece" class="modecheque">Taux</td>
+                                  <td name="data[piece][<?php echo $i  ?>][trtaux]" id="trtauxb<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trtauxb" table="piece" class="modecheque"><?php
+                                                                                                                                                                                              echo $this->Form->control('valeur_id', array('value' => $piece->to_id, 'class' => 'form-control select montantbrut ', 'label' => '', 'index' => $i, 'champ' => 'taux', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][taux]', 'id' => 'taux' . $i, 'empty' => 'Veuillez choisir'));
+                                                                                                                                                                                              ?> </td>
+                                </tr>
+                                <tr <?php if (($piece->paiement_id == 7) || ($piece->paiement_id == 6) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trechances<?php echo $i  ?>">
+                                  <td>Montant</td>
+                                  <td><?php
+                                      echo $this->Form->control('montant', array('value' => $piece->montant, 'readonly' => $readonly, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control sum-input differanceedit', 'label' => '', 'index' => $i, 'champ' => 'montant', 'id' => 'montant' . $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][montant]'));
+                                      ?>
+                                  </td>
+                                </tr>
+                                <tr <?php if ($piece->paiement_id != 5) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trmontantnet<?php echo $i  ?>">
+                                  <td name="data[piece][<?php echo $i  ?>][trmontantnet]" id="trmontantneta<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantneta" table="piece" class="modecheque">Montant Net</td>
+                                  <td name="data[piece][<?php echo $i  ?>][trmontantnet]" id="trmontantnetb<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantnetb" table="piece" class="modecheque"><?php
+                                                                                                                                                                                                                echo $this->Form->control('montant_net', array('value' => $piece->montant_net, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control', 'label' => '', 'type' => 'text', 'index' => $i, 'id' => 'montantnet' . $i, 'champ' => 'montantnet', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][montantnet]'));
                                                                                                                                                                                                                 ?> </td>
-                              </tr>
-                              <tr <?php if ($piece->paiement_id != 5) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trtaux<?php echo $i  ?>">
-                                <td name="data[piece][<?php echo $i  ?>][trtaux]" id="trtauxa<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trtauxa" table="piece" class="modecheque">Taux</td>
-                                <td name="data[piece][<?php echo $i  ?>][trtaux]" id="trtauxb<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trtauxb" table="piece" class="modecheque"><?php
-                                                                                                                                                                                            echo $this->Form->control('valeur_id', array('value' => $piece->to_id, 'class' => 'form-control select montantbrut ', 'label' => '', 'index' => $i, 'champ' => 'taux', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][taux]', 'id' => 'taux' . $i, 'empty' => 'Veuillez choisir'));
-                                                                                                                                                                                            ?> </td>
-                              </tr>
-                              <tr <?php if (($piece->paiement_id == 7) || ($piece->paiement_id == 6) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trechances<?php echo $i  ?>">
-                                <td>Montant</td>
-                                <td><?php
-                                    echo $this->Form->control('montant', array('value' => $piece->montant, 'readonly' => $readonly, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control differance', 'label' => '', 'index' => $i, 'champ' => 'montant', 'id' => 'montant' . $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][montant]'));
-                                    ?>
-                                </td>
-                              </tr>
-                              <tr <?php if ($piece->paiement_id != 5) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trmontantnet<?php echo $i  ?>">
-                                <td name="data[piece][<?php echo $i  ?>][trmontantnet]" id="trmontantneta<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantneta" table="piece" class="modecheque">Montant Net</td>
-                                <td name="data[piece][<?php echo $i  ?>][trmontantnet]" id="trmontantnetb<?php echo $i  ?>" index="<?php echo $i  ?>" champ="trmontantnetb" table="piece" class="modecheque"><?php
-                                                                                                                                                                                                              echo $this->Form->control('montant_net', array('value' => $piece->montant_net, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control', 'label' => '', 'type' => 'text', 'index' => $i, 'id' => 'montantnet' . $i, 'champ' => 'montantnet', 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][montantnet]'));
-                                                                                                                                                                                                              ?> </td>
-                              </tr>
-                              <tr <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 5) || ($piece->paiement_id == 55) || ($piece->paiement_id == 7) || ($piece->paiement_id == 8) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trechances<?php echo $i  ?>">
-                                <td name="data[piece][<?php echo $i ?>][trechance]" id="trechancea<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque"><strong>Echéance</strong></td>
-                                <td name="data[piece][<?php echo $i ?>][trechance]" id="trechanceb<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque"><?php
-                                                                                                                                                                              echo $this->Form->control('echance', array('value' => $piece->echance, 'class' => 'form-control datetimepicker', 'readonly', 'label' => '', 'type' => 'date', 'id' => 'echance' . $i, 'index' => $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][echance]'));
-                                                                                                                                                                              ?> </td>
-                              </tr>
-                              <tr <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 5) || ($piece->paiement_id == 55) || ($piece->paiement_id == 7) || ($piece->paiement_id == 8) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trechances<?php echo $i  ?>">
-                                <td name="data[piece][<?php echo $i ?>][trechance2]" id="trechancea2<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque" style="color:#dc143c;">Echéance 2</td>
-                                <td name="data[piece][<?php echo $i ?>][trechance2]" id="trechanceb2<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque"><?php
-                                                                                                                                                                                echo $this->Form->control('echance2', array('value' => $piece->echance2, 'style' => 'color:#dc143c;', 'readonly' => $readonly, 'class' => 'form-control datetimepicker', 'label' => '', 'type' => 'date', 'id' => 'echance2' . $i, 'index' => $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][echance2]'));
+                                </tr>
+                                <tr <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 5) || ($piece->paiement_id == 55) || ($piece->paiement_id == 7) || ($piece->paiement_id == 8) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trechances<?php echo $i  ?>">
+                                  <td name="data[piece][<?php echo $i ?>][trechance]" id="trechancea<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque"><strong>Echéance</strong></td>
+                                  <td name="data[piece][<?php echo $i ?>][trechance]" id="trechanceb<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque"><?php
+                                                                                                                                                                                echo $this->Form->control('echance', array('value' => $piece->echance, 'class' => 'form-control datetimepicker', 'readonly', 'label' => '', 'type' => 'date', 'id' => 'echance' . $i, 'index' => $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][echance]'));
                                                                                                                                                                                 ?> </td>
-                              </tr>
-                              <tr <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 5)  || ($piece->paiement_id == 7) || ($piece->paiement_id == 8) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trbanque<?php echo $i  ?>">
-                                <td name="data[piece][<?php echo $i ?>][trbanque]" id="trbanque<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque">Banque </td>
-                                <td name="data[piece][<?php echo $i ?>][trbanque]" id="trbanque<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque"><?php
-                                                                                                                                                                            echo  $this->Form->control('banque_id', array(
-                                                                                                                                                                              'class' => 'form-control getcomptes',
-                                                                                                                                                                              'empty' => 'veuillez choisir',
-                                                                                                                                                                              'value' => $piece->banque_id,
-                                                                                                                                                                              'options' => $banques,
-                                                                                                                                                                              // 'style' => $style,
-                                                                                                                                                                              'readonly' => $readonly,
-                                                                                                                                                                              'label' => '',
-                                                                                                                                                                              'index' => $i,
-                                                                                                                                                                              'id' => 'banque_id' . $i,
-                                                                                                                                                                              'table' => 'pieceregelemnt',
-                                                                                                                                                                              'name' => 'data[pieceregelemnt][' . $i . '][banque_id]'
-                                                                                                                                                                            ));
-                                                                                                                                                                            ?></td>
-                              </tr>
-                              <tr <?php if ($piece->paiement_id != 2) { ?> style="display:none" <?php } ?> id="trcompte<?php echo $i  ?>">
-                                <td name="data[piece][<?php echo $i ?>][trcompte]" id="trcompte<?php echo $i ?>" index="<?php echo $i ?>" champ="trcomptea" table="piece" class="modecheque">Compte</td>
-                                <td name="data[piece][<?php echo $i ?>][trcompte]" id="trcompte<?php echo $i ?>" index="<?php echo $i ?>" champ="trcompteb" table="piece" class="modecheque">
+                                </tr>
+                                <tr <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 5) || ($piece->paiement_id == 55) || ($piece->paiement_id == 7) || ($piece->paiement_id == 8) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trechances<?php echo $i  ?>">
+                                  <td name="data[piece][<?php echo $i ?>][trechance2]" id="trechancea2<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque" style="color:#dc143c;">Echéance 2</td>
+                                  <td name="data[piece][<?php echo $i ?>][trechance2]" id="trechanceb2<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque"><?php
+                                                                                                                                                                                  echo $this->Form->control('echance2', array('value' => $piece->echance2, 'style' => 'color:#dc143c;', 'readonly' => $readonly, 'class' => 'form-control datetimepicker', 'label' => '', 'type' => 'date', 'id' => 'echance2' . $i, 'index' => $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][echance2]'));
+                                                                                                                                                                                  ?> </td>
+                                </tr>
+                                <tr <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 5)  || ($piece->paiement_id == 7) || ($piece->paiement_id == 8) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trbanque<?php echo $i  ?>">
+                                  <td name="data[piece][<?php echo $i ?>][trbanque]" id="trbanque<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque">Banque </td>
+                                  <td name="data[piece][<?php echo $i ?>][trbanque]" id="trbanque<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque"><?php
+                                                                                                                                                                              echo  $this->Form->control('banque_id', array(
+                                                                                                                                                                                'class' => 'form-control getcomptes',
+                                                                                                                                                                                'empty' => 'veuillez choisir',
+                                                                                                                                                                                'value' => $piece->banque_id,
+                                                                                                                                                                                'options' => $banques,
+                                                                                                                                                                                // 'style' => $style,
+                                                                                                                                                                                'readonly' => $readonly,
+                                                                                                                                                                                'label' => '',
+                                                                                                                                                                                'index' => $i,
+                                                                                                                                                                                'id' => 'banque_id' . $i,
+                                                                                                                                                                                'table' => 'pieceregelemnt',
+                                                                                                                                                                                'name' => 'data[pieceregelemnt][' . $i . '][banque_id]'
+                                                                                                                                                                              ));
+                                                                                                                                                                              ?></td>
+                                </tr>
+                                <tr <?php if ($piece->paiement_id != 2) { ?> style="display:none" <?php } ?> id="trcompte<?php echo $i  ?>">
+                                  <td name="data[piece][<?php echo $i ?>][trcompte]" id="trcompte<?php echo $i ?>" index="<?php echo $i ?>" champ="trcomptea" table="piece" class="modecheque">Compte</td>
+                                  <td name="data[piece][<?php echo $i ?>][trcompte]" id="trcompte<?php echo $i ?>" index="<?php echo $i ?>" champ="trcompteb" table="piece" class="modecheque">
 
 
-                                  <div name="data[<?php echo $i ?>][divsous]" id="divsous<?php echo $i ?>" index="<?php echo $i ?>"><?php
-                                                                                                                                    echo $this->Form->control('comptee', array(
+                                    <div name="data[<?php echo $i ?>][divsous]" id="divsous<?php echo $i ?>" index="<?php echo $i ?>"><?php
+                                                                                                                                      echo $this->Form->control('comptee', array(
 
-                                                                                                                                      'value' => $piece->compte,
-                                                                                                                                      // 'options' => $comptes,
-                                                                                                                                      'div' => 'form-group',
-                                                                                                                                      'between' => '<div class="col-sm-10">',
-                                                                                                                                      'after' => '</div>',
-                                                                                                                                      'class' => 'form-control    ',
-                                                                                                                                      'empty' => 'veuillez choisir',
-                                                                                                                                      'label' => '',
-                                                                                                                                      'readonly' => $readonly,
-                                                                                                                                      'index' => $i,
-                                                                                                                                      'champ' => 'compte',
-                                                                                                                                      'table' => 'pieceregelemnt',
-                                                                                                                                      'name' => 'data[pieceregelemnt][' . $i . '][compte]'
-                                                                                                                                    ));
-                                                                                                                                    ?></div>
-                                </td>
-                              </tr>
-                              <tr <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 5) || ($piece->paiement_id == 55) || ($piece->paiement_id == 7) || ($piece->paiement_id == 8) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trechances<?php echo $i  ?>">
-                                <td name="data[piece][<?php echo $i ?>][trendosse]" id="trendossea<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque">Endossé</td>
-                                <td name="data[piece][<?php echo $i ?>][trendosse]" id="trendosseb<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque"><?php
-                                                                                                                                                                              echo $this->Form->control('endosse', array('value' => $piece->endosse, 'readonly' => $readonly, 'class' => 'form-control ', 'label' => '', 'type' => 'text', 'id' => 'endosse' . $i, 'index' => $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][endosse]'));
-                                                                                                                                                                              ?> </td>
-                              </tr>
-                              <tr <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 5) || ($piece->paiement_id == 55) || ($piece->paiement_id == 7) || ($piece->paiement_id == 8) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="numpiece<?php echo $i  ?>">
-                                <td name="data[piece][<?php echo $i ?>][trnuma]" id="trnuma<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque">Numero piéce</td>
-                                <td name="data[piece][<?php echo $i ?>][trnumb]" id="trnumb<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque"><?php
-                                                                                                                                                                        echo $this->Form->control('num_piece', array('value' => $piece->num, 'readonly' => $readonly, 'class' => 'form-control ', 'label' => '', 'type' => 'number', 'id' => 'num' . $i, 'index' => $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][num_piece]'));
-                                                                                                                                                                        ?> </td>
-                              </tr>
-
-
-                            </table>
+                                                                                                                                        'value' => $piece->compte,
+                                                                                                                                        // 'options' => $comptes,
+                                                                                                                                        'div' => 'form-group',
+                                                                                                                                        'between' => '<div class="col-sm-10">',
+                                                                                                                                        'after' => '</div>',
+                                                                                                                                        'class' => 'form-control    ',
+                                                                                                                                        'empty' => 'veuillez choisir',
+                                                                                                                                        'label' => '',
+                                                                                                                                        'readonly' => $readonly,
+                                                                                                                                        'index' => $i,
+                                                                                                                                        'champ' => 'compte',
+                                                                                                                                        'table' => 'pieceregelemnt',
+                                                                                                                                        'name' => 'data[pieceregelemnt][' . $i . '][compte]'
+                                                                                                                                      ));
+                                                                                                                                      ?></div>
+                                  </td>
+                                </tr>
+                                <tr <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 5) || ($piece->paiement_id == 55) || ($piece->paiement_id == 7) || ($piece->paiement_id == 8) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="trechances<?php echo $i  ?>">
+                                  <td name="data[piece][<?php echo $i ?>][trendosse]" id="trendossea<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque">Endossé</td>
+                                  <td name="data[piece][<?php echo $i ?>][trendosse]" id="trendosseb<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque"><?php
+                                                                                                                                                                                echo $this->Form->control('endosse', array('value' => $piece->endosse, 'readonly' => $readonly, 'class' => 'form-control ', 'label' => '', 'type' => 'text', 'id' => 'endosse' . $i, 'index' => $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][endosse]'));
+                                                                                                                                                                                ?> </td>
+                                </tr>
+                                <tr <?php if (($piece->paiement_id == 1) || ($piece->paiement_id == 5) || ($piece->paiement_id == 55) || ($piece->paiement_id == 7) || ($piece->paiement_id == 8) || ($piece->paiement_id == 9)) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="numpiece<?php echo $i  ?>">
+                                  <td name="data[piece][<?php echo $i ?>][trnuma]" id="trnuma<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque">Numero piéce</td>
+                                  <td name="data[piece][<?php echo $i ?>][trnumb]" id="trnumb<?php echo $i ?>" index="<?php echo $i ?>" table="piece" class="modecheque"><?php
+                                                                                                                                                                          echo $this->Form->control('num_piece', array('value' => $piece->num, 'readonly' => $readonly, 'class' => 'form-control ', 'label' => '', 'type' => 'number', 'id' => 'num' . $i, 'index' => $i, 'table' => 'pieceregelemnt', 'name' => 'data[pieceregelemnt][' . $i . '][num_piece]'));
+                                                                                                                                                                          ?> </td>
+                                </tr>
 
 
-
-
-
-
-
-                          </td>
-
-                          <td <?php if ($piece->paiement_id == 9) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="supreg<?php echo $i  ?>">
-
-
-                            <i index="<?php echo $i ?>" class="fa fa-times supreg" style="color: #c9302c;font-size: 22px;"></i>
-                          </td>
+                              </table>
 
 
 
-                        </tr>
-                      <?php } }?>
+
+
+
+
+                            </td>
+
+                            <td <?php if ($piece->paiement_id == 9) { ?> style="display:none" <?php } else { ?>style="display:" <?php } ?> id="supreg<?php echo $i  ?>">
+
+
+                              <i index="<?php echo $i ?>" class="fa fa-times supreg" style="color: #c9302c;font-size: 22px;"></i>
+                            </td>
+
+
+
+                          </tr>
+                      <?php }
+                      } ?>
                       <input type="" value="<?php echo $i ?>" id="index" hidden>
                       </tbody>
                       </table><br>
@@ -852,7 +853,7 @@ use Cake\Datasource\ConnectionManager;
         <!-- /.box  testpersonnel-->
       </div>
     </div>
-    <button type="submit" class="pull-right btn btn-success btn-sm " id="" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+    <button type="submit" class="pull-right btn btn-success btn-sm testmnt" id="" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
     <?php echo $this->Form->end(); ?>
   </div>
   <!-- /.row -->
@@ -863,7 +864,49 @@ use Cake\Datasource\ConnectionManager;
 
 <script>
   $(function() {
+    $('.sum-input').on('keyup change', function() {
+      let indexString = $('#index').val(); // Assuming this is a comma-separated string of indexes.
+      let ttpayer = Number($('#ttpayer').val()) || 0; // Convert to number and handle empty value.
+      let tt = 0; // Initialize total amount.                     
 
+      if (indexString) {
+        let indexes = indexString.split(','); // Split into an array if it's comma-separated.
+        indexes.forEach(function(i) {
+          let th = Number($('#montant' + i).val()) || 0; // Retrieve the value or default to 0.
+          tt += th; // Accumulate total.
+        });
+      }
+
+      tt = tt.toFixed(3);
+
+      if (ttpayer < tt) {
+        alert('Ne dépassez pas le total des factures !');
+      }
+    });
+
+    $('.testmnt').on('mouseover', function() {
+      let ttpayer = Number($('#ttpayer').val()) || 0; // Get total from #ttpayer
+      let indexString = $('#index').val(); // Get index list (comma-separated string)
+      let tt = 0; // Initialize total amount
+
+      if (indexString) {
+        let indexes = indexString.split(','); // Split index string into an array
+        indexes.forEach(function(i) {
+          let th = Number($('#montant' + i).val()) || 0; // Get montant value or default to 0
+          tt += th; // Accumulate total
+        });
+      }
+
+      tt = tt.toFixed(3); // Format to 3 decimal places     
+
+      if (tt > ttpayer) {
+        alert('Le montant total dépasse le total de la facture !');
+      } else if (tt < ttpayer) {
+        alert('Le montant total est inférieur au total de la facture.');
+      } else {
+        //alert('Le montant total est égal au total de la facture.');
+      }
+    });
 
     $('#diff').on('change', function() {
       // alert('aaaaaa')
@@ -977,6 +1020,8 @@ use Cake\Datasource\ConnectionManager;
         }
       }
       $('#Montant').val(tt);
+      $('#mtotal').val(tt);
+
     });
 
 
@@ -1268,38 +1313,8 @@ use Cake\Datasource\ConnectionManager;
         $('#trcarnetnuma' + index).hide();
         $('#trcarnetnumb' + index).hide();
       }
-      // if (Number(val) == 9) {
-      //   facture()
-      //   $('#trcomptea' + index).hide();
-      //   $('#trcompteb' + index).hide();
-      //   $('#trmontantbruta' + index).hide();
-      //   $('#trmontantbrutb' + index).hide();
-      //   $('#trmontantneta' + index).hide();
-      //   $('#trmontantnetb' + index).hide();
-      //   $('#trtauxa' + index).hide();
-      //   $('#trtauxb' + index).hide();
-      //   $('#trechancea' + index).hide();
-      //   $('#trechanceb' + index).hide();
-      //   $('#trbanquea' + index).hide();
-      //   $('#trbanqueb' + index).hide();
-      //   $('#trendossea' + index).hide();
-      //   $('#trendosseb' + index).hide();  
-      //   $('#trfaca' + index).show();
-      //   $('#trfacb' + index).show();
-      //   $('#trechancea2' + index).hide();
-      //   $('#trechanceb2' + index).hide();
 
-      //   $('#trnbrmoins' + index).show();
-      //   $('#trnuma' + index).hide();
-      //   $('#trnumb' + index).hide()
-      //   $('#banque' + index).hide()
-
-      //   $('#banque_idb' + index).hide(); // modifiction amin pr pag mpreglement
-      //   $('#banque_ida' + index).hide(); // modifiction amin
-      //   $('#trcarnetnuma' + index).hide();
-      //   $('#trcarnetnumb' + index).hide();
-      // }
-
+      differanceedit()
 
 
     });
@@ -1335,75 +1350,75 @@ use Cake\Datasource\ConnectionManager;
       })
     }
 
-    $('.montantbrut').on('keyup change', function() {
-      index = $(this).attr('index');
+    // $('.montantbrut').on('keyup change', function() {
+    //   index = $(this).attr('index');
 
-      ttpayer = $('#ttpayer').val();
-      $('#montantbrut' + index).val(ttpayer);
+    //   ttpayer = $('#ttpayer').val();
+    //   $('#montantbrut' + index).val(ttpayer);
 
-      // alert(index);
-      montantbrut = $('#montantbrut' + index).val() || 0;
+    //   // alert(index);
+    //   montantbrut = $('#montantbrut' + index).val() || 0;
 
-      t = $('#taux' + index).val() || 0;
-      //   alert(t);
-      // if (t == '1') {
-      //     taux = 1.5
-      // };
-      // if (t == '4') {
-      //     taux = 5
-      // };
-      // if (t == '3') {
-      //     taux = 15
-      // };
-      // if (t == '5') {
-      //     taux = 10
-      // };
-      // if (t == '6') {
-      //     taux = 3
-      // };
-      // if (t == '7') {
-      //     taux = 7
-      // };
-      // if (t == '8') {
-      //     taux = 1
-      // };
-      //alert(taux);
-      retenue = (montantbrut * (t / 100)).toFixed(3);
-      $('#montant' + index).val(retenue);
-      // $('#Montant').val(retenue);
-      net = (montantbrut - retenue).toFixed(3);
-      $('#montantnet' + index).val(net);
-      $('#netapayer').val(net);
-      v = $('#index').val(); //alert(v)//console.log(v);
-      tt = 0;
-      th = 0;
-      i = 0;
-      //for(i=0;i<=v;i++){
-      while ($('#montant' + i).val() != undefined) {
-        th = $('#montant' + i).val() || 0; //console.log(th);
-        tt = Number(tt) + Number(th);
-        i++;
-      }
-      // ttt=Number(tt)+Number(retenue);
-      //    console.log(tt);
-      $('#Montant').val((tt).toFixed(3));
-      //alert('hhhh');
-      total = $('#ttpayer').val();
-      max = $('#index').val();
-      /*  sup = $('#sup'+index).val(); */
-      variable1 = 0;
+    //   t = $('#taux' + index).val() || 0;
+    //   //   alert(t);
+    //   // if (t == '1') {
+    //   //     taux = 1.5
+    //   // };
+    //   // if (t == '4') {
+    //   //     taux = 5
+    //   // };
+    //   // if (t == '3') {
+    //   //     taux = 15
+    //   // };
+    //   // if (t == '5') {
+    //   //     taux = 10
+    //   // };
+    //   // if (t == '6') {
+    //   //     taux = 3
+    //   // };
+    //   // if (t == '7') {
+    //   //     taux = 7
+    //   // };
+    //   // if (t == '8') {
+    //   //     taux = 1
+    //   // };
+    //   //alert(taux);
+    //   retenue = (montantbrut * (t / 100)).toFixed(3);
+    //   $('#montant' + index).val(retenue);
+    //   // $('#Montant').val(retenue);
+    //   net = (montantbrut - retenue).toFixed(3);
+    //   $('#montantnet' + index).val(net);
+    //   $('#netapayer').val(net);
+    //   v = $('#index').val(); //alert(v)//console.log(v);
+    //   tt = 0;
+    //   th = 0;
+    //   i = 0;
+    //   //for(i=0;i<=v;i++){
+    //   while ($('#montant' + i).val() != undefined) {
+    //     th = $('#montant' + i).val() || 0; //console.log(th);
+    //     tt = Number(tt) + Number(th);
+    //     i++;
+    //   }
+    //   // ttt=Number(tt)+Number(retenue);
+    //   //    console.log(tt);
+    //   $('#Montant').val((tt).toFixed(3));
+    //   //alert('hhhh');
+    //   total = $('#ttpayer').val();
+    //   max = $('#index').val();
+    //   /*  sup = $('#sup'+index).val(); */
+    //   variable1 = 0;
 
 
-      for (i = 0; i <= max; i++) {
-        if ($('#sup' + i).val() != 1)
-          variable1 += Number($('#montant' + i).val());
+    //   for (i = 0; i <= max; i++) {
+    //     if ($('#sup' + i).val() != 1)
+    //       variable1 += Number($('#montant' + i).val());
 
-      }
+    //   }
 
-      $('#mtotal').val(variable1.toFixed(3));
-      $('#difference').val((Number(total) - Number(variable1)).toFixed(3));
+    //   $('#mtotal').val(variable1.toFixed(3));
+    //   $('#difference').val((Number(total) - Number(variable1)).toFixed(3));
 
-    });
+    // });
     // $('.montantbrut').on('keyup change', function() {
     //   // alert('hhh')
     //   index = $('#index').val();

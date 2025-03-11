@@ -50,7 +50,7 @@
                             echo $this->Form->control('devise_id', ['readonly' => 'readonly', 'class' => 'form-control ', 'options' => $devises]); ?>
                         </div>
                         <div class="col-xs-3"><?php echo $this->Form->control('tel', ['readonly' => 'readonly', 'label' => 'Télèphone 1']); ?></div>
-                        <div class="col-xs-3"><?php echo $this->Form->control('tel', ['readonly' => 'readonly', 'label' => 'Télèphone 2']); ?></div>
+                        <div class="col-xs-3"><?php echo $this->Form->control('tel1', ['readonly' => 'readonly', 'label' => 'Télèphone 2']); ?></div>
 
 
                         <div class="col-xs-6">
@@ -267,7 +267,7 @@
                                                                 <!-- <?= h($fournisseurbanques->document) ?> -->
                                                                 <?php echo $this->Html->link(
                                                                     $fournisseurbanques->document, // Le texte ou le nom du lien
-                                                                    '/webroot/img/' . $fournisseurbanques->document, // L'URL du lien
+                                                                    '/img/' . $fournisseurbanques->document, // L'URL du lien
                                                                     ['target' => '_blank', 'style' => 'max-width:200px;height:200px;'] // Options supplémentaires
                                                                 ); ?>
 

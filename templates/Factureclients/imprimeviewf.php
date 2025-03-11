@@ -134,7 +134,7 @@ function int2str($a)
 
   
     .print-container {
-        background-image: url('https://sttp.mtd-erp.com/ERP/img/imgdalanda.jpg') !important;
+        background-image: url('/img/imgdalanda.jpg') !important;
         background-size: cover;
         background-position: center;
         height: 1050px;
@@ -462,7 +462,7 @@ $totalPages = ceil($totalLines / $maxLinesPerPage);
                             $query = $lignestable->find();
                             $query->select([
                                 'tva' => 'Lignefactureclients.tva',
-                                'base' => $query->func()->sum('(qte*ml*punht - (qte*ml*punht)* (remise / 100) + (qte*ml*punht - (qte*ml*punht)* (remise / 100)) * ifnull(fodec,0) / 100)'),
+                                'base' => $query->func()->sum('(qte*ml*punht)'),
                                 'total' => $query->func()->sum('((qte*ml*punht - (qte*ml*punht)* (remise / 100) + (qte*ml*punht - (qte*ml*punht)* (remise / 100)) * ifnull(fodec,0) / 100)) * tva / 100')
                             ])
                                 ->where(['Lignefactureclients.factureclient_id' => $factureclient->id])
@@ -480,7 +480,7 @@ $totalPages = ceil($totalLines / $maxLinesPerPage);
                                 ->group('Lignefactureclients.fodec');
 
                             // Execute the query
-                            $fodresults = $fodquery->toArray();
+                            // $fodresults = $fodquery->toArray();
                             // print_r($results);
                             foreach ($results as $rrr) {
                                 if ($rrr->tva != 0) {
@@ -495,7 +495,7 @@ $totalPages = ceil($totalLines / $maxLinesPerPage);
                                                 <?= $this->Number->format($rrr->tva) ?>
                                             </b>
                                             <b style="margin-left: 18% !important; font-weight: normal; font-size:15px; display: block; margin-top: -0.2px;">
-                                                <?php echo number_format(abs($rrr->total), 3, ',', ' '); ?>
+                                                <?php echo number_format(abs($rrr->base), 3, ',', ' '); ?>
                                             </b>
                                         </td>
 

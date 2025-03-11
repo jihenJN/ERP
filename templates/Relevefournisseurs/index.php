@@ -358,6 +358,14 @@ var v1=arguments,v2=v1[2].split(","),v3=(v1.length>3)?v1[3]:false,v4=(v1.length>
 
 
 <script type="text/javascript">
+        $(document).ready(function() {
+    $(".testhistoriquearticle").on("mouseover", function() {
+        var fournisseur = $("#fournisseur").val(); // Assurez-vous que l'élément fournisseur a un ID 'fournisseur'
+        if (!fournisseur) {
+            alert("Veuillez choisir un fournisseur.");
+        }
+    });
+});
     //    $(document).on("scroll",function(){
     //        if($(document).scrollTop()>300){
     //            $(".tdreleveclient").addClass("displays");
@@ -375,7 +383,7 @@ var v1=arguments,v2=v1[2].split(","),v3=(v1.length>3)?v1[3]:false,v4=(v1.length>
         });
 
 
-    })
+    }) 
 </script>
 
 <?php echo $this->Html->css('AdminLTE./bower_components/select2/dist/css/select2.min', ['block' => 'css']); ?>

@@ -313,6 +313,9 @@ class Article extends Entity {
         'ml' => true,
         'marque_id' => true,
         'marque' => true,
+        'article_id' => true,
+        'typearticle_id' => true,
+
         
         
     ];

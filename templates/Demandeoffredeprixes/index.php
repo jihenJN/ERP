@@ -54,14 +54,14 @@ foreach ($lien as $k => $liens) {
 <section class="content">
     <div class="box">
 
-    <div class="box-header">
-    </div>
+        <div class="box-header">
+        </div>
         <div class="box-body">
             <div class="row">
 
 
                 <?php
-                echo $this->Form->create($recherches, ['id'=>'submitForm','type' => 'get', 'onkeypress' => "return event.keyCode!=13"]);
+                echo $this->Form->create($recherches, ['id' => 'submitForm', 'type' => 'get', 'onkeypress' => "return event.keyCode!=13"]);
                 ?>
 
                 <div class="col-xs-3">
@@ -84,13 +84,13 @@ foreach ($lien as $k => $liens) {
 
 
                 <div class="col-xs-1">
-                    <button type="submit" style="margin-top: 25px;"  id="searchButton"  class="btn btn-default custom-width-button">
+                    <button type="submit" style="margin-top: 25px;" id="searchButton" class="btn btn-default custom-width-button">
                         <i class="fa fa-search"></i>
                     </button>
 
                 </div>
                 <div class="col-xs-1" style="text-align: center; margin-top: 25px;">
-                    <?php echo $this->Html->link(__(''), ['action' => 'index/'.$typeof], ['class' => 'btn btn-default btn-large fa fa-remove', 'style' => 'width: 37px; height: 35px; display: flex; justify-content: center; align-items: center;']) ?>
+                    <?php echo $this->Html->link(__(''), ['action' => 'index/' . $typeof], ['class' => 'btn btn-default btn-large fa fa-remove', 'style' => 'width: 37px; height: 35px; display: flex; justify-content: center; align-items: center;']) ?>
                 </div>
 
                 <!-- <div class="col-lg-9 col-lg-offset-3" align="center">
@@ -105,7 +105,7 @@ foreach ($lien as $k => $liens) {
         </div>
         <br>
     </div>
-<br>
+    <br>
     <div class="box">
 
         <div class="box-body">
@@ -122,7 +122,10 @@ foreach ($lien as $k => $liens) {
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($recherches as $demandeoffredeprix) : ?>
+                    <?php foreach ($recherches as $demandeoffredeprix) :
+                        $id_demande = $demandeoffredeprix['id'];
+                        $connection = ConnectionManager::get('default');
+                        $lignedemandeoffredeprix = $connection->execute("SELECT * FROM lignedemandeoffredeprixes WHERE lignedemandeoffredeprixes.demandeoffredeprix_id = $id_demande GROUP BY lignedemandeoffredeprixes.nameF;")->fetchAll('assoc'); ?>
                         <tr>
                             <!-- <td><?= h($demandeoffredeprix->date) ?></td> -->
                             <td><?=
@@ -136,7 +139,7 @@ foreach ($lien as $k => $liens) {
                             </td>
 
                             <td><?= h($demandeoffredeprix->numero) ?></td>
-                           
+
 
 
 
@@ -164,11 +167,26 @@ foreach ($lien as $k => $liens) {
                                 //     echo $this->Html->link("<button class='btn btn-xs btn-primary'><i class='fa fa-print'></i></button>", array('action' => 'imprimeview', $typeof, $demandeoffredeprix->id), array('escape' => false));
                                 // }
                                 ?>
-                                <?php if ($demandeoffredeprix['consultation'] != 1 && $edit == 1) {
-                                    echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-print'></i></button>", array('action' => 'imprimerr', $demandeoffredeprix->id), array('escape' => false));
-                                }
+                                <?php foreach ($lignedemandeoffredeprix as $ligne) :
+                                    $four_id = $ligne['fournisseur_id'];
+                                    $four_name = $ligne['nameF'];
+                                    // debug($ligne['fournisseur_id']);
+                                ?>
+
+                                    <a onclick='openWindow(1000, 1000, `/ERP/demandeoffredeprixes/imprimeview/<?php echo @$typeof . "/" . @$demandeoffredeprix->id . "/"; ?><?php if (!empty($four_name)) : ?><?php echo $four_name; ?><?php endif; ?>`)' class="btn btn-xs btn-primary">
+                                        <i class='fa fa-print'></i>
+                                    </a>
+                                    <!-- <a onclick="openWindow(1000, 1000, 'http://localhost:8765/demandeoffredeprixes/imprimeview/<?php echo @$typeof, '/', @$demandeoffredeprix->id, '/'; ?><?php echo ($four_name !== null) ? $four_id . '/' . $four_name : $four_id; ?>')"
+                                            class="btn btn-xs btn-primary">
+                                            <i class='fa fa-print'></i>
+                                        </a> -->
+
+                                <?php endforeach; ?>
+                                <?php //if ($demandeoffredeprix['consultation'] != 1 && $edit == 1) {
+                                // echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-print'></i></button>", array('action' => 'imprimerr', $demandeoffredeprix->id), array('escape' => false));
+                                //}
                                 if ($demandeoffredeprix['consultation'] == 1) {
-                                    echo $this->Html->link("<button class='btn btn-xs btn-primary'><i class='fa fa-print'></i></button>", array('action' => 'imprimeview', $demandeoffredeprix->id), array('escape' => false));
+                                    //echo $this->Html->link("<button class='btn btn-xs btn-primary'><i class='fa fa-print'></i></button>", array('action' => 'imprimeview', $demandeoffredeprix->id), array('escape' => false));
                                 }
                                 ?>
                                 <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $typeof, $demandeoffredeprix->id), array('escape' => false)); ?>
@@ -252,9 +270,9 @@ foreach ($lien as $k => $liens) {
 <script>
     $(function() {
 
-  
 
-    $('#example2').DataTable({
+
+        $('#example2').DataTable({
             'paging': true,
             'lengthChange': true,
             'searching': true,
@@ -266,38 +284,38 @@ foreach ($lien as $k => $liens) {
     $('.select2').select2()
 </script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const numeroInput = document.querySelector('input[name="numero"]');
-    const datedebutInput = document.getElementById('datedebut');
-    const datefinInput = document.getElementById('datefin');
-   // const fournisseurIdSelect = document.getElementById('fournisseur_id');
-    const searchForm = document.getElementById('searchForm');
+    document.addEventListener('DOMContentLoaded', function() {
+        const numeroInput = document.querySelector('input[name="numero"]');
+        const datedebutInput = document.getElementById('datedebut');
+        const datefinInput = document.getElementById('datefin');
+        // const fournisseurIdSelect = document.getElementById('fournisseur_id');
+        const searchForm = document.getElementById('searchForm');
 
-    console.log('DOM entièrement chargé');
+        console.log('DOM entièrement chargé');
 
-    if (numeroInput && datedebutInput && datefinInput &&  searchForm) {
-        console.log('Éléments de formulaire trouvés');
+        if (numeroInput && datedebutInput && datefinInput && searchForm) {
+            console.log('Éléments de formulaire trouvés');
 
-        // Fonction pour soumettre le formulaire
-        function submitForm() {
-            searchForm.submit();
-        }
-
-        // Événement pour soumettre le formulaire lorsqu'Entrée est pressé
-        searchForm.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && (e.target !== numeroInput || e.target !== datedebutInput || e.target !== datefinInput)) {
-                e.preventDefault();
-                submitForm();
+            // Fonction pour soumettre le formulaire
+            function submitForm() {
+                searchForm.submit();
             }
-        });
 
-        // Événement pour soumettre le formulaire lorsqu'un changement est apporté au fournisseurIdSelect
-        // datedebutInput.addEventListener('change', function() {
-        //     submitForm();
-        // });
-    } else {
-        console.log('Éléments de formulaire non trouvés');
-    }
-});
+            // Événement pour soumettre le formulaire lorsqu'Entrée est pressé
+            searchForm.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && (e.target !== numeroInput || e.target !== datedebutInput || e.target !== datefinInput)) {
+                    e.preventDefault();
+                    submitForm();
+                }
+            });
+
+            // Événement pour soumettre le formulaire lorsqu'un changement est apporté au fournisseurIdSelect
+            // datedebutInput.addEventListener('change', function() {
+            //     submitForm();
+            // });
+        } else {
+            console.log('Éléments de formulaire non trouvés');
+        }
+    });
 </script>
 <?php $this->end(); ?>

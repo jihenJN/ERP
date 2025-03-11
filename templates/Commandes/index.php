@@ -294,31 +294,8 @@ if ($add == 1) {
                                 $id = $commande->id;
                                 // debug($id);
 
-                                $commandeTotQte = 0;
-                                $BLTotQte = 0;
-                                $connection = ConnectionManager::get('default');
                                 if (!empty($id)) {
-                                    $commandeTotQte = $connection->execute('SELECT SUM(qte) AS sommeqtecmd FROM lignecommandes WHERE commande_id = :commande_id', ['commande_id' => $id])
-                                        ->fetch('assoc');
-                                    //  debug($commandeTotQte);
-                                }
-                                if (!empty($id)) {
-                                    $bls = $connection->execute('SELECT * FROM bonlivraisons WHERE bonlivraisons.commande_id = ' . $id . ' AND bonlivraisons.typebl=1;')->fetchAll('assoc');
 
-                                    if (!empty($bls)) {
-                                        $blsIds = [];
-                                        foreach ($bls as $bl) {
-                                            $blsIds[] = $bl['id'];
-                                        }
-
-                                        $blsIdsString = implode(',', $blsIds);
-
-                                        $BLTotQte = $connection
-                                            ->execute('SELECT SUM(qte) AS sommeqtebl FROM lignebonlivraisons WHERE bonlivraison_id IN (' . $blsIdsString . ')')
-                                            ->fetch('assoc');
-
-                                        //debug($BLTotQte);
-                                    }
                                     if ($commande->user_id != null) {
                                         $uu = $connection->execute('SELECT * FROM personnels WHERE personnels.id = ' . $commande->user->personnel_id . ';')->fetchAll('assoc');
 
@@ -358,11 +335,11 @@ if ($add == 1) {
                                     <td width="8%">&nbsp;&nbsp;<?= h($commande->numero) ?> </td>
                                     <?php if ($commande->client_id == 12) { ?>
                                         <td width="7%">&nbsp;&nbsp;<?php echo $commande->client->Code ?></td>
-                                        <td  width="12%">&nbsp;&nbsp;<?php echo $commande->nomprenom ?></td>
+                                        <td width="12%">&nbsp;&nbsp;<?php echo $commande->nomprenom ?></td>
 
                                     <?php } else { ?>
                                         <td width="7%">&nbsp;&nbsp;<?php echo $commande->client->Code ?></td>
-                                        <td  width="12%">&nbsp;&nbsp;<?php echo $commande->client->Raison_Sociale ?></td>
+                                        <td width="12%">&nbsp;&nbsp;<?php echo $commande->client->Raison_Sociale ?></td>
                                     <?php } ?>
                                     <!-- <td width="9%"> &nbsp;&nbsp;<?php if ($bll[0]['numero']) {
                                                                             echo ($bll[0]['numero']);
@@ -374,19 +351,16 @@ if ($add == 1) {
 
                                     <!-- <td width="7%"><?= h($commande->etattransport->name) ?></td> -->
                                     <td width="15%" align="center"><?= h($commande->totalttc) ?></td>
-             
+
                                     <td width="14%" align="center">
+
                                         <?php
-                                        if (is_array($commandeTotQte) && is_array($BLTotQte)) {
-                                            if ($BLTotQte['sommeqtebl'] == $commandeTotQte['sommeqtecmd'] && $BLTotQte['sommeqtebl'] != 0) {
-                                                echo '<button class="btn btn-sm custom-button custom-button" style="background-color: #54A74D; color: white;">Livré</button>';
-                                            } elseif ($BLTotQte['sommeqtebl'] == 0) {
-                                                echo '<button class="btn btn-sm custom-button custom-button" style="background-color: #F55C43; color: white;">En cours</button>';
-                                            } elseif ($BLTotQte['sommeqtebl'] < $commandeTotQte['sommeqtecmd']) {
-                                                echo '<button class="btn btn-sm custom-button custom-button" style="background-color: #F99048; color: white;">Livré Partiel</button>';
-                                            }
-                                        } else {
+                                        if ($commande->livre == 2) {
+                                            echo '<button class="btn btn-sm custom-button custom-button" style="background-color: #54A74D; color: white;">Livré</button>';
+                                        } elseif ($commande->livre == 0) {
                                             echo '<button class="btn btn-sm custom-button custom-button" style="background-color: #F55C43; color: white;">En cours</button>';
+                                        } elseif ($commande->livre == 1) {
+                                            echo '<button class="btn btn-sm custom-button custom-button" style="background-color: #F99048; color: white;">Livré Partiel</button>';
                                         }
                                         ?>
                                     </td>
@@ -401,7 +375,7 @@ if ($add == 1) {
                                             <!-- <button style="background-color:black" class="btn btn-success btn-xs glyphicon glyphicon-edit opendialogcycle" index=<?php echo $i ?> id="<?php echo '' ?>"></button> -->
                                             <?php //}
                                             /// } else {
-                                            if ($BLTotQte['sommeqtebl'] != $commandeTotQte['sommeqtecmd']) {
+                                            if ($commande->livre != 2) {
                                             ?>
                                                 <input type="checkbox" id="check<?php echo $i; ?>" value="<?php echo $commande['id'] ?>" name="checkbox[]" ligne="<?php echo $i; ?>" class="blfbre" />
                                                 <input id="poids<?= $i ?>" ligne="<?php echo $i; ?>" class="poidhidden" type="hidden" value="<?= $commande->Poids ?>">
@@ -432,34 +406,38 @@ if ($add == 1) {
 
 
                                             <?php if ($edit == 1) { ?>
-                                                <?php if ($commande->bonlivraison_id == 0) { //if ($BLTotQte['sommeqtebl'] != $commandeTotQte['sommeqtecmd']) { 
+                                                <?php //if ($commande->bonlivraison_id == 0) {
+                                                    if ($commande->livre ==0) {
                                                 ?>
-                                                    <div style="margin-right:2px ;">
-                                                        <?php echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $commande->id), array('escape' => false)); ?>
-                                                    </div>
+                                                        <div style="margin-right:2px ;">
+                                                            <?php echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $commande->id), array('escape' => false)); ?>
+                                                        </div>
                                                 <?php }
-                                            }
+                                                }
+                                          //  }
                                             if ($imp == 1) { ?>
-                                                <!-- <div style="margin-right:2px ;">
+                                                <div style="margin-right:2px ;">
                                                     <a onclick="openWindow(1000, 1000, 'Commandes/imprimeview/<?php echo $commande->id; ?>')"><button class='btn btn-xs btn-primary'><i class='fa fa-print'></i> PDF</button></a>
-                                                </div> -->
+                                                </div>
                                                 <div style="margin-right:2px ;">
                                                     <a onclick="openWindow(1000, 1000, wr+'Commandes/imprimesans/<?php echo $commande->id; ?>')"><button class='btn btn-xs btn-success' style="background-color:purple;color:white;"><i class='fa fa-print'></i></button></a>
                                                 </div>
 
                                             <?php }
                                             if ($delete == 1) { ?>
-                                                <?php if ($commande->bonlivraison_id == 0) { //if ($BLTotQte['sommeqtebl'] != $commandeTotQte['sommeqtecmd']) { 
+                                                <?php //if ($commande->bonlivraison_id == 0) {
+                                                    if ($commande->livre == 0) {
                                                 ?>
-                                                    <div>
-                                                        <?php //echo $this->Form->postLink("<button class='deleteConfirm btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $commande->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $commande->id)); 
+                                                        <div>
+                                                            <?php //echo $this->Form->postLink("<button class='deleteConfirm btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $commande->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $commande->id)); 
 
-                                                        echo ("<button type=button index= '" . $i . "' id='delete" . $i . "' class='btn btn-xs btn-danger deleteverif'><i class='fa fa-trash-o'></i></button>");
+                                                            echo ("<button type=button index= '" . $i . "' id='delete" . $i . "' class='btn btn-xs btn-danger deleteverif'><i class='fa fa-trash-o'></i></button>");
 
-                                                        ?>
-                                                    </div>
+                                                            ?>
+                                                        </div>
                                             <?php }
-                                            } ?>
+                                                }
+                                            //} ?>
                                         </div>
 
                                     </td>

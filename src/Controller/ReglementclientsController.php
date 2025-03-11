@@ -6,6 +6,9 @@ namespace App\Controller;
 
 use Cake\Datasource\ConnectionManager;
 
+use Cake\Core\Configure;
+// Configure::write('debug', true);
+
 
 /**
  * Reglementclients Controller
@@ -34,10 +37,11 @@ class ReglementclientsController extends AppController
         $userId = $this->request->getAttribute('authentication')->getIdentity()['id'];
         $user_id = $userId;
 
-        $num = $this->fetchTable('Bordereauversementcheques')->find()
-            ->select(["num" => 'MAX(Bordereauversementcheques.numero)'])
-            ->where(['Bordereauversementcheques.type=1'])
-
+        $num =$this->fetchTable('Bordereauversementcheques')->find()
+            ->select([
+                'num' => $this->fetchTable('Bordereauversementcheques')->find()->func()->max('CAST(numero AS UNSIGNED)')
+            ])
+            ->where(['type=2'])
             ->first();
         $n = $num->num;
 
@@ -150,9 +154,11 @@ class ReglementclientsController extends AppController
         $userId = $this->request->getAttribute('authentication')->getIdentity()['id'];
         $user_id = $userId;
 
-        $num = $this->fetchTable('Bordereauversementcheques')->find()
-            ->select(["num" => 'MAX(Bordereauversementcheques.numero)'])
-            ->where(['Bordereauversementcheques.type=1'])
+        $num =$this->fetchTable('Bordereauversementcheques')->find()
+            ->select([
+                'num' => $this->fetchTable('Bordereauversementcheques')->find()->func()->max('CAST(numero AS UNSIGNED)')
+            ])
+            ->where(['type' => 1])
             ->first();
         $n = $num->num;
 
@@ -256,7 +262,7 @@ class ReglementclientsController extends AppController
     {
 
         $connection = ConnectionManager::get('default');
-        $dateauj = date('Y-m-d', strtotime(date("Y-m-d") . ' -20 day'));
+        $dateauj = date('Y-m-d', strtotime(date("Y-m-d") . ' +20 day'));
 
         $echeances = $connection->execute("SELECT * from piecereglementclients where  echance <='" . $dateauj . "' and piecereglementclients.etat_id !=9 and  paiement_id in (3)")->fetchAll('assoc');
         $this->set(compact('clients', 'reglementclients', 'type', 'factures', 'echeances'));
@@ -267,7 +273,7 @@ class ReglementclientsController extends AppController
         $connection = ConnectionManager::get('default');
         $dateauj = date('Y-m-d', strtotime(date("Y-m-d") . ' +1 day'));
 
-        $echeances = $connection->execute("SELECT * from piecereglementclients where  echance <='" . $dateauj . "' and piecereglementclients.etat_id !=9 and  paiement_id in (2,3)")->fetchAll('assoc');
+        $echeances = $connection->execute("SELECT * from piecereglementclients where  echance <='" . $dateauj . "' and piecereglementclients.etat_id !=9 and  paiement_id in (2)")->fetchAll('assoc');
         $this->set(compact('clients', 'reglementclients', 'type', 'factures', 'echeances'));
     }
     public function index($type = null)
@@ -295,14 +301,14 @@ class ReglementclientsController extends AppController
 
 
         if ($numero) {
-            $cond1 = "Reglementclients.numero   = '" . $numero . "' ";
+            $cond1 = "Reglementclients.numeroconca   like '%" . $numero . "%' ";
         }
 
         if ($datedebut) {
-            $cond2 = "date(Reglementclients.Date) <= '" . $datedebut . "'";
+            $cond2 = "date(Reglementclients.Date) >= '" . $datedebut . "'";
         }
         if ($datefin) {
-            $cond3 = "date(Reglementclients.Date) >= '" . $datefin . "'";
+            $cond3 = "date(Reglementclients.Date) <= '" . $datefin . "'";
         }
         if ($client_id) {
             $cond4 = "Reglementclients.client_id = '" . $client_id . "' ";
@@ -398,7 +404,7 @@ class ReglementclientsController extends AppController
 
         $this->set(compact('piecereglements', 'count', 'etats', 'agences', 'etat_id', 'comptes', 'modes', 'clients', 'echance', 'modeid', 'clientid', 'datereg', 'endosse', 'echance2'));
     }
-    
+
     public function impetatimpayepaye()
     {
         error_reporting(E_ERROR | E_PARSE);
@@ -418,7 +424,7 @@ class ReglementclientsController extends AppController
         $cond1 = 'Piecereglementclients.paiement_id = ' . $modeid;
 
         // Get query parameters
-        $clientid = $this->request->getQuery('client_id');
+        $clientid = $this->request->getQuery('clientid');
         if (!empty($clientid)) {
             $cond2 = 'Reglementclients.client_id = ' . $clientid;
         }
@@ -472,7 +478,7 @@ class ReglementclientsController extends AppController
 
         $this->set(compact('piecereglements', 'count', 'etats', 'agences', 'etat_id', 'comptes', 'modes', 'clients', 'echance', 'modeid', 'clientid', 'datereg', 'endosse', 'echance2'));
     }
-    
+
     public function etatimpaye29122024()
     {
         error_reporting(E_ERROR | E_PARSE);
@@ -595,7 +601,7 @@ class ReglementclientsController extends AppController
         }
 
 
-      /*  $subquery = $this->Piecereglementclients->Etatreglementclients->find()
+        /*  $subquery = $this->Piecereglementclients->Etatreglementclients->find()
             ->select(['piecereglementclient_id'])
             ->where(['Etatreglementclients.etat_id' => 3])
             ->andWhere([$cond4, $cond2, $cond6, $cond7])
@@ -603,11 +609,11 @@ class ReglementclientsController extends AppController
 
         $piecereglements = $this->Piecereglementclients->find('all')
             ->contain(['Paiements', 'Etats', 'Reglementclients' => ['Clients']])
-            ->where([/*'Piecereglementclients.id IN' => $subquery, */ 'Piecereglementclients.etat_id' => 3,$condet])
-            ->andWhere(['Paiements.id' => '2'])
+            ->where(['Piecereglementclients.etat_id =3 '])
+            // ->andWhere(['Paiements.id' => '2'])
             ->order(['Piecereglementclients.id' => 'ASC'])
             ->toArray();
-        // debug($piecereglements);
+        //  debug($piecereglements);
 
         $count = count($piecereglements);
 
@@ -669,7 +675,7 @@ class ReglementclientsController extends AppController
         }
 
 
-      /*  $subquery = $this->Piecereglementclients->Etatreglementclients->find()
+        /*  $subquery = $this->Piecereglementclients->Etatreglementclients->find()
             ->select(['piecereglementclient_id'])
             ->where(['Etatreglementclients.etat_id' => 3])
             ->andWhere([$cond4, $cond2, $cond6, $cond7])
@@ -677,7 +683,7 @@ class ReglementclientsController extends AppController
 
         $piecereglements = $this->Piecereglementclients->find('all')
             ->contain(['Paiements', 'Etats', 'Reglementclients' => ['Clients']])
-            ->where([/*'Piecereglementclients.id IN' => $subquery, */ 'Piecereglementclients.etat_id' => 3,$condet])
+            ->where([/*'Piecereglementclients.id IN' => $subquery, */'Piecereglementclients.etat_id' => 3, $condet])
             ->andWhere(['Paiements.id' => '2'])
             ->order(['Piecereglementclients.id' => 'ASC'])
             ->toArray();
@@ -1160,7 +1166,6 @@ class ReglementclientsController extends AppController
         if ($this->request->is('post')) {
             $etatpieceregelemnt = $this->fetchTable('Etatreglementclients')->patchEntity($etatpieceregelemntt, $this->request->getData());
 
-            //// mise ajour solde compte
             if ($etatpieceregelemnt['etat_id'] == 2) {
                 $compte = $this->Comptes->get($etatpieceregelemnt['compte_id'], [
                     'contain' => []
@@ -1171,15 +1176,11 @@ class ReglementclientsController extends AppController
                 $this->fetchTable('Comptes')->save($compte);
             }
 
-            //// mise ajour etat piece
             $piece = $this->Piecereglementclients->get($etatpieceregelemnt['piecereglementclient_id'], [
                 'contain' => []
             ]);
 
             $piece->etat_id = $this->request->getData('etat_id');
-            // $piece->compte_id = $this->request->getData('compte_id');
-
-            // debug($piece->toArray());die;
 
             if ($this->fetchTable('Piecereglementclients')->save($piece)) {
                 if ($this->fetchTable('Etatreglementclients')->save($etatpieceregelemnt)) {
@@ -1210,11 +1211,12 @@ class ReglementclientsController extends AppController
         $count = count($piecereglements);  // Utilisation de count() pour compter les résultats
 
         $comptes = $this->fetchTable('Comptes')->find('list', ['keyField' => 'id', 'valueField' => 'numero']);
-        $etats = $this->fetchTable('Etats')->find('list', ['keyField' => 'id', 'valueField' => 'name']);
+        // $etats = $this->fetchTable('Etats')->find('list', ['keyField' => 'id', 'valueField' => 'name']);
 
         $clients = $this->fetchTable('Clients')->find('list', ['keyField' => 'id', 'valueField' => 'Raison_Sociale']);
         $modes = $this->fetchTable('Paiements')->find('list', ['keyField' => 'id', 'valueField' => 'name'])->where(['Paiements.id' => '2']);
         $etats = $this->fetchTable('Etats')->find('list', ['keyField' => 'id', 'valueField' => 'name']);
+        // debug($etats->toarray());
         $agences = $this->fetchTable('Agences')->find('list', ['keyField' => 'id', 'valueField' => 'name']);
 
         $this->set(compact('reglements', 'endosse', 'echance2', 'piecereglements', 'count', 'etats', 'agences', 'comptes', 'modes', 'clients', 'echance', 'modeid', 'clientid', 'compteid', 'modes', 'datereg', 'fournisseurid'));
@@ -1684,9 +1686,13 @@ class ReglementclientsController extends AppController
         }
         if (!empty($historiquede)) {
             $conditionsreg[] = ["date(Retenus.date) >= '" . $historiquede . "'"];
+        } else {
+            $conditionsreg[] = ["date(Retenus.date) >= '" . date('Y-01-01') . "'"];
         }
         if (!empty($au)) {
             $conditionsreg[] = ["date(Retenus.date) <= '" . $au . "'"];
+        } else {
+            $conditionsreg[] = ["date(Retenus.date) <= '" . date('Y-12-t') . "'"];
         }
 
         $retenu = $this->Retenus->find('all')
@@ -2548,17 +2554,21 @@ class ReglementclientsController extends AppController
 
         foreach ($lignesreg as $l => $li) {
             $l = '(0';
+            $lbl = '(0';
+            $lav = '(0';
 
 
             if ($li['factureclient_id'] != 0) {
                 $l .= ',' . $li['factureclient_id'];
             } else if ($li['bonlivraison_id'] != 0) {
-                $l .= ',' . $li['bonlivraison_id'];
+                $lbl .= ',' . $li['bonlivraison_id'];
             } else if ($li['factureavoir_id'] != 0) {
-                $l .= ',' . $li['factureavoir_id'];
+                $lav .= ',' . $li['factureavoir_id'];
             }
             $l .= ',0)';
-        } //debug($l);
+            $lbl .= ',0)';
+            $lav .= ',0)';
+        } debug($lbl);
 
 
 
@@ -2604,13 +2614,15 @@ class ReglementclientsController extends AppController
             // $factures = $this->Factureclients->find('all')->where(['Factureclients.client_id =' . $cli , 'Factureclients.totalttc > Factureclients.Montant_Regler']);
             $factures = $connection->execute("select * from factureclients where (factureclients.client_id=" . $cli . " and factureclients.totalttc > factureclients.Montant_Regler) OR (factureclients.id in" . $l . ");")->fetchAll('assoc');
 
-            $livraisons = $connection->execute("select * from bonlivraisons where (bonlivraisons.client_id=" . $cli . " and bonlivraisons.typebl=1 and bonlivraisons.bl= 1 and bonlivraisons.totalttc > bonlivraisons.Montant_Regler) OR (bonlivraisons.id in" . $l . ");")->fetchAll('assoc');
-            //debug($livraisons->toArray());
+            // $livraisons = $connection->execute("select * from bonlivraisons where (bonlivraisons.client_id=" . $cli . " and bonlivraisons.typebl=1  and bonlivraisons.totalttc > bonlivraisons.Montant_Regler) OR (bonlivraisons.id in" . $lbl . ");")->fetchAll('assoc');
+            $livraisons = $connection->execute("select * from bonlivraisons where  bonlivraisons.typebl=1 and bonlivraisons.id in" . $lbl . ";")->fetchAll('assoc');
+
+            debug($livraisons);
             $compte = $this->Clients->find('all')->where(['Clients.id =' . $cli, 'Clients.soldedebut - Clients.Montant_Regler !=0'])->first();
 
             // $compte = $this->fetchTable('Clients')->find('all')->where(['Clients.id =' . $cli])->first();
             // $factureavoirs = $this->fetchTable('Factureavoirs')->find('all')->where(['Factureavoirs.client_id =' . $cli,'Factureavoirs.factureclient_id=0', 'Factureavoirs.totalttc > Factureavoirs.Montant_Regler']);
-            $factureavoirs = $connection->execute("select * from factureavoirs where (factureavoirs.client_id=" . $cli . " and factureavoirs.factureclient_id=0 and  factureavoirs.totalttc > factureavoirs.Montant_Regler) OR (factureavoirs.id in" . $l . ");")->fetchAll('assoc');
+            $factureavoirs = $connection->execute("select * from factureavoirs where (factureavoirs.client_id=" . $cli . " and factureavoirs.factureclient_id=0 and  factureavoirs.totalttc > factureavoirs.Montant_Regler) OR (factureavoirs.id in" . $lav . ");")->fetchAll('assoc');
         }
 
 
@@ -2623,7 +2635,7 @@ class ReglementclientsController extends AppController
         $valeurs = $this->Tos->find('list', ['limit' => 200])->all();
         $this->loadModel('Paiements');
         if ($type == 1) {
-            $paiements = $this->fetchTable('Paiements')->find('list')->where(['id NOT IN' => [ 4, 5, 6, 7, 8, 9]]);
+            $paiements = $this->fetchTable('Paiements')->find('list')->where(['id NOT IN' => [4, 5, 6, 7, 8, 9]]);
         } else {
             $paiements = $this->Paiements->find('list', ['limit' => 200])->where(['Paiements.id not in (6,7,8,9,5)'])->all();
         }
