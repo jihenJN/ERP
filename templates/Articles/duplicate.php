@@ -1253,7 +1253,6 @@
             return false;
         }
 
-
         $.ajax({
             method: "GET",
             url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'checkDesignation']) ?>",
