@@ -717,24 +717,24 @@
     </div>
 
     <!-- Bootstrap Modal for Famille and Sous Famille -->
-<div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="popupModalLabel">Erreur</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body" id="modalBody">
-        <!-- The content will be dynamically inserted here -->
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-      </div>
+    <div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="popupModalLabel">Erreur</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- The content will be dynamically inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
 
 
@@ -753,7 +753,7 @@
 <?php $this->start('scriptBottom'); ?>
 <script>
     $('.testobgarticle').on('mouseover', function() {
-   
+
         famille = $('#salma').val();
         sousfamille = $('#sous').val();
         unite = $('#unite-id').val();
@@ -773,8 +773,8 @@
             $('#modalBody').text("Veuillez choisir une sous Famille !");
             $('#popupModal').modal('show'); // Show modal if sousfamille is empty
             return false; // Stop the function execution if sousfamille is empty
-        
-        }else
+
+        } else
         if (unite === "") {
             alert("Veuillez choisir une unite !");
             return false;
@@ -798,48 +798,47 @@
         }
 
         $.ajax({
-                method: "GET",
-                url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'checkDesignation']) ?>",
-                dataType: "json",
-                data: {
-                    Dsignation: Dsignation,
-
-                },
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
-                },
-                success: function(data) {
-                    alert(data.testt);
-                   
-                    return false;
-                    // alert(data.vente);
-                 
+            method: "GET",
+            url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'checkDesignation']) ?>",
+            dataType: "json",
+            data: {
+                Dsignation: Dsignation,
+            },
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+            },
+            success: function(data) {
+                if (data.testt == 1) {
+                  //  alert("Designation existante !");
+                  $('#modalBody').text("Designation existante!");
+                  $('#popupModal').modal('show'); // Show modal if famille is empty
                 }
+                return false;
+            }
+        })
 
-            })
+        // Check if the designation is unique by sending an AJAX request to the CakePHP controller
+        //     $.ajax({
+        //     method: "POST", // Use POST since we are sending data
+        //     url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'checkDesignation']) ?>",
+        //     dataType: "json", // Expecting a JSON response
+        //     data: { designation: Dsignation }, // Send the designation to check
+        //     headers: {
+        //         'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
 
-     // Check if the designation is unique by sending an AJAX request to the CakePHP controller
-    //     $.ajax({
-    //     method: "POST", // Use POST since we are sending data
-    //     url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'checkDesignation']) ?>",
-    //     dataType: "json", // Expecting a JSON response
-    //     data: { designation: Dsignation }, // Send the designation to check
-    //     headers: {
-    //         'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
-            
-    //     },
-    //     success: function(data) {
-    //         if (data.status === 'exists') {
-    //             alert("La Désignation existe déjà ! Veuillez choisir un autre.");
-    //         } else {
-    //             // Proceed with the next steps
-    //         }
-    //     },
-    //     error: function(xhr) {
-    //         alert("Une erreur s'est produite: " + xhr.status + " " + xhr.statusText);
-    //         console.log(xhr.responseText); // Log the detailed error for debugging
-    //     }
-    // });
+        //     },
+        //     success: function(data) {
+        //         if (data.status === 'exists') {
+        //             alert("La Désignation existe déjà ! Veuillez choisir un autre.");
+        //         } else {
+        //             // Proceed with the next steps
+        //         }
+        //     },
+        //     error: function(xhr) {
+        //         alert("Une erreur s'est produite: " + xhr.status + " " + xhr.statusText);
+        //         console.log(xhr.responseText); // Log the detailed error for debugging
+        //     }
+        // });
 
 
     });
@@ -1417,4 +1416,3 @@
         });
     });
 </script>
-
