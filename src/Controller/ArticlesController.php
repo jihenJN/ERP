@@ -5665,13 +5665,11 @@ public function duplicate($id = null)
             $image->moveTo($targetPath);
             $article->image = $name;
         }
-        /****************jn solution*************************/
         // Convert it to an array
         $data = $article->toArray();
         unset($article->id); // Remove the ID
         // Create a new entity with the modified data
         $newArticle = $this->Articles->newEntity($data);
-        debug($newArticle);die();
         if ($this->Articles->save($newArticle)) {
            $article_id = $article->id;
             $this->loadModel('Uaprincipals');
