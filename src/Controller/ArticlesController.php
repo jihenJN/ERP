@@ -3107,7 +3107,7 @@ class ArticlesController extends AppController
         $this->paginate = [
             'contain' => ['Familles', 'Tvas', 'Marques', 'Typearticles'],
             'order' => ['id' => 'ASC'],
-            'limit'=>["150000"]
+            'limit' => ["150000"]
         ];
         $articles = $this->paginate($query);
         //debug($articles);die;
@@ -3284,7 +3284,6 @@ class ArticlesController extends AppController
                     $dat[$i]['Ligne'][$j]['ligneligne'][$k]['article_id'] = $fiche2['article_id3'];
                     $dat[$i]['Ligne'][$j]['ligneligne'][$k]['qte'] = $fiche2['qte'];
                     $dat[$i]['Ligne'][$j]['ligneligne'][$k]['unite_id'] = $fiche2['unite_id'];
-
                 }
             }
         }
@@ -3387,7 +3386,7 @@ class ArticlesController extends AppController
 
         $article = $this->Articles->newEmptyEntity();
 
-    
+
         if ($this->request->is('post')) {
 
             $codearticle = $this->request->getData('codearticle');
@@ -3848,7 +3847,7 @@ class ArticlesController extends AppController
 
 
 
-           
+
 
             if ($this->Articles->save($article)) {
                 $article_id = $article->id;
@@ -4179,7 +4178,6 @@ class ArticlesController extends AppController
                     $dat[$i]['Ligne'][$j]['ligneligne'][$k]['article_id'] = $fiche2['article_id3'];
                     $dat[$i]['Ligne'][$j]['ligneligne'][$k]['qte'] = $fiche2['qte'];
                     $dat[$i]['Ligne'][$j]['ligneligne'][$k]['unite_id'] = $fiche2['unite_id'];
-
                 }
             }
         }
@@ -4206,8 +4204,8 @@ class ArticlesController extends AppController
         // debug($clientarticles);
         $famillerotations = $this->fetchTable('Famillerotations')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $articlees = $this->Articles->find('list', ['keyfield' => 'id', 'valueField' => 'Dsignation'])->where(['Articles.vente=0']);
-        
- 
+
+
 
         //  foreach($mois as $m){debug($m);}
         // $tvas = $this->Articles->Tvas->find('list')->all();
@@ -4244,7 +4242,7 @@ class ArticlesController extends AppController
 
 
 
-    
+
     public function dupliquer($id = null)
     {
         // $session = $this->request->getSession();
@@ -5553,32 +5551,16 @@ class ArticlesController extends AppController
         echo json_encode(array('testt' => $testt));
         die;
     }
-    /*  public function duplicate($id = null)
-    {
-        $this->loadModel('Articles');
-        $original = $this->Articles->get($id, ['contain' => []]);
-    
-        if (!$original) {
-            $this->Flash->error(__('Record not found.'));
-            return $this->redirect(['action' => 'index']);
-        }
-    
-         // Create a new entity with original data but without ID
-    $duplicate = $this->YourModel->newEntity($original->toArray());
-    unset($duplicate->id); // Ensures CakePHP treats this as a new record
 
-    $this->set(compact('duplicate'));
-    $this->render('edit'); // Reuse edit.php template
-    }
-    */
     public function duplicate($id = null)
     {
         $this->loadModel('Articles');
         $original = $this->Articles->get($id, ['contain' => ['Familles', 'Tvas', 'Marques', 'Typearticles']]);
-       
+
         // Create a new entity with original data but without ID
         $duplicate = $this->Articles->newEntity($original->toArray());
         unset($duplicate->id);
+        unset($duplicate->Dsignation);
 
         // Handle form submission
         if ($this->request->is(['post', 'put'])) {
@@ -5601,9 +5583,7 @@ class ArticlesController extends AppController
         $unitearticles = $this->fetchTable('Unitearticles')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $unites = $this->fetchTable('Unites')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $typearticles = $this->fetchTable('Typearticles')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->order('rang', 'asc');
-        $this->set(compact('duplicate','familles','tvas','unitearticles','unites','typearticles'));
+        $this->set(compact('duplicate', 'familles', 'tvas', 'unitearticles', 'unites', 'typearticles'));
         $this->render('edit');
-
     }
-
 }

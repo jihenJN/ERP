@@ -130,7 +130,8 @@
                             <?php //echo $this->Form->control('Code', ['label' => 'Code', 'required' => 'off', 'id' => 'code', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control ', 'type' => 'number', 'name' => 'Code']); 
                             ?>
 
-                            <input value="<?php echo $article->Code ?>" readonly name="Code" id="code" class="form-control">
+                            <input value="<?php echo $article->Code ?>" readonly name="Code" id="code"
+                                class="form-control">
                         </div>
                     </div>
 
@@ -213,8 +214,10 @@
 
 
                         <div class="input-group">
-                            <span name="codepaysproducteur" class="input-group-addon" style="width:10%"><?php echo $val ?></span>
-                            <input name="codearticle" readonly type="text" id="codearticle" class="form-control" style="width:50%;">
+                            <span name="codepaysproducteur" class="input-group-addon"
+                                style="width:10%"><?php echo $val ?></span>
+                            <input name="codearticle" readonly type="text" id="codearticle" class="form-control"
+                                style="width:50%;">
 
                         </div>
 
@@ -260,7 +263,9 @@
                             <label> Prix Vente HT</label>
 
 
-                            <input placeholder="0.000" step="0.001" value="<?php echo ($article->Prix_LastInput); ?>" type="number" class="form-control calculprixarticlefinal" name='Prix_LastInput' id="Prix_LastInput">
+                            <input placeholder="0.000" step="0.001" value="<?php echo ($article->Prix_LastInput); ?>"
+                                type="number" class="form-control calculprixarticlefinal" name='Prix_LastInput'
+                                id="Prix_LastInput">
 
                         </div>
 
@@ -369,7 +374,8 @@
                             </div>
                             <br><br><br>
                             <div style="margin-top:20px" class="col-xs-8" hidden>
-                                <label class="control-label" for="unipxte-id" style="margin-right: 20px"> Destine a la vente :</label>
+                                <label class="control-label" for="unipxte-id" style="margin-right: 20px"> Destine a la
+                                    vente :</label>
 
                                 <input type="checkbox" id="vente" name="vente" value="0">
                             </div>
@@ -378,11 +384,14 @@
 
                                 <input type="checkbox" id="mobilee" name="mobile" value="1"> -->
                             </div>
-                            <div style="width:90%; margin: 0 auto;  margin-left: 20px; margin-right: 20px; position: static; ">
+                            <div
+                                style="width:90%; margin: 0 auto;  margin-left: 20px; margin-right: 20px; position: static; ">
                                 <label class="control-label" for="unipxte-id" style="margin-right: 20px"> Etat :</label>
 
-                                Activ&eacute; <input type="radio" name="etat" checked value="0" id="active" class="" style="margin-right: 20px">
-                                D&eacute;sactiv&eacute; <input type="radio" name="etat" value="1" id="desactive" class="">
+                                Activ&eacute; <input type="radio" name="etat" checked value="0" id="active" class=""
+                                    style="margin-right: 20px">
+                                D&eacute;sactiv&eacute; <input type="radio" name="etat" value="1" id="desactive"
+                                    class="">
 
 
 
@@ -395,10 +404,13 @@
 
 
 
-                                <label hidden class="control-label" for="unipxte-id" style="margin-right: 20px">Fodec :</label>
+                                <label hidden class="control-label" for="unipxte-id" style="margin-right: 20px">Fodec
+                                    :</label>
 
-                                <input hidden type="radio" name="fodec" value="<?php echo $fodec ?>" id="OUI" class="calculprixarticle" style="margin-right: 20px">
-                                <input hidden type="radio" name="fodec" value="0" id="NON" class="calculprixarticle" checked>
+                                <input hidden type="radio" name="fodec" value="<?php echo $fodec ?>" id="OUI"
+                                    class="calculprixarticle" style="margin-right: 20px">
+                                <input hidden type="radio" name="fodec" value="0" id="NON" class="calculprixarticle"
+                                    checked>
 
 
 
@@ -410,9 +422,11 @@
 
                                 <?php //echo $tpe 
                                 ?>
-                                <label hidden class="control-label" for="unipxte-id" style="margin-right: 20px">Tpe (%):</label>
+                                <label hidden class="control-label" for="unipxte-id" style="margin-right: 20px">Tpe
+                                    (%):</label>
 
-                                <input hidden type="radio" name="TXTPE" value="0" id="OUItpe" class="calculprixarticle" style="margin-right: 20px">
+                                <input hidden type="radio" name="TXTPE" value="0" id="OUItpe" class="calculprixarticle"
+                                    style="margin-right: 20px">
                                 <input hidden type="radio" name="TXTPE" value="0" id="NONtpe" class="calculprixarticle">
                             </div>
                         </div>
@@ -425,9 +439,13 @@
                             <div style="width:80%;margin-left: 30%; margin-right: 20px; position: static; ">
                                 <div align="center">
                                     <div class="form-group input number">
-                                        <label style="font-size:30px;color:rgb(255, 0, 0);margin-right:20px"> Prix TTC :</label>
+                                        <label style="font-size:30px;color:rgb(255, 0, 0);margin-right:20px"> Prix TTC
+                                            :</label>
 
-                                        <input style="color:rgb(255, 0, 0);height: 80px;font-size:50px;width:50%;text-align:center" type="number" step="any" value="<?php echo $article->prixttc ?>" name="prixttc" id="prixttc">
+                                        <input
+                                            style="color:rgb(255, 0, 0);height: 80px;font-size:50px;width:50%;text-align:center"
+                                            type="number" step="any" value="<?php echo $article->prixttc ?>"
+                                            name="prixttc" id="prixttc">
 
                                     </div>
                                 </div>
@@ -475,14 +493,16 @@
                                 <h3 class="panel-title">
                                     <?php echo __('Fiche Article'); ?>
                                 </h3>
-                                <a class="btn btn-primary ajouterlignematriceee " table='addtablea' index='index' tr="tra" style="
+                                <a class="btn btn-primary ajouterlignematriceee " table='addtablea' index='index'
+                                    tr="tra" style="
                                        float: right; 
                                        position: relative;
                                        top: -25px;
                                        "><i class="fa fa-plus-circle"></i> </a>
                             </div>
                             <div class="panel-body">
-                                <table class="table table-bordered table-striped table-bottomless" id="addtablea" style="width:100%" align="center">
+                                <table class="table table-bordered table-striped table-bottomless" id="addtablea"
+                                    style="width:100%" align="center">
                                     <thead>
                                         <tr bgcolor="#EDEDED">
                                             <td width="" align="center">Composant1</td>
@@ -521,7 +541,8 @@
                                                 ?>
                                             </td> -->
                                             <td align="center">
-                                                <i index="" class="fa fa-times supor" style="color: #c9302c;font-size: 22px;">
+                                                <i index="" class="fa fa-times supor"
+                                                    style="color: #c9302c;font-size: 22px;">
                                             </td>
                                         </tr>
 
@@ -535,14 +556,18 @@
                                                         <h3 class="panel-title">
                                                             <?php echo __('Composant2'); ?>
                                                         </h3>
-                                                        <a class="btn btn-primary ajouterligne1 " tabletype='addtableaa' indexlignetype='indexa' trtype="traaa" style="
+                                                        <a class="btn btn-primary ajouterligne1 " tabletype='addtableaa'
+                                                            indexlignetype='indexa' trtype="traaa" style="
                                                            float: right; 
                                                            position: relative;
                                                            top: -25px;
                                                            "><i class="fa fa-plus-circle"></i> </a>
                                                     </div>
                                                     <div class="panel-body">
-                                                        <table class="table table-bordered table-striped table-bottomless" index="" indexligne='indexa' champ="addtableaa" id="" style="width:100%" align="center">
+                                                        <table
+                                                            class="table table-bordered table-striped table-bottomless"
+                                                            index="" indexligne='indexa' champ="addtableaa" id=""
+                                                            style="width:100%" align="center">
                                                             <thead>
                                                                 <tr bgcolor="#EDEDED">
                                                                     <td align="center">Composant</td>
@@ -556,7 +581,8 @@
                                                             </thead>
                                                             <tbody>
 
-                                                                <tr class="traaa" style="display:none;" id="traaa" champ='traaa' index="">
+                                                                <tr class="traaa" style="display:none;" id="traaa"
+                                                                    champ='traaa' index="">
                                                                     <td>
                                                                         <?php echo $this->Form->input(
                                                                             'supp2',
@@ -595,26 +621,41 @@
                                                                         ?>
                                                                     </td> -->
                                                                     <td align="center">
-                                                                        <i indexligne="" index="" class="fa fa-times supor2" style="color: #c9302c;font-size: 22px;">
+                                                                        <i indexligne="" index=""
+                                                                            class="fa fa-times supor2"
+                                                                            style="color: #c9302c;font-size: 22px;">
                                                                     </td>
                                                                 </tr>
 
-                                                                <tr class="traaligne" index="" champ='traaligne' style="display:none">
+                                                                <tr class="traaligne" index="" champ='traaligne'
+                                                                    style="display:none">
                                                                     <td width='30%'></td>
-                                                                    <td champ="afefligne" class="afefligne" colspan="3" id="" index="">
+                                                                    <td champ="afefligne" class="afefligne" colspan="3"
+                                                                        id="" index="">
                                                                         <div class="panel panel-default">
                                                                             <div class="panel-heading">
                                                                                 <h3 class="panel-title">
                                                                                     <?php echo __('Composant3'); ?>
                                                                                 </h3>
-                                                                                <a class="btn btn-primary ajouterligne1ligne " index="" indexligne="" tabletypeligne='addtableaaligne' indexligneligne='indexaligne' indexlignetypeligne='indexaligne' trtypeligne="traaaligne" style="
+                                                                                <a class="btn btn-primary ajouterligne1ligne "
+                                                                                    index="" indexligne=""
+                                                                                    tabletypeligne='addtableaaligne'
+                                                                                    indexligneligne='indexaligne'
+                                                                                    indexlignetypeligne='indexaligne'
+                                                                                    trtypeligne="traaaligne" style="
                                                                                    float: right; 
                                                                                    position: relative;
                                                                                    top: -25px;
-                                                                                   "><i class="fa fa-plus-circle"></i></a>
+                                                                                   "><i
+                                                                                        class="fa fa-plus-circle"></i></a>
                                                                             </div>
                                                                             <div class="panel-body">
-                                                                                <table class="table table-bordered table-striped table-bottomless" index="" indexligneligne='indexaligne' champ="addtableaaligne" id="" style="width:100%" align="center">
+                                                                                <table
+                                                                                    class="table table-bordered table-striped table-bottomless"
+                                                                                    index=""
+                                                                                    indexligneligne='indexaligne'
+                                                                                    champ="addtableaaligne" id=""
+                                                                                    style="width:100%" align="center">
                                                                                     <thead>
                                                                                         <tr bgcolor="#EDEDED">
                                                                                             <td align="center">
@@ -632,7 +673,9 @@
                                                                                     </thead>
                                                                                     <tbody>
 
-                                                                                        <tr class="traaaligne" style="display:none;" id="" champ='traaaligne' index="">
+                                                                                        <tr class="traaaligne"
+                                                                                            style="display:none;" id=""
+                                                                                            champ='traaaligne' index="">
                                                                                             <td>
                                                                                                 <?php
                                                                                                 echo $this->Form->input('supp3', array('name' => '', 'type' => 'hidden', 'label' => '', 'indexligneligne' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'supp3', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control',));
@@ -654,7 +697,11 @@
                                                                                                 ?>
                                                                                             </td> -->
                                                                                             <td align="center">
-                                                                                                <i indexligneligne="" indexligne="" index="" class="fa fa-times supor3" style="color: #c9302c;font-size: 22px;">
+                                                                                                <i indexligneligne=""
+                                                                                                    indexligne=""
+                                                                                                    index=""
+                                                                                                    class="fa fa-times supor3"
+                                                                                                    style="color: #c9302c;font-size: 22px;">
                                                                                             </td>
 
                                                                                         </tr>
@@ -662,7 +709,8 @@
 
                                                                                     </tbody>
                                                                                 </table>
-                                                                                <input type="hidden" value="0" class="" id="" champ="indexaligne" />
+                                                                                <input type="hidden" value="0" class=""
+                                                                                    id="" champ="indexaligne" />
                                                                             </div>
                                                                         </div>
                                                                     </td>
@@ -682,321 +730,419 @@
                                             $i++;
                                             //debug($fech);
                                         ?>
-                                            <tr>
+                                        <tr>
 
-                                                <td align="left">
-                                                    <?php
+                                            <td align="left">
+                                                <?php
                                                     echo $this->Form->input('sup', array('name' => 'data[Ofsfligne][' . $i . '][sup]', 'id' => 'sup' . $i, 'champ' => 'sup', 'table' => 'Ofsfligne', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'type' => 'hidden', 'after' => '</div>', 'class' => 'form-control'));
                                                     echo $this->Form->control('article_id', array('options' => $articlescomp, 'value' => $fech['article_id'], 'style' => 'width:250px', 'label' => '', 'id' => 'article_id' . $i, 'label' => '', 'name' => 'data[Ofsfligne][' . $i . '][article_id]', 'table' => 'Ofsfligne', 'champ' => 'article_id', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control  select2', 'empty' => 'Veuillez choisir'));
                                                     ?>
-                                                </td>
-                                                <td align="center">
-                                                    <?php
+                                            </td>
+                                            <td align="center">
+                                                <?php
                                                     echo $this->Form->input('qte', array('value' => $fech['qte'], 'id' => 'qte' . $i, 'label' => '', 'name' => 'data[Ofsfligne][' . $i . '][qte]', 'table' => 'Ofsfligne', 'champ' => 'qte', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control comp'));
                                                     ?>
-                                                </td>
+                                            </td>
 
-                                                <td>
-                                                    <select name="<?php echo "data[Ofsfligne][" . $i . "][unite_id]" ?>" width="200px" id="<?php echo 'unite_id' . $i ?>" style="width:200px" table="ligner" index="<?php echo $i ?>" champ="unite_id" class="js-example-responsive select2 ">
-                                                        <option value="" selected="selected" >Veuillez choisir
-                                                            !!</option>
+                                            <td>
+                                                <select name="<?php echo "data[Ofsfligne][" . $i . "][unite_id]" ?>"
+                                                    width="200px" id="<?php echo 'unite_id' . $i ?>" style="width:200px"
+                                                    table="ligner" index="<?php echo $i ?>" champ="unite_id"
+                                                    class="js-example-responsive select2 ">
+                                                    <option value="" selected="selected">Veuillez choisir
+                                                        !!</option>
 
-                                                        <?php foreach ($unit as $u) {
+                                                    <?php foreach ($unit as $u) {
                                                         ?>
-                                                            <option <?php if ($fech['unite_id'] == $u->id) { ?> selected="selected" <?php } ?> value="<?php echo $u->id; ?>">
-                                                                <?php echo $u->name ?>
-                                                            </option>
-                                                        <?php }
+                                                    <option <?php if ($fech['unite_id'] == $u->id) { ?>
+                                                        selected="selected" <?php } ?> value="<?php echo $u->id; ?>">
+                                                        <?php echo $u->name ?>
+                                                    </option>
+                                                    <?php }
 
 
                                                         ?>
-                                                    </select>
-                                                </td>
-                                                <!-- <td align="center" <?php if (empty($fech['Ligne'])) { ?> hidden <?php } ?> id="tdcomp<?php echo $i ?>" index="<?php echo $i ?>" champ="tdcomp" table="Ofsfligne" name="data[Ofsfligne][<?php echo $i ?>][tdcomp]">
+                                                </select>
+                                            </td>
+                                            <!-- <td align="center" <?php if (empty($fech['Ligne'])) { ?> hidden <?php } ?> id="tdcomp<?php echo $i ?>" index="<?php echo $i ?>" champ="tdcomp" table="Ofsfligne" name="data[Ofsfligne][<?php echo $i ?>][tdcomp]">
                                                     <?php
                                                     echo $this->Form->input('coeff', array('value' => $fech['coeff'], 'id' => 'coeff' . $i, 'label' => '', 'name' => 'data[Ofsfligne][' . $i . '][coeff]', 'table' => 'Ofsfligne', 'champ' => 'coeff', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
                                                     ?>
                                                 </td> -->
-                                                <td align="center"><i index="<?php echo $i; ?>" class="fa fa-times supor" style="color: #c9302c;font-size: 22px;"></td>
+                                            <td align="center"><i index="<?php echo $i; ?>" class="fa fa-times supor"
+                                                    style="color: #c9302c;font-size: 22px;"></td>
 
-                                            </tr>
+                                        </tr>
 
-                                            <tr index="<?php echo $i; ?>" class="tr" align="centre">
-                                                <td width='30%'></td>
-                                                <td champ="afef" class="afef" id="afef<?php echo $i; ?>" colspan="3" index="<?php echo $i; ?>">
-                                                    <div class="panel panel-default" width="50%">
-                                                        <div class="panel-heading">
-                                                            <h3 class="panel-title">
-                                                                <?php echo __('Composant'); ?>
-                                                            </h3>
-                                                            <a class="btn btn-primary ajouterligne1 " table='addtableaa<?php echo $i; ?>' index='<?php echo $i; ?>' indexligne='indexa<?php echo $i; ?>' tr="traa<?php echo $i; ?>" style="
+                                        <tr index="<?php echo $i; ?>" class="tr" align="centre">
+                                            <td width='30%'></td>
+                                            <td champ="afef" class="afef" id="afef<?php echo $i; ?>" colspan="3"
+                                                index="<?php echo $i; ?>">
+                                                <div class="panel panel-default" width="50%">
+                                                    <div class="panel-heading">
+                                                        <h3 class="panel-title">
+                                                            <?php echo __('Composant'); ?>
+                                                        </h3>
+                                                        <a class="btn btn-primary ajouterligne1 "
+                                                            table='addtableaa<?php echo $i; ?>'
+                                                            index='<?php echo $i; ?>'
+                                                            indexligne='indexa<?php echo $i; ?>'
+                                                            tr="traa<?php echo $i; ?>" style="
                                                                    float: right; 
                                                                    position: relative;
                                                                    top: -25px;
                                                                    "><i class="fa fa-plus-circle"></i></a>
-                                                        </div>
-                                                        <div class="panel-body">
-                                                            <table class="table table-bordered table-striped table-bottomless" id="addtableaa<?php echo $i; ?>" style="width:100%" align="center">
-                                                                <thead>
-                                                                    <tr bgcolor="#EDEDED">
-                                                                        <td align="center">Composant</td>
-                                                                        <td align="center">Qte</td>
-                                                                        <td align="center">Unite</td>
-                                                                        <!-- <td align="center" hidden id='tdcompp'>
+                                                    </div>
+                                                    <div class="panel-body">
+                                                        <table
+                                                            class="table table-bordered table-striped table-bottomless"
+                                                            id="addtableaa<?php echo $i; ?>" style="width:100%"
+                                                            align="center">
+                                                            <thead>
+                                                                <tr bgcolor="#EDEDED">
+                                                                    <td align="center">Composant</td>
+                                                                    <td align="center">Qte</td>
+                                                                    <td align="center">Unite</td>
+                                                                    <!-- <td align="center" hidden id='tdcompp'>
                                                                             Coefficient</td> -->
 
-                                                                        <td></td>
-                                                                    </tr>
-                                                                <tbody>
-                                                                    <tr class="traa<?php echo $i; ?>" style="display:none;" d="traa<?php echo $i; ?>">
-                                                                        <td>
-                                                                            <?php
+                                                                    <td></td>
+                                                                </tr>
+                                                            <tbody>
+                                                                <tr class="traa<?php echo $i; ?>" style="display:none;"
+                                                                    d="traa<?php echo $i; ?>">
+                                                                    <td>
+                                                                        <?php
                                                                             echo $this->Form->input('supp2', array('label' => '', 'type' => 'hidden', 'div' => 'form-group', 'name' => '', 'indexligne' => '0', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'index' => $i, 'id' => 'supp', 'champ' => 'supp2', 'indextype' => '', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
                                                                             echo $this->Form->control('article_id', array('options' => $articlescomp, 'name' => '', 'label' => '', 'indexligne' => '0', 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'article_idt', 'id' => 'article_idt', 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control ', 'empty' => 'Veuillez Choisir !!'));
                                                                             ?>
-                                                                        </td>
-                                                                        <td>
-                                                                            <?php
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php
                                                                             echo $this->Form->input('qte', array('name' => '', 'label' => '', 'indexligne' => '0', 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'qte', 'id' => 'qte', 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control '));
                                                                             ?>
-                                                                        </td>
-                                                                        <td>
-                                                                            <?php echo $this->Form->control('unite_id', array('name' => '', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'unite_idt', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => '', 'empty' => 'Veuillez Choisir !!', 'class' => 'form-control'));
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php echo $this->Form->control('unite_id', array('name' => '', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'unite_idt', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => '', 'empty' => 'Veuillez Choisir !!', 'class' => 'form-control'));
                                                                             ?>
-                                                                        </td>
+                                                                    </td>
 
-                                                                        <!-- <td hidden champ='tdcompp' index='' indexligne='' table='Ofsfligne' tableligne='Phaseofsf'>
+                                                                    <!-- <td hidden champ='tdcompp' index='' indexligne='' table='Ofsfligne' tableligne='Phaseofsf'>
                                                                             <?php
                                                                             echo $this->Form->input('coeff', array('name' => '', 'label' => '', 'indexligne' => '0', 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'coeff', 'id' => 'coeff', 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control '));
                                                                             ?>
                                                                         </td> -->
-                                                                        <td align="center">
-                                                                            <i indexligne="0" index="<?php echo $i; ?>" class="fa fa-times supor2" style="color: #c9302c;font-size: 22px;">
-                                                                        </td>
+                                                                    <td align="center">
+                                                                        <i indexligne="0" index="<?php echo $i; ?>"
+                                                                            class="fa fa-times supor2"
+                                                                            style="color: #c9302c;font-size: 22px;">
+                                                                    </td>
 
 
-                                                                    </tr>
-                                                                    <tr class="traaligne" index="" champ='traaligne' style="display:none">
-                                                                        <td width='30%'></td>
-                                                                        <td champ="afefligne" class="afefligne" colspan="3" id="" index="">
-                                                                            <div class="panel panel-default">
-                                                                                <div class="panel-heading">
-                                                                                    <h3 class="panel-title">
-                                                                                        <?php echo __('Composant'); ?>
-                                                                                    </h3>
-                                                                                    <a class="btn btn-primary ajouterligne1ligne " tabletypeligne='addtableaaligne' indexligneligne='indexaligne' trtypeligne="traaaligne" style="
+                                                                </tr>
+                                                                <tr class="traaligne" index="" champ='traaligne'
+                                                                    style="display:none">
+                                                                    <td width='30%'></td>
+                                                                    <td champ="afefligne" class="afefligne" colspan="3"
+                                                                        id="" index="">
+                                                                        <div class="panel panel-default">
+                                                                            <div class="panel-heading">
+                                                                                <h3 class="panel-title">
+                                                                                    <?php echo __('Composant'); ?>
+                                                                                </h3>
+                                                                                <a class="btn btn-primary ajouterligne1ligne "
+                                                                                    tabletypeligne='addtableaaligne'
+                                                                                    indexligneligne='indexaligne'
+                                                                                    trtypeligne="traaaligne" style="
                                                                                    float: right; 
                                                                                    position: relative;
                                                                                    top: -25px;
                                                                                    "><i class="fa fa-plus-circle"></i>
-                                                                                    </a>
-                                                                                </div>
-                                                                                <div class="panel-body">
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="panel-body">
 
-                                                                                    <table class="table table-bordered table-striped table-bottomless" index="" indexligneligne='indexaligne' champ="addtableaaligne" id="" style="width:100%" align="center">
-                                                                                        <thead>
-                                                                                            <tr bgcolor="#EDEDED">
-                                                                                                <td align="center">
-                                                                                                    Composant</td>
-                                                                                                <td align="center">Qte
-                                                                                                </td>
-                                                                                                <td align="center">Unite
-                                                                                                </td>
-                                                                                                <!-- <td align="center" hidden>
+                                                                                <table
+                                                                                    class="table table-bordered table-striped table-bottomless"
+                                                                                    index=""
+                                                                                    indexligneligne='indexaligne'
+                                                                                    champ="addtableaaligne" id=""
+                                                                                    style="width:100%" align="center">
+                                                                                    <thead>
+                                                                                        <tr bgcolor="#EDEDED">
+                                                                                            <td align="center">
+                                                                                                Composant</td>
+                                                                                            <td align="center">Qte
+                                                                                            </td>
+                                                                                            <td align="center">Unite
+                                                                                            </td>
+                                                                                            <!-- <td align="center" hidden>
                                                                                                     Coefficient
                                                                                                 </td> -->
 
-                                                                                                <td align="center"></td>
-                                                                                            </tr>
-                                                                                        </thead>
-                                                                                        <tbody>
-                                                                                            <tr class="traaaligne" style="display:none;" id="" champ='traaaligne' index="">
+                                                                                            <td align="center"></td>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr class="traaaligne"
+                                                                                            style="display:none;" id=""
+                                                                                            champ='traaaligne' index="">
 
-                                                                                                <td>
-                                                                                                    <?php
+                                                                                            <td>
+                                                                                                <?php
                                                                                                     echo $this->Form->input('supp3', array('name' => '', 'type' => 'hidden', 'label' => '', 'indexligneligne' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'supp3', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control',));
 
 
                                                                                                     echo $this->Form->control('article_id', array('options' => $articlescomp, 'name' => '', 'label' => false, 'indexligneligne' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'article_idd', 'id' => 'article_idd', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => '', 'empty' => 'Veuillez Choisir !!', "style" => "width:100% ; height:32px"));
                                                                                                     ?>
-                                                                                                </td>
-                                                                                                <td>
-                                                                                                    <?php echo $this->Form->input('qte', array('name' => '', 'label' => '', 'indexligneligne' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'qte', 'id' => 'qte', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <?php echo $this->Form->input('qte', array('name' => '', 'label' => '', 'indexligneligne' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'qte', 'id' => 'qte', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
                                                                                                     ?>
-                                                                                                </td>
-                                                                                                <!-- <td hidden>
+                                                                                            </td>
+                                                                                            <!-- <td hidden>
                                                                                                     <?php echo $this->Form->input('coeff', array('name' => '', 'label' => '', 'indexligneligne' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'coeff', 'id' => 'coeff', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
                                                                                                     ?>
                                                                                                 </td> -->
-                                                                                                <td align="center">
-                                                                                                    <i indexligneligne="" indexligne="" index="" class="fa fa-times supor3" style="color: #c9302c;font-size: 22px;">
-                                                                                                </td>
+                                                                                            <td align="center">
+                                                                                                <i indexligneligne=""
+                                                                                                    indexligne=""
+                                                                                                    index=""
+                                                                                                    class="fa fa-times supor3"
+                                                                                                    style="color: #c9302c;font-size: 22px;">
+                                                                                            </td>
 
-                                                                                            </tr>
-                                                                                        </tbody>
-                                                                                    </table>
-                                                                                    <input type="hidden" value="0" class="" id="" champ="indexaligne" />
-                                                                                </div>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                                <input type="hidden" value="0" class=""
+                                                                                    id="" champ="indexaligne" />
                                                                             </div>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <?php foreach ($fech['Ligne'] as $j => $fech1) {
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <?php foreach ($fech['Ligne'] as $j => $fech1) {
                                                                         // debug($fech1['unite_id']) ;                                                                     
                                                                     ?>
-                                                                        <tr>
-                                                                            <td>
-                                                                                <?php
+                                                                <tr>
+                                                                    <td>
+                                                                        <?php
                                                                                 echo $this->Form->input('supp2', array('name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][supp2]', 'label' => false, 'type' => 'hidden', 'div' => 'form-group', 'indexligne' => $j, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'index' => $i, 'id' => 'supp2' . $i . '-' . $j, 'champ' => 'supp', 'indextype' => '', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
                                                                                 echo $this->Form->input('id', array('value' => $fech1['id'], 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][id]', 'type' => 'hidden', 'label' => false, 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'personnel_id', 'id' => 'id' . $i . '-' . $j, 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => ''));
                                                                                 echo $this->Form->control('article_id', array('options' => $articlescomp, 'value' => $fech1['article_id'], 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][article_idt]', 'label' => false, 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'article_idt', 'id' => 'article_idt' . $i . '-' . $j, 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control select2', 'empty' => 'Veuillez Choisir !!'));
                                                                                 ?>
-                                                                            </td>
-                                                                            <td>
-                                                                                <?php
+                                                                    </td>
+                                                                    <td>
+                                                                        <?php
                                                                                 echo $this->Form->input('qte', array('value' => $fech1['qte'], 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][qte]', 'label' => '', 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'qte', 'id' => 'qte' . $i . '-' . $j, 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control '));
                                                                                 ?>
-                                                                            </td>
+                                                                    </td>
 
-                                                                            <td>
-                                                                                <select name="<?php echo "data[Ofsfligne][" . $i . "][Phaseofsf][" . $j . "][unite_id]" ?>" width="200px" id="<?php echo 'unite_idt' . $i ?>" style="width:200px" table="ligner" index="<?php echo $i ?>" champ="unite_idt" class="js-example-responsive select2 ">
-                                                                                    <option value="" selected="selected" >Veuillez choisir !!
-                                                                                    </option>
+                                                                    <td>
+                                                                        <select
+                                                                            name="<?php echo "data[Ofsfligne][" . $i . "][Phaseofsf][" . $j . "][unite_id]" ?>"
+                                                                            width="200px"
+                                                                            id="<?php echo 'unite_idt' . $i ?>"
+                                                                            style="width:200px" table="ligner"
+                                                                            index="<?php echo $i ?>" champ="unite_idt"
+                                                                            class="js-example-responsive select2 ">
+                                                                            <option value="" selected="selected">
+                                                                                Veuillez choisir !!
+                                                                            </option>
 
-                                                                                    <?php foreach ($unit as $u) {
+                                                                            <?php foreach ($unit as $u) {
                                                                                     ?>
-                                                                                        <option <?php if ($fech1['unite_id'] == $u->id) { ?> selected="selected" <?php } ?> value="<?php echo $u->id; ?>">
-                                                                                            <?php echo $u->name ?>
-                                                                                        </option>
-                                                                                    <?php }
+                                                                            <option
+                                                                                <?php if ($fech1['unite_id'] == $u->id) { ?>
+                                                                                selected="selected" <?php } ?>
+                                                                                value="<?php echo $u->id; ?>">
+                                                                                <?php echo $u->name ?>
+                                                                            </option>
+                                                                            <?php }
                                                                                     ?>
-                                                                                </select>
-                                                                            </td>
-                                                                            <!-- <td <?php if (empty($fech['ligneligne'])) { ?> hidden <?php } ?> id="tdcompp<?php echo $i ?>-<?php echo $j ?>" champ="tdcompp" table="Ofsfligne" indexligne="<?php echo $j ?>" index="<?php echo $i ?>" name="data[Ofsfligne][<?php echo $i ?>][Phaseofsf][<?php echo $j ?>][tdcompp]">
+                                                                        </select>
+                                                                    </td>
+                                                                    <!-- <td <?php if (empty($fech['ligneligne'])) { ?> hidden <?php } ?> id="tdcompp<?php echo $i ?>-<?php echo $j ?>" champ="tdcompp" table="Ofsfligne" indexligne="<?php echo $j ?>" index="<?php echo $i ?>" name="data[Ofsfligne][<?php echo $i ?>][Phaseofsf][<?php echo $j ?>][tdcompp]">
                                                                                 <?php
                                                                                 echo $this->Form->input('coeff', array('value' => $fech1['coeff'], 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][coeff]', 'label' => '', 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'coeff', 'id' => 'coeff' . $i . '-' . $j, 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control '));
                                                                                 ?>
                                                                             </td> -->
-                                                                            <td align="center">
-                                                                                <i indexligne="<?php echo $j; ?>" index="<?php echo $i; ?>" class="fa fa-times supor2" style="color: #c9302c;font-size: 22px;">
-                                                                            </td>
+                                                                    <td align="center">
+                                                                        <i indexligne="<?php echo $j; ?>"
+                                                                            index="<?php echo $i; ?>"
+                                                                            class="fa fa-times supor2"
+                                                                            style="color: #c9302c;font-size: 22px;">
+                                                                    </td>
 
 
-                                                                        </tr>
-                                                                        <tr id="traaligne<?php echo $i ?>-<?php echo $j ?>" champ='traaligne'>
-                                                                            <td width='30%'></td>
-                                                                            <td id="afefligne<?php echo $i ?>-<?php echo $j ?>" champ="afefligne" class="afefligne <?php echo $i ?>-<?php echo $j ?>" colspan="3" id="afefligne<?php echo $i ?>-<?php echo $j ?>" index="<?php echo $i ?>">
-                                                                                <div class="panel panel-default">
-                                                                                    <div class="panel-heading">
-                                                                                        <h3 class="panel-title">
-                                                                                            <?php echo __('Composant'); ?>
-                                                                                        </h3>
-                                                                                        <a class="btn btn-primary ajouterligne1ligne" table="addtableaaligne<?php echo $i ?>-<?php echo $j ?>" tr="traaaligne<?php echo $i ?>-<?php echo $j ?>" tabletypeligne='addtableaaligne' trtypeligne="traaaligne" tabletypeligne='addtableaaligne<?php echo $i ?>-<?php echo $j ?>' indexligneligne='indexaligne<?php echo $i ?>-<?php echo $j ?>' indexlignetypeligne='indexaligne<?php echo $i ?>-<?php echo $j ?>' trtypeligne="traaaligne<?php echo $i ?>-<?php echo $j ?>" style="
+                                                                </tr>
+                                                                <tr id="traaligne<?php echo $i ?>-<?php echo $j ?>"
+                                                                    champ='traaligne'>
+                                                                    <td width='30%'></td>
+                                                                    <td id="afefligne<?php echo $i ?>-<?php echo $j ?>"
+                                                                        champ="afefligne"
+                                                                        class="afefligne <?php echo $i ?>-<?php echo $j ?>"
+                                                                        colspan="3"
+                                                                        id="afefligne<?php echo $i ?>-<?php echo $j ?>"
+                                                                        index="<?php echo $i ?>">
+                                                                        <div class="panel panel-default">
+                                                                            <div class="panel-heading">
+                                                                                <h3 class="panel-title">
+                                                                                    <?php echo __('Composant'); ?>
+                                                                                </h3>
+                                                                                <a class="btn btn-primary ajouterligne1ligne"
+                                                                                    table="addtableaaligne<?php echo $i ?>-<?php echo $j ?>"
+                                                                                    tr="traaaligne<?php echo $i ?>-<?php echo $j ?>"
+                                                                                    tabletypeligne='addtableaaligne'
+                                                                                    trtypeligne="traaaligne"
+                                                                                    tabletypeligne='addtableaaligne<?php echo $i ?>-<?php echo $j ?>'
+                                                                                    indexligneligne='indexaligne<?php echo $i ?>-<?php echo $j ?>'
+                                                                                    indexlignetypeligne='indexaligne<?php echo $i ?>-<?php echo $j ?>'
+                                                                                    trtypeligne="traaaligne<?php echo $i ?>-<?php echo $j ?>"
+                                                                                    style="
                                                                                                float: right; 
                                                                                                position: relative;
                                                                                                top: -25px;
-                                                                                               "><i class="fa fa-plus-circle"></i>
-                                                                                        </a>
-                                                                                    </div>
-                                                                                    <div class="panel-body">
-                                                                                        <table class="table table-bordered table-striped table-bottomless" index="<?php echo $i ?>" indexligneligne='<?php echo $j ?>' champ="addtableaaligne" id="addtableaaligne<?php echo $i ?>-<?php echo $j ?>" style="width:100%" align="center">
-                                                                                            <thead>
-                                                                                                <tr bgcolor="#EDEDED">
-                                                                                                    <td align="center">
-                                                                                                        Composant</td>
-                                                                                                    <td align="center">Qte
-                                                                                                    </td>
-                                                                                                    <td align="center">Unite
-                                                                                                    </td>
-                                                                                                    <!-- <td align="center" hidden>
+                                                                                               "><i
+                                                                                        class="fa fa-plus-circle"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div class="panel-body">
+                                                                                <table
+                                                                                    class="table table-bordered table-striped table-bottomless"
+                                                                                    index="<?php echo $i ?>"
+                                                                                    indexligneligne='<?php echo $j ?>'
+                                                                                    champ="addtableaaligne"
+                                                                                    id="addtableaaligne<?php echo $i ?>-<?php echo $j ?>"
+                                                                                    style="width:100%" align="center">
+                                                                                    <thead>
+                                                                                        <tr bgcolor="#EDEDED">
+                                                                                            <td align="center">
+                                                                                                Composant</td>
+                                                                                            <td align="center">Qte
+                                                                                            </td>
+                                                                                            <td align="center">Unite
+                                                                                            </td>
+                                                                                            <!-- <td align="center" hidden>
                                                                                                         Coefficient
                                                                                                     </td> -->
 
-                                                                                                    <td align="center"></td>
-                                                                                                </tr>
-                                                                                            </thead>
-                                                                                            <tbody>
-                                                                                                <tr style="display:none;" class="traaaligne<?php echo $i ?>-<?php echo $j ?>" id="traaaligne<?php echo $i ?>-<?php echo $j ?>" champ='traaaligne' index="<?php echo $i ?>" indexligne="<?php echo $j ?>">
+                                                                                            <td align="center"></td>
+                                                                                        </tr>
+                                                                                    </thead>
+                                                                                    <tbody>
+                                                                                        <tr style="display:none;"
+                                                                                            class="traaaligne<?php echo $i ?>-<?php echo $j ?>"
+                                                                                            id="traaaligne<?php echo $i ?>-<?php echo $j ?>"
+                                                                                            champ='traaaligne'
+                                                                                            index="<?php echo $i ?>"
+                                                                                            indexligne="<?php echo $j ?>">
 
-                                                                                                    <td>
-                                                                                                        <?php
+                                                                                            <td>
+                                                                                                <?php
                                                                                                         echo $this->Form->input('supp3', array('name' => '', 'type' => 'hidden', 'label' => '', 'indexligneligne' => '', 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'supp3', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
 
 
                                                                                                         echo $this->Form->control('article_id', array('options' => $articlescomp, 'name' => '', 'label' => false, 'indexligneligne' => '', 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'article_idd', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => '', 'empty' => 'Veuillez Choisir !!', "style" => "width:100% ; height:32px"));
                                                                                                         ?>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <?php echo $this->Form->input('qte', array('name' => '', 'label' => '', 'indexligneligne' => '', 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'qte', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <?php echo $this->Form->input('qte', array('name' => '', 'label' => '', 'indexligneligne' => '', 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'qte', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
                                                                                                         ?>
-                                                                                                    </td>
-                                                                                                    <td>
-                                                                                                        <?php echo $this->Form->control('unite_id', array('name' => '', 'label' => '', 'indexligneligne' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'unite_idd', 'id' => 'unite_idd', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control', 'empty' => 'Veuillez Choisir !!'));
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <?php echo $this->Form->control('unite_id', array('name' => '', 'label' => '', 'indexligneligne' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'unite_idd', 'id' => 'unite_idd', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control', 'empty' => 'Veuillez Choisir !!'));
                                                                                                         ?>
-                                                                                                    </td>
-                                                                                                    <!-- <td hidden>
+                                                                                            </td>
+                                                                                            <!-- <td hidden>
                                                                                                         <?php echo $this->Form->input('coeff', array('name' => '', 'label' => '', 'indexligneligne' => '', 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'coeff', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
                                                                                                         ?>
                                                                                                     </td> -->
-                                                                                                    <td align="center">
-                                                                                                        <i indexligneligne="" indexligne="<?php echo $j ?>" index="<?php echo $i ?>" class="fa fa-times supor3" style="color: #c9302c;font-size: 22px;">
-                                                                                                    </td>
-                                                                                                </tr>
-                                                                                                <?php foreach ($fech1['ligneligne'] as $k => $fech2) {
+                                                                                            <td align="center">
+                                                                                                <i indexligneligne=""
+                                                                                                    indexligne="<?php echo $j ?>"
+                                                                                                    index="<?php echo $i ?>"
+                                                                                                    class="fa fa-times supor3"
+                                                                                                    style="color: #c9302c;font-size: 22px;">
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <?php foreach ($fech1['ligneligne'] as $k => $fech2) {
                                                                                                     ///debug($fech2);
                                                                                                 ?>
-                                                                                                    <tr>
-                                                                                                        <td>
-                                                                                                            <?php
+                                                                                        <tr>
+                                                                                            <td>
+                                                                                                <?php
                                                                                                             echo $this->Form->input('supp3', array('name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][Phaseofsfligne][' . $k . '][supp3]', 'type' => 'hidden', 'label' => '', 'indexligneligne' => $k, 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'supp3', 'id' => 'supp3' . $i . '-' . $j . '-' . $k, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
 
 
                                                                                                             echo $this->Form->control('article_id', array('options' => $articlescomp, 'value' => $fech2['article_id'], 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][Phaseofsfligne][' . $k . '][article_idd]', 'label' => false, 'indexligneligne' => $k, 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'article_idd', 'id' => 'article_idd' . $i . '-' . $j . '-' . $k, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control select2', 'empty' => 'Veuillez Choisir !!', "style" => "width:100% ; height:32px"));
                                                                                                             ?>
-                                                                                                        </td>
-                                                                                                        <td>
-                                                                                                            <?php echo $this->Form->input('qte', array('value' => $fech2['qte'], 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][Phaseofsfligne][' . $k . '][qte]', 'label' => '', 'indexligneligne' => $k, 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'qte', 'id' => 'qte' . $i . '-' . $j . '-' . $k, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <?php echo $this->Form->input('qte', array('value' => $fech2['qte'], 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][Phaseofsfligne][' . $k . '][qte]', 'label' => '', 'indexligneligne' => $k, 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'qte', 'id' => 'qte' . $i . '-' . $j . '-' . $k, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
                                                                                                             ?>
-                                                                                                        </td>
-                                                                                                        <td>
-                                                                                                            <select name="<?php echo "data[Ofsfligne][" . $i . "][Phaseofsf][" . $j . "][Phaseofsfligne][" . $k . "][unite_idd]" ?>" width="200px" id="<?php echo 'unite_idd' . $i ?>" style="width:200px" table="ligner" index="<?php echo $i ?>" champ="unite_idd" class="js-example-responsive select2 ">
-                                                                                                                <option value="" selected="selected" >
-                                                                                                                    Veuillez
-                                                                                                                    choisir !!
-                                                                                                                </option>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <select
+                                                                                                    name="<?php echo "data[Ofsfligne][" . $i . "][Phaseofsf][" . $j . "][Phaseofsfligne][" . $k . "][unite_idd]" ?>"
+                                                                                                    width="200px"
+                                                                                                    id="<?php echo 'unite_idd' . $i ?>"
+                                                                                                    style="width:200px"
+                                                                                                    table="ligner"
+                                                                                                    index="<?php echo $i ?>"
+                                                                                                    champ="unite_idd"
+                                                                                                    class="js-example-responsive select2 ">
+                                                                                                    <option value=""
+                                                                                                        selected="selected">
+                                                                                                        Veuillez
+                                                                                                        choisir !!
+                                                                                                    </option>
 
-                                                                                                                <?php foreach ($unit as $u) {
+                                                                                                    <?php foreach ($unit as $u) {
                                                                                                                 ?>
-                                                                                                                    <option <?php if ($fech2['unite_id'] == $u->id) { ?> selected="selected" <?php } ?> value="<?php echo $u->id; ?>">
-                                                                                                                        <?php echo $u->name ?>
-                                                                                                                    </option>
-                                                                                                                <?php }
+                                                                                                    <option
+                                                                                                        <?php if ($fech2['unite_id'] == $u->id) { ?>
+                                                                                                        selected="selected"
+                                                                                                        <?php } ?>
+                                                                                                        value="<?php echo $u->id; ?>">
+                                                                                                        <?php echo $u->name ?>
+                                                                                                    </option>
+                                                                                                    <?php }
                                                                                                                 ?>
-                                                                                                            </select>
-                                                                                                        </td>
-                                                                                                        <!-- <td hidden>
+                                                                                                </select>
+                                                                                            </td>
+                                                                                            <!-- <td hidden>
                                                                                                             <?php echo $this->Form->input('coeff', array('value' => $fech2['coeff'], 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][Phaseofsfligne][' . $k . '][coeff]', 'label' => '', 'indexligneligne' => $k, 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'coeff', 'id' => 'coeff' . $i . '-' . $j . '-' . $k, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
                                                                                                             ?>
                                                                                                         </td> -->
-                                                                                                        <td align="center">
-                                                                                                            <i indexligneligne="<?php echo $k ?>" indexligne="<?php echo $j ?>" index="<?php echo $i ?>" class="fa fa-times supor3" style="color: #c9302c;font-size: 22px;">
-                                                                                                        </td>
-                                                                                                    </tr>
-                                                                                                <?php } ?>
-                                                                                            </tbody>
-                                                                                        </table>
-                                                                                        <input type="hidden" value="<?php echo $k ?>" class="" id="indexaligne<?php echo $i ?>-<?php echo $j ?>" champ="indexaligne" />
-                                                                                    </div>
-                                                                                </div>
-                                                                            </td>
-                                                                        </tr>
-                                                                    <?php } ?>
-                                                                    <input type="hidden" value="<?php echo $j ?>" id="indexa<?php echo $i ?>" />
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
+                                                                                            <td align="center">
+                                                                                                <i indexligneligne="<?php echo $k ?>"
+                                                                                                    indexligne="<?php echo $j ?>"
+                                                                                                    index="<?php echo $i ?>"
+                                                                                                    class="fa fa-times supor3"
+                                                                                                    style="color: #c9302c;font-size: 22px;">
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <?php } ?>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                                <input type="hidden"
+                                                                                    value="<?php echo $k ?>" class=""
+                                                                                    id="indexaligne<?php echo $i ?>-<?php echo $j ?>"
+                                                                                    champ="indexaligne" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <?php } ?>
+                                                                <input type="hidden" value="<?php echo $j ?>"
+                                                                    id="indexa<?php echo $i ?>" />
+                                                            </tbody>
+                                                        </table>
                                                     </div>
-                                                </td>
-                                            </tr>
+                                                </div>
+                                            </td>
+                                        </tr>
                                         <?php } ?>
                                         <input type="hidden" value="<?php echo $i ?>" id="index" />
                                     </tbody>
@@ -1011,7 +1157,8 @@
 
 
                 <div align="center">
-                    <button type="submit" class="pull-right btn btn-success testobgarticle " id="ajouarticle" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+                    <button type="submit" class="pull-right btn btn-success testobgarticle " id="ajouarticle"
+                        style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
 
                     <!-- <?php echo $this->Form->submit(__('Enregistrer'), ['id' => 'ajouarticle']); ?> -->
                 </div>
@@ -1028,7 +1175,8 @@
 
 
     <!-- Bootstrap Modal for Famille and Sous Famille -->
-    <div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel" aria-hidden="true">
+    <div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -1058,7 +1206,7 @@
 
 <!-- Select2 -->
 <?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
-<!--?php $this->start('scriptBottom'); ?>
+<?php $this->start('scriptBottom'); ?>
 <script>
     $('.testobgarticle').on('mouseover', function() {
         // alert('fff')
@@ -1160,262 +1308,354 @@
         format: 'MM/DD/YYYY h:mm A'
     })
 </script>
-<!?php $this->end(); ?-->
+<?php $this->end(); ?>
 
 <script type="text/javascript">
-    $(function() {
-        $('.famille1').on('change', function() {
+$(function() {
+    $('.famille1').on('change', function() {
 
-            id = $('#salma').val();
+        id = $('#salma').val();
 
-            if (id == 1) {
-                //document.getElementById("code").maxLength = 4;
-                $('#fichee').attr('style', "display:true;");
-                $('#fiche').attr('style', "display:true;");
-                $('#qteminmax').attr('style', "display:true;");
-                $('#qteminmax2').attr('style', "display:true;");
-                $('#showhide').attr('style', "display:true;");
-                $('#showhide0').attr('style', "display:true;");
-                $('#showhide00').attr('style', "display:true;");
-                $('#showhide').attr('style', "font-size: 25px;");
-                $('#showhide0').attr('style', "font-size: 25px;");
-                $('#showhide00').attr('style', "font-size: 25px;");
+        if (id == 1) {
+            //document.getElementById("code").maxLength = 4;
+            $('#fichee').attr('style', "display:true;");
+            $('#fiche').attr('style', "display:true;");
+            $('#qteminmax').attr('style', "display:true;");
+            $('#qteminmax2').attr('style', "display:true;");
+            $('#showhide').attr('style', "display:true;");
+            $('#showhide0').attr('style', "display:true;");
+            $('#showhide00').attr('style', "display:true;");
+            $('#showhide').attr('style', "font-size: 25px;");
+            $('#showhide0').attr('style', "font-size: 25px;");
+            $('#showhide00').attr('style', "font-size: 25px;");
+        } else {
+            //  $('.aff').html("<img style='width:150px' src=" + url + ">");
+            $('#fichee').attr('style', "display:none;");
+            $('#fiche').attr('style', "display:none;");
+            $('#qteminmax').attr('style', "display:none;");
+            $('#qteminmax2').attr('style', "display:none;");
+            $('#showhide').attr('style', "display:none;");
+            $('#showhide0').attr('style', "display:none;");
+            $('#showhide00').attr('style', "display:none;");
+
+            if (document.getElementById('img')) {
+                document.getElementById('img').setAttribute('src', '');
+            }
+
+            if (id == 2) {
+                $('#mobile').attr('style', "display:none;");
+                $('#nombrepiece').attr('style', "display:none;");
+                $('#nbpiecepalette').attr('style', "display:none;");
+                $('#nbjour').attr('style', "display:none;");
+                $('#frotation').attr('style', "display:none;");
+                $('#nbpoint').attr('style', "display:none;");
+                $('#coefficient').attr('style', "display:none;");
             } else {
-                //  $('.aff').html("<img style='width:150px' src=" + url + ">");
-                $('#fichee').attr('style', "display:none;");
-                $('#fiche').attr('style', "display:none;");
-                $('#qteminmax').attr('style', "display:none;");
-                $('#qteminmax2').attr('style', "display:none;");
-                $('#showhide').attr('style', "display:none;");
-                $('#showhide0').attr('style', "display:none;");
-                $('#showhide00').attr('style', "display:none;");
+                $('#mobile').attr('style', "display:none;");
+                $('#nombrepiece').attr('style', "display:true;");
+                $('#nbpiecepalette').attr('style', "display:true;");
+                $('#nbjour').attr('style', "display:true;");
+                $('#frotation').attr('style', "display:true;");
+                $('#nbpoint').attr('style', "display:true;");
+                $('#coefficient').attr('style', "display:true;");
+            }
 
-                if (document.getElementById('img')) {
-                    document.getElementById('img').setAttribute('src', '');
+        }
+
+
+
+
+
+        //alert(id);
+
+        // if (id == 2 || id == 1) {
+        if (document.getElementById('divsous'))
+            document.getElementById('divsous').disabled = false;
+        if (document.getElementById('sou'))
+            document.getElementById('sous').disabled = false;
+        $.ajax({
+            method: "GET",
+            url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'getsousfamille1']) ?>",
+            dataType: "json",
+            data: {
+                idfam: id,
+
+            },
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+            },
+            success: function(data) {
+                // alert(data.vente);
+                $('#divsous').html(data.select);
+
+                if ($.fn.select2 && $('#sous').hasClass('select2-hidden-accessible')) {
+                    $('#sous').select2('destroy');
                 }
 
-                if (id == 2) {
-                    $('#mobile').attr('style', "display:none;");
-                    $('#nombrepiece').attr('style', "display:none;");
-                    $('#nbpiecepalette').attr('style', "display:none;");
-                    $('#nbjour').attr('style', "display:none;");
-                    $('#frotation').attr('style', "display:none;");
-                    $('#nbpoint').attr('style', "display:none;");
-                    $('#coefficient').attr('style', "display:none;");
-                } else {
-                    $('#mobile').attr('style', "display:none;");
-                    $('#nombrepiece').attr('style', "display:true;");
-                    $('#nbpiecepalette').attr('style', "display:true;");
-                    $('#nbjour').attr('style', "display:true;");
-                    $('#frotation').attr('style', "display:true;");
-                    $('#nbpoint').attr('style', "display:true;");
-                    $('#coefficient').attr('style', "display:true;");
-                }
+                $('#sous').select2();
+
+
+
+
+
+
+
+
 
             }
 
-
-
-
-
-            //alert(id);
-
-            // if (id == 2 || id == 1) {
-            if (document.getElementById('divsous'))
-                document.getElementById('divsous').disabled = false;
-            if (document.getElementById('sou'))
-                document.getElementById('sous').disabled = false;
-            $.ajax({
-                method: "GET",
-                url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'getsousfamille1']) ?>",
-                dataType: "json",
-                data: {
-                    idfam: id,
-
-                },
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
-                },
-                success: function(data) {
-                    // alert(data.vente);
-                    $('#divsous').html(data.select);
-
-                    if ($.fn.select2 && $('#sous').hasClass('select2-hidden-accessible')) {
-                        $('#sous').select2('destroy');
-                    }
-
-                    $('#sous').select2();
-
-
-
-
-
-
-
-
-
-                }
-
-            })
-            // } 
-            // else {
-            //     document.getElementById('soussous').disabled = true;
-            //     document.getElementById('sous').disabled = true;
-            // }
-
-
-
-        });
-
-
-    });
-
-
-    $('.tva').trigger('change');
-    $(function() {
-        $('.tva').on('change', function() {
-            //alert('hello');
-            id = $('#tvaselect').val();
-            // alert(id)
-            $.ajax({
-                method: "GET",
-                url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'getvaleurtva']) ?>",
-                dataType: "json",
-                data: {
-                    idfam: id,
-
-                },
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
-                },
-                success: function(data) {
-                    //alert(data['ligne']['valeur']);
-
-                    $('#tva').val(data['valeur']);
-                    // $('#tva').val(id);
-
-                    prix = Number($('#Prix_LastInput').val());
-                    tva = Number($('#tva').val());
-                    // alert(tvas);
-                    // if (tvas == 5) {
-                    //     tva = 19;
-                    // } else if (tvas == 6) {
-                    //     tva = 7;
-                    // } else {
-                    //     tva = 0;
-                    // }
-                    //  alert(tva);
-                    TXTPE = Number($('#TXTPE').val());
-
-
-                    if (prix < 0) {
-                        alert("Veuillez entrer un prix valide SVP!!");
-                        $('#Prix_LastInput').val('');
-                    }
-                    if ($('#OUI').is(':checked')) {
-                        // alert("cbon");
-                        fodec = Number($('#OUI').val());
-
-
-
-                        montantfodec = Number($('#Prix_LastInput').val()) * fodec / 100;
-                        prix = prix + montantfodec; // alert(prix);
-                        //alert(prix);
-                        // alert(remisepayementmontant);
-                    }
-                    // $('#prixttc').val(Number(prix).toFixed(3));
-
-                    if ($('#OUItpe').is(':checked')) {
-                        //   alert("hh");
-                        tpe = Number($('#OUItpe').val()); //alert(tpe);
-
-                        mpontanttpe = Number($('#Prix_LastInput').val()) * tpe / 100; //alert(mpontanttpe);
-                        prix = prix + mpontanttpe;
-                        //alert(netht);
-                        // alert(remisepayementmontant);
-                    }
-                    // $('#prixttc').val(Number(prix).toFixed(3));
-
-                    // alert(prix);
-                    if (tva != "") {
-                        montanttva = prix * tva / 100;
-                        //  alert(montanttva);
-                        prix = prix + montanttva;
-                        // $('#prixttc').val(Number(prix).toFixed(3));
-
-
-
-                    }
-
-
-
-
-
-                    $('#prixttc').val(Number(prix).toFixed(3));
-
-
-
-                }
-
-            })
-        });
-    });
-    $(".calculprixarticlefinal").on("change", function() {
-        // alert('hh');
-        prix = Number($("#Prix_LastInput").val());
-        // alert(prix);
-        let tva = Number($("#tva").val());
-        // alert(tva);
-        // if (tvas == 5) {
-        //     tva = 19;
-        // } else if (tvas == 6) {
-        //     tva = 7;
-        // } else {
-        //     tva = 0;
+        })
+        // } 
+        // else {
+        //     document.getElementById('soussous').disabled = true;
+        //     document.getElementById('sous').disabled = true;
         // }
 
-        if (prix < 0) {
-            alert("Veuillez entrer un prix valide SVP!!");
-            $("#Prix_LastInput").val("");
-        }
-        if (tva != "") {
-            montanttva = (prix * tva) / 100;
 
-        } else {
-            montanttva = 0;
-        }
 
-        prixttc = prix + montanttva;
-
-        $("#prixttc").val(Number(prixttc).toFixed(3));
     });
-    //////
-    $(function() {
-        $('#prixttc').on('change', function() {
-            /// alert('dddd');
-            var prixttc = Number($('#prixttc').val());
-            tva = Number($('#tva').val());
-            remise = Number($('#remise').val());
-            // alert(tva);
-            // Reverse calculation for TVA
-            if (tva != "") {
-                var mm = prixttc / (1 + tva / 100);
-                // var montanttva = prixttc - mm;
-                $('#Prix_LastInput').val(Number(mm).toFixed(3));
+
+
+});
+
+
+$('.tva').trigger('change');
+$(function() {
+    $('.tva').on('change', function() {
+        //alert('hello');
+        id = $('#tvaselect').val();
+        // alert(id)
+        $.ajax({
+            method: "GET",
+            url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'getvaleurtva']) ?>",
+            dataType: "json",
+            data: {
+                idfam: id,
+
+            },
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+            },
+            success: function(data) {
+                //alert(data['ligne']['valeur']);
+
+                $('#tva').val(data['valeur']);
+                // $('#tva').val(id);
+
+                prix = Number($('#Prix_LastInput').val());
+                tva = Number($('#tva').val());
+                // alert(tvas);
+                // if (tvas == 5) {
+                //     tva = 19;
+                // } else if (tvas == 6) {
+                //     tva = 7;
+                // } else {
+                //     tva = 0;
+                // }
+                //  alert(tva);
+                TXTPE = Number($('#TXTPE').val());
+
+
+                if (prix < 0) {
+                    alert("Veuillez entrer un prix valide SVP!!");
+                    $('#Prix_LastInput').val('');
+                }
+                if ($('#OUI').is(':checked')) {
+                    // alert("cbon");
+                    fodec = Number($('#OUI').val());
+
+
+
+                    montantfodec = Number($('#Prix_LastInput').val()) * fodec / 100;
+                    prix = prix + montantfodec; // alert(prix);
+                    //alert(prix);
+                    // alert(remisepayementmontant);
+                }
+                // $('#prixttc').val(Number(prix).toFixed(3));
+
+                if ($('#OUItpe').is(':checked')) {
+                    //   alert("hh");
+                    tpe = Number($('#OUItpe').val()); //alert(tpe);
+
+                    mpontanttpe = Number($('#Prix_LastInput').val()) * tpe /
+                    100; //alert(mpontanttpe);
+                    prix = prix + mpontanttpe;
+                    //alert(netht);
+                    // alert(remisepayementmontant);
+                }
+                // $('#prixttc').val(Number(prix).toFixed(3));
+
+                // alert(prix);
+                if (tva != "") {
+                    montanttva = prix * tva / 100;
+                    //  alert(montanttva);
+                    prix = prix + montanttva;
+                    // $('#prixttc').val(Number(prix).toFixed(3));
+
+
+
+                }
+
+
+
+
+
+                $('#prixttc').val(Number(prix).toFixed(3));
+
+
 
             }
 
+        })
+    });
+});
+$(".calculprixarticlefinal").on("change", function() {
+    // alert('hh');
+    prix = Number($("#Prix_LastInput").val());
+    // alert(prix);
+    let tva = Number($("#tva").val());
+    // alert(tva);
+    // if (tvas == 5) {
+    //     tva = 19;
+    // } else if (tvas == 6) {
+    //     tva = 7;
+    // } else {
+    //     tva = 0;
+    // }
 
-        });
+    if (prix < 0) {
+        alert("Veuillez entrer un prix valide SVP!!");
+        $("#Prix_LastInput").val("");
+    }
+    if (tva != "") {
+        montanttva = (prix * tva) / 100;
 
-        // Trigger the change event initially
-        $('.prixttc').trigger('change');
+    } else {
+        montanttva = 0;
+    }
+
+    prixttc = prix + montanttva;
+
+    $("#prixttc").val(Number(prixttc).toFixed(3));
+});
+//////
+$(function() {
+    $('#prixttc').on('change', function() {
+        /// alert('dddd');
+        var prixttc = Number($('#prixttc').val());
+        tva = Number($('#tva').val());
+        remise = Number($('#remise').val());
+        // alert(tva);
+        // Reverse calculation for TVA
+        if (tva != "") {
+            var mm = prixttc / (1 + tva / 100);
+            // var montanttva = prixttc - mm;
+            $('#Prix_LastInput').val(Number(mm).toFixed(3));
+
+        }
+
+
+    });
+
+    // Trigger the change event initially
+    $('.prixttc').trigger('change');
+});
+
+
+function getsousfamille2(param) {
+
+    //alert('hello');
+    id = $('#sous').val();
+    // alert(id)
+    $.ajax({
+        method: "GET",
+        url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'getsousf']) ?>",
+        dataType: "json",
+        data: {
+            idfam: id,
+
+        },
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+        },
+        success: function(data) {
+
+            finalCode = data.finalCode;
+            if (finalCode) {
+                $('#code').val(finalCode);
+            }
+        }
+
     });
 
 
-    function getsousfamille2(param) {
 
-        //alert('hello');
+}
+
+function getdonnee(param) {
+
+    article_id = $('#article_id').val();
+    $.ajax({
+        method: "GET",
+        url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'getdonnee']) ?>",
+        dataType: "json",
+        data: {
+            article_id: article_id,
+
+        },
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+        },
+        success: function(data) {
+
+            $('#divsous').html(data.select);
+
+            if ($.fn.select2 && $('#salma').hasClass('select2-hidden-accessible')) {
+                $('#salma').select2('destroy');
+            }
+
+            if ($.fn.select2 && $('#sous').hasClass('select2-hidden-accessible')) {
+                $('#sous').select2('destroy');
+            }
+
+            $('#salma').removeAttr('readonly');
+            $('#salma').css('pointer-events', '');
+            $('#sous').removeAttr('readonly');
+            $('#sous').css('pointer-events', '');
+
+
+            $('#salma').val(data.famille_id);
+            $('#sous').val(data.sousfamille1_id);
+            $('#salma').attr('readonly', 'readonly');
+            $('#salma').css('pointer-events', 'none');
+            $('#sous').attr('readonly', 'readonly');
+            $('#sous').css('pointer-events', 'none');
+            // $('#salma').select2();
+            // $('#sous').select2();
+
+            finalCode = data.finalCode;
+            if (finalCode) {
+                $('#code').val(finalCode);
+            }
+
+
+
+
+
+        }
+
+    });
+
+
+
+}
+
+
+
+
+$(function() {
+    $('.sousfamille1').on('change', function() {
+        //  alert('hello');
         id = $('#sous').val();
         // alert(id)
         $.ajax({
@@ -1431,27 +1671,32 @@
             },
             success: function(data) {
 
-                finalCode = data.finalCode;
-                if (finalCode) {
-                    $('#code').val(finalCode);
-                }
+
+
+
+
             }
 
-        });
+        })
+    });
+});
+
+$(function() {
+    $('#typearticle').on('change', function() {
+        typearticle_id = $('#typearticle').val();
+        //produit fini
+
+        //accessoires
 
 
 
-    }
 
-    function getdonnee(param) {
-
-        article_id = $('#article_id').val();
         $.ajax({
             method: "GET",
-            url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'getdonnee']) ?>",
+            url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'typearticle']) ?>",
             dataType: "json",
             data: {
-                article_id: article_id,
+                typearticle_id: typearticle_id,
 
             },
             headers: {
@@ -1459,34 +1704,76 @@
             },
             success: function(data) {
 
-                $('#divsous').html(data.select);
-
-                if ($.fn.select2 && $('#salma').hasClass('select2-hidden-accessible')) {
-                    $('#salma').select2('destroy');
+                $('#divselect').html(data.select);
+                if (data.disabled == "") {
+                    setTimeout(function() {
+                        $('#article_id').select2();
+                    }, 100);
                 }
 
-                if ($.fn.select2 && $('#sous').hasClass('select2-hidden-accessible')) {
-                    $('#sous').select2('destroy');
+
+
+                // Reset the values and trigger change (without the AJAX call)
+                $('#salma').val('').trigger('change');
+                $('#sous').val('').trigger('change');
+
+
+
+                if (typearticle_id == 1) {
+
+                    if ($.fn.select2 && $('#salma').hasClass('select2-hidden-accessible')) {
+                        $('#salma').select2('destroy');
+                    }
+
+                    if ($.fn.select2 && $('#sous').hasClass('select2-hidden-accessible')) {
+                        $('#sous').select2('destroy');
+                    }
+                    $('#salma').removeAttr('readonly');
+                    $('#salma').css('pointer-events', '');
+                    $('#sous').removeAttr('readonly');
+                    $('#sous').css('pointer-events', '');
+
+
+                    $('#salma').select2();
+                    $('#sous').select2();
+
+                    $('#code').val('');
+
+
+
                 }
 
-                $('#salma').removeAttr('readonly');
-                $('#salma').css('pointer-events', '');
-                $('#sous').removeAttr('readonly');
-                $('#sous').css('pointer-events', '');
+
+                if (typearticle_id == 2) {
+                    setTimeout(function() {
 
 
-                $('#salma').val(data.famille_id);
-                $('#sous').val(data.sousfamille1_id);
-                $('#salma').attr('readonly', 'readonly');
-                $('#salma').css('pointer-events', 'none');
-                $('#sous').attr('readonly', 'readonly');
-                $('#sous').css('pointer-events', 'none');
-                // $('#salma').select2();
-                // $('#sous').select2();
+                        if ($.fn.select2 && $('#salma').hasClass(
+                                'select2-hidden-accessible')) {
+                            $('#salma').select2('destroy');
+                        }
 
-                finalCode = data.finalCode;
-                if (finalCode) {
-                    $('#code').val(finalCode);
+                        if ($.fn.select2 && $('#sous').hasClass(
+                                'select2-hidden-accessible')) {
+                            $('#sous').select2('destroy');
+                        }
+
+
+                        $('#salma').attr('readonly', 'readonly');
+                        $('#salma').css('pointer-events', 'none');
+                        $('#sous').attr('readonly', 'readonly');
+                        $('#sous').css('pointer-events', 'none');
+
+
+
+
+                        $('#code').val(data.code);
+
+
+                    }, 200);
+                } else {
+                    $('#code').val('');
+
                 }
 
 
@@ -1495,209 +1782,73 @@
 
             }
 
-        });
+        })
+    });
+});
 
 
 
-    }
+$(function() {
+    $('#code').on('blur', function() {
+
+        codearticle = $('#codearticle').val();
+        //    alert(codearticle)
 
 
+        //  alert(codearticle);
 
+        $.ajax({
+            method: "GET",
+            url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'verifcodearticle']) ?>",
+            dataType: "json",
+            data: {
+                idfam: codearticle,
 
-    $(function() {
-        $('.sousfamille1').on('change', function() {
-            //  alert('hello');
-            id = $('#sous').val();
-            // alert(id)
-            $.ajax({
-                method: "GET",
-                url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'getsousf']) ?>",
-                dataType: "json",
-                data: {
-                    idfam: id,
-
-                },
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
-                },
-                success: function(data) {
-
-
-
-
-
+            },
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+            },
+            success: function(data) {
+                // alert('hello');
+                //alert(data.select);
+                //  $('#divsous').html(data.select);
+                // uniform_select('divsous');
+                if (codearticle != '') {
+                    if (data.codeexistant.length != 0) {
+                        alert("Code article déja reservé !!");
+                        $('#codearticle').val("");
+                        $("#code").val("");
+                    }
                 }
 
-            })
-        });
+
+                //  $.each(data, function(index) {
+                // alert(data[index].name);
+                // $('#sous').append('<option value="' + data[index].name + '">' + data[index].name + '</option>');
+
+
+                //   alert(d[index].TEST2);
+                //  });
+
+
+
+
+
+                //  var opts = $.parseJSON(data);
+                // alert(opts);
+                //   alert("hh");
+
+
+                // $('#sousfamille1').html(data.select);
+                // uniform_select('sousfamille1_id');
+                /*  $.each(opts, function(i, d) {
+                 //You will need to alter the below to get the right values from your json object.  Guessing that d.id /d.modelName are columns in your carModels data
+                 $('#emptyDropdown').append('<option value="' + d.ModelID + '">' + d.ModelName + '</option>');
+                 });*/
+
+            }
+
+        })
     });
-
-    $(function() {
-        $('#typearticle').on('change', function() {
-            typearticle_id = $('#typearticle').val();
-            //produit fini
-
-            //accessoires
-
-
-
-
-            $.ajax({
-                method: "GET",
-                url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'typearticle']) ?>",
-                dataType: "json",
-                data: {
-                    typearticle_id: typearticle_id,
-
-                },
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
-                },
-                success: function(data) {
-
-                    $('#divselect').html(data.select);
-                    if (data.disabled == "") {
-                        setTimeout(function() {
-                            $('#article_id').select2();
-                        }, 100);
-                    }
-
-
-
-                    // Reset the values and trigger change (without the AJAX call)
-                    $('#salma').val('').trigger('change');
-                    $('#sous').val('').trigger('change');
-
-
-
-                    if (typearticle_id == 1) {
-
-                        if ($.fn.select2 && $('#salma').hasClass('select2-hidden-accessible')) {
-                            $('#salma').select2('destroy');
-                        }
-
-                        if ($.fn.select2 && $('#sous').hasClass('select2-hidden-accessible')) {
-                            $('#sous').select2('destroy');
-                        }
-                        $('#salma').removeAttr('readonly');
-                        $('#salma').css('pointer-events', '');
-                        $('#sous').removeAttr('readonly');
-                        $('#sous').css('pointer-events', '');
-
-
-                        $('#salma').select2();
-                        $('#sous').select2();
-
-                        $('#code').val('');
-
-
-
-                    }
-
-
-                    if (typearticle_id == 2) {
-                        setTimeout(function() {
-
-
-                            if ($.fn.select2 && $('#salma').hasClass('select2-hidden-accessible')) {
-                                $('#salma').select2('destroy');
-                            }
-
-                            if ($.fn.select2 && $('#sous').hasClass('select2-hidden-accessible')) {
-                                $('#sous').select2('destroy');
-                            }
-
-
-                            $('#salma').attr('readonly', 'readonly');
-                            $('#salma').css('pointer-events', 'none');
-                            $('#sous').attr('readonly', 'readonly');
-                            $('#sous').css('pointer-events', 'none');
-
-
-
-
-                            $('#code').val(data.code);
-
-
-                        }, 200);
-                    } else {
-                        $('#code').val('');
-
-                    }
-
-
-
-
-
-                }
-
-            })
-        });
-    });
-
-
-
-    $(function() {
-        $('#code').on('blur', function() {
-
-            codearticle = $('#codearticle').val();
-            //    alert(codearticle)
-
-
-            //  alert(codearticle);
-
-            $.ajax({
-                method: "GET",
-                url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'verifcodearticle']) ?>",
-                dataType: "json",
-                data: {
-                    idfam: codearticle,
-
-                },
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
-                },
-                success: function(data) {
-                    // alert('hello');
-                    //alert(data.select);
-                    //  $('#divsous').html(data.select);
-                    // uniform_select('divsous');
-                    if (codearticle != '') {
-                        if (data.codeexistant.length != 0) {
-                            alert("Code article déja reservé !!");
-                            $('#codearticle').val("");
-                            $("#code").val("");
-                        }
-                    }
-
-
-                    //  $.each(data, function(index) {
-                    // alert(data[index].name);
-                    // $('#sous').append('<option value="' + data[index].name + '">' + data[index].name + '</option>');
-
-
-                    //   alert(d[index].TEST2);
-                    //  });
-
-
-
-
-
-                    //  var opts = $.parseJSON(data);
-                    // alert(opts);
-                    //   alert("hh");
-
-
-                    // $('#sousfamille1').html(data.select);
-                    // uniform_select('sousfamille1_id');
-                    /*  $.each(opts, function(i, d) {
-                     //You will need to alter the below to get the right values from your json object.  Guessing that d.id /d.modelName are columns in your carModels data
-                     $('#emptyDropdown').append('<option value="' + d.ModelID + '">' + d.ModelName + '</option>');
-                     });*/
-
-                }
-
-            })
-        });
-    });
+});
 </script>
