@@ -3385,6 +3385,8 @@ class ArticlesController extends AppController
 
 
         $article = $this->Articles->newEmptyEntity();
+
+    
         if ($this->request->is('post')) {
 
             debug($this->request->getData());
@@ -5534,4 +5536,32 @@ class ArticlesController extends AppController
         echo json_encode(array('select' => $select));
         exit;
     }
+
+
+    public function checkDesignation()
+    {   
+        $this->autoRender = false; // Disable view rendering for AJAX
+        $this->response = $this->response->withType('application/json');
+    
+        if ($this->request->is('post')) {
+            $designation = $this->request->getData('designation');
+    
+            $article = $this->Articles->find()
+                ->where(['designation' => $designation])
+                ->first();
+            
+    
+           return $this->response->withStringBody(json_encode([
+                'status' => $article ? 'exists' : 'unique'
+            ]));
+        }
+    
+        return $this->response->withStringBody(json_encode([
+            'status' => 'error',
+            'message' => 'Invalid request'
+        ]));
+    }
+    
+
+   
 }

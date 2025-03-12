@@ -499,7 +499,7 @@
                                     <tr champ="tra" class="tra" style="display:none;">
                                         <td align="left">
                                             <?php echo $this->Form->input('sup', array('name' => '', 'id' => '', 'champ' => 'sup', 'table' => 'Ofsfligne', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control')); ?>
-                                            <div >
+                                            <div>
                                                 <?php echo $this->Form->control('article_id', array('options' => $articlescomp, 'empty' => 'Veuillez choisir', 'label' => false, 'id' => 'article_id', 'name' => '', 'table' => 'Ofsfligne', 'champ' => 'article_id', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => '')); ?>
                                             </div>
                                         </td>
@@ -559,7 +559,7 @@
                                         champ='traaa' index="">
                                         <td>
                                             <?php echo $this->Form->input('supp2', array('name' => '', 'type' => 'hidden', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'supp2', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
-                                            <div >
+                                            <div>
                                                 <?php echo $this->Form->control('article_id', array('options' => $articlescomp, 'name' => '', 'label' => false, 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'article_idt', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => '', 'empty' => 'Veuillez Choisir !!', "style" => "width:100% ; height:32px"));
                                                 ?>
                                             </div>
@@ -716,6 +716,27 @@
     </div>
     </div>
 
+    <!-- Bootstrap Modal for Famille and Sous Famille -->
+<div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="popupModalLabel">Erreur</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modalBody">
+        <!-- The content will be dynamically inserted here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
 
 </section>
 
@@ -729,20 +750,31 @@
 
 <!-- Select2 -->
 <?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
-<!--?php $this->start('scriptBottom'); ?>
+<?php $this->start('scriptBottom'); ?>
 <script>
     $('.testobgarticle').on('mouseover', function() {
-        alert('fff')
+   
         famille = $('#salma').val();
+        sousfamille = $('#sous').val();
         unite = $('#unite-id').val();
         Dsignation = $('#Dsignation').val();
         code = $('#code').val();
         prixachat = $('#prixachat').val();
         Prix = $('#Prix_LastInput').val();
+        // Check if famille is empty
         if (famille === "") {
-            // alert("Veuillez choisir une Famille !");
-            return false;
-        } else
+            $('#modalBody').text("Veuillez choisir une Famille !");
+            $('#popupModal').modal('show'); // Show modal if famille is empty
+            return false; // Stop the function execution if famille is empty
+        }
+
+        // Check if sousfamille is empty
+        if (sousfamille === "") {
+            $('#modalBody').text("Veuillez choisir une sous Famille !");
+            $('#popupModal').modal('show'); // Show modal if sousfamille is empty
+            return false; // Stop the function execution if sousfamille is empty
+        
+        }else
         if (unite === "") {
             alert("Veuillez choisir une unite !");
             return false;
@@ -764,6 +796,32 @@
             alert("Veuillez saisir le prix de vente !");
             return false;
         }
+
+
+
+     // Check if the designation is unique by sending an AJAX request to the CakePHP controller
+        $.ajax({
+        method: "POST", // Use POST since we are sending data
+        url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'checkDesignation']) ?>",
+        dataType: "json", // Expecting a JSON response
+        data: { designation: Dsignation }, // Send the designation to check
+        headers: {
+            'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+            
+        },
+        success: function(data) {
+            if (data.status === 'exists') {
+                alert("La Désignation existe déjà ! Veuillez choisir un autre.");
+            } else {
+                // Proceed with the next steps
+            }
+        },
+        error: function(xhr) {
+            alert("Une erreur s'est produite: " + xhr.status + " " + xhr.statusText);
+            console.log(xhr.responseText); // Log the detailed error for debugging
+        }
+    });
+
 
     });
     $(function() {
@@ -799,7 +857,7 @@
         format: 'MM/DD/YYYY h:mm A'
     })
 </script>
-<!-?php $this->end(); ?-->
+<?php $this->end(); ?>
 
 <script type="text/javascript">
     $(function() {
@@ -1340,32 +1398,4 @@
         });
     });
 </script>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var form = document.querySelector("form");
-        var famille = document.getElementById("salma");
-        var sousfamille = document.getElementById("sous");
-        var submitButton = document.querySelector("form button[type='submit'], form input[type='submit']"); 
-        form.addEventListener("submit", function (event) {
-            if (!famille.value) {
-                event.preventDefault(); // Prevent form submission
-                alert("Veuillez choisir une famille avant d'enregistrer l'article !");
-                submitButton.disabled = true;
-
-            }
-
-         
-
-        
-            submitButton.disabled = false;
-        
-        
-        });
-
-       
-    });
-</script>
-the sousfamille is not detected
-
 
