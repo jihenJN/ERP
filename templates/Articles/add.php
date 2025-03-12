@@ -797,30 +797,49 @@
             return false;
         }
 
+        $.ajax({
+                method: "GET",
+                url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'checkDesignation']) ?>",
+                dataType: "json",
+                data: {
+                    Dsignation: Dsignation,
 
+                },
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+                },
+                success: function(data) {
+                    alert(data.testt);
+                   
+                    return false;
+                    // alert(data.vente);
+                 
+                }
+
+            })
 
      // Check if the designation is unique by sending an AJAX request to the CakePHP controller
-        $.ajax({
-        method: "POST", // Use POST since we are sending data
-        url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'checkDesignation']) ?>",
-        dataType: "json", // Expecting a JSON response
-        data: { designation: Dsignation }, // Send the designation to check
-        headers: {
-            'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+    //     $.ajax({
+    //     method: "POST", // Use POST since we are sending data
+    //     url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'checkDesignation']) ?>",
+    //     dataType: "json", // Expecting a JSON response
+    //     data: { designation: Dsignation }, // Send the designation to check
+    //     headers: {
+    //         'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
             
-        },
-        success: function(data) {
-            if (data.status === 'exists') {
-                alert("La Désignation existe déjà ! Veuillez choisir un autre.");
-            } else {
-                // Proceed with the next steps
-            }
-        },
-        error: function(xhr) {
-            alert("Une erreur s'est produite: " + xhr.status + " " + xhr.statusText);
-            console.log(xhr.responseText); // Log the detailed error for debugging
-        }
-    });
+    //     },
+    //     success: function(data) {
+    //         if (data.status === 'exists') {
+    //             alert("La Désignation existe déjà ! Veuillez choisir un autre.");
+    //         } else {
+    //             // Proceed with the next steps
+    //         }
+    //     },
+    //     error: function(xhr) {
+    //         alert("Une erreur s'est produite: " + xhr.status + " " + xhr.statusText);
+    //         console.log(xhr.responseText); // Log the detailed error for debugging
+    //     }
+    // });
 
 
     });

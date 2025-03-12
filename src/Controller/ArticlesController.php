@@ -5539,29 +5539,18 @@ class ArticlesController extends AppController
 
 
     public function checkDesignation()
-    {   
-        $this->autoRender = false; // Disable view rendering for AJAX
-        $this->response = $this->response->withType('application/json');
-    
-        if ($this->request->is('post')) {
-            $designation = $this->request->getData('designation');
-    
-            $article = $this->Articles->find()
-                ->where(['designation' => $designation])
-                ->first();
-            
-    
-           return $this->response->withStringBody(json_encode([
-                'status' => $article ? 'exists' : 'unique'
-            ]));
-        }
-    
-        return $this->response->withStringBody(json_encode([
-            'status' => 'error',
-            'message' => 'Invalid request'
-        ]));
-    }
-    
+    {
 
-   
+        $testt = 0;
+        $designation = $this->request->getQuery('Dsignation');
+        $article = $this->Articles->find()
+            ->where(['Dsignation' => $designation])
+            ->first();
+        if ($article) {
+            $testt = 1;
+        }
+
+        echo json_encode(array('testt' => $testt));
+        die;
+    }
 }
