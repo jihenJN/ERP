@@ -3106,7 +3106,8 @@ class ArticlesController extends AppController
         //debug($query);
         $this->paginate = [
             'contain' => ['Familles', 'Tvas', 'Marques', 'Typearticles'],
-            'order' => ['id' => 'ASC']
+            'order' => ['id' => 'ASC'],
+            'limit'=>["150000"]
         ];
         $articles = $this->paginate($query);
         //debug($articles);die;
@@ -3389,7 +3390,6 @@ class ArticlesController extends AppController
     
         if ($this->request->is('post')) {
 
-            debug($this->request->getData());
             $codearticle = $this->request->getData('codearticle');
             $article = $this->Articles->patchEntity($article, $this->request->getData());
             $codefinale = $codepays . $codeproducteur . $codearticle;
@@ -3409,12 +3409,6 @@ class ArticlesController extends AppController
                 $image->moveTo($targetPath);
                 $article->image = $name;
             }
-
-
-
-
-
-
 
 
             if ($this->Articles->save($article)) {
@@ -5540,7 +5534,6 @@ class ArticlesController extends AppController
 
     public function checkDesignation()
     {
-
         $testt = 0;
         $designation = $this->request->getQuery('Dsignation');
         $article = $this->Articles->find()
@@ -5549,7 +5542,6 @@ class ArticlesController extends AppController
         if ($article) {
             $testt = 1;
         }
-
         echo json_encode(array('testt' => $testt));
         die;
     }
