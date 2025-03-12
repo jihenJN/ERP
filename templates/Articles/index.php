@@ -51,7 +51,7 @@ foreach ($lien as $k => $liens) {
 if ($add == 1) {
 ?>
     <div class="pull-left" style="margin-left:25px;margin-top: 20px">
-        <?php echo $this->Html->link(__('Ajouter'), ['action' => 'add/'.$type], ['class' => 'btn btn-success btn-sm']) ?>
+        <?php echo $this->Html->link(__('Ajouter'), ['action' => 'add/' . $type], ['class' => 'btn btn-success btn-sm']) ?>
     </div>
 <?php } ?>
 <br> <br><br>
@@ -129,7 +129,7 @@ if ($add == 1) {
 
                 <div class="pull-right" style="margin-right:50%;margin-top: 20px;">
                     <button type="submit" class="btn btn-primary btn-sm">Afficher</button>
-                    <?php echo $this->Html->link(__('Afficher Tous'), ['action' => 'index/'.$type], ['class' => 'btn btn-primary btn-sm']) ?>
+                    <?php echo $this->Html->link(__('Afficher Tous'), ['action' => 'index/' . $type], ['class' => 'btn btn-primary btn-sm']) ?>
                 </div>
             </div>
             <?php echo $this->Form->end(); ?>
@@ -199,12 +199,16 @@ if ($add == 1) {
                                     <!-- <td>
                                         <?php echo $this->Html->image('imgart/' . $article->image, ['style' => 'max-width:80px;height:80px;']); ?>
                                     </td> -->
-                                   
+
                                     <td class="actions text" style="text-align:center;padding:2px">
                                         <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $article->id), array('escape' => false)); ?>
                                         <!-- <?= $this->Html->link(__(''), ['action' => 'view', $article->id], ['class' => 'fa fa-search ']) ?> -->
                                         <?php if ($edit == 1) {
                                             echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $article->id), array('escape' => false));
+                                        } ?>
+
+                                        <?php if ($edit == 1) {
+                                            echo $this->Html->link("<button class='btn btn-xs btn-primary'><i class='fa fa-clone'></i></button>", array('action' => 'duplicate', $article->id), array('escape' => false));
                                         } ?>
                                         <!-- <?= $this->Html->link(__('Edit'), ['action' => 'edit', $article->id], ['class' => 'btn btn-warning btn-xs']) ?> -->
                                         <?php if ($delete == 1) { ?>

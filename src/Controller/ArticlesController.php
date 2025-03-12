@@ -3848,7 +3848,7 @@ class ArticlesController extends AppController
 
 
 
-
+           
 
             if ($this->Articles->save($article)) {
                 $article_id = $article->id;
@@ -4206,6 +4206,9 @@ class ArticlesController extends AppController
         // debug($clientarticles);
         $famillerotations = $this->fetchTable('Famillerotations')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $articlees = $this->Articles->find('list', ['keyfield' => 'id', 'valueField' => 'Dsignation'])->where(['Articles.vente=0']);
+        
+ 
+
         //  foreach($mois as $m){debug($m);}
         // $tvas = $this->Articles->Tvas->find('list')->all();
         $uaprincipals = $this->fetchTable('Uaprincipals')->find('all',  [
@@ -4237,6 +4240,11 @@ class ArticlesController extends AppController
 
         $this->set(compact('unit', 'dat', 'articlescomp', 'type', 'articles', 'typearticles', 'clientarticles', 'clients', 'marques', 'uaprincipals', 'unitearticless', 'articlefournisseurs', 'frs', 'articles', 'devices',  'charges', 'famillerotations',  'articlees', 'objectifrepresentants', 'commercials', 'mois', 'unitearticles', 'sousfamille2s', 'unites', 'tpe', 'seuil', 'codeart', 'article', 'articlee', 'familles', 'sousfamille1s', 'codepays', 'codeproducteur', 'val', 'tvas', 'fodec'));
     }
+
+
+
+
+    
     public function dupliquer($id = null)
     {
         // $session = $this->request->getSession();
@@ -5545,4 +5553,42 @@ class ArticlesController extends AppController
         echo json_encode(array('testt' => $testt));
         die;
     }
+    /*  public function duplicate($id = null)
+    {
+        $this->loadModel('Articles');
+        $original = $this->Articles->get($id, ['contain' => []]);
+    
+        if (!$original) {
+            $this->Flash->error(__('Record not found.'));
+            return $this->redirect(['action' => 'index']);
+        }
+    
+         // Create a new entity with original data but without ID
+    $duplicate = $this->YourModel->newEntity($original->toArray());
+    unset($duplicate->id); // Ensures CakePHP treats this as a new record
+
+    $this->set(compact('duplicate'));
+    $this->render('edit'); // Reuse edit.php template
+    }
+    */
+    public function duplicate($id = null)
+    {
+        $this->loadModel('Articles');
+        $original = $this->Articles->get($id, ['contain' => ['Familles', 'Tvas', 'Marques', 'Typearticles']]);
+
+        // Create a new entity with original data but without ID
+        $duplicate = $this->Articles->newEntity($original->toArray());
+        unset($duplicate->id);
+
+        // Fetch necessary data for form selects
+    
+        $familles = $this->fetchTable('Familles')->find('list', ['keyField' => 'id', 'valueField' => 'Nom']);
+        $tvas = $this->fetchTable('Tvas')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+        $unitearticles = $this->fetchTable('Unitearticles')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+        $unites = $this->fetchTable('Unites')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+        $typearticles = $this->fetchTable('Typearticles')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->order('rang', 'asc');
+        $this->set(compact('duplicate','familles','tvas','unitearticles','unites','typearticles'));
+        $this->render('edit');
+    }
+
 }

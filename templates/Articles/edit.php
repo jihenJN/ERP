@@ -38,7 +38,7 @@
                 <!-- /.box-header -->
                 <!-- form start -->
                 <?php
-                echo $this->Form->create($article, ['role' => 'form', 'type' => 'file', 'onkeypress' => "return event.keyCode!=13"]);
+                echo $this->Form->create($duplicate ?? $article, ['role' => 'form', 'type' => 'file', 'onkeypress' => "return event.keyCode!=13"]);
                 //debug ($article);
                 // die;
                 ?>
