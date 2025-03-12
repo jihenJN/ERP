@@ -1028,6 +1028,25 @@
     </div>
 
 
+    <!-- Bootstrap Modal for Famille and Sous Famille -->
+    <div class="modal fade" id="popupModal" tabindex="-1" role="dialog" aria-labelledby="popupModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="popupModalLabel">Erreur</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <!-- The content will be dynamically inserted here -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 
@@ -1045,15 +1064,26 @@
     $('.testobgarticle').on('mouseover', function() {
         // alert('fff')
         famille = $('#salma').val();
+        sousfamille = $('#sous').val();
         unite = $('#unite-id').val();
         Dsignation = $('#Dsignation').val();
         code = $('#code').val();
         prixachat = $('#prixachat').val();
         Prix = $('#Prix_LastInput').val();
-        if (famille === "") {
-            alert("Veuillez choisir une Famille !");
-            return false;
+         // Check if famille is empty
+         if (famille === "") {
+            $('#modalBody').text("Veuillez choisir une Famille !");
+            $('#popupModal').modal('show'); 
+            return false; 
         } else
+           // Check if sousfamille is empty
+           if (sousfamille === "") {
+            $('#modalBody').text("Veuillez choisir une sous Famille !");
+            $('#popupModal').modal('show'); 
+            return false; 
+
+        } else
+       
         if (unite === "") {
             alert("Veuillez choisir une unite !");
             return false;
@@ -1075,6 +1105,27 @@
             alert("Veuillez saisir le prix de vente !");
             return false;
         }
+
+
+        $.ajax({
+            method: "GET",
+            url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'checkDesignation']) ?>",
+            dataType: "json",
+            data: {
+                Dsignation: Dsignation,
+            },
+            headers: {
+                'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+            },
+            success: function(data) {
+                if (data.testt == 1) {
+                  //  alert("Designation existante !");
+                  $('#modalBody').text("Designation existante!");
+                  $('#popupModal').modal('show'); 
+                }
+                return false;
+            }
+        })
 
     });
     $(function() {
