@@ -39,8 +39,7 @@
                 <!-- form start -->
                 <?php
                 echo $this->Form->create($duplicate ?? $article, ['role' => 'form', 'type' => 'file', 'onkeypress' => "return event.keyCode!=13"]);
-                //debug ($article);
-                // die;
+                
                 ?>
 
 
@@ -1059,7 +1058,7 @@
 
 <!-- Select2 -->
 <?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
-<?php $this->start('scriptBottom'); ?>
+<!--?php $this->start('scriptBottom'); ?>
 <script>
     $('.testobgarticle').on('mouseover', function() {
         // alert('fff')
@@ -1161,7 +1160,7 @@
         format: 'MM/DD/YYYY h:mm A'
     })
 </script>
-<?php $this->end(); ?>
+<!?php $this->end(); ?-->
 
 <script type="text/javascript">
     $(function() {

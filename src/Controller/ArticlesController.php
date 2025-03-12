@@ -5575,13 +5575,27 @@ class ArticlesController extends AppController
     {
         $this->loadModel('Articles');
         $original = $this->Articles->get($id, ['contain' => ['Familles', 'Tvas', 'Marques', 'Typearticles']]);
-
+       
         // Create a new entity with original data but without ID
         $duplicate = $this->Articles->newEntity($original->toArray());
         unset($duplicate->id);
 
+        // Handle form submission
+        if ($this->request->is(['post', 'put'])) {
+            $duplicate = $this->Articles->patchEntity($duplicate, $this->request->getData());
+
+            if ($this->Articles->save($duplicate)) {
+                $this->Flash->success(__('L"article dupliqué a été enregistré.'));
+                return $this->redirect(['action' => 'index']);
+            } else {
+                $this->Flash->error(__('Unable to save the duplicate article.'));
+                debug($duplicate->getErrors());
+                die();
+            }
+        }
+
+
         // Fetch necessary data for form selects
-    
         $familles = $this->fetchTable('Familles')->find('list', ['keyField' => 'id', 'valueField' => 'Nom']);
         $tvas = $this->fetchTable('Tvas')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $unitearticles = $this->fetchTable('Unitearticles')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
@@ -5589,6 +5603,7 @@ class ArticlesController extends AppController
         $typearticles = $this->fetchTable('Typearticles')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->order('rang', 'asc');
         $this->set(compact('duplicate','familles','tvas','unitearticles','unites','typearticles'));
         $this->render('edit');
+
     }
 
 }
