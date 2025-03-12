@@ -5538,19 +5538,66 @@ class ArticlesController extends AppController
     }
 
 
-    public function checkDesignation()
+    /*  public function checkDesignation($id=null)
+    {   
+        $testt = 0;
+        if($id){
+        
+        } else{
+
+            $designation = $this->request->getQuery('Dsignation');
+            $article = $this->Articles->find()
+                ->where(['Dsignation' => $designation])
+                ->first();
+            if ($article) {
+                $testt = 1;
+            }
+            echo json_encode(array('testt' => $testt));
+            die;
+        }
+       
+    }*/
+
+    public function checkDesignation($id = null)
     {
         $testt = 0;
         $designation = $this->request->getQuery('Dsignation');
-        $article = $this->Articles->find()
-            ->where(['Dsignation' => $designation])
-            ->first();
-        if ($article) {
-            $testt = 1;
+
+        if ($id) {
+            // Fetch the current article by ID
+            $article = $this->Articles->find()
+                ->where(['id' => $id])
+                ->first();
+
+            if ($article) {
+                // Skip validation if the designation hasn't changed
+                if ($article->Dsignation !== $designation) {
+                    // Check if the new designation already exists in another article
+                    $existingArticle = $this->Articles->find()
+                        ->where(['Dsignation' => $designation])
+                        ->where(['id !=' => $id]) // Exclude the current article
+                        ->first();
+
+                    if ($existingArticle) {
+                        $testt = 1; // The new designation is not unique
+                    }
+                }
+            }
+        } else {
+            // Check if designation exists for a new article (creation mode)
+            $existingArticle = $this->Articles->find()
+                ->where(['Dsignation' => $designation])
+                ->first();
+
+            if ($existingArticle) {
+                $testt = 1; // Designation is not unique
+            }
         }
-        echo json_encode(array('testt' => $testt));
+
+        echo json_encode(['testt' => $testt]);
         die;
     }
+
 
     public function duplicate($id = null)
     {
