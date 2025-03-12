@@ -5538,17 +5538,19 @@ class ArticlesController extends AppController
     }
 
 
-    public function checkDesignation($id = null)
+    public function checkDesignation()
     {
         $testt = 0;
         $designation = $this->request->getQuery('Dsignation');
+        $id = $this->request->getQuery('id'); // Get the ID from the request query
 
         if ($id) {
             // Fetch the current article by ID
             $article = $this->Articles->find()
                 ->where(['id' => $id])
                 ->first();
-
+            
+     
             if ($article) {
                 // Skip validation if the designation hasn't changed
                 if ($article->Dsignation !== $designation) {

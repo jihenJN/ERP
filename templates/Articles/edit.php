@@ -1209,6 +1209,7 @@
 <?php $this->start('scriptBottom'); ?>
 <script>
     $('.testobgarticle').on('mouseover', function() {
+        var articleId = <?= json_encode($article->id) ?>;
         // alert('fff')
         famille = $('#salma').val();
         sousfamille = $('#sous').val();
@@ -1260,6 +1261,7 @@
             dataType: "json",
             data: {
                 Dsignation: Dsignation,
+                id: articleId
             },
             headers: {
                 'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
