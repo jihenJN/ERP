@@ -3105,7 +3105,7 @@ class ArticlesController extends AppController
         $query = $this->Articles->find('all')->where([$cond1, $cond2, $cond3, $cond4, $cond5, $cond6, $condtype]);
         //debug($query);
         $this->paginate = [
-            'contain' => ['Familles', 'Tvas', 'Marques', 'Typearticles'],
+            'contain' => ['Familles', 'Tvas', 'Marques', 'Typearticles','ParentArticle'],
             'order' => ['id' => 'ASC'],
             'limit' => ["150000"]
         ];

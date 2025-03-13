@@ -80,6 +80,7 @@ class ArticlesTable extends Table {
             'foreignKey' => 'unite_id',
         ]);
 
+
         $this->belongsTo('Typearticles', [
             'foreignKey' => 'typearticle_id',
         ]);
@@ -148,6 +149,12 @@ class ArticlesTable extends Table {
         ]);
         $this->hasMany('Lignelivraisons', [
             'foreignKey' => 'article_id',
+        ]);
+
+        $this->belongsTo('ParentArticle', [
+            'className' => 'Articles',
+            'foreignKey' => 'article_id',
+            
         ]);
     }
 

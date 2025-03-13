@@ -146,6 +146,7 @@ if ($add == 1) {
                             <tr>
                                 <th scope="col"><?= ('Code') ?></th>
                                 <th scope="col"><?= ('Type article') ?></th>
+                                <th scope="col"><?= ('Article Parent') ?></th>
 
                                 <th scope="col"><?= ('Désignation') ?></th>
                                 <th scope="col"><?= ('Famille') ?></th>
@@ -161,13 +162,14 @@ if ($add == 1) {
                         <tbody>
                             <?php
                             foreach ($articles as $i => $article) :
+                                //debug ($article);
                             ?>
                                 <tr>
                                     <td align="right" style="padding:2px">
                                         <?php echo $this->Form->control('id', ['type' => 'hidden', 'index' => $i, 'id' => 'id' . $i, 'value' => $article->id, 'label' => '', 'champ' => 'id', 'class' => 'form-control']); ?>
                                         <?= h($article->Code) ?></td>
                                     <td style="padding:2px"><?= h($article->typearticle->name) ?></td>
-
+                                    <td style="padding:2px"><?= h($article->parent_article->Dsignation) ?></td>
                                     <td style="padding:2px"><?= h($article->Dsignation) ?></td>
                                     <td style="padding:2px"><?= ($article->famille->Nom) ?></td>
 
