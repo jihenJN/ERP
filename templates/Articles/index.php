@@ -132,7 +132,7 @@ if ($add == 1) {
                                 <option <?php if ($this->request->getQuery('typearticle_id') == $id) { ?> selected="selected" <?php } ?> value="<?php echo $id; ?>"><?php echo $typearticle ?></option>
                             <?php } ?>
                         </select>
-                    </div>
+                    </div> 
                 </div>
 
 
@@ -141,13 +141,13 @@ if ($add == 1) {
                     <button type="submit" class="btn btn-primary btn-sm">Afficher</button>
                     <?php echo $this->Html->link(__('Afficher Tous'), ['action' => 'index/' . $type], ['class' => 'btn btn-primary btn-sm']) ?> 
                     <!--?php echo $this->Html->link(__('Excel'), ['action' => 'downloadExcel?date=' . $date . '&name=' . $name . '&operateur_id=' . $operateur_id . '&produit_id=' . $produit_id . '&typeopenmarket_id=' . $typeopenmarket_id . '&valide=' . $valide . ''], ['class' => 'btn btn-primary ']) ?-->
-                  <?php echo $this->Html->link(__('Excel'), ['action' => 'downloadExcel?Code=' . $Code . '&sousfamille1_id=' . $sousfamille1_id . ''], ['class' => 'btn btn-primary ']) ?>
+                  <?php echo $this->Html->link(__('Excel'), ['action' => 'downloadExcel?Code=' . $Code . '&sousfamille1_id=' . $sousfamille1_id . '&sousfamille2_id=' . $sousfamille2_id . '&Dsignation=' . $Dsignation .'&famille_id=' . $famille_id .'&etat=' . $etat .'&typearticle_id=' . $typearticle_id .''], ['class' => 'btn btn-primary ']) ?>
                 </div>
             </div>
             <?php echo $this->Form->end(); ?>
         </div>
 
-</section>
+</section>$etat
 <section class="content">
     <div class="row">
         <div class="col-xs-12">

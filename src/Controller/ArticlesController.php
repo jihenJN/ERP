@@ -3057,15 +3057,12 @@ class ArticlesController extends AppController
         if (($artic == 0)) {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
-      
-          // Get the current search filters from the request
-    $searchFilters = $this->request->getQueryParams();
 
-    // Store filters in the session
-    $session->write('search_filters', $searchFilters);
-    debug($searchFilters);
+        // Get the current search filters from the request
+        $searchFilters = $this->request->getQueryParams();
 
-
+        // Store filters in the session
+        $session->write('search_filters', $searchFilters);
 
         $cond1 = '';
         $cond2 = '';
