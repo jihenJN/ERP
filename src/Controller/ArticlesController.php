@@ -6111,8 +6111,13 @@ class ArticlesController extends AppController
 
  
        $articles  = $this->Articles->find('all', [
-            'contain' => ['Familles', 'Tvas', 'Marques', 'Typearticles', 'ParentArticle'],'limit' => ["150000"]
+            'contain' => ['Familles', 'Tvas', 'Marques', 'Typearticles', 'ParentArticle','Sousfamille1s'],'limit' => ["150000"]
         ])->where([$cond1, $cond2, $cond3, $cond4, $cond5, $cond6, $cond7]);
+        
+        // Debug only the first 5 records
+        //debug($articles->toArray()); 
+        //$articleCount = $articles->count();
+        //debug($articleCount);
  
         $tempFile = tempnam(sys_get_temp_dir(), 'excel_') . '.xls';
         // // Créer un fichier temporaire pour stocker les données
@@ -6132,7 +6137,7 @@ class ArticlesController extends AppController
                 $article->parent_article->Dsignation,
                 $article->Dsignation,
                 $article->famille->nom,
-                $article->sousfamille1_id,
+                $article->sousfamille1s->nom,
                 $article->etat,
                 $article->Prix_LastInput
                
