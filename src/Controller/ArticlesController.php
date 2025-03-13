@@ -5632,10 +5632,32 @@ public function duplicate($id = null)
         'contain' => ['Tvas', 'Familles'],
     ]);
 
-    // Force 'Dsignation' to be empty
-    $article->Dsignation = '';
 
-    if ($article->typearticle != 2) {
+   
+        // Ensure $article->Code is set
+        $code = isset($article->Code) ? $article->Code : '0000000'; // Default value if null or empty
+
+        // Extract numeric part while preserving non-numeric prefix (if any)
+        preg_match('/^(\D*)(\d+)$/', $code, $matches);
+
+        $prefix = $matches[1] ?? ''; // Non-numeric prefix
+        $numericPart = isset($matches[2]) ? $matches[2] : '0'; // Keep as string
+
+        // Convert to integer, increment, and then format as a string with leading zeros
+        $numericPart = str_pad((string)((int)$numericPart + 1), strlen($matches[2]), '0', STR_PAD_LEFT);
+
+        // Concatenate prefix and updated numeric part
+        $newCode = $prefix . $numericPart;
+
+        $article->Code = $newCode;
+
+        // Force 'Dsignation' to be empty
+        $article->Dsignation = '';
+
+        
+
+        
+        if ($article->typearticle != 2) {
         $type = 1;
     } else {
         $type = 2;
@@ -5653,6 +5675,7 @@ public function duplicate($id = null)
     if ($this->request->is(['patch', 'post', 'put'])) {
         // debug($this->request->getData());
         $codearticle = $this->request->getData('codearticle');
+        
         $article = $this->Articles->patchEntity($article, $this->request->getData());
         
         $codefinale = $codepays . $codeproducteur . $codearticle;
@@ -5994,7 +6017,7 @@ public function duplicate($id = null)
     $articlesss = $this->fetchTable('Articles')->find()->select(['id', 'Dsignation', 'Code'])->where(['Articles.famille_id!=1']);
 
     foreach ($articlesss as $a) {
-        // debug($a->id.' '.$a->Dsignation);
+       // debug($a->id.' '.$a->Dsignation);
         $articles[$a->id] = $a->Code . ' ' . $a->Dsignation;
     }
 
