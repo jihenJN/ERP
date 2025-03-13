@@ -3057,6 +3057,16 @@ class ArticlesController extends AppController
         if (($artic == 0)) {
             $this->redirect(array('controller' => 'users', 'action' => 'login'));
         }
+      
+          // Get the current search filters from the request
+    $searchFilters = $this->request->getQueryParams();
+
+    // Store filters in the session
+    $session->write('search_filters', $searchFilters);
+    debug($searchFilters);
+
+
+
         $cond1 = '';
         $cond2 = '';
         $cond3 = '';
@@ -6067,7 +6077,14 @@ class ArticlesController extends AppController
 
 
     public function downloadExcel()
-    {
+
+    {   
+        $session = $this->request->getSession();
+        // Get stored search filters
+        $queryParams = $session->read('search_filters');
+        // Manually set the request query parameters
+        $this->request = $this->request->withQueryParams($queryParams);
+
         $cond1 = '';
         $cond2 = '';
         $cond3 = '';
@@ -6083,6 +6100,7 @@ class ArticlesController extends AppController
         $typearticle_id = $this->request->getQuery('typearticle_id');
 
         if ($Code) {
+
             $cond1 = "Articles.Code like  '%" . $Code . "%' ";
         }
         if ($sousfamille1_id) {

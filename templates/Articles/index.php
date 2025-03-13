@@ -141,7 +141,7 @@ if ($add == 1) {
                     <button type="submit" class="btn btn-primary btn-sm">Afficher</button>
                     <?php echo $this->Html->link(__('Afficher Tous'), ['action' => 'index/' . $type], ['class' => 'btn btn-primary btn-sm']) ?> 
                     <!--?php echo $this->Html->link(__('Excel'), ['action' => 'downloadExcel?date=' . $date . '&name=' . $name . '&operateur_id=' . $operateur_id . '&produit_id=' . $produit_id . '&typeopenmarket_id=' . $typeopenmarket_id . '&valide=' . $valide . ''], ['class' => 'btn btn-primary ']) ?-->
-                  <?php echo $this->Html->link(__('Excel'), ['action' => 'downloadExcel?code=' . $Code . ''], ['class' => 'btn btn-primary ']) ?>
+                  <?php echo $this->Html->link(__('Excel'), ['action' => 'downloadExcel?Code=' . $Code . '&sousfamille1_id=' . $sousfamille1_id . ''], ['class' => 'btn btn-primary ']) ?>
                 </div>
             </div>
             <?php echo $this->Form->end(); ?>
