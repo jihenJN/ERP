@@ -3110,7 +3110,7 @@ class ArticlesController extends AppController
         //debug($query);
         $this->paginate = [
             'contain' => ['Familles', 'Tvas', 'Marques', 'Typearticles','ParentArticle'],
-            'order' => ['id' => 'ASC'],
+            'order' => ['id' => 'DESC'],
             'limit' => ["150000"]
         ];
         $articles = $this->paginate($query);
