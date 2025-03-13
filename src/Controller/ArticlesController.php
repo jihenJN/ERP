@@ -3069,6 +3069,7 @@ class ArticlesController extends AppController
         $famille_id = $this->request->getQuery('famille_id');
         $sousfamille1_id = $this->request->getQuery('sousfamille1_id');
         $sousfamille2_id = $this->request->getQuery('sousfamille2_id');
+        $typearticle_id = $this->request->getQuery('typearticle_id');
 
         //debug( $this->request->getQuery());die;
         if ($Code) {
@@ -3086,6 +3087,7 @@ class ArticlesController extends AppController
         if ($famille_id) {
             $cond5 = "Articles.famille_id  = " . $famille_id;
         }
+      
         if ($etat) {
             if ($etat == 'Veuillez choisir !!') {
                 $cond6 = '';
@@ -3093,7 +3095,9 @@ class ArticlesController extends AppController
                 $cond6 = "Articles.etat=" . $etat;
             }
         }
-
+        if ($typearticle_id) {
+            $cond7 = "Articles.typearticle_id  = " . $typearticle_id;
+        }
 
         if ($type == 1) {
             $condtype = "typearticle_id!=2";
@@ -3102,7 +3106,7 @@ class ArticlesController extends AppController
         }
 
 
-        $query = $this->Articles->find('all')->where([$cond1, $cond2, $cond3, $cond4, $cond5, $cond6, $condtype]);
+        $query = $this->Articles->find('all')->where([$cond1, $cond2, $cond3, $cond4, $cond5, $cond6,$cond7,$condtype]);
         //debug($query);
         $this->paginate = [
             'contain' => ['Familles', 'Tvas', 'Marques', 'Typearticles','ParentArticle'],
@@ -3114,6 +3118,7 @@ class ArticlesController extends AppController
         $familles = $this->fetchTable('Familles')->find('list', ['keyfield' => 'id', 'valueField' => 'Nom']);
         $sousfamille1s = $this->fetchTable('Sousfamille1s')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $sousfamille2s = $this->fetchTable('Sousfamille2s')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+        $typearticles = $this->fetchTable('Typearticles')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         // $sousfamille1s = $this->fetchTable('Sousfamille1s')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])
         //     ->where(["Sousfamille1s.famille_id = " . $articles->famille_id . ""]);
 
@@ -3123,7 +3128,7 @@ class ArticlesController extends AppController
         // debug($sousfamille2s);die;
         $marques = $this->fetchTable('Marques')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
 
-        $this->set(compact('type', 'articles', 'familles', 'marques', 'sousfamille2s', 'sousfamille1s'));
+        $this->set(compact('type', 'articles','familles', 'marques', 'sousfamille2s', 'sousfamille1s','typearticles'));
     }
 
     /**

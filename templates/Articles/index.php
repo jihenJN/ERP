@@ -123,7 +123,17 @@ if ($add == 1) {
                         <option value="1"> Désactivé
                     </select>
                 </div>
-
+                <div class="col-xs-6">
+                    <div class="form-group input text required">
+                        <label class="control-label" for="name">Type Article</label>
+                        <select class="form-control select2" name="typearticle_id" id="typearticle_id" value='<?php $this->request->getQuery('typearticle_id') ?>'>
+                            <option value="" selected="selected" disabled>Veuillez choisir !!</option>
+                            <?php foreach ($typearticles as $id => $typearticle) { ?>
+                                <option <?php if ($this->request->getQuery('typearticle_id') == $id) { ?> selected="selected" <?php } ?> value="<?php echo $id; ?>"><?php echo $typearticle ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
 
 
 
