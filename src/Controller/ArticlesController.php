@@ -6109,65 +6109,36 @@ class ArticlesController extends AppController
             $cond7 = "Articles.typearticle_id  = " . $typearticle_id;
         }
 
-        $articles = $this->Articles->find('all')->where([$cond1, $cond2, $cond3, $cond4, $cond5, $cond6, $cond7]);
-        //debug($query);
-        $this->paginate = [
-            'contain' => ['Familles', 'Tvas', 'Marques', 'Typearticles', 'ParentArticle'],
-            'order' => ['id' => 'DESC'],
-            'limit' => ["150000"]
-        ];
  
-      /*  $inscriptions = $this->Inscriptions->find('all', [
-            'contain' => ['Produits', 'Operateurs', 'Typeopenmarkets', 'Couleurs'],
-        ])->where([$cond1, $cond2, $cond3, $cond4, $cond5, $cond6, $cond7])->order('date');*/
+       $articles  = $this->Articles->find('all', [
+            'contain' => ['Familles', 'Tvas', 'Marques', 'Typearticles', 'ParentArticle'],'limit' => ["150000"]
+        ])->where([$cond1, $cond2, $cond3, $cond4, $cond5, $cond6, $cond7]);
  
         $tempFile = tempnam(sys_get_temp_dir(), 'excel_') . '.xls';
         // // Créer un fichier temporaire pour stocker les données
         $tempFile = tempnam(sys_get_temp_dir(), 'excel_') . '.xls';;
-        // // Ouvrir le fichier en écriture
-        //         $spreadsheet = new Spreadsheet();
-        // $sheet = $spreadsheet->getActiveSheet();
         $fileHandle = fopen($tempFile, 'w');
-        // // Écrire les données dans le fichier CSV
-        //         $object="";
-        //        $object['name'] .= 'Name';
-        //        $object['date'] .= 'Date';
-        //        $object['tlf'] .= 'Num';
-        //        $object['mail'] .= 'Email';
-        //        $object['couleur_id'] .= 'Color';
-        //        $object['operateur_id'] .= 'Operator';
-        //        $object['produit_id'] .= 'Product';
-        //        $object['typeopenmarket_id'] .= 'Site';
-        //        $object['valide'] .= 'Status';
+      
         $object = array(
-            array('Code')
+            array('Code','Type Article','Article Parent','Designation', 'famille','sous famille','Etat','Prix')
         );
+       
         // Collect data rows
         foreach ($articles  as $article) {
-     
-
+              
             $rowData = array(
-                $article['Code'],
+                $article->Code,
+                $article->typearticle->name,
+                $article->parent_article->Dsignation,
+                $article->Dsignation,
+                $article->famille->nom,
+                $article->sousfamille1_id,
+                $article->etat,
+                $article->Prix_LastInput
                
             );
             $object[] = $rowData;
             
-           /* $formattedDate = $article->date->format(' Y-m-d '); // Format date as '27/07/23, 8:20 AM'
-            $heure = $article->date->format('H:i:s');
-            $rowData = array(
-                $article['name'],
-                $formattedDate,
-                $heure,
-                $article->tlf,
-                $article->mail,
-                $article->couleur->name,
-                $article->operateur->name,
-                $article->produit->name,
-                $article->typeopenmarket->name,
-                $article->facebook == 0 ? 'Website' : 'Facebook',
-                $article->valide == 0 ? 'Accepted' : 'Pending'
-            );
-            $object[] = $rowData;*/
         }
         // Convert the $object array to a CSV-like string
         $csvString = '';
