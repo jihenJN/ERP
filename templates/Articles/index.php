@@ -139,7 +139,9 @@ if ($add == 1) {
 
                 <div class="pull-right" style="margin-right:50%;margin-top: 20px;">
                     <button type="submit" class="btn btn-primary btn-sm">Afficher</button>
-                    <?php echo $this->Html->link(__('Afficher Tous'), ['action' => 'index/' . $type], ['class' => 'btn btn-primary btn-sm']) ?>
+                    <?php echo $this->Html->link(__('Afficher Tous'), ['action' => 'index/' . $type], ['class' => 'btn btn-primary btn-sm']) ?> 
+                    <!--?php echo $this->Html->link(__('Excel'), ['action' => 'downloadExcel?date=' . $date . '&name=' . $name . '&operateur_id=' . $operateur_id . '&produit_id=' . $produit_id . '&typeopenmarket_id=' . $typeopenmarket_id . '&valide=' . $valide . ''], ['class' => 'btn btn-primary ']) ?-->
+                  <?php echo $this->Html->link(__('Excel'), ['action' => 'downloadExcel?Code=' . $Code . ''], ['class' => 'btn btn-primary ']) ?>
                 </div>
             </div>
             <?php echo $this->Form->end(); ?>
