@@ -1,70 +1,64 @@
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script>
-<?php echo $this->Html->script('alert'); ?>
-<?php echo $this->Html->css('select2'); ?>
-
-<section class="content-header">
-  <header>
-    <h1 style="text-align:center;"> Commission Commercial
-    </h1>
-  </header>
-</section>
-<section class="content" style="width: 99%" style="background-color: white ;">
-  <div class="box">
-    <div class="box-body">
-      <div class="row">
-        <?php echo $this->Form->create($relevercommercials, ['type' => 'get']);
-
-        //        debug($Date_debut);
-        //         debug($Date_fin);
-        ?>
-        <div class="col-xs-6">
-          <?php
-          echo $this->Form->input('Date_debut', array('value' => @$Date_debut, 'id' => 'Date_debut', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control', 'type' => 'date', "required" => "on"));
-          ?>
-        </div>
-        <div class="col-xs-6">
-          <?php
-          echo $this->Form->input('Date_fin', array('value' => @$Date_fin, 'id' => 'Date_fin', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control', 'type' => 'date', "required" => "on"));
-          ?>
-        </div>
-        <div class="col-xs-6">
-          <?php
-          echo $this->Form->control('commercial_id', ['class' => ' form-control select2 ', 'label' => 'Commercial', 'value' => $this->request->getQuery('commercial_id'), 'empty' => 'Veuillez choisir !!', 'autocomplete' => 'off', "required" => "on"]); ?>
-        </div>
-        <div class="pull-right" style="margin-right:50%;margin-top: 20px;">
-          <button type="submit" class="btn btn-primary btn-sm rel">Afficher</button>
-          <?php if ($this->request->getQuery('commercial_id')) { ?>
-            <a onclick="openWindow(1000, 1000, 'https://codifaerp.isofterp.com/demo/articles/imprime?Date_debut=<?php echo @$Date_debut; ?>&Date_fin=<?php echo @$Date_fin; ?>&commercial_id=<?php echo @$commercial_id; ?>')"><button class="btn btn-primary btn-sm">Imprimer</button></a>
-            <a onclick="openWindow(1000, 1000, 'https://codifaerp.isofterp.com/demo/articles/imprimedet?Date_debut=<?php echo @$Date_debut; ?>&Date_fin=<?php echo @$Date_fin; ?>&commercial_id=<?php echo @$commercial_id; ?>')"><button class="btn btn-primary btn-sm">Imprimer details</button></a>
-          <?php } ?>
-          <?php echo $this->Html->link(__('Actualiser'), ['action' => '/indexrelever'], ['class' => 'btn btn-primary btn-sm']) ?>
-        </div>
-        <?php echo $this->Form->end(); ?>
-      </div>
+<?php $this->layout = 'AdminLTE.print'; ?>
+<br>
+<div style="display:flex">
+    <div style="margin-left:6%">
+        <?php
+        echo $this->Html->image('mm.png', ['alt' => 'CakePHP', 'height' => '140px', 'width' => '200px']); ?>
     </div>
-</section>
+    <div style="width: 75%;margin-left:23%" class="box" align="left">
+        Société CODIFA <br>
+        Rte Fouchana 1.8 km 1135 naassen <br>
+        Phone : (+216) 71 398 404 / (+216) 71 398 158 <br>
+        Mail : codifa@gnet.tn <br>
+    </div>
+</div>
+<h3 align="center">
+    Relevé Commercial détaillé
+</h3>
+<h3 align="center">
+    <?php
+    $Date_debut = $this->Time->format($Date_debut, 'dd/MM/y');
+    $Date_fin = $this->Time->format($Date_fin, 'dd/MM/y');
 
-<section class="content">
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="box">
-        <div class="box-body">
-          <table id="example1" class="table table-bordered table-striped">
+    echo 'Du ' . $Date_debut . ' au ' . $Date_fin ?>
+</h3>
+<table width="100%">
+    <tbody>
+        <tr>
+            <td width="50%">
+                Commercial : <?php echo $thiscommercial->name ?>
 
-            <thead>
-              <tr style="background-color: #ccc;">
-                <th width="10%" class=" text-center"><?= ('Date') ?></th>
-                <th width="52%" class=" text-center"><?= ('Client') ?></th>
-                <th width="10%" class=" text-center"><?= ('Total point') ?></th>
-                <th width="10%" class=" text-center"><?= ('Débit') ?></th>
-                <th width="10%" class=" text-center"><?= ('Crédit') ?></th>
-                <th width="5%" class=" text-center"><?= ('') ?></th>
+            </td>
+            <td width="25%">
+                Type : <?php echo $thiscommercial->category->name ?>
 
+            </td>
+            <td width="25%">
+                Prix : <?php echo $thiscommercial->category->valeur ?>
 
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<table class="table table-bordered table-striped table-bottomless" style="border:2px solid black;">
+  <thead>
+    <tr>
+      <th width="10%" class=" text-center"><?= ('Date') ?></th>
+      <th width="52%" class=" text-center"><?= ('Client') ?></th>
+      <th width="10%" class=" text-center"><?= ('Total point') ?></th>
+      <th width="10%" class=" text-center"><?= ('Débit') ?></th>
+      <th width="10%" class=" text-center"><?= ('Crédit') ?></th>
+    </tr>
+  </thead>
+  <tbody>
+              <tr>
+                <td></td>
+                <?php $spaces = str_repeat('&nbsp;', 25); ?>
+                <td  align="center"><strong>SOLDE</strong><?php echo $spaces. ' '. number_format(@$solde, 3, '.', ' '); ?> </td>
+       
+                <td colspan="4" align="center"></td>
               </tr>
-            </thead>
-            <tbody>
-             
               <?php
               $tot = 0;
               $totcr = 0;
@@ -80,17 +74,16 @@
                 // debug($dat);die;
 
                 foreach ($dat as $i => $relefe) :
-
-                //  $tot = $tot + $relefe['debit'];
-                
-                  if (@$relefe['debitM'] == "0.000" || @$relefe['debitM'] == null) {
+  if (@$relefe['debitM'] == "0.000" || @$relefe['debitM'] == null) {
                        $tot = $tot - $relefe['debit'];
                   }
                     if (@$relefe['creditM'] == "0.000" || @$relefe['creditM'] == null) {
                        $tot = $tot + $relefe['debit'];
                     }
-                      $totcr = $totcr + $relefe['credit'];
+                 // $tot = $tot + $relefe['debit'];
+                  $totcr = $totcr + $relefe['credit'];
                   $tots = ($tot - $totcr) + $solde;
+
                   $totdebM = $totdebM + $relefe['debitM'];
                   $totcredM = $totcredM + $relefe['creditM'];
 
@@ -126,14 +119,15 @@
                           } else {
                             echo (@$relefe['debit']);
                           } ?></td>
-                    
+                    <!-- <td> <?php if (@$relefe['credit'] == "0.000") {
+                                echo '';
+                              } else {
+                                echo (@$relefe['credit']);
+                              } ?></td> -->
                     <td>
                     <?php if (@$relefe['debitM'] == "0.000" || @$relefe['debitM'] == null) {
                             echo '';
                           } else {
-                              if (@$rel['nouv_client'] == "TRUE"){
-                                  @$relefe['debitM']=@$relefe['debitM']*2;
-                              }
                             echo (@$relefe['debitM']);
                           } ?>
                     </td>
@@ -147,10 +141,9 @@
 
                     </td>
 
-                    <td><button class='btn btn-xs btn-success affichereg' index="<?php echo $i; ?>"><i class='fa fa-eye'></i></button></td>
 
                   </tr>
-                  <tr class='montreg' style="display: none !important" id="montreg<?php echo $i; ?>">
+                  <tr class='montreg' style="display: true !important" id="montreg<?php echo $i; ?>">
                     <td colspan="4" width="100%">
                       <table align="center" class="table table-bordered table-striped table-bottomless">
                         <thead>
@@ -209,7 +202,6 @@
                               ?>
 
                             </td>
-                            <!-- <td   ><?php echo @$rel['montantcommissions']; ?><?php echo @$rel['montantss']; ?><?php echo @$rel['montants']; ?></td> -->
                           </tr>
                         <?php endforeach; ?>
                       </table>
@@ -217,8 +209,7 @@
                   </tr>
               <?php endforeach;
               } ?>
-            </tbody>
-            <tfoot>
+          
               <tr>
                 <td colspan="2" align="center"><b> Total </b></td>
                 <td align="center"> <?php echo number_format(@$tot, 3, '.', ' '); ?></td>
@@ -230,46 +221,6 @@
                 <td colspan="2" align="center"><b> Total</b></td>
                 <td colspan="2" align="center"> <?php echo number_format(@$totdebM-@$totcredM, 3, '.', ' '); ?></td>
               </tr>
-            </tfoot>
-          </table>
-
-
-
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<?php echo $this->Html->css('AdminLTE./bower_components/datatables.net-bs/css/dataTables.bootstrap.min', ['block' => 'css']); ?>
-<?php echo $this->Html->script('AdminLTE./bower_components/datatables.net/js/jquery.dataTables.min', ['block' => 'script']); ?>
-<?php echo $this->Html->script('AdminLTE./bower_components/datatables.net-bs/js/dataTables.bootstrap.min', ['block' => 'script']); ?>
-<?php echo $this->Html->script('AdminLTE./bower_components/select2/dist/js/select2.full.min', ['block' => 'script']); ?>
-<?php echo $this->Html->css('AdminLTE./bower_components/select2/dist/css/select2.min', ['block' => 'css']); ?>
-<?php $this->start('scriptBottom'); ?>
-<script>
-  $(function() {
-    $('#example1').DataTable()
-    $('#example2').DataTable({
-      'paging': true,
-      'lengthChange': false,
-      'searching': false,
-      'ordering': true,
-      'info': true,
-      'autoWidth': false
-    })
-  })
-</script>
-<script>
-  $('.select2').select2()
-</script>
-<?php $this->end(); ?><script>
-  $('.select2').select2()
-</script>
-<?php $this->end(); ?>
-<script>
-  function openWindow(h, w, url) {
-    leftOffset = (screen.width / 2) - w / 2;
-    topOffset = (screen.height / 2) - h / 2;
-    window.open(url, this.target, 'left=' + leftOffset + ',top=' + topOffset + ',width=' + w + ',height=' + h + ',resizable,scrollbars=yes');
-  }
-</script>
+  </tbody>
+</table>
+<br>

@@ -51,7 +51,7 @@ foreach ($lien as $k => $liens) {
 if ($add == 1) {
 ?>
     <div class="pull-left" style="margin-left:25px;margin-top: 20px">
-        <?php echo $this->Html->link(__('Ajouter'), ['action' => 'add/' . $type], ['class' => 'btn btn-success btn-sm']) ?>
+        <?php echo $this->Html->link(__('Ajouter'), ['action' => 'add'], ['class' => 'btn btn-success btn-sm']) ?>
     </div>
 <?php } ?>
 <br> <br><br>
@@ -86,7 +86,7 @@ if ($add == 1) {
                     <div class="form-group input text required">
                         <label class="control-label" for="name">Familles</label>
                         <select class="form-control select2" name="famille_id" id="famille_id" value='<?php $this->request->getQuery('famille_id') ?>'>
-                            <option value="" selected="selected" disabled>Veuillez choisir !!</option>
+                            <option value="" selected="selected">Veuillez choisir !!</option>
                             <?php foreach ($familles as $id => $famille) { ?>
                                 <option <?php if ($this->request->getQuery('famille_id') == $id) { ?> selected="selected" <?php } ?> value="<?php echo $id; ?>"><?php echo $famille ?></option>
                             <?php } ?>
@@ -97,24 +97,24 @@ if ($add == 1) {
                     <div id="divsousfam1" class="form-group input text required">
                         <label class="control-label" for="name">Sous familles</label>
                         <select class="form-control select2" name="sousfamille1_id" id="sousfamille1_id" value='<?php $this->request->getQuery('sousfamille1_id') ?>'>
-                            <option value="" selected="selected" disabled>Veuillez choisir !!</option>
+                            <option value="" selected="selected">Veuillez choisir !!</option>
                             <?php foreach ($sousfamille1s as $id => $sousfamille) { ?>
                                 <option <?php if ($this->request->getQuery('sousfamille1_id') == $id) { ?> selected="selected" <?php } ?> value="<?php echo $id; ?>"><?php echo $sousfamille ?></option>
                             <?php } ?>
                         </select>
                     </div>
                 </div>
-                <!-- <div class="col-xs-6">
+                <div class="col-xs-6">
                     <div id="divsousfam2" class="form-group input text required">
                         <label class="control-label" for="name">Sous sous familles</label>
                         <select class="form-control select2" name="sousfamille2_id" id="sousfamille2_id" value='<?php $this->request->getQuery('sousfamille2_id') ?>'>
-                            <option value="" selected="selected" disabled>Veuillez choisir !! </option>
+                            <option value="" selected="selected">Veuillez choisir !! </option>
                             <?php foreach ($sousfamille2s as $id => $ssousfamille) { ?>
                                 <option <?php if ($this->request->getQuery('sousfamille2_id') == $id) { ?> selected="selected" <?php } ?> value="<?php echo $id; ?>"><?php echo $ssousfamille ?></option>
                             <?php } ?>
                         </select>
                     </div>
-                </div> -->
+                </div>
                 <div class="col-xs-6">
                     <label>Etat</label>
                     <select name="etat" class="form-control" style='text-align:left;' value='<?php $this->request->getQuery('etat') ?>'>
@@ -123,23 +123,13 @@ if ($add == 1) {
                         <option value="1"> Désactivé
                     </select>
                 </div>
-                <div class="col-xs-6">
-                    <div class="form-group input text required">
-                        <label class="control-label" for="name">Type Article</label>
-                        <select class="form-control select2" name="typearticle_id" id="typearticle_id" value='<?php $this->request->getQuery('typearticle_id') ?>'>
-                            <option value="" selected="selected" disabled>Veuillez choisir !!</option>
-                            <?php foreach ($typearticles as $id => $typearticle) { ?>
-                                <option <?php if ($this->request->getQuery('typearticle_id') == $id) { ?> selected="selected" <?php } ?> value="<?php echo $id; ?>"><?php echo $typearticle ?></option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                </div>
+
 
 
 
                 <div class="pull-right" style="margin-right:50%;margin-top: 20px;">
                     <button type="submit" class="btn btn-primary btn-sm">Afficher</button>
-                    <?php echo $this->Html->link(__('Afficher Tous'), ['action' => 'index/' . $type], ['class' => 'btn btn-primary btn-sm']) ?>
+                    <?php echo $this->Html->link(__('Afficher Tous'), ['action' => 'index'], ['class' => 'btn btn-primary btn-sm']) ?>
                 </div>
             </div>
             <?php echo $this->Form->end(); ?>
@@ -155,16 +145,13 @@ if ($add == 1) {
                         <thead>
                             <tr>
                                 <th scope="col"><?= ('Code') ?></th>
-                                <th scope="col"><?= ('Type article') ?></th>
-                                <th scope="col"><?= ('Article Parent') ?></th>
-
-                                <th scope="col"><?= ('Désignation') ?></th>
+                                <th scope="col"><?= ('Designiation') ?></th>
                                 <th scope="col"><?= ('Famille') ?></th>
                                 <th scope="col"><?= ('Sous famille') ?></th>
-
-                                <!-- <th scope="col"><?= ('Sous sous famille') ?></th> -->
+                                <th scope="col"><?= ('Sous sous famille') ?></th>
                                 <th scope="col"><?= ('Etat') ?></th>
                                 <th scope="col"><?= ('Prix') ?></th>
+                                <th scope="col"><?= ('Image') ?></th>
 
                                 <th scope="col" class="actions text-center"><?= __('Actions') ?></th>
                             </tr>
@@ -172,17 +159,13 @@ if ($add == 1) {
                         <tbody>
                             <?php
                             foreach ($articles as $i => $article) :
-                                //debug ($article);
                             ?>
                                 <tr>
-                                    <td align="right" style="padding:2px">
+                                    <td>
                                         <?php echo $this->Form->control('id', ['type' => 'hidden', 'index' => $i, 'id' => 'id' . $i, 'value' => $article->id, 'label' => '', 'champ' => 'id', 'class' => 'form-control']); ?>
                                         <?= h($article->Code) ?></td>
-                                    <td style="padding:2px"><?= h($article->typearticle->name) ?></td>
-                                    <td style="padding:2px"><?= h($article->parent_article->Dsignation) ?></td>
-                                    <td style="padding:2px"><?= h($article->Dsignation) ?></td>
-                                    <td style="padding:2px"><?= ($article->famille->Nom) ?></td>
-
+                                    <td><?= h($article->Dsignation) ?></td>
+                                    <td><?= ($article->famille->Nom) ?></td>
                                     <td>
                                         <?php foreach ($datehs as $dateh) : ?>
                                             <?php if ($dateh['sousfamille1_id'] == $article->sousfamille1_id) { ?>
@@ -190,46 +173,42 @@ if ($add == 1) {
                                             }; ?>
                                         <?php endforeach; ?>
                                     </td>
-
-                                    <!-- <td>
-                                        < ?php foreach ($datehss as $datehh) : ?>
-                                            < ?php if ($datehh['sousfamille2_id'] == $article->sousfamille2_id) { ?>
-                                            < ?= h($datehh['sousfam']);
+                                    <td>
+                                        <?php foreach ($datehss as $datehh) : ?>
+                                            <?php if ($datehh['sousfamille2_id'] == $article->sousfamille2_id) { ?>
+                                            <?= h($datehh['sousfam']);
                                             }; ?>
-                                        < ?php endforeach; ?>
-                                    </td> -->
+                                        <?php endforeach; ?>
+                                    </td>
                                     <?php
                                     // debug($article->sousfamille1_id);die; 
                                     ?>
                                     <?php if ($article->etat == 0) { ?>
-                                        <td style="padding:2px" align="center"> Activé </td>
+                                        <td align="center"> Activé </td>
                                     <?php } ?>
                                     <?php if ($article->etat == 1) { ?>
-                                        <td style="padding:2px" align="center"> Désactivé </td>
+                                        <td align="center"> Désactivé </td>
                                     <?php } ?>
-                                    <td style="padding:2px"><?= h($article->Prix_LastInput) ?></td>
-                                    <!-- <td>
+                                    <td><?= h($article->Prix_LastInput) ?></td>
+                                    <td>
                                         <?php echo $this->Html->image('imgart/' . $article->image, ['style' => 'max-width:80px;height:80px;']); ?>
-                                    </td> -->
-
-                                    <td class="actions text" style="text-align:center;padding:2px">
+                                    </td>
+                                    <td class="actions text" style="text-align:center">
+                                        <?php if ($article->famille_id == 1) {
+                                            $path = $_SERVER['HTTP_HOST'];
+                                        ?>
+                                            <div class='tooltip1'><button class='btn btn-xs btn-primary' onClick="openWindow(1000, 1000, '/demo/articles/fichetechnique/<?php echo $article->id; ?>')"><i class='fa fa-print'></i></button><span class='tooltiptext'> Fiche technique </span></div>
+                                            <?php //echo $this->Html->link("<button class='btn btn-xs btn-primary'><i class='fa fa-print'></i></button>", array('action' => 'fichetechnique', $article->id), array('escape' => false)); 
+                                            ?> <?php } ?>
                                         <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $article->id), array('escape' => false)); ?>
                                         <!-- <?= $this->Html->link(__(''), ['action' => 'view', $article->id], ['class' => 'fa fa-search ']) ?> -->
                                         <?php if ($edit == 1) {
-                                          //  echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $article->id), array('escape' => false));
-                                        } ?>
-
-                                        <?php if ($edit == 1) {
-                                            echo $this->Html->link("<button class='btn btn-xs btn-primary'><i class='fa fa-clone'></i></button>", array('action' => 'duplicate', $article->id), array('escape' => false));
+                                            echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $article->id), array('escape' => false));
                                         } ?>
                                         <!-- <?= $this->Html->link(__('Edit'), ['action' => 'edit', $article->id], ['class' => 'btn btn-warning btn-xs']) ?> -->
                                         <?php if ($delete == 1) { ?>
-                                            <?php //echo $this->Form->postLink("<button class=' verifiercmd btn btn-xs btn-danger deletecon'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $article->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $article->id)); 
-                                            ?>
-
-                                            <button index='<?php echo $i ?>' class='verifiercmd btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>
+                                            <button index='<?php echo $i ?>' class='verifier btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>
                                         <?php } ?>
-
 
                                     </td>
 
@@ -241,8 +220,6 @@ if ($add == 1) {
                             <?php endforeach; ?>
                         </tbody>
                     </table>
-                    <input type="hidden" value="<?php echo $i ?>" id="index">
-
 
                     <table>
 
@@ -286,12 +263,12 @@ if ($add == 1) {
         window.open(url, this.target, 'left=' + leftOffset + ',top=' + topOffset + ',width=' + w + ',height=' + h + ',resizable,scrollbars=yes');
     }
     $(function() {
-        $('#example2').DataTable()
-        $('#example1').DataTable({
+        $('#example1').DataTable()
+        $('#example2').DataTable({
             'paging': true,
-            'lengthChange': true,
-            'searching': true,
-            'ordering': false,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
             'info': true,
             'autoWidth': false
         })
@@ -320,49 +297,15 @@ if ($add == 1) {
 </script>
 <?php $this->end(); ?>
 <script>
-    $(function() {
-        $('.verifiercmd').on('click', function() {
-            // alert('hello');
-            ind = $(this).attr('index');
-            //  alert(ind);
-            articleId = $('#id' + ind).val();
-            //  alert(id);
-            //  alert(id)
-            $.ajax({
-                method: "GET",
-                url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'getarticlecmd']) ?>",
-                dataType: "json",
-                data: {
-                    idarticle: articleId
-                },
-                headers: {
-                    'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
-                },
-                success: function(data) {
-                    //   $('#pays').html(data.pays);
-                    //  alert(data.pays);
-
-
-                    if (data.articles != 0) {
-                        alert("Existe dans un autre document");
-
-                    } else {
-                        if (confirm('Voulez vous vraiment supprimer cet enregistrement')) {
-                            document.location = wr + "articles/delete/" + articleId;
-                        }
-                    }
-                }
-            })
-        });
-
-
-    });
     //Select pays/ville
     $(function() {
         $('#famille_id').on('change', function() {
             //alert('hello');
             idfam = $('#famille_id').val();
             // alert(id)
+            $('#sousfamille1_id').val('');
+            $('#sousfamille2_id').val('');
+
             $.ajax({
                 method: "GET",
                 url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'getsousfamille1']) ?>",
@@ -444,10 +387,7 @@ if ($add == 1) {
                     } else {
                         if (confirm('Voulez-vous vraiment supprimer cet enregistrement?')) {
                             //   alert('ok supp');
-                            const currentUrl = window.location.href;
-                            const parentUrl = currentUrl.split('/').slice(0, -1).join('/');
-
-                            document.location = parentUrl + "/Articles/delete/" + id;
+                            document.location = "https://codifaerp.isofterp.com/demo/articles/delete/" + id;
                         }
                     }
                 }
@@ -461,6 +401,7 @@ if ($add == 1) {
         //alert('hello');
         id = $('#sous').val();
         // alert(id)
+        $('#sousfamille2_id').val('');
         $.ajax({
             method: "GET",
             url: "<?= $this->Url->build(['controller' => 'Articles', 'action' => 'getsousf']) ?>",
@@ -510,3 +451,30 @@ if ($add == 1) {
 
     }
 </script>
+<style>
+    .tooltip1 {
+        position: relative;
+        display: inline-block;
+        /*border-bottom: 1px  black;*/
+    }
+
+    .tooltip1 .tooltiptext {
+        visibility: hidden;
+        width: max-content;
+        background-color: #0505057a;
+        color: #fff;
+        text-align: center;
+        border-radius: 6px;
+        padding: 5px 0;
+
+        /* Position the tooltip */
+        position: absolute;
+        z-index: 1;
+        top: 85%;
+        left: 0%;
+    }
+
+    .tooltip1:hover .tooltiptext {
+        visibility: visible;
+    }
+</style>

@@ -132,20 +132,22 @@ if ($add == 1) {
                                 <option <?php if ($this->request->getQuery('typearticle_id') == $id) { ?> selected="selected" <?php } ?> value="<?php echo $id; ?>"><?php echo $typearticle ?></option>
                             <?php } ?>
                         </select>
-                    </div>
+                    </div> 
                 </div>
 
 
 
                 <div class="pull-right" style="margin-right:50%;margin-top: 20px;">
                     <button type="submit" class="btn btn-primary btn-sm">Afficher</button>
-                    <?php echo $this->Html->link(__('Afficher Tous'), ['action' => 'index/' . $type], ['class' => 'btn btn-primary btn-sm']) ?>
+                    <?php echo $this->Html->link(__('Afficher Tous'), ['action' => 'index/' . $type], ['class' => 'btn btn-primary btn-sm']) ?> 
+                    <!--?php echo $this->Html->link(__('Excel'), ['action' => 'downloadExcel?date=' . $date . '&name=' . $name . '&operateur_id=' . $operateur_id . '&produit_id=' . $produit_id . '&typeopenmarket_id=' . $typeopenmarket_id . '&valide=' . $valide . ''], ['class' => 'btn btn-primary ']) ?-->
+                  <?php echo $this->Html->link(__('Excel'), ['action' => 'downloadExcel?Code=' . $Code . '&sousfamille1_id=' . $sousfamille1_id . '&sousfamille2_id=' . $sousfamille2_id . '&Dsignation=' . $Dsignation .'&famille_id=' . $famille_id .'&etat=' . $etat .'&typearticle_id=' . $typearticle_id .''], ['class' => 'btn btn-primary ']) ?>
                 </div>
             </div>
             <?php echo $this->Form->end(); ?>
         </div>
 
-</section>
+</section>$etat
 <section class="content">
     <div class="row">
         <div class="col-xs-12">
@@ -216,7 +218,7 @@ if ($add == 1) {
                                         <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $article->id), array('escape' => false)); ?>
                                         <!-- <?= $this->Html->link(__(''), ['action' => 'view', $article->id], ['class' => 'fa fa-search ']) ?> -->
                                         <?php if ($edit == 1) {
-                                          //  echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $article->id), array('escape' => false));
+                                            echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $article->id), array('escape' => false));
                                         } ?>
 
                                         <?php if ($edit == 1) {

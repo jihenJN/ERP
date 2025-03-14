@@ -1,10 +1,4 @@
-<script>
-    var wr = "<?= $this->Url->build('/', ['fullBase' => true]) ?>";
-</script>
 <?php
-
-use Cake\Datasource\ConnectionManager;
-
 error_reporting(E_ERROR | E_PARSE); ?>
 <?php echo $this->Html->css('select2'); ?>
 <section class="content-header">
@@ -25,7 +19,7 @@ error_reporting(E_ERROR | E_PARSE); ?>
                     <div class="col-xs-6">
                         <?php
 
-                        echo $this->Form->input('date1', array('value' => @$date1, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control datePickerOnly ', 'type' => 'date', 'label' => 'Date de'));
+                        echo $this->Form->control('date1', array('value' => @$date1, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control datePickerOnly ', 'type' => 'date', 'label' => 'Date de'));
                         ?>
 
                     </div>
@@ -34,7 +28,7 @@ error_reporting(E_ERROR | E_PARSE); ?>
                     <div class="col-xs-6">
 
                         <?php
-                        echo $this->Form->input('date2', array('value' => @$date2, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control datePickerOnly', 'type' => 'date', 'label' => "Jusqu'à "));
+                        echo $this->Form->control('date2', array('value' => @$date2, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control datePickerOnly', 'type' => 'date', 'label' => "Jusqu'à "));
 
                         ?>
 
@@ -44,24 +38,32 @@ error_reporting(E_ERROR | E_PARSE); ?>
                 <div class="row">
                     <div class="col-xs-6">
                         <?php
-                        echo $this->Form->input('depot_id', array('id' => 'depot_id', 'empty' => 'veuillez choisir', 'div' => 'form-group', 'label' => 'Dépot', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control select2', 'options' => $depots, 'value' => $this->request->getQuery('depot_id')));
+                        echo $this->Form->control('depot_id', array('id' => 'depot_id', 'div' => 'form-group', 'label' => 'Dépot', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control select2', 'options' => $depots, 'value' => $this->request->getQuery('depot_id'),));
                         ?>
                     </div>
 
                     <div class="col-xs-6">
-                        <label>Article</label>
+                        <label>Code</label>
                         <select class="form-control select2" name="article_id" id="article_id" value='<?php $this->request->getQuery('article_id') ?>'>
                             <option value="" selected="selected">Veuillez choisir !!</option>
                             <?php foreach ($articles as $j => $art) {
                             ?>
-                                <option <?php if ($art->id == $articleid) { ?> selected="selected" <?php } ?> value="<?php echo $art->id; ?>"><?php echo $art->Code . ' ' . $art->Dsignation ?></option>
+                                <option <?php if ($art->id == $articleid) { ?> selected="selected" <?php } ?> value="<?php echo $art->id; ?>"><?php echo $art->Code ?></option>
                             <?php } ?>
 
                         </select>
                     </div>
-                </div>
+                    <div class="col-xs-6">
+                        <label>Désignation</label>
+                        <select class="form-control select2" name="article_id1" id="article_id1" value='<?php $this->request->getQuery('article_id') ?>'>
+                            <option value="" selected="selected">Veuillez choisir !!</option>
+                            <?php foreach ($articles as $j => $art) {
+                            ?>
+                                <option <?php if ($art->id == $articleid) { ?> selected="selected" <?php } ?> value="<?php echo $art->id; ?>"><?php echo $art->Dsignation ?></option>
+                            <?php } ?>
 
-                <div class="row">
+                        </select>
+                    </div>
                     <div class="col-xs-6">
                         <label>Client</label>
                         <select name="client_id" id="client" class="form-control select2 control-label ">
@@ -73,7 +75,20 @@ error_reporting(E_ERROR | E_PARSE); ?>
                         </select>
 
                     </div>
+                    <!-- <div class="col-xs-6">
+                        <label>Article</label>
+                        <select class="form-control select2" name="article_id" id="article_id" value='<?php $this->request->getQuery('article_id') ?>'>
+                            <option value="" selected="selected">Veuillez choisir !!</option>
+                            <?php foreach ($articles as $j => $art) {
+                            ?>
+                                <option <?php if ($art->id == $articleid) { ?> selected="selected" <?php } ?> value="<?php echo $art->id; ?>"><?php echo $art->Code . ' ' . $art->Dsignation ?></option>
+                            <?php } ?>
+
+                        </select>
+                    </div> -->
                 </div>
+
+
 
 
 
@@ -82,11 +97,9 @@ error_reporting(E_ERROR | E_PARSE); ?>
                         <button type="submit" class="btn btn-primary  alertHisto" id="">Afficher</button>
 
                         <?php
-
                         //debug($count);
                         if ($count != 0) { ?>
-                            <!--                             <a onclick="openWindow(1000, 1000, 'https://codifaerp.isofterp.com/demo/Articles/imphisto?client_id=<?php echo @$clientID;  ?>')"><button class="btn btn-primary ">Imprimer</button></a>
- --> <a onclick="openWindow(1000, 1000, wr+'Articles/imphistotest?date1=<?php echo @$date1;  ?>&depot=<?php echo @$depot;  ?>&soldedeb=<?php echo @$soldeqte;  ?>&client_id=<?php echo @$clientID;  ?>')"><button class="btn btn-primary ">Imprimer</button></a>
+                            <a onclick="openWindow(1000, 1000, wr+'Articles/imphisto?solde=<?php echo @$solde; ?>&date1=<?php echo @$date1; ?>&date2=<?php echo @$date2; ?>&depot_id=<?php echo @$depotid; ?>&article_id=<?php echo @$articleid; ?>&client_id=<?php echo @$clientID;  ?>')"><button class="btn btn-primary ">Imprimer</button></a>
                         <?php } ?>
                         <?php echo $this->Html->link(__('Actualiser'), ['action' => '/indexspec'], ['class' => 'btn btn-primary']) ?>
 
@@ -109,48 +122,35 @@ error_reporting(E_ERROR | E_PARSE); ?>
                 <div class="box">
                     <div class="box-body">
                         <table id="example1" class="table table-bordered">
-                            <tr>
-                                <th width="10%" class="actions text-center"> <?php echo ('Date '); ?></th>
-                                <th width="10%" class="actions text-center "><?php echo ('Action'); ?></th>
-                                <th width="10%" class="actions text-center "><?php echo ('Dépot'); ?></th>
-                                <th width="10%" class="actions text-center "><?php echo ('Numéro'); ?></th>
-                                <th width="20%" class="actions text-center "><?php echo ('Client'); ?></th>
-                                <th width="10%" class="actions text-center "><?php echo ('Entrée'); ?></th>
-                                <th width="10%" class="actions text-center "><?php echo ('Sortie'); ?></th>
-                                <th width="10%" class="actions text-center "><?php echo ('PU HT'); ?></th>
-                                <th width="10%" class="actions text-center "><?php echo ('TOT HT'); ?></th>
+                            <tr style="background-color:#367FA9;color:#ffffff;">
+                                <td width="12%" class="actions text-center"> <?php echo ('Date '); ?></td>
+                                <td width="15%" class="actions text-center "><?php echo ('Action'); ?></td>
+                                <td width="9%" class="actions text-center "><?php echo ('Dépot'); ?></td>
+                                <td width="7%" class="actions text-center "><?php echo ('Numéro'); ?></td>
+                                <td width="10%" class="actions text-center "><?php echo ('Client'); ?></td>
+                                <td width="15%" class="actions text-center "><?php echo ('Entrée'); ?> </td>
+
+                                <td width="15%" class="actions text-center "><?php echo ('Sortie'); ?> </td>
+
+                                <td width="9%" class="actions text-center "><?php echo ('PU HT'); ?></td>
+                                <td width="9%" class="actions text-center "><?php echo ('TOT HT'); ?></td>
 
                             </tr>
-                            <?php
-
-                            // debug($st);
-                            ?>
                             <tr>
-                                <td align="center"><?= @$date1 ?></td>
-                                <td align="center">Solde Départ</td>
-                                <td align="center"><?= @$depot ?></td>
-                                <td align="center"></td>
-                                <td align="center"></td>
-                                <td align="center"> <?php if (@$soldeqte > 0) echo @$soldeqte ?> </td>
-                                <td align="center"> <?php if (@$soldeqte < 0) echo abs(@$soldeqte) ?> </td>
-                                <td align="center"></td>
-                                <td align="center"></td>
+                                <td align="center" colspan="5" style="color:#367FA9;"> <strong>Solde </strong></td>
+
+                                <td align="center" colspan="2"> <strong><?php echo $solde ?> </strong></td>
+                                <td align="center" colspan="2"></td>
+
                             </tr>
                             <?php
                             $nb = 0;
-                            if (@$soldeqte > 0) {
-                                $qte_ent = $soldeqte;
-                                $qte_sor = 0;
-                            } else if (@$soldeqte < 0) {
-                                $qte_sor = $soldeqte;
-                                $qte_ent = 0;
-                            } else {
-                                $qte_sor = 0;
-                                $qte_ent = 0;
-                            }
+                            $qte_ent = $solde;
+                            $qte_ent1 = 0;
+                            $qte_sor = 0;
+
                             $qte_final = 0;
 
-                            //debug($historiquearticles);die;
                             foreach ($historiquearticles as $historiquearticle) {
                                 // debug($historiquearticle);
                                 $nb = $nb + 1;
@@ -164,6 +164,7 @@ error_reporting(E_ERROR | E_PARSE); ?>
 
                                 if ($historiquearticle['indice'] == 4) {
                                     $qte_sor = 0;
+
                                     $qte_ent = $historiquearticle['qte'];
                                     $qte_sor = $qte_sor;
                                 }
@@ -172,30 +173,32 @@ error_reporting(E_ERROR | E_PARSE); ?>
 
                                 if (($historiquearticle['mode'] == "Entreé") && ($historiquearticle['indice'] != 4)) {
                                     $qte_ent = $qte_ent + sprintf("%.3f", $historiquearticle['qte']);
-                                    ///debug($qte_ent);
                                 }
 
-                                ///debug($qte_ent);
+
 
 
                                 if ($historiquearticle['mode'] == "Sortie") {
                                     $qte_sor = $qte_sor + sprintf("%.3f", $historiquearticle['qte']);
                                 }
                                 $qte_final = sprintf("%.3f", $qte_ent) - sprintf("%.3f", $qte_sor);
-                                //debug($qte_final);
-                            ?>
-                                <tr>
-                                    <?php
-                                    $date = date("Y-m-d H:i:s", strtotime(str_replace('-', '/',  $historiquearticle['date'])));
 
+                            ?>
+
+                                <tr>
+
+                                    <?php
+                                    // $date = date("Y-m-d H:i:s", strtotime(str_replace('-', '/',  $historiquearticle['date'])));
+                                    $date = $this->Time->format($historiquearticle['date'], 'dd/MM/y HH:mm:ss');
                                     ?>
                                     <td align="center"><?php echo $date ?></td>
                                     <td align="center"><?php echo $historiquearticle['type']; ?></td>
                                     <td align="center"><?php echo $historiquearticle['depot']; ?></td>
                                     <td align="center"><?php echo $historiquearticle['numero']; ?></td>
                                     <td align="center">
-                                        <?php if ($historiquearticle['type'] != 'Inventaire')  echo $clientcod;
-                                        else {
+                                        <?php if ($historiquearticle['type'] != 'Inventaire' && $historiquearticle['type'] != 'Lancer Ordre fabrication' && $historiquearticle['type'] != 'Validation Ordre fabrication') {
+                                            echo $clientcod;
+                                        } else {
                                             echo '';
                                         } ?>
 
@@ -203,7 +206,7 @@ error_reporting(E_ERROR | E_PARSE); ?>
 
 
                                     <?php if ($historiquearticle['indice'] == 4) { ?>
-                                        <td align="center" colspan="2">
+                                        <td align="center">
                                             <?php
                                             if ($historiquearticle['qte'] == null) {
                                                 echo '0';
@@ -216,20 +219,26 @@ error_reporting(E_ERROR | E_PARSE); ?>
 
 
                                     <?php } else {  ?>
-                                        <td align="center">
-                                            <?php
-                                            if ($historiquearticle['mode'] == "Entreé") {
-                                                echo $historiquearticle['qte'];
-                                            }
-                                            ?>&nbsp;
+
+                                        <td align="center"> <?php
+                                                            if ($historiquearticle['mode'] == "Entreé") {
+                                                                echo $historiquearticle['qte'];
+                                                            }
+                                                            ?>&nbsp;
+
                                         </td>
-                                        <td align="center">
-                                            <?php
-                                            if ($historiquearticle['mode'] == "Sortie") {
-                                                echo $historiquearticle['qte'];
-                                            }
-                                            ?>&nbsp;
+
+
+                                        <td align="center"> <?php
+                                                            if ($historiquearticle['mode'] == "Sortie") {
+                                                                echo $historiquearticle['qte'];
+                                                            }
+                                                            ?>&nbsp;
                                         </td>
+
+
+
+
 
                                     <?php }  ?>
                                     <td align="center"><?php echo $historiquearticle['pu']; ?></td>
@@ -239,16 +248,24 @@ error_reporting(E_ERROR | E_PARSE); ?>
                             <?php } ?>
                             <tr>
                                 <td colspan="5"></td>
-                                <td align="center"><?php echo $qte_ent ?></td>
-                                <td align="center"><?php echo  $qte_sor ?></td>
-                                <td colspan="4"></td>
+
+                                <td align="center" style="color: #008000;"> <strong><?php echo $qte_ent ?> </strong></td>
+
+
+                                <td align="center" style="color: #4f86f7;"> <strong><?php echo  $qte_sor ?> </strong></td>
+
+                                <td colspan="2"></td>
+
                             </tr>
                             <tr>
                                 <td colspan="5"></td>
-                                <td colspan="2" align="center"> <strong>
-                                        <?php echo @$qte_final ?>
-                                    </strong> </td>
-                                <td colspan="4"></td>
+                                <td colspan="2" style="background-color:#367FA9" align="center"> <strong>
+                                        <?php echo @$qte_final  ?>
+                                    </strong>
+
+
+
+                                <td colspan="2"></td>
                             </tr>
                         </table>
                     </div>
@@ -282,7 +299,26 @@ error_reporting(E_ERROR | E_PARSE); ?>
         })
         $('.select2').select2()
     </script>
+    <script>
+        $(document).ready(function() {
 
+            $('#article_id').change(function() {
+                var selectedcodename = $(this).val();
+                // alert(article_id);
+                $("#article_id1").select2('destroy');
+                $("#article_id1").val(selectedcodename);
+                $("#article_id1").select2();
+
+            });
+            $('#article_id1').change(function() {
+                var selectedcodename = $(this).val();
+                $("#article_id").select2('destroy');
+                $("#article_id").val(selectedcodename);
+                $("#article_id").select2();
+
+            });
+        });
+    </script>
     <script>
         $(function() {
 

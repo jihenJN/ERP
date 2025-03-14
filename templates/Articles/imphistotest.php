@@ -41,10 +41,22 @@
         <th width="10%" class="actions text-center "><?php echo ('TOT HT'); ?></th>
 
     </tr>
+    <tr><td align="center"><?= @$date1 ?></td><td align="center">Solde Départ</td><td align="center"><?= @$depot ?></td><td align="center"></td><td align="center"></td><td align="center"> <?php if(@$soldedeb>0) echo @$soldedeb ?> </td><td align="center"> <?php if(@$soldedeb<0) echo abs(@$soldedeb) ?> </td><td align="center"></td><td align="center"></td></tr>
+
     <?php
     $nb = 0;
-    $qte_ent = 0;
-    $qte_sor = 0;
+    if(@$soldedeb>0){
+        $qte_ent = $soldedeb;
+        $qte_sor = 0;
+
+    }else if(@$soldedeb<0){
+        $qte_sor = $soldedeb;
+        $qte_ent = 0;
+
+    }else{
+        $qte_sor = 0;
+        $qte_ent = 0;
+    }
     $qte_final = 0;
     //debug($historiquearticles);die;
     foreach ($historiquearticles as $historiquearticle) {

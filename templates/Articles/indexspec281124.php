@@ -1,10 +1,4 @@
-<script>
-    var wr = "<?= $this->Url->build('/', ['fullBase' => true]) ?>";
-</script>
 <?php
-
-use Cake\Datasource\ConnectionManager;
-
 error_reporting(E_ERROR | E_PARSE); ?>
 <?php echo $this->Html->css('select2'); ?>
 <section class="content-header">
@@ -34,7 +28,7 @@ error_reporting(E_ERROR | E_PARSE); ?>
                     <div class="col-xs-6">
 
                         <?php
-                        echo $this->Form->input('date2', array('value' => @$date2, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control datePickerOnly', 'type' => 'date', 'label' => "Jusqu'à "));
+                        echo $this->Form->input('date2', array('value' => @$date2 , 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control datePickerOnly', 'type' => 'date', 'label' => "Jusqu'à "));
 
                         ?>
 
@@ -44,7 +38,7 @@ error_reporting(E_ERROR | E_PARSE); ?>
                 <div class="row">
                     <div class="col-xs-6">
                         <?php
-                        echo $this->Form->input('depot_id', array('id' => 'depot_id', 'empty' => 'veuillez choisir', 'div' => 'form-group', 'label' => 'Dépot', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control select2', 'options' => $depots, 'value' => $this->request->getQuery('depot_id')));
+                        echo $this->Form->input('depot_id', array('id' => 'depot_id', 'empty' => 'veuillez choisir', 'div' => 'form-group', 'label' => 'Dépot', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control select2', 'options' => $depots, 'value' => $this->request->getQuery('depot_id'),));
                         ?>
                     </div>
 
@@ -82,11 +76,9 @@ error_reporting(E_ERROR | E_PARSE); ?>
                         <button type="submit" class="btn btn-primary  alertHisto" id="">Afficher</button>
 
                         <?php
-
                         //debug($count);
                         if ($count != 0) { ?>
-                            <!--                             <a onclick="openWindow(1000, 1000, 'https://codifaerp.isofterp.com/demo/Articles/imphisto?client_id=<?php echo @$clientID;  ?>')"><button class="btn btn-primary ">Imprimer</button></a>
- --> <a onclick="openWindow(1000, 1000, wr+'Articles/imphistotest?date1=<?php echo @$date1;  ?>&depot=<?php echo @$depot;  ?>&soldedeb=<?php echo @$soldeqte;  ?>&client_id=<?php echo @$clientID;  ?>')"><button class="btn btn-primary ">Imprimer</button></a>
+                            <a onclick="openWindow(1000, 1000, 'https://codifaerp.isofterp.com/demo/Articles/imphisto?client_id=<?php echo @$clientID;  ?>')"><button class="btn btn-primary ">Imprimer</button></a>
                         <?php } ?>
                         <?php echo $this->Html->link(__('Actualiser'), ['action' => '/indexspec'], ['class' => 'btn btn-primary']) ?>
 
@@ -122,34 +114,10 @@ error_reporting(E_ERROR | E_PARSE); ?>
 
                             </tr>
                             <?php
-
-                            // debug($st);
-                            ?>
-                            <tr>
-                                <td align="center"><?= @$date1 ?></td>
-                                <td align="center">Solde Départ</td>
-                                <td align="center"><?= @$depot ?></td>
-                                <td align="center"></td>
-                                <td align="center"></td>
-                                <td align="center"> <?php if (@$soldeqte > 0) echo @$soldeqte ?> </td>
-                                <td align="center"> <?php if (@$soldeqte < 0) echo abs(@$soldeqte) ?> </td>
-                                <td align="center"></td>
-                                <td align="center"></td>
-                            </tr>
-                            <?php
                             $nb = 0;
-                            if (@$soldeqte > 0) {
-                                $qte_ent = $soldeqte;
-                                $qte_sor = 0;
-                            } else if (@$soldeqte < 0) {
-                                $qte_sor = $soldeqte;
-                                $qte_ent = 0;
-                            } else {
-                                $qte_sor = 0;
-                                $qte_ent = 0;
-                            }
+                            $qte_ent = 0;
+                            $qte_sor = 0;
                             $qte_final = 0;
-
                             //debug($historiquearticles);die;
                             foreach ($historiquearticles as $historiquearticle) {
                                 // debug($historiquearticle);
@@ -159,7 +127,9 @@ error_reporting(E_ERROR | E_PARSE); ?>
                                 } else {
                                     $date = "";
                                 }
-
+                                // if($historiquearticle['indice']==4){
+                                //     $qte_ent= $qte_ent + sprintf("%.3f",$historiquearticle['qte']);
+                                // }
 
 
                                 if ($historiquearticle['indice'] == 4) {
@@ -169,15 +139,15 @@ error_reporting(E_ERROR | E_PARSE); ?>
                                 }
 
                                 //debug($qte_ent);
-
-                                if (($historiquearticle['mode'] == "Entreé") && ($historiquearticle['indice'] != 4)) {
+                               
+                                if (($historiquearticle['mode'] == "Entreé") && ($historiquearticle['indice'] != 4 )) {
                                     $qte_ent = $qte_ent + sprintf("%.3f", $historiquearticle['qte']);
                                     ///debug($qte_ent);
                                 }
 
-                                ///debug($qte_ent);
-
-
+                                 ///debug($qte_ent);
+                                
+                                
                                 if ($historiquearticle['mode'] == "Sortie") {
                                     $qte_sor = $qte_sor + sprintf("%.3f", $historiquearticle['qte']);
                                 }

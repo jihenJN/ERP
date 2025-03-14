@@ -1,7 +1,7 @@
 <?php
 
 use function PHPSTORM_META\type;
-use Cake\Datasource\ConnectionManager;
+
 $session = $this->request->getSession();
 $id = $session->read('Users'); //debug($id);
 
@@ -58,7 +58,6 @@ echo ($comm);
             Fournisseur</button>
 
 
-            <button type="button" style="width: 160px;<?php if (($article->famille_id == 1 || $article->famille_id == 4) && $comm == 0) { ?>display:true;<?php } else { ?>display:none<?php } ?> " data-toggle="tab" class="btn btn-primary btn-sm" onclick="afficherDiv('fichartcout')">Cout</button>
 
     </div>
 </section>
@@ -530,70 +529,6 @@ echo ($comm);
                                     </div>
                                     <div class="row" style="text-align: center;margin-top:20px">
 
-<div style="display:flex;">
-
-<?php if ($article->famille_id != 1 && $article->famille_id != 4) { ?>
-
-    <div style="display:flex;">
-
-        <div style="width:100%;    margin-right: 20px; position: static; ">
-            <div align="center">
-                <div class="form-group input number">
-                    <label style="font-size:30px;color:rgb(255, 0, 0);margin-right:20px">
-                        Cout :</label>
-
-                    <input  readonly='readonly' value="<?php echo $article->cout ?>"
-                        style="height: 80px;font-size:50px;width:61%;text-align:center"
-                        type="text" name="cout" id="cout">
-
-                </div>
-            </div>
-
-
-        </div>
-
-    </div>
-    <?php } ?>
-
-    <div style="display:flex;">
-
-        <div style="width:100%; position: static; ">
-            <div align="center">
-                <div class="form-group input number">
-                    <label style="font-size:30px;color:rgb(255, 0, 0);margin-right:20px">
-                        Prix
-                        TTC :</label>
-
-                    <input  value="<?php echo $article->prixttc ?>"
-                        style="color:rgb(255, 0, 0);height: 80px;font-size:50px;width:61%%;text-align:center"
-                        readonly='readonly' type="text" name="prixttc" id="prixttc">
-
-                </div>
-            </div>
-
-
-        </div>
-
-    </div>
-
-    <!-- <div class="col-xs-6">
-        <div class="form-group input number">
-            <label style="font-size:30px;color:rgb(255, 0, 0);margin-right:20px"> Prix TTC
-                :</label>
-
-            <input value="<?php echo $article->prixttc ?>"
-                style="color:rgb(255, 0, 0);height: 80px;font-size:40px;width:50%;text-align:center"
-                readonly='readonly' type="text" name="prixttc" id="prixttc">
-
-        </div>
-
-    </div> -->
-
-</div>
-</div>
-
-                                    <!-- <div class="row" style="text-align: center;margin-top:20px">
-
                                         <div
                                             style=" margin: 0 auto;  margin-left: 20px; margin-right: 20px; position: static; ">
 
@@ -617,7 +552,7 @@ echo ($comm);
                                             </div>
 
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                             <br><br>
@@ -1075,235 +1010,6 @@ echo ($comm);
 
 
                             </section>
-                        </div>
-                    </div>
-                    <div class=" tab-content" id="fichartcout" style="display: none">
-                        <?php //echo $comm; 
-                        ?>
-
-
-                        <div id="fiche" class="col-md-12 " <?php if (($article->famille_id == 1 || $article->famille_id == 4) && $comm == 0) { ?> style='display:true' <?php } else { ?> style='display:none' <?php } ?>>
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">
-                                        <?php echo __('Fiche Article'); ?>
-                                    </h3>
-
-                                </div>
-                                <div style="display:flex;">
-
-                                    <div style="width:100%;    margin-right: 20px; position: static; ">
-                                        <div align="center">
-                                            <div class="form-group input number">
-                                                <label style="font-size:30px;color:rgb(255, 0, 0);margin-right:20px">
-                                                    Cout :</label>
-
-                                                <input  value="<?php echo $article->cout ?>" style="height: 80px;font-size:50px;width:61%;text-align:center" readonly type="text" name="coutpf" id="coutpf">
-
-                                            </div>
-                                        </div>
-
-
-                                    </div>
-
-                                </div>
-
-                                <div class="panel-body">
-                                    <table class="table table-bordered table-striped table-bottomless" id="addtablea" style="width:100%" align="center">
-                                        <thead>
-                                            <tr bgcolor="#EDEDED">
-                                                <td width="" align="center">Composant1</td>
-                                                <td width="" align="center">Qte</td>
-                                                <td align="center">COUT</td>
-
-
-
-
-
-
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-
-
-
-
-                                            <?php
-                                            //    debug($dat)
-                                            //    echo 
-                                            $i = -1;
-                                            foreach ($dat as $fech) {
-                                                $i++;
-                                                //   debug($fech);die;
-                                                $connection = ConnectionManager::get('default');
-
-                                                $coutt11 = $connection->execute('SELECT cout as c From articles where id=' . $fech['article_id'] . ' ;')->fetchAll('assoc');
-                                                //var_dump($coutt);
-                                                $ccout = $fech['qte'] * $coutt11[0]['c'];
-                                            ?>
-                                                <tr>
-
-                                                    <td align="left">
-                                                        <?php
-                                                        echo $this->Form->input('sup', array('name' => 'data[Ofsfligne][' . $i . '][sup]', 'id' => 'sup' . $i, 'champ' => 'sup', 'table' => 'Ofsfligne', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'type' => 'hidden', 'after' => '</div>', 'class' => 'form-control'));
-                                                        echo $this->Form->input('article_id', array('disabled','value' => $fech['article_id'], 'style' => 'width:250px', 'label' => '', 'id' => 'article_id' . $i, 'label' => '', 'name' => 'data[Ofsfligne][' . $i . '][article_id]', 'table' => 'Ofsfligne', 'champ' => 'article_id', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control  select2', 'empty' => 'Veuillez choisir'));
-                                                        ?>
-                                                    </td>
-                                                    <td align="center">
-                                                        <?php
-                                                        echo $this->Form->input('qte', array('readonly','value' => $fech['qte'], 'id' => 'qte' . $i, 'label' => '', 'name' => 'data[Ofsfligne][' . $i . '][qte]', 'table' => 'Ofsfligne', 'champ' => 'qte', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control comp calcout'));
-                                                        ?>
-                                                    </td>
-
-
-                                                    <td align="center">
-                                                        <?php
-                                                        echo $this->Form->input('cout', array('readonly','value' => $coutt11[0]['c'], 'id' => 'cout' . $i, 'label' => '', 'name' => 'data[Ofsfligne][' . $i . '][cout]', 'table' => 'Ofsfligne', 'champ' => 'cout', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control calcout'));
-                                                        ?>
-                                                        <?php echo $this->Form->input('ttcout', array('value' => $ccout, 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][ttcout]', 'label' => '', 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf',  'champ' => 'ttcout', 'id' => 'ttcout' . $i . '-' . $j, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control', 'type' => 'hidden'));
-                                                        ?>
-                                                    </td>
-
-
-                                                </tr>
-
-                                                <tr index="<?php echo $i; ?>" class="tr" align="centre">
-                                                    <td width='30%'></td>
-                                                    <td champ="afef" class="afef" id="afef<?php echo $i; ?>" colspan="3" index="<?php echo $i; ?>">
-                                                        <div class="panel panel-default" width="50%">
-                                                            <div class="panel-heading">
-                                                                <h3 class="panel-title">
-                                                                    <?php echo __('Composant'); ?>
-                                                                </h3>
-
-                                                            </div>
-                                                            <div class="panel-body">
-                                                                <table class="table table-bordered table-striped table-bottomless" id="addtableaa<?php echo $i; ?>" style="width:100%" align="center">
-                                                                    <thead>
-                                                                        <tr bgcolor="#EDEDED">
-                                                                            <td align="center">Composant</td>
-                                                                            <td align="center">Qte</td>
-                                                                            <td align="center">cout</td>
-
-                                                                        </tr>
-                                                                    <tbody>
-
-
-                                                                        <?php foreach ($fech['Ligne'] as $j => $fech1) {
-                                                                            // debug($fech1['unite_id']) ;    
-                                                                            $connection = ConnectionManager::get('default');
-
-                                                                            // $coutt1 = $connection->execute('SELECT cout(' . $fech1['article_id'] . ',"' . date("Y-m-d H:i:s") . '") as c ;')->fetchAll('assoc');
-                                                                            $coutt1 = $connection->execute('SELECT cout as c From articles where id=' . $fech1['article_id'] . ' ;')->fetchAll('assoc');
-
-                                                                            //var_dump($coutt1);
-                                                                            $ccout1 = $fech1['qte'] * $coutt1[0]['c'];
-                                                                        ?>
-                                                                            <tr>
-                                                                                <td>
-                                                                                    <?php
-                                                                                    echo $this->Form->input('supp2', array('name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][supp2]', 'label' => '', 'type' => 'hidden', 'div' => 'form-group', 'indexligne' => $j, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'index' => $i, 'id' => 'supp2' . $i . '-' . $j, 'champ' => 'supp', 'indextype' => '', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
-                                                                                    echo $this->Form->input('id', array('value' => $fech1['id'], 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][id]', 'type' => 'hidden', 'label' => '', 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'personnel_id', 'id' => 'id' . $i . '-' . $j, 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => ''));
-                                                                                    echo $this->Form->input('article_id', array('disabled','value' => $fech1['article_id'], 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][article_idt]', 'label' => '', 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'article_idt', 'id' => 'article_idt' . $i . '-' . $j, 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control select2', 'empty' => 'Veuillez Choisir !!'));
-                                                                                    ?>
-                                                                                </td>
-                                                                                <td>
-                                                                                    <?php
-                                                                                    echo $this->Form->input('qte', array('readonly','value' => $fech1['qte'], 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][qte]', 'label' => '', 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'qte', 'id' => 'qte' . $i . '-' . $j, 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control calcout'));
-                                                                                    ?>
-                                                                                </td>
-
-                                                                                <td align="center">
-                                                                                    <?php
-                                                                                    echo $this->Form->input('cout', array('readonly','value' => $coutt1[0]['c'], 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][cout]', 'label' => '', 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'coeff', 'id' => 'cout' . $i . '-' . $j, 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control calcout'));
-                                                                                    ?>
-                                                                                    <?php echo $this->Form->input('ttcout', array('value' => $ccout1, 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][ttcout]', 'label' => '', 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf',  'champ' => 'ttcout', 'id' => 'ttcout' . $i . '-' . $j, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control', 'type' => 'hidden'));
-                                                                                    ?>
-                                                                                </td>
-
-
-
-                                                                            </tr>
-                                                                            <tr id="traaligne<?php echo $i ?>-<?php echo $j ?>" champ='traaligne'>
-                                                                                <td width='30%'></td>
-                                                                                <td id="afefligne<?php echo $i ?>-<?php echo $j ?>" champ="afefligne" class="afefligne <?php echo $i ?>-<?php echo $j ?>" colspan="3" id="afefligne<?php echo $i ?>-<?php echo $j ?>" index="<?php echo $i ?>">
-                                                                                    <div class="panel panel-default">
-                                                                                        <div class="panel-heading">
-                                                                                            <h3 class="panel-title">
-                                                                                                <?php echo __('Composant'); ?>
-                                                                                            </h3>
-
-                                                                                        </div>
-                                                                                        <div class="panel-body">
-                                                                                            <table class="table table-bordered table-striped table-bottomless" index="<?php echo $i ?>" indexligneligne='<?php echo $j ?>' champ="addtableaaligne" id="addtableaaligne<?php echo $i ?>-<?php echo $j ?>" style="width:100%" align="center">
-                                                                                                <thead>
-                                                                                                    <tr bgcolor="#EDEDED">
-                                                                                                        <td align="center">
-                                                                                                            Composant</td>
-                                                                                                        <td align="center">Qte
-                                                                                                        </td>
-
-                                                                                                        <td align="center">
-                                                                                                            Cout
-                                                                                                        </td>
-
-                                                                                                    </tr>
-                                                                                                </thead>
-                                                                                                <tbody>
-
-                                                                                                    <?php foreach ($fech1['ligneligne'] as $k => $fech2) {
-                                                                                                        ///debug($fech2);
-                                                                                                        $connection = ConnectionManager::get('default');
-
-                                                                                                        $coutt2 = $connection->execute('SELECT cout as c From articles where id=' . $fech2['article_id'] . '')->fetchAll('assoc');
-                                                                                                        //var_dump($coutt);
-                                                                                                        $ccout2 = $fech2['qte'] * $coutt2[0]['c'];
-                                                                                                    ?>
-                                                                                                        <tr>
-                                                                                                            <td>
-                                                                                                                <?php
-                                                                                                                echo $this->Form->input('supp3', array('name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][Phaseofsfligne][' . $k . '][supp3]', 'type' => 'hidden', 'label' => '', 'indexligneligne' => $k, 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'supp3', 'id' => 'supp3' . $i . '-' . $j . '-' . $k, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
-
-
-                                                                                                                echo $this->Form->input('article_id', array('disabled','value' => $fech2['article_id'], 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][Phaseofsfligne][' . $k . '][article_idd]', 'label' => '', 'indexligneligne' => $k, 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'article_idd', 'id' => 'article_idd' . $i . '-' . $j . '-' . $k, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control select2', 'empty' => 'Veuillez Choisir !!', "style" => "width:100% ; height:32px"));
-                                                                                                                ?>
-                                                                                                            </td>
-                                                                                                            <td>
-                                                                                                                <?php echo $this->Form->input('qte', array('readonly','value' => $fech2['qte'], 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][Phaseofsfligne][' . $k . '][qte]', 'label' => '', 'indexligneligne' => $k, 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'qte', 'id' => 'qte' . $i . '-' . $j . '-' . $k, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control calcout'));
-                                                                                                                ?>
-                                                                                                            </td>
-
-                                                                                                            <td>
-                                                                                                                <?php echo $this->Form->input('cout', array('readonly','value' => $coutt2[0]['c'], 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][Phaseofsfligne][' . $k . '][cout]', 'label' => '', 'indexligneligne' => $k, 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'cout', 'id' => 'cout' . $i . '-' . $j . '-' . $k, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control calcout'));
-                                                                                                                ?>
-                                                                                                                <?php echo $this->Form->input('ttcout', array('value' => $ccout2, 'name' => 'data[Ofsfligne][' . $i . '][Phaseofsf][' . $j . '][Phaseofsfligne][' . $k . '][ttcout]', 'label' => '', 'indexligneligne' => $k, 'indexligne' => $j, 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'tableligneligne' => 'Phaseofsfligne', 'champ' => 'ttcout', 'id' => 'ttcout' . $i . '-' . $j . '-' . $k, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control', 'type' => 'hidden'));
-                                                                                                                ?>
-                                                                                                            </td>
-
-                                                                                                        </tr>
-                                                                                                    <?php } ?>
-                                                                                                </tbody>
-                                                                                            </table>
-                                                                                            <input type="hidden" value="<?php echo $k ?>" class="" id="indexaligne<?php echo $i ?>-<?php echo $j ?>" champ="indexaligne" />
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </td>
-                                                                            </tr>
-                                                                        <?php } ?>
-                                                                        <input type="hidden" value="<?php echo $j ?>" id="indexa<?php echo $i ?>" />
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            <?php } ?>
-                                            <input type="hidden" value="<?php echo $i ?>" id="index" />
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class=" tab-content" id="fichart" style="display: none">
@@ -1792,11 +1498,6 @@ echo ($comm);
 
 
 <script type="text/javascript">
-    $(document).ready(function() {
-        calcout();
-
-
-    });
     document.addEventListener('DOMContentLoaded', function () {
         const buttons = document.querySelectorAll('[data-toggle="tab"]');
         buttons.forEach(button => {
@@ -1832,62 +1533,6 @@ echo ($comm);
 
         // Afficher le div correspondant
         document.getElementById(id).style.display = 'block';
-
-    }
-    function afficherDivcout(id) {
-        // Masquer tous les divs
-        const divs = document.getElementsByClassName('tab-content');
-
-        for (let i = 0; i < divs.length; i++) {
-            divs[i].style.display = 'none';
-        }
-
-        // Afficher le div correspondant
-        document.getElementById(id).style.display = 'block';
-
-    }
-    function calcout() {
-        // Masquer tous les divs
-
-        index = $('#index').val();
-        tt = 0;
-        for (i = 0; i <= index; i++) {
-
-            indexa = $('#indexa' + i).val();
-            if (indexa != -1) {
-                tt1 = 0;
-                for (j = 0; j <= indexa; j++) {
-                    indexaligne = $('#indexaligne' + i + '-' + j).val();
-                    if (indexaligne != -1) {
-                        tt2 = 0;
-                        for (k = 0; k <= indexaligne; k++) {
-                            ttcout = Number($('#cout' + i + '-' + j + '-' + k).val()) * Number($('#qte' + i + '-' + j + '-' + k).val());
-                            tt2 = tt2 + Number(ttcout);
-                        }
-                        if (tt2 > 0) {
-                            $('#cout' + i + '-' + j).val(tt2);
-
-                        }
-
-                    }
-                    ttcout2 = Number($('#cout' + i + '-' + j).val()) * Number($('#qte' + i + '-' + j).val());
-
-                    tt1 = tt1 + Number(ttcout2);
-                }
-                if (tt1 > 0) {
-                    $('#cout' + i).val(tt1);
-                }
-
-            }
-            ttcout1 = Number($('#cout' + i).val()) * Number($('#qte' + i).val());
-
-            tt = tt + Number(ttcout1);
-
-        }
-        if (tt > 0) {
-
-            $('#coutpf').val(tt);
-        }
 
     }
     $(function () {
