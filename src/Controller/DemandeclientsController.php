@@ -49,6 +49,7 @@ class DemandeclientsController extends AppController
 
         $this->paginate = [
             'contain' => ['Clients', 'Typedemandes','Typecontacts','Commercials'],
+            'order'=> ['Demandeclients.id' => 'DESC']
         ];
         $demandeclients = $this->paginate($query);
 
@@ -178,9 +179,6 @@ class DemandeclientsController extends AppController
 
             if ($this->Clients->save($datacl)) {
                 $client_id = $datacl->id;
-
-               
-
                 $type_contact_id = (int) $this->request->getData('type_contact_id');
                 $newTypeContact = $this->request->getData('libelle'); // Now correctly captured
                 
@@ -204,20 +202,40 @@ class DemandeclientsController extends AppController
                 $demande->client_id = $client_id;
                 $this->Demandeclients->save($demande);
                 $this->loadModel('Listetypedemandes');
+                $this->loadModel('Visites');
                 $demandeIds = $this->request->getData('typedemandes')??[];
+            
                 $filteredemandeIds = array_filter($demandeIds);
-
+   
                 if (!empty($filteredemandeIds)) {
                     foreach ($filteredemandeIds as $typedemande_id) {
                         $dataa = [
                             'demandeclient_id' => $demande->id,
                             'typedemande_id' => $typedemande_id[0],
                         ];
+                        
+                       
 
                         $clientlist = $this->Listetypedemandes->newEntity($dataa);
+
+                         // **If TypeDemande is 3, create a new Visite**
+                         if ($typedemande_id[0] == 3) { 
+                            $visite = $this->Visites->newEmptyEntity();
+                            $visite->demandeclient_id = $demande->id;
+                            $visite->client_id = $demande->client_id ;
+                            $visite->responsable = $demande->client->responsable;
+                            $visite->commercial_id = $demande->commercial_id ;
+                            $visite->type_contact_id = $demande->type_contact_id ;
+                            $this->Visites->save($visite);
+                        }
+                        
+
                         if ($this->Listetypedemandes->save($clientlist)) {
+
                         } else {
                         }
+                        
+                       
                     }
                 }
 
