@@ -139,8 +139,6 @@ class VisitesController extends AppController
             $typeContactsCountsMap[$row->type_contact_id] = $row->nbre_visites;
         }
 
-
-
         // Prepare data array
         $typeContactsData = [];
         foreach ($typeContacts as $id => $name) {
@@ -300,12 +298,7 @@ class VisitesController extends AppController
                 $document->moveTo($targetPath);
                 $data['piece'] = $namedoc;
             }
-            $num = $this->Visites->find()->select(["num" => 'MAX(Visites.numero)'])->first();
-            $n = $num->num;
-            $in = intval($n) + 1;
-            $mm = str_pad("$in", 5, "0", STR_PAD_LEFT);
-            $data['numero'] = $mm;
-
+            $data['numero'] = $this->Visites->getNextNumero(); 
             // Handling TypeContact creation
             $type_contact_id = (int) $this->request->getData('type_contact_id');
             $newTypeContact = trim($this->request->getData('libelle'));

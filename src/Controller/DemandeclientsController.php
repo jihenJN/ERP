@@ -202,7 +202,10 @@ class DemandeclientsController extends AppController
                 $demande->client_id = $client_id;
                 $this->Demandeclients->save($demande);
                 $this->loadModel('Listetypedemandes');
+                
                 $this->loadModel('Visites');
+                $nextNumero = $this->Visites->getNextNumero();
+
                 $demandeIds = $this->request->getData('typedemandes')??[];
             
                 $filteredemandeIds = array_filter($demandeIds);
@@ -221,6 +224,7 @@ class DemandeclientsController extends AppController
                          // **If TypeDemande is 3, create a new Visite**
                          if ($typedemande_id[0] == 3) { 
                             $visite = $this->Visites->newEmptyEntity();
+                            $visite->numero = $demande->id;
                             $visite->demandeclient_id = $demande->id;
                             $visite->client_id = $demande->client_id ;
                             $visite->responsable = $demande->client->responsable;
