@@ -224,7 +224,7 @@ class DemandeclientsController extends AppController
                          // **If TypeDemande is 3, create a new Visite**
                          if ($typedemande_id[0] == 3) { 
                             $visite = $this->Visites->newEmptyEntity();
-                            $visite->numero = $demande->id;
+                            $visite->numero = $nextNumero;
                             $visite->demandeclient_id = $demande->id;
                             $visite->client_id = $demande->client_id ;
                             $visite->responsable = $demande->client->responsable;
