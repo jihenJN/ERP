@@ -6042,6 +6042,362 @@ public function duplicate($id = null)
 }
 
 
+public function addaccessoire($type = 2)
+
+{
+    $this->loadModel('Fichearticles');
+    $codep = $this->fetchTable('Societes')->find()->select(["codepays" =>
+    'MAX(Societes.codepays)'])->first();
+    $codepays = $codep->codepays;
+    $codeproduc = $this->fetchTable('Societes')->find()->select(["codeproducteur" =>
+    'MAX(Societes.codeproducteur)'])->first();
+    $codeproducteur = $codeproduc->codeproducteur;
+    $fodecs = $this->fetchTable('Fodecs')->find()->select(["fodecs" =>
+    'MAX(Fodecs.valeur)'])->first();
+    $fodec = $fodecs->fodecs;
+    $tpes = $this->fetchTable('Tpes')->find()->select(["tpes" =>
+    'MAX(Tpes.valeur)'])->first();
+    $tpe = $tpes->tpes;
+    $this->loadModel('Uaprincipals');
+    $this->loadModel('Clientarticles');
+    $session = $this->request->getSession();
+    $abrv = $session->read('abrvv');
+    $liendd = $session->read('lien_articles' . $abrv);
+    //   debug($liendd);
+    $artic = 0;
+    foreach ($liendd as $k => $liens) {
+        //  debug($liens);
+        if (@$liens['lien'] == 'article') {
+            $artic = $liens['ajout'];
+        }
+    }
+    // debug($societe);die;
+    if (($artic <> 1)) {
+        $this->redirect(array('controller' => 'users', 'action' => 'login'));
+    }
+/*****************************JN ADDS***************************** */
+    $article = $this->Articles->newEmptyEntity();
+    $article->typearticle_id= '2';
+    $nextCode = $this->Articles->getNextCode($article->typearticle_id);
+    $article->Code= $nextCode;
+  
+
+    if ($this->request->is('post')) {
+
+        $codearticle = $this->request->getData('codearticle');
+        $article = $this->Articles->patchEntity($article, $this->request->getData());
+      
+        $codefinale = $codepays . $codeproducteur . $codearticle;
+        // debug($codefinale);
+        $article->inserted = '1';
+        $article->updated = '0';
+        $article->codeabarre = $codefinale;
+        
+        $image = $this->request->getData('image_file');
+        //  debug($image);die;
+        $name = $image->getClientFilename();
+        /* if (!is_dir(WWW_ROOT . 'img' . DS . 'user-img'))
+          mkdir(WWW_ROOT . 'img' . DS . 'user-img', 0775); */
+
+        // $targetPath = WWW_ROOT . 'img' . DS .'imgart' . $name;
+        $targetPath = WWW_ROOT . 'img' . DS . 'imgart' . DS . $name;
+        if (!empty($name)) {
+            $image->moveTo($targetPath);
+            $article->image = $name;
+        }
+
+
+        if ($this->Articles->save($article)) {
+            $article_id = $article->id;
+            $this->loadModel('Uaprincipals');
+            if (isset($this->request->getData('data')['uaprincipals']) && (!empty($this->request->getData('data')['uaprincipals']))) {
+                foreach ($this->request->getData('data')['uaprincipals'] as $i => $tar) {
+                    //debug($this->request->getData());
+                    // die;
+                    if ($tar['sup0'] != 1) {
+                        $data['article_id'] = $article_id;
+                        $data['unitearticle_id'] = $tar['unitearticle_id'];
+                        $data['Correspand'] = $tar['Correspand'];
+
+                        $uaprincipal = $this->fetchTable('Uaprincipals')->newEmptyEntity();
+                        $uaprincipal = $this->Uaprincipals->patchEntity($uaprincipal, $data);
+                        if ($this->Uaprincipals->save($uaprincipal)) {
+                            //debug($data);
+                            //debug($tar);
+                            //debug($uaprincipal);
+                        } else {
+                        }
+                    }
+                }
+            }
+            if (isset($this->request->getData('data')['clientarticles']) && (!empty($this->request->getData('data')['clientarticles']))) {
+                foreach ($this->request->getData('data')['clientarticles'] as $a => $tarr) {
+                    // debug($this->request->getData());
+                    // die;
+                    if ($tar['sup1'] != 1) {
+                        $data['article_id'] = $article_id;
+                        $data['client_id'] = $tarr['client_id'];
+                        $data['prix'] = $tarr['prix'];
+                        $data['inserted'] = '1';
+                        $data['updated'] = '0';
+                        // debug($data);
+                        $clientarticle = $this->fetchTable('Clientarticles')->newEmptyEntity();
+                        $clientarticle = $this->Clientarticles->patchEntity($clientarticle, $data);
+                        if ($this->Clientarticles->save($clientarticle)) {
+                            // debug($clientarticle);
+                        } else {
+                        }
+                    }
+                }
+            }
+
+
+
+
+
+
+
+
+
+            //   debug($article);
+            $id = $article->id;
+
+
+            if (isset($this->request->getData('data')['articlefr']) && (!empty($this->request->getData('data')['articlefr']))) {
+                foreach ($this->request->getData('data')['articlefr'] as $j => $p) {
+                    // debug($p['prix']);die;
+                    //die;
+
+                    if ($p['supfr'] != 1) {
+                        $articlefr = $this->fetchTable('Articlefournisseurs')->newEmptyEntity();
+
+                        //debug($clientarticle);
+                        $data['article_id'] = $id;
+                        $data['prix'] = $p['prix'];
+                        $data['code'] = $p['code'];
+                        $data['fournisseur_id'] = $p['fr_id'];
+                        $articlefr = $this->fetchTable('Articlefournisseurs')->patchEntity($articlefr, $data);
+                        $this->fetchTable('Articlefournisseurs')->save($articlefr);
+                        //  debug($articlefr);
+                        //die;
+                    }
+                }
+            }
+
+
+
+            if (isset($this->request->getData('data')['Ofsfligne']) && (!empty($this->request->getData('data')['Ofsfligne']))) {
+                foreach ($this->request->getData('data')['Ofsfligne'] as $i => $Ofsfligne) {
+                    //debug($Ofsfligne);
+                    //die;
+                    if ($Ofsfligne['sup'] != 1) {
+                        if ($Ofsfligne['article_id'] != '') {
+                            $d = $this->fetchTable('Fichearticles')->newEmptyEntity();
+                            $d['article_id'] = $article->id;
+                            $d['article_id1'] = $Ofsfligne['article_id'];
+                            $d['article_id2'] = 0;
+                            $d['article_id3'] = 0;
+                            $d['qte'] = $Ofsfligne['qte'];
+                            $d['unite_id'] = $Ofsfligne['unite'];
+                            // $d['coeff'] = $Ofsfligne['coeff'];
+
+
+
+                            //         $fichearticle =  $this->fetchTable('Fichearticles')->patchEntity($fichearticles, $d);
+                            if ($this->fetchTable('Fichearticles')->save($d)) {
+                                ///debug($d);
+                                foreach ($Ofsfligne['Phaseofsf'] as $i => $Phaseofsf) {
+
+                                    //debug($Phaseofsf); die ; 
+                                    if ($Phaseofsf['supp2'] != 1) {
+                                        if ($Phaseofsf['article_idt'] != '') {
+                                            $dd = $this->fetchTable('Fichearticles')->newEmptyEntity();
+                                            $dd['article_id'] = $article->id;
+                                            $dd['article_id1'] = $Ofsfligne['article_id'];
+                                            $dd['article_id2'] = $Phaseofsf['article_idt'];;
+                                            $dd['article_id3'] = 0;
+                                            $dd['qte'] = $Phaseofsf['qte'];
+                                            $dd['unite_id'] = $Phaseofsf['unite_idt'];
+                                            // $dd['coeff'] = $Phaseofsf['coeff'];
+
+                                            //  $fichearticle =  $this->fetchTable('Fichearticles')->patchEntity($fichearticles, $d);
+                                            if ($this->fetchTable('Fichearticles')->save($dd)) {
+                                                ///debug($dd);
+                                                foreach ($Phaseofsf['Phaseofsfligne'] as $i => $Phaseofsfligne) {
+                                                    ///   debug($Phaseofsfligne); die ;
+                                                    if ($Phaseofsfligne['supp3'] != 1) {
+                                                        if ($Phaseofsfligne['article_idd'] != '') {
+                                                            $ddd = $this->fetchTable('Fichearticles')->newEmptyEntity();
+                                                            $ddd['article_id'] = $article->id;
+                                                            $ddd['article_id1'] = $Ofsfligne['article_id'];
+                                                            $ddd['article_id2'] = $Phaseofsf['article_idt'];
+                                                            $ddd['article_id3'] = $Phaseofsfligne['article_idd'];
+                                                            $ddd['qte'] = $Phaseofsfligne['qte'];
+                                                            $ddd['unite_id'] = $Phaseofsfligne['unite_idd'];
+                                                            // $ddd['coeff'] = $Phaseofsfligne['coeff'];
+
+                                                            // debug($ddd);
+                                                            // $fichearticle =  $this->fetchTable('Fichearticles')->patchEntity($fichearticles, $d);
+                                                            if ($this->fetchTable('Fichearticles')->save($ddd)) {
+                                                                ///  debug($ddd);
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            //                            $objectifrepresentant = $this->fetchTable('Objectifrepresentants')->patchEntity($objectifrepresentant, $dataobj);
+                            //
+                            //
+                            //                            $this->fetchTable('Objectifrepresentants')->save($objectifrepresentant);
+                            //debug($seuil);
+                        }
+                    }
+                }
+            }
+
+
+
+
+            if (isset($this->request->getData('data')['seuil']) && (!empty($this->request->getData('data')['seuil']))) {
+                foreach ($this->request->getData('data')['seuil'] as $i => $b) {
+                    //debug($adresseliv);
+                    //die;
+                    //  if($b['minimum'] != '' &&  $b['maximum'] != '' && $b['alert'] != '' ) {
+
+
+
+
+                    $seuil = $this->fetchTable('Seuilmois')->newEmptyEntity();
+                    $data['moi_id'] = $i;
+                    $data['min'] = $b['minimum'];
+                    $data['max'] = $b['maximum'];
+                    $data['alert'] = $b['alert'];
+                    $data['article_id'] = $article->id;
+
+                    $seuil = $this->fetchTable('Seuilmois')->patchEntity($seuil, $data);
+
+
+                    $this->fetchTable('Seuilmois')->save($seuil);
+                    // }
+                    //debug($seuil);
+                }
+            }
+
+
+
+
+            if (isset($this->request->getData('data')['objectifrep']) && (!empty($this->request->getData('data')['objectifrep']))) {
+                foreach ($this->request->getData('data')['objectifrep'] as $i => $c) {
+                    //debug($adresseliv);
+                    //die;
+                    // if ($c['objectif'] != '') {
+
+
+
+
+                    $objectifrepresentant = $this->fetchTable('Objectifrepresentants')->newEmptyEntity();
+                    // $data['mois'] = $i;
+                    $dataobj['objectif'] = $c['objectif'];
+                    $dataobj['commercial_id'] = $c['commercial'];
+                    $dataobj['moi_id'] = $c['mois'];
+                    $dataobj['article_id'] = $article->id;
+                    //  debug($dataobj);
+
+
+
+                    if (!empty($c['objectif'])) {
+                        $objectifrepresentant = $this->fetchTable('Objectifrepresentants')->patchEntity($objectifrepresentant, $dataobj);
+                        $this->fetchTable('Objectifrepresentants')->save($objectifrepresentant);
+                        //debug($objectifrepresentant);
+                    }                            //debug($seuil);
+                    //}
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            return $this->redirect(['action' => 'index/' . $type]);
+        }
+    }
+    /*    $sousfamille2s = $this->fetchTable('Sousfamille2s')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])
+    ->where(["Sousfamille2s.sousfamille1_id =  $article->sousfamille1_id "]);*/
+    $familles = $this->fetchTable('Familles')->find('list', ['keyfield' => 'id', 'valueField' => 'Nom']);
+    $devices = $this->fetchTable('Devises')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+    $charges = $this->fetchTable('Charges')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+    $unites = $this->fetchTable('Unites')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+    $unitearticles = $this->fetchTable('Unitearticles')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+    $frs = $this->fetchTable('Fournisseurs')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+    $tvas = $this->fetchTable('Tvas')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+    $typearticles = $this->fetchTable('Typearticles')->find('list', ['keyfield' => 'id', 'valueField' => 'name'])->order('rang', 'asc');
+    $val = $codepays . ' ' . $codeproducteur;
+    //debug($val);
+
+    $sousfamille1s = $this->fetchTable('Sousfamille1s')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+
+
+    $sousfamille1s = $this->fetchTable('Sousfamille1s')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+    //  ->where(["Sousfamille1s.famille_id = " . $article->famille_id . ""]);
+
+    $sousfamille2s = $this->fetchTable('Sousfamille2s')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+    //  ->where(["Sousfamille2s.sousfamille1_id = " . $article->sousfamille1_id . ""]);
+
+
+
+    $mois = $this->fetchTable('Mois')->find('all');
+    $commercials = $this->fetchTable('Commercials')->find('all');
+
+
+
+
+
+    $famillerotations = $this->fetchTable('Famillerotations')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+
+    //$articles=$this->Articles->find('list',['keyfield' => 'id', 'valueField' => 'Dsignation'])->where(['Articles.vente=0']);
+    // $tvas = $this->Articles->Tvas->find('list')->all();
+    $articlesss = $this->fetchTable('Articles')->find()->select(['id', 'Dsignation', 'Code'])->where(['Articles.famille_id!=1']);
+    // debug($articles);
+    foreach ($articlesss as $a) {
+        // debug($a->id.' '.$a->Dsignation);
+        $articles[$a->id] = $a->Code . ' ' . $a->Dsignation;
+    }
+    $marques = $this->fetchTable('Marques')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+
+    //debug($articles);die;
+    $clientt = $this->fetchTable('Clients')->find('list', ['keyfield' => 'id', 'valueField' => 'Raison_Sociale']);
+    $clients = $this->fetchTable('Clients')->find('all');
+    $unitearticless = $this->fetchTable('Unitearticles')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+    $articlescomp = $this->Articles->find('list', [
+        'keyField' => 'id',
+        'valueField' => function ($article) {
+            return $article->Code . ' - ' . $article->Dsignation;
+        }
+    ])->where(['Articles.typearticle_id !=1']);
+
+    $this->set(compact('type', 'articlescomp', 'typearticles', 'clients', 'clientt', 'unitearticless', 'articles', 'marques', 'frs', 'devices', 'charges', 'famillerotations', 'commercials', 'mois', 'unitearticles', 'tpe', 'unites', 'article', 'familles', 'sousfamille2s', 'sousfamille1s', 'codepays', 'codeproducteur', 'val', 'tvas', 'fodec'));
+}
+  
 
 
 }

@@ -197,4 +197,15 @@ class ArticlesTable extends Table {
     public $virtualFields = array(
         'nom' => 'CONCAT(Articles.Dsignation, " ", Articles.Code)');
 
+    public function getNextCode($typearticle_id)
+    {
+        $num = $this->find()
+           ->where(['typearticle_id' => $typearticle_id])
+            ->select(["num" => 'MAX(Articles.Code)'])
+            ->first();
+
+        $n = $num->num ?? 0; // Handle null case
+        $in = intval($n) + 1; // Convert to integer and increment
+        return str_pad("$in", 5, "0", STR_PAD_LEFT); // Format with leading zeros (5 digits)
+    }
 }
