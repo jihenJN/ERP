@@ -59,7 +59,8 @@ table {
                             </div>
                             <div class="col-xs-6">
                                 <h1 class="box-title" style="color:#3C386E!important;margin-top:5%;">
-                                    <strong>Consultation Formulaire Consultation Client</strong></h1>
+                                    <strong>Consultation Formulaire Consultation Client</strong>
+                                </h1>
 
                             </div>
                         </div>
@@ -67,15 +68,60 @@ table {
 
                 </div>
             </div>
+            
             <div class="box box-primary">
                 <div>
-                    <h3 class="box-title"><strong><?php echo __('Civilité'); ?></strong></h3>
+                    <h4 class="box-title"><strong><?php echo __('Civilité'); ?></strong></h4>
                     <br>
                 </div>
             </div>
             <div class="row">
-               
+                <div style=" margin: 0 auto;  margin-left: 20px; margin-right: 20px; position: static; ">
+                    <div class="col-xs-4">
+                        <label><strong>Code:</strong></label>
+                        <?php echo h($clients->Code); ?>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <label><strong>Responsable:</strong></label>
+                        <?php echo h($clients->responsable); ?>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <label><strong>Adresse:</strong></label>
+                        <?php echo h($clients->Adresse); ?>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <label><strong>Fax:</strong></label>
+                        <?php echo h($clients->Fax); ?>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <label><strong>Client:</strong></label>
+                        <?php echo h($clients->Raison_Sociale); ?>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <label><strong>Mail:</strong></label>
+                        <?php echo h($clients->Email); ?>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <label><strong>Tél:</strong></label>
+                        <?php echo h($clients->Tel); ?>
+                    </div>
+
+                    <div class="col-xs-4">
+                        <label><strong>Portable:</strong></label>
+                        <?php echo h( $clients->Contact); ?>
+
+                    </div>
+
+                </div>
             </div>
+
+
 
         </div>
 </section>
