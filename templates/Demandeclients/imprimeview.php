@@ -12,38 +12,38 @@ $this->layout = 'AdminLTE.print';
 
 
 <style>
-    body {
-        font-size: 10px;
-    }
+body {
+    font-size: 10px;
+}
 
-    table {
-        font-size: 13px;
+table {
+    font-size: 13px;
+}
+
+.page-break {
+    page-break-before: always;
+}
+
+@media print {
+
+    /* Masquer l'en-tête et le pied de page sur chaque page */
+    .content {
+        display: block !important;
+        /* Afficher normalement */
+        page-break-inside: avoid;
+        /* Éviter les sauts de page à l'intérieur du contenu */
     }
 
     .page-break {
         page-break-before: always;
+        /* Forcer un saut de page avant chaque section */
     }
 
-    @media print {
-
-        /* Masquer l'en-tête et le pied de page sur chaque page */
-        .content {
-            display: block !important;
-            /* Afficher normalement */
-            page-break-inside: avoid;
-            /* Éviter les sauts de page à l'intérieur du contenu */
-        }
-
-        .page-break {
-            page-break-before: always;
-            /* Forcer un saut de page avant chaque section */
-        }
-
-        .table-container {
-            max-height: 500px;
-            overflow-y: auto;
-        }
+    .table-container {
+        max-height: 500px;
+        overflow-y: auto;
     }
+}
 </style>
 
 <section class="content">
@@ -151,25 +151,50 @@ $this->layout = 'AdminLTE.print';
                     <div class="col-xs-12">
                         <div style="display: flex; flex-wrap: wrap; gap: 20px;">
                             <?php foreach ($typedemandes as $id => $name): ?>
-                                <label style="display: flex; align-items: center; gap: 7px;">
-                                    <input
-                                        type="checkbox"
-                                        class="typedemande-checkbox"
-                                        name="typedemandes[]"
-                                        value="<?= $id; ?>"
-                                        <?= in_array($id, $listetypedemandeIds) ? 'checked' : ''; ?>>
-                                    <?= h($name); ?>
-                                </label>
+                            <label style="display: flex; align-items: center; gap: 7px;">
+                                <input type="checkbox" class="typedemande-checkbox" name="typedemandes[]"
+                                    value="<?= $id; ?>" <?= in_array($id, $listetypedemandeIds) ? 'checked' : ''; ?>>
+                                <?= h($name); ?>
+                            </label>
                             <?php endforeach; ?>
                         </div>
                     </div>
-
-
-
                 </div>
             </div>
+            <div class="box box-primary">
+                <div>
+                    <h3 class="box-title"><strong></strong></h3>
+                </div>
+            </div>
+            <!------------------------Table starts here ------------------>
+            <table border="1px" class="table table-bordered table-striped table-bottomless">
+                <thead>
+                    <tr>
+                        <th align="center" style="width: 12%; font-size: 16px;">N° boite</th>
+                        <th align="center" style="width: 14%; font-size: 16px;">Famille</th>
+                        <th align="center" style="width: 14%; font-size: 16px;">Sous-Famille</th>
+                        <th align="center" style="width: 15%; font-size: 16px;">Réf produit</th>
+                        <th align="center" style="width: 8%; font-size: 16px;">Qte</th>
+                        <th align="center" style="width: 10%; font-size: 16px;">Unité</th>
+                        <th align="center" style="width: 20%; font-size: 16px;">Exigence</th>
+                    </tr>
+                </thead>
+
+                <?php foreach ($lignedemandeclients as $i => $res) : ?>
+                <td><?= h($res->numboite ?? 'N/A'); ?></td>
+                <td><?= h($res->famille_id ?? 'N/A'); ?></td>
+                <td><?= h($res->sousfamille1_id ?? 'N/A'); ?></td>
+                <td><?= h($res->article_id ?? 'N/A'); ?></td>
+                <td><?= h($res->qte ?? 'N/A'); ?></td>
+                <td><?= h($res->unite_id ?? 'N/A'); ?></td>
+                <td><?= h($res->exigence ?? 'N/A'); ?></td>
+            </tr>
+                <?php endforeach; ?>
+
+            </table>
 
 
 
-        </div>
+
+
 </section>
