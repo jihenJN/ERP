@@ -96,8 +96,12 @@ foreach ($lien as $k => $liens) {
                         <?php foreach ($clients as $id => $client) {
                         ?>
 
-                            <option <?php if ($this->request->getQuery('client_id') == $client->id) echo 'selected="selected"' ?> value="<?php echo $client->id; ?>"><?php
-                                                                                                                                                                        echo $client->Code ?></option>
+                        <option
+                            <?php if ($this->request->getQuery('client_id') == $client->id) echo 'selected="selected"' ?>
+                            value="<?php echo $client->id; ?>">
+                            <?php
+                                                                                                                                                                        echo $client->Code ?>
+                        </option>
                         <?php } ?>
                     </select>
                 </div>
@@ -113,8 +117,12 @@ foreach ($lien as $k => $liens) {
                         <?php foreach ($clients as $id => $client) {
                         ?>
 
-                            <option <?php if ($this->request->getQuery('client_id') == $client->id) echo 'selected="selected"' ?> value="<?php echo $client->id; ?>"><?php
-                                                                                                                                                                        echo $client->Raison_Sociale ?></option>
+                        <option
+                            <?php if ($this->request->getQuery('client_id') == $client->id) echo 'selected="selected"' ?>
+                            value="<?php echo $client->id; ?>">
+                            <?php
+                                                                                                                                                                        echo $client->Raison_Sociale ?>
+                        </option>
                         <?php } ?>
                     </select>
                 </div>
@@ -134,12 +142,12 @@ foreach ($lien as $k => $liens) {
 
                 </div>
                 <?php if ($count != 0) { ?>
-                    <div class="col-xs-1">
+                <div class="col-xs-1">
 
-                        <!-- <button onclick="openWindow(1000, 1000, wr+'factureclients/imprimelistefactureclient?datedebut=<?php echo @$datedebut; ?>&datefin=<?php echo @$datefin; ?>&client_id=<?php echo @$client_id; ?>&numdeb=<?php echo @$numdeb; ?>&numfin=<?php echo @$numfin; ?>&reglee=<?php echo @$reglee; ?>')" class="btn btn-primary" style="margin-top: 25px;">
+                    <!-- <button onclick="openWindow(1000, 1000, wr+'factureclients/imprimelistefactureclient?datedebut=<?php echo @$datedebut; ?>&datefin=<?php echo @$datefin; ?>&client_id=<?php echo @$client_id; ?>&numdeb=<?php echo @$numdeb; ?>&numfin=<?php echo @$numfin; ?>&reglee=<?php echo @$reglee; ?>')" class="btn btn-primary" style="margin-top: 25px;">
                             <i class="fa fa-print"></i>
                         </button> -->
-                    </div>
+                </div>
                 <?php } ?>
 
                 <div class="col-xs-1" style="text-align: center; margin-top: 25px;">
@@ -215,65 +223,63 @@ foreach ($lien as $k => $liens) {
                                 }
 
                             ?>
-                                <tr style="font-size: 16px;">
+                            <tr style="font-size: 16px;">
 
-                                    <td><?= $demande->client->Code . ' ' . h($demande->client->Raison_Sociale) ?></td>
-                                    <td><?=
+                                <td><?= $demande->client->Code . ' ' . h($demande->client->Raison_Sociale) ?></td>
+                                <td><?=
                                         $this->Time->format(
                                             $demande->dateconsulation,
                                             'dd/MM/y'
                                         );
                                         ?>
-                                    </td>
-                                    <td><?=
+                                </td>
+                                <td><?=
                                         $this->Time->format(
                                             $demande->delaivoulu,
                                             'dd/MM/y'
                                         );
                                         ?>
-                                    </td>
-                                    <td><?=
+                                </td>
+                                <td><?=
                                         $this->Time->format(
                                             $demande->delaireponse,
                                             'dd/MM/y'
                                         );
                                         ?>
-                                    </td>
-                                    <td><?=
+                                </td>
+                                <td><?=
                                         $this->Time->format(
                                             $demande->delaiapprov,
                                             'dd/MM/y'
                                         );
                                         ?>
-                                    </td>
-                                    <td><?= $demande->typecontact?->libelle ?? 'N/A' ?></td>
-                                    <td><?= $demande->commercial?->name ?? 'N/A' ?></td>
+                                </td>
+                                <td><?= $demande->typecontact?->libelle ?? 'N/A' ?></td>
+                                <td><?= $demande->commercial?->name ?? 'N/A' ?></td>
 
-                                    <td align="center">
-                                        <?php 
+                                <td align="center">
+                                    <?php 
                                             if ($test == 1 && $testvisite == 0) { ?>
-                                                <div>
-                                                    <a
-                                                        href="<?php echo $this->Url->build(['controller' => 'Visites', 'action' => 'addvisite', $demande->id]); ?>"
-                                                        target="_blank"
-                                                        class="btn"
-                                                        style="background-color: #c71585; color: white; padding: 7px 10px; text-decoration: none; border-radius: 5px; display: inline-flex; align-items: center;">
-                                                        <i class="fa fa-calendar" style="margin-right: 5px;"></i>
+                                    <div>
+                                        <a href="<?php echo $this->Url->build(['controller' => 'Visites', 'action' => 'addvisite', $demande->id]); ?>"
+                                            target="_blank" class="btn"
+                                            style="background-color: #c71585; color: white; padding: 7px 10px; text-decoration: none; border-radius: 5px; display: inline-flex; align-items: center;">
+                                            <i class="fa fa-calendar" style="margin-right: 5px;"></i>
 
-                                                    </a>
+                                        </a>
 
 
-                                                    <!-- <input type="checkbox" id="checkbox<?php echo $i; ?>" value="<?php echo $bonsortiestock['id'] ?>" name="checkbox[]" ligne="<?php echo $i; ?>" class="facc55 facture55" /> -->
-                                                </div>
-                                        <?php 
+                                        <!-- <input type="checkbox" id="checkbox<?php echo $i; ?>" value="<?php echo $bonsortiestock['id'] ?>" name="checkbox[]" ligne="<?php echo $i; ?>" class="facc55 facture55" /> -->
+                                    </div>
+                                    <?php 
                                         } ?>
-                                    </td>
+                                </td>
 
-                           
 
-                                    <td align="center">
-                                        <?php if ( !empty($imp) && $imp == 1) { ?>
-                                            <!-- <?php echo $this->Html->Link(
+
+                                <td align="center">
+                                    <?php if ( !empty($imp) && $imp == 1) { ?>
+                                    <!-- <?php echo $this->Html->Link(
                                                         "<button class='btn btn-xs' style='background-color: #800080; color: white; border: 1px solid #800080;'>
                                                        <i class='fa fa-print'></i>
                                                                  </button>",
@@ -282,27 +288,35 @@ foreach ($lien as $k => $liens) {
                                                     ); ?> -->
 
 
-                                            <!-- <a onclick="openWindow(1000, 1000, wr+ 'Factureclients/imprimeview/<?php echo $facture->id; ?>')"><button class='btn btn-xs btn-warning' style='background-color: #cb4154; color: white; border: 1px solid #cb4154;'><i class='fa fa-print'></i>PDF</button></a> -->
+                                    <!-- <a onclick="openWindow(1000, 1000, wr+ 'Factureclients/imprimeview/<?php echo $facture->id; ?>')"><button class='btn btn-xs btn-warning' style='background-color: #cb4154; color: white; border: 1px solid #cb4154;'><i class='fa fa-print'></i>PDF</button></a> -->
 
 
 
-                                        <?php } ?>
-                                        <?php //if ($edit == 1 && $facture->client_id != 12) {
+                                    <?php } ?>
+                                    <?php //if ($edit == 1 && $facture->client_id != 12) {
                                         echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $demande->id), array('escape' => false));
                                         //} 
                                         ?>
-                                        <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $demande->id), array('escape' => false)); ?>
+                                    <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $demande->id), array('escape' => false)); ?>
 
-                                        <?php //if ($delete == 1 && $testregler == 0 && $BLTotQte == 0) {
+                                    <?php //if ($delete == 1 && $testregler == 0 && $BLTotQte == 0) {
                                         echo $this->Form->postLink("<button class='deleteConfirm btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $demande->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $facture->id ?? 0));
                                         //} 
                                         ?>
 
-                                    </td>
-                                </tr>
+                                    <div style="margin-right:2px ;">
+                                        <a
+                                            onclick="openWindow(1000, 1000, wr+'Demandeclients/imprimeview/<?php echo $demande->id; ?>')"><button
+                                                class='btn btn-xs btn-primary '
+                                                style="background-color: #bb3385 ; color: white; border-color: white;"><i
+                                                    class='fa fa-print'></i></button></a>
+                                    </div>
+
+                                </td>
+                            </tr>
 
 
-                                <input type="hidden" value="<?php echo $i; ?>" id="index" />
+                            <input type="hidden" value="<?php echo $i; ?>" id="index" />
                             <?php endforeach; ?>
                         </tbody>
 
@@ -333,192 +347,194 @@ foreach ($lien as $k => $liens) {
 
 <?php $this->start('scriptBottom'); ?>
 <script>
-    // document.addEventListener('DOMContentLoaded', function() {
-    //     // const numeroInput = document.querySelector('input[name="numero"]');
-    //     const datedebutInput = document.getElementById('datedebut'); //alert(datedebutInput)
-    //     const datefinInput = document.getElementById('datefin');
-    //     const clientcIdSelect = document.getElementById('idclient');
-    //     const clientnIdSelect = document.getElementById('idclient1');
-    //     const regleee = document.getElementById('reglee');
-    //     const numdebb = document.querySelector('input[name="numdeb"]');
-    //     const numfinn = document.querySelector('input[name="numfin"]');
+// document.addEventListener('DOMContentLoaded', function() {
+//     // const numeroInput = document.querySelector('input[name="numero"]');
+//     const datedebutInput = document.getElementById('datedebut'); //alert(datedebutInput)
+//     const datefinInput = document.getElementById('datefin');
+//     const clientcIdSelect = document.getElementById('idclient');
+//     const clientnIdSelect = document.getElementById('idclient1');
+//     const regleee = document.getElementById('reglee');
+//     const numdebb = document.querySelector('input[name="numdeb"]');
+//     const numfinn = document.querySelector('input[name="numfin"]');
 
-    //     const searchForm = document.getElementById('searchForm');
+//     const searchForm = document.getElementById('searchForm');
 
-    //     console.log('DOM entièrement chargé');
+//     console.log('DOM entièrement chargé');
 
-    //     if (datedebutInput && datefinInput && clientcIdSelect && clientnIdSelect && regleee &&  numdebb && numfinn &&  searchForm) {
-    //         console.log('Éléments de formulaire trouvés');
+//     if (datedebutInput && datefinInput && clientcIdSelect && clientnIdSelect && regleee &&  numdebb && numfinn &&  searchForm) {
+//         console.log('Éléments de formulaire trouvés');
 
-    //         // Fonction pour soumettre le formulaire
-    //         function submitForm() {
-    //             searchForm.submit();
-    //         }
+//         // Fonction pour soumettre le formulaire
+//         function submitForm() {
+//             searchForm.submit();
+//         }
 
-    //         // Événement pour soumettre le formulaire lorsqu'Entrée est pressé
-    //         searchForm.addEventListener('keydown', function(e) {
-    //             if (e.key === 'Enter' && (e.target !== numfinn ||e.target !== numdebb || e.target !== datedebutInput || e.target !== datefinInput ||e.target !== regleee)) {
-    //                 e.preventDefault();
-    //                 submitForm();
-    //             }
-    //         });
+//         // Événement pour soumettre le formulaire lorsqu'Entrée est pressé
+//         searchForm.addEventListener('keydown', function(e) {
+//             if (e.key === 'Enter' && (e.target !== numfinn ||e.target !== numdebb || e.target !== datedebutInput || e.target !== datefinInput ||e.target !== regleee)) {
+//                 e.preventDefault();
+//                 submitForm();
+//             }
+//         });
 
-    //         // Événement pour soumettre le formulaire lorsqu'un changement est apporté au fournisseurIdSelect
-    //         clientcIdSelect.addEventListener('change', function() {
-    //             submitForm();
-    //         });
-    //     } else {
-    //         console.log('Éléments de formulaire non trouvés');
-    //     }
-    // });
+//         // Événement pour soumettre le formulaire lorsqu'un changement est apporté au fournisseurIdSelect
+//         clientcIdSelect.addEventListener('change', function() {
+//             submitForm();
+//         });
+//     } else {
+//         console.log('Éléments de formulaire non trouvés');
+//     }
+// });
 
 
-    document.addEventListener('DOMContentLoaded', function() {
-        // Sélectionner les éléments du formulaire et initialiser Select2
-        const numeroInput = document.querySelector('input[name="numero"]');
-        const datedebutInput = document.getElementById('datedebut');
-        const datefinInput = document.getElementById('datefin');
-        const clientcIdSelect = $('#idclient');
-        const clientnIdSelect = $('#idclient1');
-        const etatlivv = document.getElementById('reglee');
-        const numdebb = document.querySelector('input[name="numdeb"]');
-        const numfinn = document.querySelector('input[name="numfin"]');
-        const searchForm = document.getElementById('searchForm');
+document.addEventListener('DOMContentLoaded', function() {
+    // Sélectionner les éléments du formulaire et initialiser Select2
+    const numeroInput = document.querySelector('input[name="numero"]');
+    const datedebutInput = document.getElementById('datedebut');
+    const datefinInput = document.getElementById('datefin');
+    const clientcIdSelect = $('#idclient');
+    const clientnIdSelect = $('#idclient1');
+    const etatlivv = document.getElementById('reglee');
+    const numdebb = document.querySelector('input[name="numdeb"]');
+    const numfinn = document.querySelector('input[name="numfin"]');
+    const searchForm = document.getElementById('searchForm');
 
-        console.log('DOM entièrement chargé');
+    console.log('DOM entièrement chargé');
 
-        // Initialiser Select2 sur les dropdowns
-        clientcIdSelect.select2();
-        clientnIdSelect.select2();
+    // Initialiser Select2 sur les dropdowns
+    clientcIdSelect.select2();
+    clientnIdSelect.select2();
 
-        // Fonction pour soumettre le formulaire
-        function submitForm() {
-            searchForm.submit();
-        }
+    // Fonction pour soumettre le formulaire
+    function submitForm() {
+        searchForm.submit();
+    }
 
-        // Écouteur d'événements pour les changements sur les dropdowns clients
-        clientcIdSelect.on('change', function() {
-            clientnIdSelect.val(clientcIdSelect.val()).trigger('change.select2');
-        });
+    // Écouteur d'événements pour les changements sur les dropdowns clients
+    clientcIdSelect.on('change', function() {
+        clientnIdSelect.val(clientcIdSelect.val()).trigger('change.select2');
+    });
 
-        clientnIdSelect.on('change', function() {
-            clientcIdSelect.val(clientnIdSelect.val()).trigger('change.select2');
-        });
+    clientnIdSelect.on('change', function() {
+        clientcIdSelect.val(clientnIdSelect.val()).trigger('change.select2');
+    });
 
-        // Écouteur d'événements pour soumettre le formulaire lors de la pression sur Entrée
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const activeElement = document.activeElement;
+    // Écouteur d'événements pour soumettre le formulaire lors de la pression sur Entrée
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+            const activeElement = document.activeElement;
 
-                // Vérifier si l'élément actif est l'un des éléments spécifiés ou un champ Select2
-                if (
-                    activeElement === numeroInput ||
-                    activeElement === datedebutInput ||
-                    activeElement === datefinInput ||
-                    activeElement === numdebb ||
-                    activeElement === numfinn ||
-                    activeElement === etatlivv ||
-                    $(activeElement).hasClass('select2-search__field') || // Champ de recherche Select2
-                    $(activeElement).closest('.select2-container').length // Conteneur Select2
-                ) {
-                    return; // Permettre le comportement par défaut si le focus est sur ces éléments
-                }
-
-                // Empêcher le comportement par défaut de la touche Entrée et soumettre le formulaire
-                e.preventDefault();
-                submitForm();
+            // Vérifier si l'élément actif est l'un des éléments spécifiés ou un champ Select2
+            if (
+                activeElement === numeroInput ||
+                activeElement === datedebutInput ||
+                activeElement === datefinInput ||
+                activeElement === numdebb ||
+                activeElement === numfinn ||
+                activeElement === etatlivv ||
+                $(activeElement).hasClass('select2-search__field') || // Champ de recherche Select2
+                $(activeElement).closest('.select2-container').length // Conteneur Select2
+            ) {
+                return; // Permettre le comportement par défaut si le focus est sur ces éléments
             }
-        });
+
+            // Empêcher le comportement par défaut de la touche Entrée et soumettre le formulaire
+            e.preventDefault();
+            submitForm();
+        }
     });
+});
 </script>
 <script>
-    $('.urlimprimeview').on('click', function() {
-        index = $(this).attr("index");
-        // alert(index)
+$('.urlimprimeview').on('click', function() {
+    index = $(this).attr("index");
+    // alert(index)
 
-        facture_id = $("#factureclient_id" + index).val();
-        var currentUrl = window.location.href;
-        var parentUrl = currentUrl.split('/').slice(0, -2).join('/');
-        var link = wr + "Factureclients/imprimeviewb/" + facture_id;
-        // alert(link);
-        openWindow(1000, 1000, link);
+    facture_id = $("#factureclient_id" + index).val();
+    var currentUrl = window.location.href;
+    var parentUrl = currentUrl.split('/').slice(0, -2).join('/');
+    var link = wr + "Factureclients/imprimeviewb/" + facture_id;
+    // alert(link);
+    openWindow(1000, 1000, link);
+});
+
+function openWindow(width, height, url) {
+    var left = (screen.width - width) / 2;
+    var top = (screen.height - height) / 2;
+    window.open(url, '_blank', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=' +
+        width + ',height=' + height + ',top=' + top + ',left=' + left);
+}
+$(document).ready(function() {
+
+    $('#idclient1').change(function() {
+        var selectedcodename = $(this).val();
+        $("#idclient").select2('destroy');
+        $("#idclient").val(selectedcodename);
+        $("#idclient").select2();
+
     });
+    $('#idclient').change(function() {
+        var selectedcodename = $(this).val();
+        $("#idclient1").select2('destroy');
+        $("#idclient1").val(selectedcodename);
+        $("#idclient1").select2();
 
-    function openWindow(width, height, url) {
-        var left = (screen.width - width) / 2;
-        var top = (screen.height - height) / 2;
-        window.open(url, '_blank', 'toolbar=no,location=no,status=no,menubar=no,scrollbars=yes,resizable=yes,width=' + width + ',height=' + height + ',top=' + top + ',left=' + left);
-    }
-    $(document).ready(function() {
-
-        $('#idclient1').change(function() {
-            var selectedcodename = $(this).val();
-            $("#idclient").select2('destroy');
-            $("#idclient").val(selectedcodename);
-            $("#idclient").select2();
-
-        });
-        $('#idclient').change(function() {
-            var selectedcodename = $(this).val();
-            $("#idclient1").select2('destroy');
-            $("#idclient1").val(selectedcodename);
-            $("#idclient1").select2();
-
-        });
     });
+});
 
 
-    $(document).ready(function() {
-        $('#printAllButton').click(function() {
-            var factureIds = [];
-            <?php foreach ($factureclients as $facture) : ?>
-                factureIds.push(<?php echo $facture->id; ?>);
-            <?php endforeach; ?>
+$(document).ready(function() {
+    $('#printAllButton').click(function() {
+        var factureIds = [];
+        <?php foreach ($factureclients as $facture) : ?>
+        factureIds.push(<?php echo $facture->id; ?>);
+        <?php endforeach; ?>
 
-            // if (factureIds.length > 0) {
-            var printURL = wr + 'Factureclients/imprimeviewall/' + factureIds.join(',');
-            window.open(printURL, '_blank');
-            //}
-        });
+        // if (factureIds.length > 0) {
+        var printURL = wr + 'Factureclients/imprimeviewall/' + factureIds.join(',');
+        window.open(printURL, '_blank');
+        //}
     });
+});
 </script>
 
 <script>
-    function openWindow(h, w, url) {
-        leftOffset = (screen.width / 2) - w / 2;
-        topOffset = (screen.height / 2) - h / 2;
-        window.open(url, this.target, 'left=' + leftOffset + ',top=' + topOffset + ',width=' + w + ',height=' + h + ',resizable,scrollbars=yes');
-    }
-    $(function() {
-        $('#example2').DataTable({
-            'paging': true,
-            'lengthChange': true,
-            'searching': true,
-            'ordering': false,
-            'info': true,
-            'autoWidth': false
-        })
+function openWindow(h, w, url) {
+    leftOffset = (screen.width / 2) - w / 2;
+    topOffset = (screen.height / 2) - h / 2;
+    window.open(url, this.target, 'left=' + leftOffset + ',top=' + topOffset + ',width=' + w + ',height=' + h +
+        ',resizable,scrollbars=yes');
+}
+$(function() {
+    $('#example2').DataTable({
+        'paging': true,
+        'lengthChange': true,
+        'searching': true,
+        'ordering': false,
+        'info': true,
+        'autoWidth': false
     })
-    $('.select2').select2()
+})
+$('.select2').select2()
 
-    //Datemask dd/mm/yyyy
-    $('#datemask').inputmask('dd/mm/yyyy', {
-        'placeholder': 'dd/mm/yyyy'
-    })
-    //Datemask2 mm/dd/yyyy
-    $('#datemask2').inputmask('mm/dd/yyyy', {
-        'placeholder': 'mm/dd/yyyy'
-    })
-    //Money Euro
-    $('[data-mask]').inputmask()
+//Datemask dd/mm/yyyy
+$('#datemask').inputmask('dd/mm/yyyy', {
+    'placeholder': 'dd/mm/yyyy'
+})
+//Datemask2 mm/dd/yyyy
+$('#datemask2').inputmask('mm/dd/yyyy', {
+    'placeholder': 'mm/dd/yyyy'
+})
+//Money Euro
+$('[data-mask]').inputmask()
 
-    //Date range picker
-    $('#reservation').daterangepicker()
-    //Date range picker with time picker
-    $('#reservationtime').daterangepicker({
-        timePicker: true,
-        timePickerIncrement: 30,
-        format: 'MM/DD/YYYY h:mm A'
-    })
+//Date range picker
+$('#reservation').daterangepicker()
+//Date range picker with time picker
+$('#reservationtime').daterangepicker({
+    timePicker: true,
+    timePickerIncrement: 30,
+    format: 'MM/DD/YYYY h:mm A'
+})
 </script>
 <?php $this->end(); ?>

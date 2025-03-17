@@ -574,6 +574,52 @@ class DemandeclientsController extends AppController
     }
 
 
+
+
+    public function imprimeview($id = null)
+    {
+        Configure::write('debug', false);
+        $demandeclient = $this->Demandeclients->get($id, [
+            'contain' => [],
+        ]);
+        $client_id = $demandeclient->client_id;
+        if (!empty($client_id)) {
+            $clients = $this->fetchTable('Clients')->find('all')->where(['Clients.id' => $client_id])->first();
+            // debug($clients);
+        }
+
+
+
+        // $typedemandes = $this->fetchTable('Typedemandes')->find('list', ['limit' => 200])->all();
+        $typedemandes = $this->fetchTable('Typedemandes')->find('list')->toArray();
+
+
+
+        $listetypedemandes = $this->fetchTable('Listetypedemandes')
+            ->find('all')
+
+            ->where(['Listetypedemandes.demandeclient_id' => $demandeclient->id])
+            // ->enableHydration(false)
+            ->toList();
+        if (!empty($listetypedemandes)) {
+            $listetypedemandeIds = array_column($listetypedemandes, 'typedemande_id');
+        }
+        if (!empty($demandeclient->id)) {
+            $lignedemandeclients = $this->fetchTable('Lignedemandeclients')->find('all')->where(['Lignedemandeclients.demandeclient_id' => $demandeclient->id])->toArray();
+        }
+        //  debug($listetypedemandeIds);
+        $sousfamille1s = $this->fetchTable('Sousfamille1s')->find('all'); //, ['keyfield' => 'id', 'valueField' => 'name']);
+        $unites = $this->fetchTable('Unites')->find('all'); //, ['keyfield' => 'id', 'valueField' => 'name']);
+
+        $familles = $this->fetchTable('Familles')->find('all');
+        // debug($familles) ;
+        $articles = $this->fetchTable('Articles')->find('all');
+
+        //, ['keyfield' => 'id', 'valueField' => 'Nom']);
+        $this->set(compact('demandeclient', 'articles', 'sousfamille1s', 'unites', 'familles', 'lignedemandeclients', 'clients', 'listetypedemandeIds', 'listetypedemandes', 'typedemandes'));
+    }
+
+
 }
 
 
