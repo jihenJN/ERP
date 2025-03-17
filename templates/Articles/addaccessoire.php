@@ -311,21 +311,28 @@
                                     <input type="file" name="image_file" class="form-control" id="ArticleImage">
                                 </div>
                             </div>
-
+                            <!----------------------------jn--------------------->
 
                             <div class="col-xs-6">
 
                                 <div style="width:90%; margin: 0 auto;  position: static; ">
                                     <label class="control-label" for="unipxte-id" style="margin-right: 20px"> Type Accessoire :</label>
-                                    vente direct <input type="radio" name="" checked value="0" id="active" class="" style="margin-right: 20px">
-                                    lié a un article<input type="radio" name="" value="1" id="desactive" class="">
+                                    vente direct <input type="radio" name="type_accessoire" checked value="0" id="active" class="" style="margin-right: 20px">
+                                    lié a un article<input type="radio" name="type_accessoire" value="1" id="desactive" class="">
                                     <br>
                                 </div>
                             </div>
-
-
-
-
+                            <!-- Hidden by default -->
+                            <div class="col-xs-6" id="articleField" style="display: none;">
+                                <div class="form-group input text required">
+                                    <?php echo $this->Form->control('article_id', [
+                                        'empty' => 'Veuillez choisir !!',
+                                        'options' => $articles,
+                                        'class' => 'form-control select2 ',
+                                        'required' => false
+                                    ]); ?>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -758,27 +765,27 @@
 <script>
     $('.testobgarticle').on('mouseover', function() {
 
-        famille = $('#salma').val();
-        sousfamille = $('#sous').val();
+        //famille = $('#salma').val();
+        //sousfamille = $('#sous').val();
         unite = $('#unite-id').val();
         Dsignation = $('#Dsignation').val();
         code = $('#code').val();
         prixachat = $('#prixachat').val();
         Prix = $('#Prix_LastInput').val();
         // Check if famille is empty
-        if (famille === "") {
+       /* if (famille === "") {
             $('#modalBody').text("Veuillez choisir une Famille !");
             $('#popupModal').modal('show');
             return false;
-        }
+        }*/
 
         // Check if sousfamille is empty
-        if (sousfamille === "") {
+      /*  if (sousfamille === "") {
             $('#modalBody').text("Veuillez choisir une sous Famille !");
             $('#popupModal').modal('show');
             return false;
 
-        } else
+        } else*/
         if (unite === "") {
             alert("Veuillez choisir une unite !");
             return false;
@@ -1392,4 +1399,26 @@
             })
         });
     });
+</script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    const articleField = document.getElementById("articleField");
+    const radios = document.querySelectorAll('input[name="type_accessoire"]');
+
+    radios.forEach(radio => {
+        radio.addEventListener("change", function() {
+            if (this.value === "1") {
+                articleField.style.display = "block"; // Show field
+            } else {
+                articleField.style.display = "none"; // Hide field
+            }
+        });
+    });
+
+    // Ensure correct visibility on page load
+    if (document.getElementById("desactive").checked) {
+        articleField.style.display = "block";
+    }
+});
 </script>
