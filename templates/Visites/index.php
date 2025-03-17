@@ -332,6 +332,10 @@ foreach ($lien as $k => $liens) {
                                         echo $this->Form->postLink("<button class='deleteConfirm btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete', $vv->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?', $vv->id));
                                         //}
                                         ?>
+                                        <div style="margin-right:2px ;">
+                                            <a onclick="openWindow(1000, 1000, wr+'Visites/imprimeview/<?php echo  $vv->id; ?>')"><button class='btn btn-xs btn-primary ' style="background-color: #bb3385 ; color: white; border-color: white;"><i class='fa fa-print'></i></button></a>
+                                        </div>
+
                                     </td>
                                 </tr>
                                 <input type="hidden" value="<?php echo $i; ?>" id="index" />

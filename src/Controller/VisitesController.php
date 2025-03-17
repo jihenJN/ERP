@@ -670,4 +670,64 @@ class VisitesController extends AppController
 
         return $code;
     }
+
+
+    public function imprimeview($id = null)
+    {
+
+     
+        $listetypeIds = [];  // Initialize to avoid undefined variable error
+        $listetypecomteIds = [];
+        $listetypedemandes = [];
+        $typedemandes = [];
+        // Configure::write('debug', false);
+        $visite = $this->Visites->get($id, [
+            'contain' => ['Clients', 'Demandeclients', 'Typecontacts', 'Commercials'],
+        ]);
+        $client_id = $visite->client_id;
+        $type_contact_id = $visite->type_contact_id;
+        $commercial_id = $visite->commercial_id;
+        if (!empty($client_id)) {
+            $clients = $this->fetchTable('Clients')->find('all')->where(['Clients.id' => $client_id])->first();
+        }
+
+        if (!empty($type_contact_id)) {
+            $typeContacts = $this->fetchTable('Typecontacts')->find('all')->where(['Typecontacts.id' => $type_contact_id])->first();
+        }
+
+        if (!empty($commercial_id)) {
+            $commercials = $this->fetchTable('Commercials')->find('all')->where(['Commercials.id' => $commercial_id])->first();
+        }
+
+        // $typedemandes = $this->fetchTable('Typedemandes')->find('list', ['limit' => 200])->all();
+        $compterendus = $this->fetchTable('Compterendus')->find('list')->toArray();
+
+
+
+        $listecompterendus = $this->fetchTable('Listecompterendus')
+            ->find('all')
+
+            ->where(['Listecompterendus.visite_id' => $visite->id])
+            // ->enableHydration(false)
+            ->toList();
+        if (!empty($listecompterendus)) {
+            $listetypecomteIds = array_column($listecompterendus, 'compterendu_id');
+        }
+
+        $listebesoins = $this->fetchTable('Listetypebesoins')
+            ->find('all')
+
+            ->where(['Listetypebesoins.visite_id' => $visite->id])
+            // ->enableHydration(false)
+            ->toList();
+        if (!empty($listebesoins)) {
+            $listetypeIds = array_column($listebesoins, 'typebesoin_id');
+        }
+        $typebesoins = $this->fetchTable('Typebesoins')->find('list')->toArray();
+        // debug($familles) ;
+        // var_dump($listetypeIds);
+        //, ['keyfield' => 'id', 'valueField' => 'Nom']);
+        $this->set(compact('visite', 'listecompterendus', 'compterendus', 'listebesoins', 'listetypeIds', 'clients', 'listebesoins', 'listetypecomteIds', 'typebesoins', 'listetypedemandes', 'typedemandes', 'typeContacts', 'commercials'));
+       
+    }
 }
