@@ -12,38 +12,38 @@ $this->layout = 'AdminLTE.print';
 
 
 <style>
-body {
-    font-size: 10px;
-}
+    body {
+        font-size: 10px;
+    }
 
-table {
-    font-size: 13px;
-}
-
-.page-break {
-    page-break-before: always;
-}
-
-@media print {
-
-    /* Masquer l'en-tête et le pied de page sur chaque page */
-    .content {
-        display: block !important;
-        /* Afficher normalement */
-        page-break-inside: avoid;
-        /* Éviter les sauts de page à l'intérieur du contenu */
+    table {
+        font-size: 13px;
     }
 
     .page-break {
         page-break-before: always;
-        /* Forcer un saut de page avant chaque section */
     }
 
-    .table-container {
-        max-height: 500px;
-        overflow-y: auto;
+    @media print {
+
+        /* Masquer l'en-tête et le pied de page sur chaque page */
+        .content {
+            display: block !important;
+            /* Afficher normalement */
+            page-break-inside: avoid;
+            /* Éviter les sauts de page à l'intérieur du contenu */
+        }
+
+        .page-break {
+            page-break-before: always;
+            /* Forcer un saut de page avant chaque section */
+        }
+
+        .table-container {
+            max-height: 500px;
+            overflow-y: auto;
+        }
     }
-}
 </style>
 
 <section class="content">
@@ -68,15 +68,14 @@ table {
 
                 </div>
             </div>
-            
+
             <div class="box box-primary">
                 <div>
-                    <h4 class="box-title"><strong><?php echo __('Civilité'); ?></strong></h4>
-                    <br>
+                    <h3 class="box-title"><strong><?php echo __('Civilité'); ?></strong></h3>
                 </div>
             </div>
             <div class="row">
-                <div style=" margin: 0 auto;  margin-left: 20px; margin-right: 20px; position: static; ">
+                <div style=" margin: 0 auto;   position: static; ">
                     <div class="col-xs-4">
                         <label><strong>Code:</strong></label>
                         <?php echo h($clients->Code); ?>
@@ -114,9 +113,58 @@ table {
 
                     <div class="col-xs-4">
                         <label><strong>Portable:</strong></label>
-                        <?php echo h( $clients->Contact); ?>
+                        <?php echo h($clients->Contact); ?>
 
                     </div>
+
+                </div>
+            </div>
+
+            <div class="box box-primary">
+                <div>
+                    <h3 class="box-title"><strong><?php echo __('Demande Client'); ?></strong></h3>
+                </div>
+            </div>
+            <div class="row">
+                <div style=" margin: 0 auto;   position: static; ">
+
+                    <div class="col-xs-6">
+                        <label><strong>Date Consultation:</strong></label>
+                        <p><?php echo h($demandeclient->dateconsulation); ?></p>
+                    </div>
+
+                    <div class="col-xs-6">
+                        <label><strong>Délai Conception:</strong></label>
+                        <p><?php echo h($demandeclient->delaivoulu); ?></p>
+                    </div>
+
+                    <div class="col-xs-6">
+                        <label><strong>Délai de Réponse:</strong></label>
+                        <p><?php echo h($demandeclient->delaireponse); ?></p>
+                    </div>
+
+                    <div class="col-xs-6">
+                        <label><strong>Délai d`approvisionnement:</strong></label>
+                        <p> <?php echo h($demandeclient->delaiapprov); ?></p>
+                    </div>
+                    <br>
+                    <div class="col-xs-12">
+                        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                            <?php foreach ($typedemandes as $id => $name): ?>
+                                <label style="display: flex; align-items: center; gap: 7px;">
+                                    <input
+                                        type="checkbox"
+                                        class="typedemande-checkbox"
+                                        name="typedemandes[]"
+                                        value="<?= $id; ?>"
+                                        <?= in_array($id, $listetypedemandeIds) ? 'checked' : ''; ?>>
+                                    <?= h($name); ?>
+                                </label>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+
+
 
                 </div>
             </div>
