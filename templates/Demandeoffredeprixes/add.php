@@ -42,8 +42,8 @@
                             <?php echo $this->Form->control('numero', ['value' => $b, 'label' => 'Numero', 'required' => 'off', 'id' => 'datecommande', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control ', 'type' => '', 'readonly' => 'readonly']); ?>
                         </div>
                     </div>
-        
-               
+
+
                     <section class="content-header">
                         <h1 class="box-title"><?php echo __('Fournisseurs'); ?></h1>
                     </section>
@@ -64,9 +64,9 @@
                                         <table class="table table-bordered table-striped table-bottomless" id="tabligne1">
                                             <thead>
                                                 <tr width:20px>
-                                                    <td align="center" style="width: 50%;"><strong>Nom du fournisseur</strong></td>
-
-                                                    <td align="center" style="width: 50%;"></td>
+                                                    <td align="center" style="width: 30%;"><strong>Nom du fournisseur</strong></td>
+                                                    <td align="center" style="width: 40%;"></td>
+                                                    <td align="center" style="width: 30%;"></td>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -78,13 +78,13 @@
                                                         ?>
 
                                                         <!-- <div id="" champ='f1' class="col-md-12"> -->
-                                                            <!-- <div style="display: flex !important"> -->
-                                                                <?php echo $this->Form->control('a', array('label' => '', 'options' =>  $fournisseurs, 'name' => '', 'id' => 'fournisseur_id', 'class'=>'form-control ' ,'champ' => 'fournisseur_id', 'table' => 'lignef', 'empty' => 'Veuillez Choisir !!')); ?>
-                                                                
-                                                                    <!-- <span title="ajout fournisseur"> <a href="javascript:;" class="btn btn-primary b2" champ="b2" id="" index=""><i class='fa fa fa-plus'></i></a></span> -->
+                                                        <!-- <div style="display: flex !important"> -->
+                                                        <?php echo $this->Form->control('a', array('label' => '', 'options' =>  $fournisseurs, 'name' => '', 'id' => 'fournisseur_id', 'class' => 'form-control ', 'champ' => 'fournisseur_id', 'table' => 'lignef', 'empty' => 'Veuillez Choisir !!')); ?>
 
-                                                                
-                                                            <!-- </div> -->
+                                                        <!-- <span title="ajout fournisseur"> <a href="javascript:;" class="btn btn-primary b2" champ="b2" id="" index=""><i class='fa fa fa-plus'></i></a></span> -->
+
+
+                                                        <!-- </div> -->
                                                         <!-- </div> -->
                                                         <div id="" champ='f2' style="display: none !important" class="col-md-12">
                                                             <div style="display: flex !important">
@@ -93,8 +93,8 @@
                                                             </div>
                                                         </div>
                                                         <!-------------------------jn------------------------>
-                                                          <!----style="display:none;"--->
-                                                <tr class="traa" champ='traa' >
+                                                        <!----style="display:none;"--->
+                                                <tr class="traa" champ='traa'>
                                                     <td width='30%'></td>
                                                     <td champ="afef" class="afef" colspan="3" id="" index="">
                                                         <div class="panel panel-default">
@@ -123,29 +123,25 @@
                                                                     </thead>
                                                                     <tbody>
                                                                         <!----style="display:none;"--->
-                                                                        <tr class="traaa"  id="traaa"
-                                                                            champ='traaa' index="">
+                                                                        <tr class="traaa" id="traaa"
+                                                                            champ='traaa' index="" style="display:none;">
                                                                             <td>
-                                                                                <?php echo $this->Form->input('supp2', array('name' => '', 'type' => 'hidden', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'supp2', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                                                                <!--?php echo $this->Form->input('supp2', array('name' => '', 'type' => 'hidden', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'supp2', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?-->
                                                                                 <div style="margin-top:5px">
-                                                                                    
+
                                                                                     <!--?php echo $this->Form->input('article_id', array('name' => '', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'article_idt', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => '', 'empty' => 'Veuillez Choisir !!', "style" => "width:100% ; height:32px"));
                                                                                     ?-->
-                                                                                      <?php echo $this->Form->control('a', array('label' => '', 'options' => $articles, 'index' => '', 'name' => '', 'id' => 'article_id', 'champ' => 'article_id', 'table' => 'lignea', 'empty' => 'Veuillez choisir !!', 'class' => 'form-control')); ?>
-                                                                               
-                                                                                
+                                                                                    <?php echo $this->Form->control('a', array('label' => '', 'options' => $articles, 'index' => '', 'name' => '', 'id' => 'article_id', 'champ' => 'article_id', 'table' => 'lignea', 'empty' => 'Veuillez choisir !!', 'class' => 'form-control')); ?>
+
+
                                                                                 </div>
                                                                             </td>
                                                                             <td>
                                                                                 <!--?php echo $this->Form->input('qte', array('name' => '', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'qte', 'id' => 'qte', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
                                                                                 ?-->
-                                                                                 <?php echo $this->Form->control('a', ['label' => '', 'name' => '', 'class' => ' form-control focus enr80 ajoutligneeedd', 'index' => '', 'champ' => 'qte', 'table' => 'lignea', 'id' => 'qte']); ?>
+                                                                                <?php echo $this->Form->control('a', ['label' => '', 'name' => '', 'class' => ' form-control focus enr80 ajoutligneeedd', 'index' => '', 'champ' => 'qte', 'table' => 'lignea', 'id' => 'qte']); ?>
                                                                             </td>
-                                                                            <td align="center">
-                                                                                <i indexligne="" index=""
-                                                                                    class="fa fa-times supor2"
-                                                                                    style="color: #c9302c;font-size: 22px;">
-                                                                            </td>
+                                                                           
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
@@ -153,13 +149,11 @@
                                                             </div>
                                                         </div>
                                                     </td>
-                                                </tr>
 
 
-                                                    <td align="center">
-                                                        <i index="0" id="" class="fa fa-times supLigneFournisseur" style="color: #c9302c;font-size: 22px;"></i>
-                                                    </td>
                                                 </tr>
+
+                                               
                                                 <input type="hidden" value="-1" id="index1">
                                             </tbody>
                                         </table><br>
@@ -183,7 +177,8 @@
 
 
                     <div align="center" id="enr3" class="index">
-                        <?php //echo $this->Form->submit(__('Enregistrer')); ?>
+                        <?php //echo $this->Form->submit(__('Enregistrer')); 
+                        ?>
                         <button type="submit" class="pull-right btn btn-success btn-sm" id="" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
 
                     </div>
@@ -294,9 +289,9 @@
 </script>
 
 <script>
-    $(document).ready(function () {
+   $(document).ready(function() {
     // Add Fournisseur (Supplier) row
-    $(".al").on("click", function () {
+    $(".al").on("click", function() {
         let table = "tabligne1"; // Table ID
         let index = "index1";
         let ind = Number($("#" + index).val()) + 1;
@@ -304,7 +299,7 @@
 
         // Clone Fournisseur row
         let $row = $("#" + table).find(".tr").clone(true).removeAttr("class").show();
-        $row.find("input, select").each(function () {
+        $row.find("input, select").each(function() {
             let champ = $(this).attr("champ");
             let tab = $(this).attr("table");
             $(this).attr("index", ind);
@@ -312,12 +307,20 @@
             $(this).attr("name", "data[" + tab + "][" + ind + "][" + champ + "]");
         });
 
+        // Create a unique index for Articles in this Fournisseur
+       // $row.append(`<input type="hidden" class="indexa" value="0">`);
+
+        // Add Delete Icon for Fournisseur
+        $row.append(`<td align="center" width='20%'>
+                        <i index="${ind}" class="fa fa-times supLigneFournisseur" style="color: #c9302c; font-size: 22px; margin:22px; cursor: pointer;"></i>
+                    </td>`);
+
         // Append row
         $("#" + table).append($row);
     });
 
-    // Remove Fournisseur row
-    $(document).on("click", ".supLigneFournisseur", function () {
+    // Delete Fournisseur (Supplier) row
+    $(document).on("click", ".supLigneFournisseur", function() {
         $(this).closest("tr").remove();
     });
 
@@ -338,12 +341,17 @@
             $(this).attr("name", "data[" + tab + "][" + ind + "][" + champ + "]");
         });
 
-        // Append Article row under the corresponding Fournisseur
-        $parentRow.after($articleRow);
+        // Add Delete Icon for Article
+        $articleRow.append(`<td align="center" margin-bottom='10px' width='20%'>
+                                <i index="${ind}" class="fa fa-times supLigneArticle" style="color: #c9302c; font-size: 22px; margin:22px;cursor: pointer;"></i>
+                            </td>`);
+
+        // Append new article row inside the correct fournisseur
+        $parentRow.find("tbody").append($articleRow);
     });
 
-    // Remove Article row
-    $(document).on("click", ".supor2", function () {
+    // Delete Article row
+    $(document).on("click", ".supLigneArticle", function() {
         $(this).closest("tr").remove();
     });
 });
