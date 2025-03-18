@@ -183,11 +183,10 @@ table {
                 <?php //debug($lignedemandeclients);
                 foreach ($lignedemandeclients as $i => $res) :?>
             
-                   <?= h($res->sousfamille1->name);?>
+                  
                 <td><?= h($res->numboite ?? 'N/A'); ?></td>
-                <td><?= h($res->famille_id ?? 'N/A'); ?></td>
-                <td><?= h($res->sousfamille1_id ?? 'N/A'); ?></td>
-                
+                <td><?= h($res->famille->name ?? 'N/A'); ?></td>
+                <td><?= h($res->sousfamille1->name ?? 'N/A'); ?></td>
                 <td><?= h($res->article_id ?? 'N/A'); ?></td>
                 <td><?= h($res->qte ?? 'N/A'); ?></td>
                 <td><?= h($res->unite->name ?? 'N/A'); ?></td>

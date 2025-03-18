@@ -310,7 +310,7 @@ class DemandeclientsController extends AppController
     }
     public function view($id = null)
     {
-        Configure::write('debug', false);
+        Configure::write('debug',true);
         $demandeclient = $this->Demandeclients->get($id, [
             'contain' => [],
         ]);
@@ -338,7 +338,9 @@ class DemandeclientsController extends AppController
         }
         if (!empty($demandeclient->id)) {
             $lignedemandeclients = $this->fetchTable('Lignedemandeclients')->find('all')->where(['Lignedemandeclients.demandeclient_id' => $demandeclient->id])->toArray();
+            debug($lignedemandeclients);
         }
+        
         //  debug($listetypedemandeIds);
         $sousfamille1s = $this->fetchTable('Sousfamille1s')->find('all'); //, ['keyfield' => 'id', 'valueField' => 'name']);
         $unites = $this->fetchTable('Unites')->find('all'); //, ['keyfield' => 'id', 'valueField' => 'name']);
