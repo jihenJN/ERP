@@ -7,7 +7,7 @@
 ?>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script>
-<?php echo $this->Html->script('controle_frs'); ?>
+<!--?php echo $this->Html->script('controle_frs'); ?-->
 <?php echo $this->Html->css('select2'); ?>
 
 <!-- Content Header (Page header) -->
@@ -41,14 +41,6 @@
                         <div class="col-xs-6">
                             <?php echo $this->Form->control('numero', ['value' => $b, 'label' => 'Numero', 'required' => 'off', 'id' => 'datecommande', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control ', 'type' => '', 'readonly' => 'readonly']); ?>
                         </div>
-                     
-
-
-
-
-
-
-
                     </div>
                     <section class="content-header">
                         <h1 class="box-title"><?php echo __(' Les articles'); ?></h1>
@@ -80,17 +72,9 @@
 
                                                         <?php echo $this->Form->input('sup0', array('name' => '', 'id' => '', 'champ' => 'sup0', 'table' => 'lignea', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control'));
                                                         ?>
-                                                        <!-- <div id="" champ='ar1' index="" class="col-md-12"> -->
-
-                                                            <!-- <div style="display: flex !important"> -->
+                                                        
                                                                 <?php echo $this->Form->control('a', array('label' => '', 'options' => $articles, 'index' => '', 'name' => '', 'id' => 'article_id', 'champ' => 'article_id', 'table' => 'lignea', 'empty' => 'Veuillez choisir !!', 'class' => 'form-control')); ?>
                                                                
-                                                                    <!-- <span title="ajout article"> <a href="javascript:;" class="btn btn-primary b1" champ="b1" id="" index=""><i class='fa fa fa-plus'></i></a></span> -->
-                                                                
-                                                            <!-- </div> -->
-                                                        <!-- </div> -->
-
-
 
                                                         <div id="" champ='ar2' index="" style="display: none !important" class="col-md-12">
                                                             <div style="display: flex !important">
@@ -113,8 +97,6 @@
                             </div>
                         </div>
                     </section>
-
-
 
                     <section class="content-header">
                         <h1 class="box-title"><?php echo __('Fournisseurs'); ?></h1>
@@ -164,6 +146,69 @@
                                                                 <span title="ajout fournisseur"> <a href="javascript:;" class="btn btn-primary b21" champ="b21" id="" index=""><i class='fa fa fa-minus'></i></a></span>
                                                             </div>
                                                         </div>
+                                                        <!-------------------------jn------------------------>
+                                                          <!----style="display:none;"--->
+                                                <tr class="traa" champ='traa' >
+                                                    <td width='30%'></td>
+                                                    <td champ="afef" class="afef" colspan="3" id="" index="">
+                                                        <div class="panel panel-default">
+                                                            <div class="panel-heading">
+                                                                <h3 class="panel-title">
+                                                                    <?php echo __('Article'); ?>
+                                                                </h3>
+                                                                <a class="btn btn-primary ajouterligne1 " tabletype='addtableaa'
+                                                                    indexlignetype='indexa' trtype="traaa" style="
+                                                                float: right; 
+                                                                position: relative;
+                                                                top: -25px;
+                                                                "><i class="fa fa-plus-circle"></i> </a>
+                                                            </div>
+                                                            <div class="panel-body">
+                                                                <table
+                                                                    class="table table-bordered table-striped table-bottomless"
+                                                                    index="" indexligne='indexa' champ="addtableaa" id=""
+                                                                    style="width:100%" align="center">
+                                                                    <thead>
+                                                                        <tr bgcolor="#EDEDED">
+                                                                            <td align="center">Nom Article</td>
+                                                                            <td align="center">Qte</td>
+                                                                            <td align="center"></td>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <!----style="display:none;"--->
+                                                                        <tr class="traaa"  id="traaa"
+                                                                            champ='traaa' index="">
+                                                                            <td>
+                                                                                <?php echo $this->Form->input('supp2', array('name' => '', 'type' => 'hidden', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'supp2', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                                                                <div style="margin-top:5px">
+                                                                                    
+                                                                                    <!--?php echo $this->Form->input('article_id', array('name' => '', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'article_idt', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => '', 'empty' => 'Veuillez Choisir !!', "style" => "width:100% ; height:32px"));
+                                                                                    ?-->
+                                                                                      <?php echo $this->Form->control('a', array('label' => '', 'options' => $articles, 'index' => '', 'name' => '', 'id' => 'article_id', 'champ' => 'article_id', 'table' => 'lignea', 'empty' => 'Veuillez choisir !!', 'class' => 'form-control')); ?>
+                                                                               
+                                                                                
+                                                                                </div>
+                                                                            </td>
+                                                                            <td>
+                                                                                <!--?php echo $this->Form->input('qte', array('name' => '', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'qte', 'id' => 'qte', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
+                                                                                ?-->
+                                                                                 <?php echo $this->Form->control('a', ['label' => '', 'name' => '', 'class' => ' form-control focus enr80 ajoutligneeedd', 'index' => '', 'champ' => 'qte', 'table' => 'lignea', 'id' => 'qte']); ?>
+                                                                            </td>
+                                                                            <td align="center">
+                                                                                <i indexligne="" index=""
+                                                                                    class="fa fa-times supor2"
+                                                                                    style="color: #c9302c;font-size: 22px;">
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                                <input type="hidden" value="-1" class="" id="" champ="indexa" />
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
 
                                                     <td align="center">
                                                         <i index="0" id="" class="fa fa-times supLigneFournisseur" style="color: #c9302c;font-size: 22px;"></i>
@@ -301,4 +346,64 @@
         })
     })
 </script>
+
+<script>
+    $(document).ready(function () {
+    // Add Fournisseur (Supplier) row
+    $(".al").on("click", function () {
+        let table = "tabligne1"; // Table ID
+        let index = "index1";
+        let ind = Number($("#" + index).val()) + 1;
+        $("#" + index).val(ind);
+
+        // Clone Fournisseur row
+        let $row = $("#" + table).find(".tr").clone(true).removeAttr("class").show();
+        $row.find("input, select").each(function () {
+            let champ = $(this).attr("champ");
+            let tab = $(this).attr("table");
+            $(this).attr("index", ind);
+            $(this).attr("id", champ + ind);
+            $(this).attr("name", "data[" + tab + "][" + ind + "][" + champ + "]");
+        });
+
+        // Append row
+        $("#" + table).append($row);
+    });
+
+    // Remove Fournisseur row
+    $(document).on("click", ".supLigneFournisseur", function () {
+        $(this).closest("tr").remove();
+    });
+
+    // Add Article row inside Fournisseur
+    $(document).on("click", ".ajouterligne1", function () {
+        let $parentRow = $(this).closest(".traa");
+        let index = "indexa";
+        let ind = Number($("#" + index).val()) + 1;
+        $("#" + index).val(ind);
+
+        // Clone Article row
+        let $articleRow = $(".traaa").clone(true).removeAttr("class").show();
+        $articleRow.find("input, select").each(function () {
+            let champ = $(this).attr("champ");
+            let tab = $(this).attr("table");
+            $(this).attr("index", ind);
+            $(this).attr("id", champ + ind);
+            $(this).attr("name", "data[" + tab + "][" + ind + "][" + champ + "]");
+        });
+
+        // Append Article row under the corresponding Fournisseur
+        $parentRow.after($articleRow);
+    });
+
+    // Remove Article row
+    $(document).on("click", ".supor2", function () {
+        $(this).closest("tr").remove();
+    });
+});
+
+</script>
+
+
+
 <?php $this->end(); ?>
