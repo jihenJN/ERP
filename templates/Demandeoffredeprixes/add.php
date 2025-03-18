@@ -42,62 +42,8 @@
                             <?php echo $this->Form->control('numero', ['value' => $b, 'label' => 'Numero', 'required' => 'off', 'id' => 'datecommande', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control ', 'type' => '', 'readonly' => 'readonly']); ?>
                         </div>
                     </div>
-                    <section class="content-header">
-                        <h1 class="box-title"><?php echo __(' Les articles'); ?></h1>
-                    </section>
-
-                    <section class="content" style="width: 99%">
-                        <div class="row">
-                            <div class="box">
-                                <div class="box-header with-border">
-                                    <a class="btn btn-primary al" table='addtable' index='index0' id='ajouter_ligne04' style="
-                                       float: right;
-                                       margin-bottom: 5px;
-                                       ">
-                                        <i class="fa fa-plus-circle "></i> Ajouter article</a>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="table-responsive ls-table">
-                                        <table class="table table-bordered table-striped table-bottomless" id="tabligne0">
-                                            <thead>
-                                                <tr width:20px>
-                                                    <td align="center" style="width: 40%;"><strong>Nom du article</strong></td>
-                                                    <td align="center" style="width: 40%;"><strong>Quantité</strong></td>
-                                                    <td align="center" style="width: 20%;"></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="tr" style="display: none !important">
-                                                    <td align="center">
-
-                                                        <?php echo $this->Form->input('sup0', array('name' => '', 'id' => '', 'champ' => 'sup0', 'table' => 'lignea', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control'));
-                                                        ?>
-                                                        
-                                                                <?php echo $this->Form->control('a', array('label' => '', 'options' => $articles, 'index' => '', 'name' => '', 'id' => 'article_id', 'champ' => 'article_id', 'table' => 'lignea', 'empty' => 'Veuillez choisir !!', 'class' => 'form-control')); ?>
-                                                               
-
-                                                        <div id="" champ='ar2' index="" style="display: none !important" class="col-md-12">
-                                                            <div style="display: flex !important">
-                                                                <input table="lignea" type='text' index="" id="designiationA" champ='designiationA' class='form-control' class='input'>
-                                                                <span title="ajout article"> <a href="javascript:;" class="btn btn-primary b11" champ="b11" id="" index=""><i class='fa fa fa-minus'></i></a></span>
-                                                            </div>
-                                                        </div>
-                                                    <td align="center">
-                                                        <?php echo $this->Form->control('a', ['label' => '', 'name' => '', 'class' => ' form-control focus enr80 ajoutligneeedd', 'index' => '', 'champ' => 'qte', 'table' => 'lignea', 'id' => 'qte']); ?>
-                                                    </td>
-                                                    <td align="center">
-                                                        <i index="0" id="" class="fa fa-times supLigneart" style="color: #c9302c;font-size: 22px;"></i>
-                                                    </td>
-                                                </tr>
-                                                <input type="hidden" value="-1" id="index0">
-                                            </tbody>
-                                        </table><br>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
+        
+               
                     <section class="content-header">
                         <h1 class="box-title"><?php echo __('Fournisseurs'); ?></h1>
                     </section>
