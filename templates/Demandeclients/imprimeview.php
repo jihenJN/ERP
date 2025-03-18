@@ -180,13 +180,17 @@ table {
                     </tr>
                 </thead>
 
-                <?php foreach ($lignedemandeclients as $i => $res) : ?>
+                <?php //debug($lignedemandeclients);
+                foreach ($lignedemandeclients as $i => $res) :?>
+            
+                   <?= h($res->sousfamille1->name);?>
                 <td><?= h($res->numboite ?? 'N/A'); ?></td>
                 <td><?= h($res->famille_id ?? 'N/A'); ?></td>
                 <td><?= h($res->sousfamille1_id ?? 'N/A'); ?></td>
+                
                 <td><?= h($res->article_id ?? 'N/A'); ?></td>
                 <td><?= h($res->qte ?? 'N/A'); ?></td>
-                <td><?= h($res->unite_id ?? 'N/A'); ?></td>
+                <td><?= h($res->unite->name ?? 'N/A'); ?></td>
                 <td><?= h($res->exigence ?? 'N/A'); ?></td>
             </tr>
                 <?php endforeach; ?>

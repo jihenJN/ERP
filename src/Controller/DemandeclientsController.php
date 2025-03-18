@@ -578,7 +578,7 @@ class DemandeclientsController extends AppController
 
     public function imprimeview($id = null)
     {
-        Configure::write('debug', false);
+        Configure::write('debug', true);
         $demandeclient = $this->Demandeclients->get($id, [
             'contain' => [],
         ]);
@@ -605,9 +605,11 @@ class DemandeclientsController extends AppController
             $listetypedemandeIds = array_column($listetypedemandes, 'typedemande_id');
         }
         if (!empty($demandeclient->id)) {
-            $lignedemandeclients = $this->fetchTable('Lignedemandeclients')->find('all')->where(['Lignedemandeclients.demandeclient_id' => $demandeclient->id])->toArray();
+            $lignedemandeclients = $this->fetchTable('Lignedemandeclients')->find('all', [
+                'contain' => ['Unites','Familles','Sousfamille1s'],
+            ])->where(['Lignedemandeclients.demandeclient_id' => $demandeclient->id]);
         }
-        //  debug($listetypedemandeIds);
+          //debug($lignedemandeclients);
         $sousfamille1s = $this->fetchTable('Sousfamille1s')->find('all'); //, ['keyfield' => 'id', 'valueField' => 'name']);
         $unites = $this->fetchTable('Unites')->find('all'); //, ['keyfield' => 'id', 'valueField' => 'name']);
 
