@@ -49,121 +49,201 @@
                     </section>
 
                     <section class="content" style="width: 99%">
-                        <div class="row">
-                            <div class="box">
-                                <div class="box-header with-border">
-                                    <a class="btn btn-primary al" table='addtable' index='index1' id='ajouter_ligne14' style="
-                                       float: right;
-                                       margin-bottom: 5px;
-                                       ">
-                                        <i class="fa fa-plus-circle "></i> Ajouter fournisseur</a>
+////////
+                    <div class=" tab-content" id="fichart" >
+  
 
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                <?php echo __('Article'); ?>
+            </h3>
+            <a class="btn btn-primary ajouterlignematriceee " table='addtablea' index='index'
+                tr="tra" style="float: right;  position: relative; top: -25px;"><i class="fa fa-plus-circle"></i></a>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered table-striped table-bottomless" id="addtablea"
+                style="width:100%" align="center">
+                <thead>
+                    <tr bgcolor="#EDEDED">
+                        <td width="" align="center">fournisseur</td>
+        
+                        <td width="" align="center"></td>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr champ="tra" class="tra" style="display:none;">
+                        <td align="left">
+                            <?php echo $this->Form->input('sup', array('name' => '', 'id' => '', 'champ' => 'sup', 'table' => 'Ofsfligne', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control')); ?>
+                            <div style="margin-top:10px">
+                                <?php echo $this->Form->input('article_id', array('empty' => 'Veuillez choisir', 'label' => '', 'id' => 'article_id', 'name' => '', 'table' => 'Ofsfligne', 'champ' => 'article_id', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => '')); ?>
+                            </div>
+                        </td>
+
+                   
+                        <td align="center">
+                            <i index="" class="fa fa-times supor"
+                                style="color: #c9302c;font-size: 22px;">
+                        </td>
+                    </tr>
+                    <tr class="traa" champ='traa' style="display:none">
+                        <td width='30%'></td>
+                        <td champ="afef" class="afef" colspan="3" id="" index="">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <?php echo __('Article'); ?>
+                                    </h3>
+                                    <a class="btn btn-primary ajouterligne1 " tabletype='addtableaa'
+                                        indexlignetype='indexa' trtype="traaa" style="
+                                       float: right; 
+                                       position: relative;
+                                       top: -25px;
+                                       "><i class="fa fa-plus-circle"></i> </a>
                                 </div>
                                 <div class="panel-body">
-                                    <div class="table-responsive ls-table">
-                                        <table class="table table-bordered table-striped table-bottomless" id="tabligne1">
-                                            <thead>
-                                                <tr width:20px>
-                                                    <td align="center" style="width: 30%;"><strong>Nom du fournisseur</strong></td>
-                                                    <td align="center" style="width: 40%;"></td>
-                                                    <td align="center" style="width: 30%;"></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="tr" style="display: none !important">
+                                    <table
+                                        class="table table-bordered table-striped table-bottomless"
+                                        index="" indexligne='indexa' champ="addtableaa" id=""
+                                        style="width:100%" align="center">
+                                        <thead>
+                                            <tr bgcolor="#EDEDED">
+                                                <td align="center">Article</td>
+                                                <td align="center">Qte</td>
+                                              
 
-
-                                                    <td align="center">
-                                                        <?php echo $this->Form->input('sup1', array('name' => '', 'id' => '', 'champ' => 'sup1', 'table' => 'lignef', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control'));
+                                                <td align="center"></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="traaa" style="display:none;" id="traaa"
+                                                champ='traaa' index="">
+                                                <td>
+                                                    <?php echo $this->Form->input('supp2', array('name' => '', 'type' => 'hidden', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'supp2', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                                    <div style="margin-top:5px">
+                                                        <?php echo $this->Form->input('article_id', array('name' => '', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'article_idt', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => '', 'empty' => 'Veuillez Choisir !!', "style" => "width:100% ; height:32px"));
                                                         ?>
-
-                                                        <!-- <div id="" champ='f1' class="col-md-12"> -->
-                                                        <!-- <div style="display: flex !important"> -->
-                                                        <?php echo $this->Form->control('a', array('label' => '', 'options' =>  $fournisseurs, 'name' => '', 'id' => 'fournisseur_id', 'class' => 'form-control ', 'champ' => 'fournisseur_id', 'table' => 'lignef', 'empty' => 'Veuillez Choisir !!')); ?>
-
-                                                        <!-- <span title="ajout fournisseur"> <a href="javascript:;" class="btn btn-primary b2" champ="b2" id="" index=""><i class='fa fa fa-plus'></i></a></span> -->
-
-
-                                                        <!-- </div> -->
-                                                        <!-- </div> -->
-                                                        <div id="" champ='f2' style="display: none !important" class="col-md-12">
-                                                            <div style="display: flex !important">
-                                                                <input table="lignef" type='text' id='id' name='' champ='fournisseur_idd' class='form-control select2' class='input'>
-                                                                <span title="ajout fournisseur"> <a href="javascript:;" class="btn btn-primary b21" champ="b21" id="" index=""><i class='fa fa fa-minus'></i></a></span>
-                                                            </div>
-                                                        </div>
-                                                        <!-------------------------jn------------------------>
-                                                        <!----style="display:none;"--->
-                                                <tr class="traa" champ='traa'>
-                                                    <td width='30%'></td>
-                                                    <td champ="afef" class="afef" colspan="3" id="" index="">
-                                                        <div class="panel panel-default">
-                                                            <div class="panel-heading">
-                                                                <h3 class="panel-title">
-                                                                    <?php echo __('Article'); ?>
-                                                                </h3>
-                                                                <a class="btn btn-primary ajouterligne1 " tabletype='addtableaa'
-                                                                    indexlignetype='indexa' trtype="traaa" style="
-                                                                float: right; 
-                                                                position: relative;
-                                                                top: -25px;
-                                                                "><i class="fa fa-plus-circle"></i> </a>
-                                                            </div>
-                                                            <div class="panel-body">
-                                                                <table
-                                                                    class="table table-bordered table-striped table-bottomless"
-                                                                    index="" indexligne='indexa' champ="addtableaa" id=""
-                                                                    style="width:100%" align="center">
-                                                                    <thead>
-                                                                        <tr bgcolor="#EDEDED">
-                                                                            <td align="center">Nom Article</td>
-                                                                            <td align="center">Qte</td>
-                                                                            <td align="center"></td>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody>
-                                                                        <!----style="display:none;"--->
-                                                                        <tr class="traaa" id="traaa"
-                                                                            champ='traaa' index="" style="display:none;">
-                                                                            <td>
-                                                                                <!--?php echo $this->Form->input('supp2', array('name' => '', 'type' => 'hidden', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'supp2', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?-->
-                                                                                <div style="margin-top:5px">
-
-                                                                                    <!--?php echo $this->Form->input('article_id', array('name' => '', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'article_idt', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => '', 'empty' => 'Veuillez Choisir !!', "style" => "width:100% ; height:32px"));
-                                                                                    ?-->
-                                                                                    <?php echo $this->Form->control('a', array('label' => '', 'options' => $articles, 'index' => '', 'name' => '', 'id' => 'article_id', 'champ' => 'article_id', 'table' => 'lignea', 'empty' => 'Veuillez choisir !!', 'class' => 'form-control')); ?>
-
-
-                                                                                </div>
-                                                                            </td>
-                                                                            <td>
-                                                                                <!--?php echo $this->Form->input('qte', array('name' => '', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'qte', 'id' => 'qte', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
-                                                                                ?-->
-                                                                                <?php echo $this->Form->control('a', ['label' => '', 'name' => '', 'class' => ' form-control focus enr80 ajoutligneeedd', 'index' => '', 'champ' => 'qte', 'table' => 'lignea', 'id' => 'qte']); ?>
-                                                                            </td>
-                                                                           
-                                                                        </tr>
-                                                                    </tbody>
-                                                                </table>
-                                                                <input type="hidden" value="-1" class="" id="" champ="indexa" />
-                                                            </div>
-                                                        </div>
-                                                    </td>
-
-
-                                                </tr>
-
-                                               
-                                                <input type="hidden" value="-1" id="index1">
-                                            </tbody>
-                                        </table><br>
-                                    </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <?php echo $this->Form->input('qte', array('name' => '', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'qte', 'id' => 'qte', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
+                                                    ?>
+                                                </td>
+                                        
+                                          
+                                                <td align="center">
+                                                    <i indexligne="" index=""
+                                                        class="fa fa-times supor2"
+                                                        style="color: #c9302c;font-size: 22px;">
+                                                </td>
+                                            </tr>
+                                       
+                                        </tbody>
+                                    </table>
+                                    <input type="hidden" value="-1" class="" id="" champ="indexa" />
                                 </div>
                             </div>
-                        </div>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <input type="hidden" value="-1" id="index" />
+        </div>
+    </div>
+</div>
 
 
-                    </section>
+  <!--  <div class="row">
+        <div class="box">
+            <div class="box-header with-border">
+                <a class="btn btn-primary al" table='addtable' index='index1' id='ajouter_ligne14' style="float: right; margin-bottom: 5px;">
+                    <i class="fa fa-plus-circle"></i> Ajouter fournisseur
+                </a>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive ls-table">
+                    <table class="table table-bordered table-striped" id="tabligne1">
+                        <thead>
+                            <tr>
+                                <th style="width: 30%; text-align: center;">Nom du fournisseur</th>
+                                <th style="width: 40%; text-align: center;">Articles</th>
+                                <th style="width: 10%; text-align: center;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="tr" style="display: none !important">
+                                <td align="center">
+                                    <?php echo $this->Form->control('a', [
+                                        'label' => '',
+                                        'options' => $fournisseurs,
+                                        'id' => 'fournisseur_id',
+                                        'class' => 'form-control',
+                                        'champ' => 'fournisseur_id',
+                                        'table' => 'lignef',
+                                        'empty' => 'Veuillez Choisir !!'
+                                    ]); ?>
+                                </td>
+                                <td champ="afef" class="afef">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title">Article</h3>
+                                            <a class="btn btn-primary ajouterligne1" tabletype='addtableaa' indexlignetype='indexa' trtype="traaa" style="float: right; top: -25px;">
+                                                <i class="fa fa-plus-circle"></i>
+                                            </a>
+                                        </div>
+                                        <div class="panel-body">
+                                            <table class="table table-bordered table-striped" id="addtableaa" style="width:100%">
+                                                <thead>
+                                                    <tr bgcolor="#EDEDED">
+                                                        <th align="center">Nom Article</th>
+                                                        <th align="center">Qte</th>
+                                                        <th align="center">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr class="traaa" id="traaa" style="display:none;">
+                                                        <td>
+                                                            <?php echo $this->Form->control('a', [
+                                                                'label' => '',
+                                                                'options' => $articles,
+                                                                'id' => 'article_id',
+                                                                'champ' => 'article_id',
+                                                                'table' => 'lignea',
+                                                                'empty' => 'Veuillez choisir !!',
+                                                                'class' => 'form-control'
+                                                            ]); ?>
+                                                        </td>
+                                                        <td>
+                                                            <?php echo $this->Form->control('a', [
+                                                                'label' => '',
+                                                                'class' => 'form-control',
+                                                                'champ' => 'qte',
+                                                                'table' => 'lignea',
+                                                                'id' => 'qte'
+                                                            ]); ?>
+                                                        </td>
+                                                        <td align="center">
+                                                            <i class="fa fa-times supLigneArticle" style="color: #c9302c; font-size: 22px; cursor: pointer;"></i>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <input type="hidden" value="-1" id="indexa" champ="indexa" />
+                                        </div>
+                                    </div>
+                                </td>
+                              
+                            </tr>
+                        </tbody>
+                    </table>
+                    <input type="hidden" value="-1" id="index1">
+                </div>
+            </div>
+        </div>
+    </div>-->
+</section>
 
 
 
@@ -220,6 +300,889 @@
 <?php $this->start('scriptBottom'); ?>
 <script>
     $(function() {
+        $(".ajouterligne1ligne").on('click', function () {
+    table = $(this).attr('table'); //alert(table+" table");
+    index = $(this).attr('indexligneligne');
+
+    //alert(index)
+    //i = $(this).attr('indexligne');
+    //alert(i)
+
+    itd = $(this).attr('index');
+    itd1 = $(this).attr('indexligne');
+
+    $('#tdcompp').show();
+    $('#tdcompp'+itd+'-'+itd1 ).show();
+
+    //alert(index+" indexligneligne") ;      
+    tr = $(this).attr('tr'); //alert(tr+" tr") ;    
+    //alert(tr)
+    ind = Number($('#' + index).val()) + 1; //alert(ind+" ind");
+    $('#' + index).val(ind);
+
+    $ttr = $('#' + table).find('.' + tr).clone(true); //alert(tr)
+    //     $ttr = $('#traaligne1-0' ).find('.traaaligne').clone(true);console.log($ttr);
+    $ttr.attr('class', '');
+    i = 0; //alert(i)
+    tabb = [];//alert(tabb)
+    vc = 0;
+    tabd = [];
+    //  alert( $ttr.find())
+    $ttr.find('input,select,div,td,textarea,a,tr,table,i').each(function () {
+
+
+      tab = $(this).attr('table');//alert(tab+"tab")
+      champ = $(this).attr('champ');// alert(champ+"champ")
+      tableligneligne = $(this).attr('tableligneligne');//alert(tableligneligne+"tableligneligne")
+      tableligne = $(this).attr('tableligne');//alert(tableligne+"tableligne")
+      index = $(this).attr('index');//alert(index)
+      indexligne = $(this).attr('indexligne');
+      //alert(indexligne+"indexligne")
+      indexligneligne = $(this).attr('indexligneligne');
+      if (champ == 'article_idd') {
+        //              alert(index+'index');
+        //              alert(ind+'indexligne');
+      }
+      //alert('index'+index);alert('tableligne'+tableligne)
+      $(this).attr('indexligneligne', ind);
+      $(this).attr('id', champ + index + '-' + indexligne + '-' + ind);
+      $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + indexligne + '][' + tableligneligne + '][' + ind + '][' + champ + ']');
+      $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + indexligne + '][' + tableligneligne + '][' + ind + '][' + champ + ']');
+      $(this).removeClass('anc');
+      if ($(this).is('select')) {
+
+        tabb[i] = champ + index + '-' + indexligne + '-' + ind;
+        // alert(tabb[i]);
+        i = Number(i) + 1;
+
+      }
+
+      // alert($(this).attr('class'));
+
+      //  $(this).val('');
+    }
+    )
+    index = $(this).attr('index');  //alert(index);
+    indexligne = $(this).attr('indexligne');//alert(indexligne);
+    ///  alert(indexligne)
+    $ttr.find('i').each(function () {
+      $(this).attr('index', index);
+    });
+    $ttr.find('i').each(function () {
+
+      $(this).attr('indexligne', indexligne);
+      $(this).attr('indexligneligne', ind);
+      //alert(indexligne);
+    });
+
+    //   $("#article_idd" +index+'-'+indexligne+'-'+ ind).data('select2').destroy();
+
+    $ttr.attr('style', '');
+    $('#' + table).append($ttr);
+    $('#' + index).val(ind);
+    $('#' + table).find('tr:last').show();
+
+    index = $(this).attr('index');//alert(index+'index');
+    indexligne = Number($('#indexa' + index).val());//alert(indexligne+'indexligne');
+    //$("#article_idd" +index+'-'+indexligne+'-'+ ind).select2("destroy");
+    //            $('input[type=button]').click(function () {
+    //
+    //   
+    //    var noOfDivs = $('.tooltest0').length;
+    //    var clonedDiv = $('.tooltest0').first().clone(true);
+    //    clonedDiv.insertBefore("#tool-placeholder");
+    //    clonedDiv.attr('id', 'tooltest' + noOfDivs);
+    //    
+    //
+    //    $('.toollist').select2({ //apply select2 to my element
+    //        placeholder: "Search your Tool",
+    //        allowClear: true
+    //    });
+    //
+    //
+    //
+    //});
+    //  alert(ind+"ind")
+    //         window.setTimeout(function(){
+    //  $('select').select2('destroy');
+    //}, 3000);
+
+    $ttr.find('i').each(function () {
+      $(this).attr('indexligneligne', ind);
+    });
+    index = Number($('#index').val());//alert(index+'index');
+    indexligne = Number($('#indexa' + index).val());
+
+    $("#article_idd" + index + '-' + indexligne + '-' + ind).select2({
+      width: '100%' // need to override the changed default
+    })
+
+
+    $("#unite_id" + index + '-' + indexligne + '-' + ind).select2({
+      width: '100%' // need to override the changed default
+    })
+
+    $ttr.attr('style', '');
+    $('#' + table).append($ttr);
+    //           $("#article_idd"+index+'-'+indexligne+'-'+ ind).select2('destroy');      
+    //                $("#article_idd" +index+'-'+indexligne+'-'+ ind).select2({
+    //            width: '100%' // need to override the changed default
+    //        }); 
+    // $('#' + indexligne).val(ind);  
+    // alert($ttr);
+    // $('#' + table).find('tr:last').show();
+    for (j = 0; j <= i; j++) {
+      // uniform_select(tabb[j]);
+      // uniform_select(tabd[j]);      
+    }
+    // alert('#date_debut'+ind);
+    //                 $('#date_debut'+ind).datetimepicker({
+    //        timepicker: false,
+    //        datepicker:true,
+    //        mask:'39/19/9999',
+    //        format:'d/m/Y'});
+    //        for (k = 0; k <= vc; k++) {
+    //            // alert(tabd[k])
+    //            $('#' + tabd[k]).datetimepicker({
+    //                timepicker: false,
+    //                datepicker: true,
+    //                mask: '39/19/9999',
+    //                format: 'd/m/Y'});
+    //        }
+  });
+
+
+
+
+
+
+
+
+
+
+
+
+  $(".ajouterligne1").on('click', function () {
+    table = $(this).attr('table'); //alert("table "+table);
+    index = $(this).attr('indexligne');
+    ////alert(index);
+    itd = $(this).attr('index');//alert(itd);
+//console.log(itd);
+    $('#tdcomp').show();
+    $('#tdcomp'+itd).show();
+    tr = $(this).attr('tr'); //alert(tr) ;
+    ind = Number($('#' + index).val()) + 1; //alert(ind);
+    $('#' + index).val(ind);
+    $ttr = $('#' + table).find('.' + tr).clone(true); //console.log($ttr);
+    $ttr.attr('class', '');
+    i = 0;
+    tabb = [];
+    vc = 0;
+    tabd = [];
+    $ttr.find('a,input,select,div,td,textarea,tr,table,i').each(function () {
+      //alert($ttr.find('a'));
+      tab = $(this).attr('table'); //alert(tab);
+      champ = $(this).attr('champ');// console.log(champ);
+      tableligne = $(this).attr('tableligne'); //alert(tableligne);
+      tableligneligne = $(this).attr('tableligneligne'); //alert(tableligneligne);
+      index = $(this).attr('index');//alert('index'+index);
+      indexligne = $(this).attr('indexligne');
+      indexligneligne = $(this).attr('indexligneligne');
+      if (champ == 'article_id') {
+        //              alert(index+'index');
+        //              alert(ind+'indexligne');
+
+        //    alert(champ)
+        //alert('index'+index);alert('tableligne'+tableligne)
+        //alert(index+'inddexx')
+        //alert(ind+'inddds')
+        $(this).attr('indexligne', ind); // alert( $(this).attr('indexligne'));
+        $(this).attr('index', index); //alert( $(this).attr('index'));
+        $(this).attr('id', champ + index + '-' + ind);//alert( $(this).attr('id'));
+        $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+        $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+        $(this).removeClass('anc');
+      }
+      if (champ == 'qte') {
+        //              alert(index+'index');
+        //              alert(ind+'indexligne');
+
+        //    alert(champ)
+        //alert('index'+index);alert('tableligne'+tableligne)
+
+        $(this).attr('indexligne', ind); // alert( $(this).attr('indexligne'));
+        $(this).attr('index', index); //alert( $(this).attr('index'));
+        $(this).attr('id', champ + index + '-' + ind);//alert( $(this).attr('id'));
+        $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+        $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+        $(this).removeClass('anc');
+      }
+
+      if (champ == 'coeff') {
+        //              alert(index+'index');
+        //              alert(ind+'indexligne');
+
+        //    alert(champ)
+        //alert('index'+index);alert('tableligne'+tableligne)
+
+        $(this).attr('indexligne', ind); // alert( $(this).attr('indexligne'));
+        $(this).attr('index', index); //alert( $(this).attr('index'));
+        $(this).attr('id', champ + index + '-' + ind);//alert( $(this).attr('id'));
+        $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+        $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+        $(this).removeClass('anc');
+      }
+      if (champ == 'unite_id') {
+      
+        $(this).attr('indexligne', ind); // alert( $(this).attr('indexligne'));
+        $(this).attr('index', index); //alert( $(this).attr('index'));
+        $(this).attr('id', champ + index + '-' + ind);//alert( $(this).attr('id'));
+        $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+        $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+        $(this).removeClass('anc');
+      }
+      if (champ == 'article_idt') {
+        //              alert(index+'index');
+        //              alert(ind+'indexligne');
+
+        //    alert(champ)
+        //alert('index'+index);alert('tableligne'+tableligne)
+
+        $(this).attr('indexligne', ind); // alert( $(this).attr('indexligne'));
+        $(this).attr('index', index); //alert( $(this).attr('index'));
+        $(this).attr('id', champ + index + '-' + ind);//alert( $(this).attr('id'));
+        $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+        $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+        $(this).removeClass('anc');
+      }
+	  if (champ == 'unite_idt') {
+      
+        $(this).attr('indexligne', ind); // alert( $(this).attr('indexligne'));
+        $(this).attr('index', index); //alert( $(this).attr('index'));
+        $(this).attr('id', champ + index + '-' + ind);//alert( $(this).attr('id'));
+        $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+        $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+        $(this).removeClass('anc');
+      }
+      if (champ == 'supp2') {
+        //              alert(index+'index');
+        //              alert(ind+'indexligne');
+
+        //    alert(champ)
+        //alert('index'+index);alert('tableligne'+tableligne)
+
+        $(this).attr('indexligne', ind); // alert( $(this).attr('indexligne'));
+        $(this).attr('index', index); //alert( $(this).attr('index'));
+        $(this).attr('id', champ + index + '-' + ind);//alert( $(this).attr('id'));
+        $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+        $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+        $(this).removeClass('anc');
+      }
+
+
+
+      if ($(this).is('select')) {
+        tabb[i] = champ + index + '-' + ind;
+        // alert(tabb[i]);
+        i = Number(i) + 1;
+      }
+
+      if ($(this).hasClass('ajouterligne1ligne')) {
+        tabletypeligne = $(this).attr('tabletypeligne');//alert(tabletypeligne+"tabletypeligne")
+        indexlignetypeligne = $(this).attr('indexlignetype');//alert(indexlignetypeligne+"tabletypeligne")
+        trtypeligne = $(this).attr('trtypeligne');//alert(trtypeligne+"trtypeligne")
+        // tabletype='addtablea' index ='' indexlignetype='indexa' trtype="tra"
+        $(this).attr('table', tabletypeligne + index + '-' + ind);
+        $(this).attr('indexligneligne', indexligneligne + index + '-' + ind);
+        $(this).attr('tr', trtypeligne + index + '-' + ind);
+
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+      ///////////////
+      if ($(this).hasClass('indexaligne1')) {
+        indextype = $(this).attr('indextype');
+        $(this).attr('id', indextypeligne + index + '-' + ind);
+      }
+      if ($(this).hasClass('traaligne')) {
+        $(this).attr('id', 'traaligne' + index + '-' + ind);
+        // $(this).attryle','display:none;');
+      }
+      // alert(champ+"champ");
+      if ($(this).hasClass('traaaligne')) {
+        //  alert(afefef)
+        $(this).attr('id', 'traaaligne' + index + '-' + ind);
+        $(this).attr('style', 'display:none;');
+      }
+      /////////////////
+      //             if ($(this).hasClass('indexaligne1')) {
+      //                
+      //                 indextypeligne=  $(this).attr('indextypeligne');
+      //                 $(this).attr('id',indextypeligne+ind);
+      //             }
+      //             if ($(this).hasClass('traaligne')) {
+      //                
+      //                
+      //                 $(this).attr('id','traaligne'+ind);
+      //                // $(this).attr('style','display:none;');
+      //             }
+      //              if ($(this).hasClass('traaaligne')) {
+      //                
+      //                
+      //                 $(this).attr('id','traaaligne'+ind);
+      //                 $(this).attr('style','display:none;');
+      //             }
+      /////////////////////
+      // alert($(this).attr('class'));
+
+      //  $(this).val('');
+
+    })
+    $ttr.find('i').each(function () {
+      $(this).attr('indexligne', ind);
+    });
+    $ttr.attr('style', '');
+
+
+
+    //         index = $(this).attr('index');alert(index);
+    //         alert()
+    //           // indexligne = $(this).attr('indexligne');alert(
+    //                $("#article_id" +index+'-'+ ind).select2({
+    //            width: '100%' // need to override the changed default
+    //       });
+    //    
+
+    $('#' + table).append($ttr);
+
+    // $('#' + indexligne).val(ind);  
+    // alert($ttr);
+    // $('#' + table).find('tr:last').show();
+
+    for (j = 0; j <= i; j++) {
+      //        uniform_select(tabb[j]);
+      // uniform_select(tabd[j]);        
+    }
+    $ttr = $('#' + table).find('.traaligne').clone(true);//console.log($ttr);
+    $ttr.attr('class', '');
+    i = 0;
+    tabb = [];
+    vc = 0;
+    tabd = [];
+    $ttr.find('input,select,div,td,textarea,tr,a,table,i').each(function () {
+      tab = $(this).attr('table');//alert(tab+"rabb")
+      champ = $(this).attr('champ');//console.log(champ); 
+      index = $(this).attr('index');//console.lfog(champ);
+      $(this).attr('index', ind);
+      $(this).attr('id', champ + ind);
+      $(this).attr('name', 'data[' + tab + '][' + ind + '][' + champ + ']');
+      $(this).attr('data-bv-field', 'data[' + tab + '][' + ind + '][' + champ + ']');
+      if (champ == 'article_id') {
+        //   $(this).attr('indexligne', 0);
+        $(this).attr('indexligneligne', 0);
+        $(this).attr('indexligne', ind);
+        $(this).attr('index', index);
+        // alert(champ+'champ')
+        // alert(index+'index')
+        //alert(ind+'ind')
+        $(this).attr('id', champ + index + '-' + ind + '-0');
+        tabb[i] = champ + index + '-' + ind + '-0';
+        i = Number(i) + 1;
+        // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+        $(this).attr('name', ' data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+        $(this).attr('data-bv-field', 'data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+      }
+      if (champ == 'addtableaaligne') {
+        $(this).attr('indexligneligne', 0);
+        $(this).attr('indexligne', 0);
+        $(this).attr('index', ind);
+        $(this).attr('id', champ + index + '-' + ind);
+        tabb[i] = champ + index + '-' + ind + '-0';
+        i = Number(i) + 1;
+      }
+
+
+      if (champ == 'qte') {
+        $(this).attr('indexligneligne', 0);
+        $(this).attr('indexligne', ind); //alert($(this).attr('indexligne'));
+        $(this).attr('index', index);
+        // alert(champ+'champ')
+        // alert(index+'index')
+        //alert(ind+'ind')
+
+        $(this).attr('id', champ + index + '-' + ind + '-0');
+        tabb[i] = champ + index + '-' + ind + '-0';
+        i = Number(i) + 1;
+        // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+        $(this).attr('name', ' data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']'); //alert($(this).attr('name'));
+        $(this).attr('data-bv-field', 'data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+      }
+      if (champ == 'coeff') {
+        $(this).attr('indexligneligne', 0);
+        $(this).attr('indexligne', ind); //alert($(this).attr('indexligne'));
+        $(this).attr('index', index);
+        // alert(champ+'champ')
+        // alert(index+'index')
+        //alert(ind+'ind')
+
+        $(this).attr('id', champ + index + '-' + ind + '-0');
+        tabb[i] = champ + index + '-' + ind + '-0';
+        i = Number(i) + 1;
+        // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+        $(this).attr('name', ' data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']'); //alert($(this).attr('name'));
+        $(this).attr('data-bv-field', 'data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+      }
+      if (champ == 'unite_id') {
+        $(this).attr('indexligneligne', 0);
+        $(this).attr('indexligne', ind); //alert($(this).attr('indexligne'));
+        $(this).attr('index', index);
+        // alert(champ+'champ')
+        // alert(index+'index')
+        //alert(ind+'ind')
+
+        $(this).attr('id', champ + index + '-' + ind + '-0');
+        tabb[i] = champ + index + '-' + ind + '-0';
+        i = Number(i) + 1;
+        // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+        $(this).attr('name', ' data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']'); //alert($(this).attr('name'));
+        $(this).attr('data-bv-field', 'data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+      }
+      if (champ == 'article_idd') {
+        $(this).attr('indexligneligne', 0);
+        $(this).attr('indexligne', ind); //alert($(this).attr('indexligne'));
+        $(this).attr('index', index);
+        // alert(champ+'champ')
+        // alert(index+'index')
+        //alert(ind+'ind')
+
+        $(this).attr('id', champ + index + '-' + ind + '-0');
+        tabb[i] = champ + index + '-' + ind + '-0';
+        i = Number(i) + 1;
+        // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+        $(this).attr('name', ' data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']'); //alert($(this).attr('name'));
+        $(this).attr('data-bv-field', 'data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+      }
+if (champ == 'unite_idd') {
+        $(this).attr('indexligneligne', 0);
+        $(this).attr('indexligne', ind); //alert($(this).attr('indexligne'));
+        $(this).attr('index', index);
+        // alert(champ+'champ')
+        // alert(index+'index')
+        //alert(ind+'ind')
+
+        $(this).attr('id', champ + index + '-' + ind + '-0');
+        tabb[i] = champ + index + '-' + ind + '-0';
+        i = Number(i) + 1;
+        // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+        $(this).attr('name', ' data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']'); //alert($(this).attr('name'));
+        $(this).attr('data-bv-field', 'data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+      }
+
+      if ($(this).hasClass('supor2')) {
+        //alert('afefefef')
+        // tabletype='addtablea' index ='' indexlignetype='indexa' trtype="tra"
+        $(this).attr('indexligne', ind);
+        $(this).attr('index', index);
+      }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      if (champ == 'supp3') {
+        $(this).attr('indexligneligne', 0);
+        $(this).attr('indexligne', ind);
+        $(this).attr('index', index);
+        //  alert( $(this).attr('index'));
+        //   alert( $(this).attr('indexligne'));
+        //     alert( $(this).attr('indexligneligne'));
+
+
+        // alert(champ+'champ')
+        // alert(index+'index')
+        //alert(ind+'ind')
+
+        $(this).attr('id', champ + index + '-' + ind + '-0');
+        tabb[i] = champ + index + '-' + ind + '-0';
+        i = Number(i) + 1;
+        // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+        $(this).attr('name', ' data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+        $(this).attr('data-bv-field', 'data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+      }
+      if ($(this).hasClass('supor3')) {
+        //alert('ind')
+        //alert('afefefef')
+        // tabletype='addtablea' index ='' indexlignetype='indexa' trtype="tra"
+        $(this).attr('indexligneligne', 0);
+        $(this).attr('indexligne', ind);
+        $(this).attr('index', index);
+      }
+
+      //            $(this).removeClass('anc');
+      //            if ($(this).is('select')) {
+      //                tabb[i] = champ + ind;
+      //                // alert(tabb[i]);
+      //                i = Number(i) + 1;
+      //            }
+      //alert($(this).hasClass('ajouterligne1ligne'))
+      /////////////////////////////////////////
+      if ($(this).hasClass('ajouterligne1ligne')) {
+        tabletypeligne = $(this).attr('tabletypeligne');//alert(tabletypeligne+"tabletypeligne")
+        indexlignetypeligne = $(this).attr('indexlignetypeligne');//alert(indexlignetypeligne+"tabletypeligne")
+
+        trtypeligne = $(this).attr('trtypeligne');//alert(trtypeligne+"trtypeligne")
+        // tabletype='addtablea' index ='' indexlignetype='indexa' trtype="tra"
+        $(this).attr('table', tabletypeligne + index + '-' + ind);
+        $(this).attr('indexligneligne', indexlignetypeligne + index + '-' + ind);
+        $(this).attr('tr', trtypeligne + index + '-' + ind);
+
+      }
+
+      if (champ == 'indexaligne') {
+        // if ($(this).hasClass('indexaligne')) {
+        indextypeligne = $(this).attr('indexligneligne');
+        //alert(indextypeligne+'jjjjjjj')
+        $(this).attr('id', champ + index + '-' + ind);
+      }
+      //alert(champ)
+      if ($(this).hasClass('traaligne')) {
+        $(this).attr('id', 'traaligne' + index + '-' + ind);
+        // $(this).attr('style','display:none;');
+      }
+      // alert($(this).hasClass)
+      if ($(this).hasClass('traaaligne')) {
+
+        $(this).attr('id', 'traaaligne' + index + '-' + ind);
+        $(this).attr('class', 'traaaligne' + index + '-' + ind);
+        // $("#traaaligne"+index+'-'+ind).parent().hide();
+        //  $("#traaaligne" +index+'-'+ind).parent().hide();
+        $(this).attr('style', "display:none;important");
+      }
+      /////////////////////////////////
+
+      /////////////////
+      //              if ($(this).hasClass('traaa')) {
+      //                
+      //                 $(this).attr('class','traaa'+ind);
+      //                 $(this).attr('id','traaa'+ind);
+      //             }
+      //  $(this).val('');
+    })
+    $ttr.find('i').each(function () {
+      $(this).attr('index', ind);
+    });
+    $ttr.attr('style', '');
+    $('#' + table).append($ttr);
+    $('#' + index).val(ind);
+    index = $(this).attr('index');//alert(index)
+    indexligne = $(this).attr('indexligne');
+    $('#' + table).find('tr:last').show();
+    // alert(index)
+    //  alert(ind)
+    //   console.log("#article_id" +index+'-'+'0')
+    //           $('select').select2({
+    //            width: '100%' // need to override the changed default
+    //        });addClass('sirine');
+
+    $("#article_idt" + index + '-' + ind).
+      select2({
+        width: '100%' // need to override the changed default
+      });
+
+
+    $("#unite_idt" + index + '-' + ind).
+      select2({
+        width: '100%' // need to override the changed default
+      });
+    sup3(index, ind)
+    //  $("#article_idd" +index+'-'+ind+'-0').
+    //                select2({
+    //            width: '100%' // need to override the changed default
+    //        });
+    // for (j = 0; j <= i; j++) {
+    //  uniform_select(tabb[j]);
+    //     }
+    // alert('#date_debut'+ind);
+    //                 $('#date_debut'+ind).datetimepicker({
+    //        timepicker: false,
+    //        datepicker:true,
+    //        mask:'39/19/9999',
+    //        format:'d/m/Y'});
+    //        for (k 
+    //        = 0; k <= vc; k++) {
+    //            // alert(tabd[k])
+    //            $('#' + tabd[k]).datetimepicker({
+    //                timepicker: false,
+    //                datepicker: true,
+    //                mask: '39/19/9999',
+    //                format: 'd/m/Y'});
+    //        }
+  });
+
+  $(".ajouterlignematriceee").on('click', function () {
+    //alert();
+    table = $(this).attr('table');//id table
+    index = $(this).attr('index') || 0;// id max compteur
+    tr = $(this).attr('tr'); //class class type
+    ind = Number($('#' + index).val()) + 1;
+    $('#' + index).val(ind);
+    $ttr = $('#' + table).find('.' + tr).clone(true);//console.log($ttr);
+    $ttr.attr('class', '');
+    i = 0;
+    tabb = [];
+    vc = 0;
+    tabd = [];
+    $ttr.find('input,select,div,td,textarea,tr,a,table,i').each(function () {
+      tab = $(this).attr('table');
+      champ = $(this).attr('champ');//console.log(champ);
+
+      $(this).attr('index', ind);
+      $(this).attr('id', champ + ind);
+      $(this).attr('name', 'data[' + tab + '][' + ind + '][' + champ + ']');
+      $(this).attr('data-bv-field', 'data[' + tab + '][' + ind + '][' + champ + ']');
+      if (tab == 'Ligneinventaire' && champ == 'article_id') {
+        $(this).attr('onchange', 'artcilecode(this.value,' + ind + ')');
+      }
+      $(this).removeClass('anc');
+      if ($(this).is('select')) {
+        tabb[i] = champ + ind;
+        // alert(tabb[i]);
+        i = Number(i) + 1;
+      }
+      if ($(this).hasClass('ajouterligne1')) {
+        tabletype = $(this).attr('tabletype');
+        indexlignetype = $(this).attr('indexlignetype');
+
+        trtype = $(this).attr('trtype');
+        // tabletype='addtablea' index ='' indexlignetype='indexa' trtype="tra"
+        $(this).attr('table', tabletype + ind);
+        $(this).attr('indexligne', indexlignetype + ind);
+        $(this).attr('tr', trtype + ind);
+
+      }
+
+      if ($(this).hasClass('indexa1')) {
+
+        indextype = $(this).attr('indextype');
+        $(this).attr('id', indextype + ind);
+      }
+      if ($(this).hasClass('traa')) {
+
+
+        $(this).attr('id', 'traa' + ind);
+        // $(this).attryle','display:none;');
+      }
+      if ($(this).hasClass('traaa')) {
+
+
+        $(this).attr('id', 'traaa' + ind);
+        $(this).attr('style', 'display:none;');
+      }
+
+      // alert($(this).attr('class')); tra
+      if ($(this).hasClass('date')) {
+        tabd[vc] = champ + ind;
+        //alert(tabd[vc]);
+        vc = Number(vc) + 1;
+      }
+      //  $(this).val('');
+
+    })
+    $ttr.find('i').each(function () {
+      $(this).attr('index', ind);
+    });
+    $ttr.attr('style', '');
+    $('#' + table).append($ttr);
+    $('#' + index).val(ind);
+    $('#' + table).find('tr:last').show();
+    $("#article_id" + ind).select2({
+      width: '100%' // need to override the changed default
+    });
+    $("#unite_id" + ind).select2({
+      width: '100%' // need to override the changed default
+    });
+
+    //                $("#article_id" +ind+'0').select2({
+    //            width: '100%' // need to override the changed default
+    //        });
+    //    alert(index+'ggindex')
+    //        alert(ind+'ind')
+    //        console.log("#article_id" +ind+'-'+'0');
+    //       $("#article_id" +ind+'-'+'0').select2({
+    //            width: '100%' // need to override the changed default
+    //        });
+    for (j = 0; j <= i; j++) {
+      //  uniform_select(tabb[j]);
+    }
+
+    // alert('#date_debut'+ind);
+    //                 $('#date_debut'+ind).datetimepicker({
+    //        timepicker: false,
+    //        datepicker:true,
+    //        mask:'39/19/9999',
+    //        format:'d/m/Y'});
+    //        for (k = 0; k <= vc; k++) {
+    //            // alert(tabd[k])
+    //            $('#' + tabd[k]).datetimepicker({
+    //                timepicker: false,
+    //                datepicker: true,
+    //                mask: '39/19/9999',
+    //                format: 'd/m/Y'});
+    //        }
+    // ajouter  desueimme ligne
+
+    $ttr = $('#' + table).find('.traa').clone(true);//console.log($ttr);
+    $ttr.attr('class', '');
+    i = 0;
+    tabb = [];
+    vc = 0;
+    tabd = [];
+    $ttr.find('input,select,div,td,textarea,tr,a,table,i').each(function () {
+      tab = $(this).attr('table');
+      champ = $(this).attr('champ');//console.log(champ);
+      $(this).attr('index', ind);
+      $(this).attr('id', champ + ind);
+      $(this).attr('name', 'data[' + tab + '][' + ind + '][' + champ + ']');
+      $(this).attr('data-bv-field', 'data[' + tab + '][' + ind + '][' + champ + ']');
+      ////article_id
+      if (champ == 'article_id') {
+
+        $(this).attr('indexligne', 0);
+        $(this).attr('index', ind);
+        $(this).attr('id', champ + ind + '-' + '0');
+        tabb[i] = champ + ind + '-' + '0';
+        i = Number(i) + 1;
+        // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+        $(this).attr('name', ' data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+        $(this).attr('data-bv-field', 'data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+
+      }
+
+
+      if (champ == 'qte') {
+
+        $(this).attr('indexligne', 0);
+        $(this).attr('index', ind);
+        $(this).attr('id', champ + ind + '-' + '0');
+        tabb[i] = champ + ind + '-' + '0';
+        i = Number(i) + 1;
+        // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+        $(this).attr('name', ' data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+        $(this).attr('data-bv-field', 'data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+      }
+
+      if (champ == 'coeff') {
+
+        $(this).attr('indexligne', 0);
+        $(this).attr('index', ind);
+        $(this).attr('id', champ + ind + '-' + '0');
+        tabb[i] = champ + ind + '-' + '0';
+        i = Number(i) + 1;
+        // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+        $(this).attr('name', ' data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+        $(this).attr('data-bv-field', 'data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+      }
+
+
+      if (champ == 'phaseproduction_id') {
+        $(this).attr('indexligne', 0);
+        $(this).attr('index', ind);
+        $(this).attr('id', champ + ind + '-' + '0');
+        tabb[i] = champ + ind + '-' + '0';
+        i = Number(i) + 1;
+        $(this).attr('name', ' data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+        $(this).attr('data-bv-field', 'data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+      }
+      if (champ == 'supp') {
+        $(this).attr('indexligne', 0);
+        $(this).attr('index', ind);
+        $(this).attr('id', champ + ind + '-' + '0');
+        tabb[i] = champ + ind + '-' + '0';
+        i = Number(i) + 1;
+        $(this).attr('name', ' data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+        $(this).attr('data-bv-field', 'data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+      }
+      if (tab == 'Ligneinventaire' && champ == 'article_id') {
+        $(this).attr('onchange', 'artcilecode(this.value,' + ind + ')');
+      }
+      //            $(this).removeClass('anc');
+      //            if ($(this).is('select')) {
+      //                tabb[i] = champ + ind;
+      //                // alert(tabb[i]);
+      //                i = Number(i) + 1;
+      //            }
+      if ($(this).hasClass('ajouterligne1')) {
+        tabletype = $(this).attr('tabletype');
+        indexlignetype = $(this).attr('indexlignetype');
+        trtype = $(this).attr('trtype');
+        // tabletype='addtablea' index ='' indexlignetype='indexa' trtype="tra"
+        $(this).attr('table', tabletype + ind);
+        $(this).attr('indexligne', indexlignetype + ind);
+        $(this).attr('tr', trtype + ind);
+      }
+      if ($(this).hasClass('traa')) {
+        $(this).attr('id', 'traa' + ind);
+        // $(this).attr('style','display:none;');
+      }
+      if ($(this).hasClass('traaa')) {
+        $(this).attr('id', 'traaa' + ind);
+        $(this).attr('class', 'traaa' + ind);
+        $(this).attr('style', 'display:none;');
+      }
+      if ($(this).hasClass('indexa1')) {
+
+        indextype = $(this).attr('indextype');
+        $(this).attr('id', indextype + ind);
+      }
+      //              if ($(this).hasClass('traaa')) {
+      //                
+      //                 $(this).attr('class','traaa'+ind);
+      //                 $(this).attr('id','traaa'+ind);
+      //             }
+
+      //  $(this).val('');
+
+    })
+    $ttr.find('i').each(function () {
+      $(this).attr('index', ind);
+
+    });
+    $ttr.attr('style', '');
+    $('#' + table).append($ttr);
+    $('#' + index).val(ind);
+    $('#' + table).find('tr:last').show();
+    // alert(ind)
+    $("#article_id" + ind).select2({
+      width: '100%' // need to override the changed default
+    });
+    //$('#' + table).find('tr:last .traa').attr('style', 'display:none');
+    for (j = 0; j <= i; j++) {
+      // uniform_select(tabb[j]);
+
+    }
+
+
+  });
 
         //Initialize Select2 Elements
         $('.select2').select2()
@@ -289,65 +1252,68 @@
 </script>
 
 <script>
-   $(document).ready(function() {
-    // Add Fournisseur (Supplier) row
-    $(".al").on("click", function() {
-        let table = "tabligne1"; // Table ID
-        let index = "index1";
-        let ind = Number($("#" + index).val()) + 1;
-        $("#" + index).val(ind);
+$(document).ready(function() {
+    // Add Fournisseur (Supplier)
+    $("#ajouter_ligne14").on("click", function() {
+        let indexFournisseur = parseInt($("#index1").val()) + 1;
+        $("#index1").val(indexFournisseur);
 
-        // Clone Fournisseur row
-        let $row = $("#" + table).find(".tr").clone(true).removeAttr("class").show();
+        // Clone new fournisseur row
+        let $row = $(".tr").clone(true).removeAttr("class").show();
         $row.find("input, select").each(function() {
             let champ = $(this).attr("champ");
             let tab = $(this).attr("table");
-            $(this).attr("index", ind);
-            $(this).attr("id", champ + ind);
-            $(this).attr("name", "data[" + tab + "][" + ind + "][" + champ + "]");
+            $(this).attr("index", indexFournisseur);
+            $(this).attr("id", champ + indexFournisseur);
+            $(this).attr("name", "data[" + tab + "][" + indexFournisseur + "][" + champ + "]");
         });
 
-        // Create a unique index for Articles in this Fournisseur
-       // $row.append(`<input type="hidden" class="indexa" value="0">`);
+        // Set unique article index per supplier
+        $row.find(".indexa").val(0);
 
-        // Add Delete Icon for Fournisseur
-        $row.append(`<td align="center" width='20%'>
-                        <i index="${ind}" class="fa fa-times supLigneFournisseur" style="color: #c9302c; font-size: 22px; margin:22px; cursor: pointer;"></i>
-                    </td>`);
+        // Ensure "Add Article" section is visible
+        $row.find(".traa").show();
 
-        // Append row
-        $("#" + table).append($row);
+        // Add delete button
+        $row.append(`<td align="center">
+            <i class="fa fa-times supLigneFournisseur" style="color: #c9302c; font-size: 22px; cursor: pointer;"></i>
+        </td>`);
+
+        $("#tabligne1 tbody").append($row);
     });
 
-    // Delete Fournisseur (Supplier) row
+    // Delete Fournisseur row
     $(document).on("click", ".supLigneFournisseur", function() {
         $(this).closest("tr").remove();
     });
 
-    // Add Article row inside Fournisseur
-    $(document).on("click", ".ajouterligne1", function () {
+    // Add Article inside Fournisseur
+    $(document).on("click", ".ajouterligne1", function() {
         let $parentRow = $(this).closest(".traa");
-        let index = "indexa";
-        let ind = Number($("#" + index).val()) + 1;
-        $("#" + index).val(ind);
+        let $articleTable = $parentRow.find("tbody"); // Get the correct table within this supplier
 
-        // Clone Article row
+        // Get supplier-specific article index
+        let $articleIndexInput = $parentRow.find(".indexa");
+        let indexArticle = parseInt($articleIndexInput.val()) + 1;
+        $articleIndexInput.val(indexArticle);
+
+        // Clone article row
         let $articleRow = $(".traaa").clone(true).removeAttr("class").show();
-        $articleRow.find("input, select").each(function () {
+        $articleRow.find("input, select").each(function() {
             let champ = $(this).attr("champ");
             let tab = $(this).attr("table");
-            $(this).attr("index", ind);
-            $(this).attr("id", champ + ind);
-            $(this).attr("name", "data[" + tab + "][" + ind + "][" + champ + "]");
+            $(this).attr("index", indexArticle);
+            $(this).attr("id", champ + indexArticle);
+            $(this).attr("name", "data[" + tab + "][" + indexArticle + "][" + champ + "]");
         });
 
-        // Add Delete Icon for Article
-        $articleRow.append(`<td align="center" margin-bottom='10px' width='20%'>
-                                <i index="${ind}" class="fa fa-times supLigneArticle" style="color: #c9302c; font-size: 22px; margin:22px;cursor: pointer;"></i>
-                            </td>`);
+        // Add delete button for article
+        $articleRow.append(`<td align="center">
+            <i class="fa fa-times supLigneArticle" style="color: #c9302c; font-size: 22px; cursor: pointer;"></i>
+        </td>`);
 
-        // Append new article row inside the correct fournisseur
-        $parentRow.find("tbody").append($articleRow);
+        // Append article row inside the correct supplier table
+        $articleTable.append($articleRow);
     });
 
     // Delete Article row
