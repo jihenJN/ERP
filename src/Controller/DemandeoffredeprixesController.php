@@ -255,15 +255,16 @@ class DemandeoffredeprixesController extends AppController
 
 
                 $id = $demandeoffredeprix->id;
-             
+                debug($this->request->getData('data'));
 
                 if (isset($this->request->getData('data')['Ofsfligne']) && (!empty($this->request->getData('data')['Ofsfligne']))) {
-                    debug($this->request->getData('data'));
+                  
                     foreach ($this->request->getData('data')['Ofsfligne'] as $j => $fourni) {
                         
                         if ($fourni['sup'] != 1  && (!empty($fourni['fournisseur_id']))) {
                            
-                                 
+                            debug($fourni);
+
                             if ($fourni['fournisseur_id']) {
                                 $fr = $this->Fournisseurs->find()->select(["nomfour" => '(Fournisseurs.name)'])->where(["Fournisseurs.id" => $fourni['fournisseur_id']])->first();
                                 $frr = $fr->nomfour;
@@ -273,24 +274,24 @@ class DemandeoffredeprixesController extends AppController
                             }
                             
                             if (isset($fourni['Phaseofsf']) && (!empty($fourni['Phaseofsf']))) {
-                                debug('hi');
+                                 
                                 $this->loadModel('Articles');
                                 foreach ($fourni['Phaseofsf'] as $i => $art) {
                                     
+                                 debug( $art);
                                  
-                                 
-                                    if ($fourni['sup2'] != 1  && (!empty($fourni['article_idt'])) ) {
-                                        debug($fourni);
-                                        if ($fourni['article_idt']) {
+                                    if ( $art['sup2'] != 1  && (!empty( $art['art_id'])) ) {
+                                       
+                                        if ( $art['art_id']) {
 
-                                            $ar = $this->Articles->find()->select(["nomarticle" => '(Articles.Dsignation)'])->where(["Articles.id" => $fourni['article_idt']])->first();
+                                            $ar = $this->Articles->find()->select(["nomarticle" => '(Articles.Dsignation)'])->where(["Articles.id" => $art['art_id']])->first();
                                             $arr = $ar->nomarticle;
                                             $art['designiationA'] = $arr;
                                         } else {
                                             $art['designiationA'] = $art['designiationA'];
                                         }
                                         $data['demandeoffredeprix_id'] = $id;
-                                        $data['article_id'] = $art['article_id'];
+                                        $data['article_id'] = $art['art_id'];
                                         $data['designiationA'] = $art['designiationA'];
                                         $data['qte'] = $art['qte'];
                                         $data['fournisseur_id'] = $fourni['fournisseur_id'];
