@@ -255,12 +255,15 @@ class DemandeoffredeprixesController extends AppController
 
 
                 $id = $demandeoffredeprix->id;
+             
 
-
-                if (isset($this->request->getData('data')['lignef']) && (!empty($this->request->getData('data')['lignef']))) {
-                    foreach ($this->request->getData('data')['lignef'] as $j => $fourni) {
-                        if ($fourni['sup1'] != 1  && (!empty($fourni['fournisseur_id']))) {
-                            //                           debug($fourni);
+                if (isset($this->request->getData('data')['Ofsfligne']) && (!empty($this->request->getData('data')['Ofsfligne']))) {
+                    debug($this->request->getData('data'));
+                    foreach ($this->request->getData('data')['Ofsfligne'] as $j => $fourni) {
+                        
+                        if ($fourni['sup'] != 1  && (!empty($fourni['fournisseur_id']))) {
+                           
+                                 
                             if ($fourni['fournisseur_id']) {
                                 $fr = $this->Fournisseurs->find()->select(["nomfour" => '(Fournisseurs.name)'])->where(["Fournisseurs.id" => $fourni['fournisseur_id']])->first();
                                 $frr = $fr->nomfour;
@@ -268,15 +271,19 @@ class DemandeoffredeprixesController extends AppController
                             } else {
                                 $fourni['nameF'] = $fourni['fournisseur_idd'];
                             }
-
-                            if (isset($this->request->getData('data')['lignea']) && (!empty($this->request->getData('data')['lignea']))) {
+                            
+                            if (isset($fourni['Phaseofsf']) && (!empty($fourni['Phaseofsf']))) {
+                                debug('hi');
                                 $this->loadModel('Articles');
-                                foreach ($this->request->getData('data')['lignea'] as $i => $art) {
+                                foreach ($fourni['Phaseofsf'] as $i => $art) {
+                                    
+                                 
+                                 
+                                    if ($fourni['sup2'] != 1  && (!empty($fourni['article_idt'])) ) {
+                                        debug($fourni);
+                                        if ($fourni['article_idt']) {
 
-                                    if ($art['sup0'] != 1  && (!empty($art['article_id'])) ) {
-                                        if ($art['article_id']) {
-
-                                            $ar = $this->Articles->find()->select(["nomarticle" => '(Articles.Dsignation)'])->where(["Articles.id" => $art['article_id']])->first();
+                                            $ar = $this->Articles->find()->select(["nomarticle" => '(Articles.Dsignation)'])->where(["Articles.id" => $fourni['article_idt']])->first();
                                             $arr = $ar->nomarticle;
                                             $art['designiationA'] = $arr;
                                         } else {
