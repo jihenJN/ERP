@@ -280,7 +280,7 @@ class DemandeoffredeprixesController extends AppController
                                     
                                  debug( $art);
                                  
-                                    if ( $art['sup2'] != 1  && (!empty( $art['art_id'])) ) {
+                                    if ( $art['supp2'] != 1  && (!empty( $art['art_id'])) ) {
                                        
                                         if ( $art['art_id']) {
 
