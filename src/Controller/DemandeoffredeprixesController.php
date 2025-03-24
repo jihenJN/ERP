@@ -133,26 +133,6 @@ class DemandeoffredeprixesController extends AppController
      */
     public function add($typeof = null)
     {
-        // $session = $this->request->getSession();
-        // $abrv = $session->read('abrvv');
-        // $liendd = $session->read('lien_parametrage' . $abrv);
-        // //   debug($liendd);
-        // $dmd = 0;
-        // foreach ($liendd as $k => $liens) {
-        //     //  debug($liens);
-        //     if (@$liens['lien'] == 'demandeoffredeprixes') {
-        //         $dmd = $liens['ajout'];
-        //     }
-        // }
-        // // debug($societe);die;
-        // if (($dmd <> 1)) {
-        //     $this->redirect(array('controller' => 'users', 'action' => 'login'));
-        // }
-
-
-
-
-
         $this->loadModel('Fournisseurs');
         $this->loadModel('Articles');
         $this->loadModel('Lignedemandeoffredeprixes');
@@ -327,7 +307,7 @@ class DemandeoffredeprixesController extends AppController
      * @return \Cake\Http\Response|null Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Network\Exception\NotFoundException When record not found.
      */
-    public function edit($typeof = null, $id = null)
+    public function editold($typeof = null, $id = null)
     {
         // $session = $this->request->getSession();
         // $abrv = $session->read('abrvv');
@@ -441,6 +421,114 @@ class DemandeoffredeprixesController extends AppController
 
         $this->set(compact('ligneas', 'lignefs','articless', 'demandeoffredeprix', 'articles', 'fournisseurs', 'typeof', 'services', 'machines'));
     }
+
+
+
+    public function edit($typeof = null, $id = null)
+{
+    $this->loadModel('Fournisseurs');
+    $this->loadModel('Articles');
+    $this->loadModel('Lignedemandeoffredeprixes');
+
+  $demandeoffredeprix = $this->Demandeoffredeprixes->get($id, [
+        'contain' => ['Lignedemandeoffredeprixes' => ['Articles', 'Fournisseurs']]
+    ]);
+
+    debug($demandeoffredeprix);
+ 
+    
+    $demandeoffredeprix->typeoffredeprix = $typeof;
+
+
+
+    if ($this->request->is(['patch', 'post', 'put'])) {
+
+    }
+    
+
+   /* if ($this->request->is(['patch', 'post', 'put'])) {
+        $inputDate = $this->request->getData('date');
+        $yearf = date('Y', strtotime($inputDate));
+        $currentYear = date('y', strtotime($inputDate));
+
+        // Preserve existing numero unless date changes
+        if ($demandeoffredeprix->date != $inputDate) {
+            $num = $this->Demandeoffredeprixes->find()->select([
+                "num" => 'MAX(Demandeoffredeprixes.numero)'
+            ])->where('YEAR(Demandeoffredeprixes.date)=' . $yearf)->first();
+
+            $n = $num->num;
+            if ($n) {
+                $lastFourDigits = substr($n, -4);
+                $in = intval($lastFourDigits) + 1;
+            } else {
+                $in = '0001';
+            }
+
+            $mm = str_pad("$in", 4, "0", STR_PAD_LEFT);
+            $b = "DF{$currentYear}00{$mm}";
+            $demandeoffredeprix->numero = $b; // Update numero only if date changed
+        }
+
+        $demandeoffredeprix = $this->Demandeoffredeprixes->patchEntity($demandeoffredeprix, $this->request->getData());
+
+        if ($this->Demandeoffredeprixes->save($demandeoffredeprix)) {
+            $this->misejour("Demandeoffredeprixes", "edit", $id);
+
+            // Handle LigneDemandeOffreDePrix modifications
+            $this->Lignedemandeoffredeprixes->deleteAll(['demandeoffredeprix_id' => $id]);
+
+            if (isset($this->request->getData('data')['Ofsfligne']) && !empty($this->request->getData('data')['Ofsfligne'])) {
+                foreach ($this->request->getData('data')['Ofsfligne'] as $fourni) {
+                    if ($fourni['sup'] != 1 && !empty($fourni['fournisseur_id'])) {
+                        if ($fourni['fournisseur_id']) {
+                            $fr = $this->Fournisseurs->find()->select(["nomfour" => '(Fournisseurs.name)'])->where(["Fournisseurs.id" => $fourni['fournisseur_id']])->first();
+                            $fourni['nameF'] = $fr->nomfour;
+                        } else {
+                            $fourni['nameF'] = $fourni['fournisseur_idd'];
+                        }
+
+                        if (isset($fourni['Phaseofsf']) && !empty($fourni['Phaseofsf'])) {
+                            foreach ($fourni['Phaseofsf'] as $art) {
+                                if ($art['supp2'] != 1 && !empty($art['art_id'])) {
+                                    if ($art['art_id']) {
+                                        $ar = $this->Articles->find()->select(["nomarticle" => '(Articles.Dsignation)'])->where(["Articles.id" => $art['art_id']])->first();
+                                        $art['designiationA'] = $ar->nomarticle;
+                                    }
+
+                                    $data = [
+                                        'demandeoffredeprix_id' => $id,
+                                        'article_id' => $art['art_id'],
+                                        'designiationA' => $art['designiationA'],
+                                        'qte' => $art['qte'],
+                                        'fournisseur_id' => $fourni['fournisseur_id'],
+                                        'nameF' => $fourni['nameF']
+                                    ];
+
+                                    $demandeoffre = $this->Lignedemandeoffredeprixes->newEmptyEntity();
+                                    $demandeoffre = $this->Lignedemandeoffredeprixes->patchEntity($demandeoffre, $data);
+                                    $this->Lignedemandeoffredeprixes->save($demandeoffre);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return $this->redirect(['action' => 'index']);
+        }
+    }*/
+
+    $services = $this->fetchTable('Services')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+    $machines = $this->fetchTable('Machines')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
+    $fournisseurs = $this->Fournisseurs->find('list', ['keyField' => 'id', 'valueField' => 'name']);
+    $articles = $this->fetchTable('Articles')->find('list', ['keyfield' => 'id', 'valueField' => function ($article) {
+        return $article->Code . ' (' . $article->Dsignation . ')';
+    }]) ;
+
+    $this->set(compact('demandeoffredeprix', 'typeof', 'fournisseurs', 'articles', 'services', 'machines'));
+}
+
 
 
 

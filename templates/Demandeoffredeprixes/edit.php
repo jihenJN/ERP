@@ -87,230 +87,142 @@
 
 
                 <section class="content-header">
-                    <h1 class="box-title"><?php echo __('Les articles'); ?></h1>
+                    <h1 class="box-title"><?php echo __('Les fournisseurs'); ?></h1>
                 </section>
 
-
-
-
-
-
                 <section class="content" style="width: 99%">
-                    <div class="row">
-                        <div class="box box-primary">
-                            <div class="box-header with-border">
-                                <a class="btn btn-primary al" table='addtable' index='index0' id='ajouter_ligne10' style="
-                                       float: right;
-                                       margin-bottom: 5px;
-                                       ">
-                                    <i class="fa fa-plus-circle "></i> Ajouter article</a>
-                            </div>
-                            <div class="panel-body">
-                                <div class="table-responsive ls-table">
-                                    <?php //if (!empty($demandeoffredeprix->lignedemandeoffredeprixes)): 
-                                    ?>
-                                    <table class="table table-bordered table-striped table-bottomless" id="tabligne0">
-                                        <thead>
-                                            <tr width:20px">
-                                                <!--                                                  <td align="center" style="width: 5%;" type="hidden" ><strong></strong></td>-->
-                                                <td align="center" style="width: 40%;"><strong>Nom du article</strong></td>
-                                                <td align="center" style="width: 40%;"><strong>Quantité</strong></td>
-                                                <td align="center" style="width: 20%;"></td>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <?php
-                                            foreach ($ligneas as $i => $lignea) :
-                                                //                                                    debug($ligneas);
-                                            ?>
-                                                <tr >
-                                                    <td align="center" style="width:111px; opacity: 1; position: relative; left: 0px;">
-                                                        <div id="" champ=''>
-                                                            <?php echo $this->Form->input('sup0', array('name' => 'data[lignea][' . $i . '][sup0]', 'id' => 'sup0' . $i, 'champ' => 'sup0' . $i, 'table' => 'lignea', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control'));
-                                                            ?>
-                                                            <?php echo $this->Form->input('id', array('value' => $lignea->id, 'name' => 'data[lignea][' . $i . '][id]', 'id' => 'id' . $i, 'champ' => 'id' . $i, 'table' => 'lignea', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control'));
-                                                            ?>
-                                                            <?php
-                                                            if (!empty($lignea->article_id)) {
-                                                            ?>
-                                                                <div id="ar1<?php echo $i ?>" index="<?php echo $i ?>" champ='ar1' style="display:true">
-                                                                    <?php
-                                                                    echo $this->Form->control('article_id', array('label' => false,'options'=>$articles, 'value' => $lignea->article_id, 'name' => 'data[lignea][' . $i . '][article_id]', 'id' => 'article_id' . $i, 'champ' => 'article_id' . $i, 'table' => 'lignea', 'index' => $i, 'class' => 'form-control select2 '));
-                                                                    //echo $this->Form->input('article_idd', array('label' => '', 'value' => '', 'name' => 'data[lignea][' . $i . '][article_idd]', 'id' => 'article_idd', 'champ' => 'article_idd' . $i, 'table' => 'lignea', 'index' => $i, 'type' => 'hidden', 'class' => 'form-control select2 '));
-                                                                    ?>
 
+<div class="tab-content" id="fichart">
 
-                                                                </div>
-
-                                                            <?php
-                                                            } else {
-                                                                echo $this->Form->control('designiationA', array('label' => '', 'value' => $lignea['designiationA'], 'champ' => 'designiationA' . $i, 'name' => 'data[lignea][' . $i . '][designiationA]', 'id' => 'designiationA' . $i, 'table' => 'lignea', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
-                                                            }
-                                                            ?>
-
-                                                            <?php // endforeach;  
-                                                            ?>
-
-                                                    </td>
-                                                    <td align="center">
-                                                        <?php echo $this->Form->input('qte', array('label' => '', 'value' => $lignea->qte, 'name' => 'data[lignea][' . $i . '][qte]', 'type' => 'text', 'id' => 'qte' . $i, 'table' => 'lignea', 'champ' => 'qte' . $i, 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control ajoutligneeetva enr80')); ?>
-                                                    </td>
-                                                    <td align="center">
-                                                        <i index="<?php echo $i ?>" id="<?php echo $i ?>" class="fa fa-times supLigneart " style="color: #c9302c;font-size: 22px;"></i>
-                                                    </td>
-                                                </tr>
-                                            <?php endforeach; ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                            <tr class="tr" style="display: none !important">
-                                                <td align="center">
-
-                                                    <?php echo $this->Form->input('sup0', array('name' => '', 'id' => '', 'champ' => 'sup0', 'table' => 'lignea', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control'));
-                                                    ?>
-                                                    <!-- <div id="" champ='ar1' index="" class="col-md-12"> -->
-
-                                                        <!-- <div style="display: flex !important"> -->
-                                                            <?php echo $this->Form->input('article_id', array('label' => false, 'options' => $articless, 'index' => '', 'name' => '', 'id' => 'article_id', 'champ' => 'article_id', 'table' => 'lignea', 'empty' => 'Veuillez choisir !!', 'class' => 'form-control ')); ?>
-
-                                                            <!-- <span title="ajout article"> <a href="javascript:;" class="btn btn-primary b1" champ="b1" id="" index=""><i class='fa fa fa-plus'></i></a></span> -->
-
-                                                        <!-- </div> -->
-                                                    <!-- </div> -->
-
-
-
-                                                    <!-- <div id="" champ='ar2' index="" style="display: none !important" class="col-md-12">
-                                                        <div style="display: flex !important">
-                                                            <input table="lignea" type='text' index="" id="designiationA" champ='designiationA' class='form-control' class='input'>
-                                                            <span title="ajout article"> <a href="javascript:;" class="btn btn-primary b11" champ="b11" id="" index=""><i class='fa fa fa-minus'></i></a></span>
-                                                        </div>
-                                                    </div> -->
-                                                <td align="center">
-                                                    <?php echo $this->Form->control('a', ['label' =>false, 'name' => '', 'class' => ' form-control enr80', 'index' => '', 'champ' => 'qte', 'table' => 'lignea', 'id' => 'qte']); ?>
-                                                </td>
-                                                <td align="center">
-                                                    <i index="0" id="" class="fa fa-times supLigneart" style="color: #c9302c;font-size: 22px;"></i>
-                                                </td>
-                                            </tr>
-                                            <input type="hidden" value="<?php echo $i ?>" id="index0">
-                                        </tbody>
-                                    </table>
-                                    <?php ?>
-                                    <br>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title"><?= __('Fournisseurs') ?></h3>
+            <a class="btn btn-primary ajouterlignematriceee" table="addtablea" index="index" tr="tra"
+               style="float: right; position: relative; top: -25px;">
+                <i class="fa fa-plus-circle"></i>
+            </a>
+        </div>
+        <div class="panel-body">
+            <table class="table table-bordered table-striped table-bottomless" id="addtablea"
+                   style="width:100%" align="center">
+                <thead>
+                    <tr bgcolor="#EDEDED">
+                        <td align="center">Fournisseur</td>
+                        <td align="center"></td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Loop through existing 'lignedemandeoffredeprixes' -->
+                    <?php foreach ($demandeoffredeprix->lignedemandeoffredeprixes as $index => $ligne) : ?>
+                        <tr champ="tra" class="tra">
+                            <td align="left">
+                                <?= $this->Form->hidden("lignedemandeoffredeprixes.$index.id", ['value' => $ligne->id]) ?>
+                                <div style="margin-top:10px">
+                                    <?= $this->Form->control("lignedemandeoffredeprixes.$index.fournisseur_id", [
+                                        'options' => $fournisseurs,
+                                        'label' => false,
+                                        'empty' => 'Veuillez choisir',
+                                        'class' => 'form-control',
+                                        'value' => $ligne->fournisseur_id
+                                    ]) ?>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                            </td>
+                            <td align="center">
+                                <i index="<?= $index ?>" class="fa fa-times supor"
+                                   style="color: #c9302c; font-size: 22px;">
+                                </i>
+                            </td>
+                        </tr>
 
-
-
-                <section class="content-header">
-                    <h1 class="box-title"><?php echo __('Fournisseurs'); ?></h1>
-                </section>
-                <section class="content" style="width: 99%">
-                    <div class="row">
-                        <div class="box box-primary">
-                            <div class="box-header with-border">
-                                <a class="btn btn-primary al" table='addtable' index='index1' id='ajouter_ligne11' style="
-                                       float:right;
-                                       margin-bottom: 5px;
-                                       ">
-                                    <i class="fa fa-plus-circle "></i> Ajouter fournisseur</a>
-
-                            </div>
-                            <div class="panel-body">
-                                <div class="table-responsive ls-table">
-                                    <table class="table table-bordered table-striped table-bottomless" id="tabligne11">
-                                        <thead>
-                                            <tr width:20px">
-                                                <td align="center" style="width: 50%;"><strong>Nom du fournisseur</strong></td>
-                                                <td align="center" style="width: 50%;"></td>
-                                            </tr>
-                                        </thead>
-                                        <?php
-                                        foreach ($lignefs as $j => $lignefs) :
-                                            //                                                debug($lignefs);
-                                        ?>
+                        <tr class="traa" champ='traa'>
+                            <td width='30%'></td>
+                            <td champ="afef" class="afef" colspan="3">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title"><?= __('Article') ?></h3>
+                                        <a class="btn btn-primary ajouterligne1" tabletype='addtableaa'
+                                           indexlignetype='indexa' trtype="traaa"
+                                           style="float: right; position: relative; top: -25px;">
+                                            <i class="fa fa-plus-circle"></i>
+                                        </a>
+                                    </div>
+                                    <div class="panel-body">
+                                        <table class="table table-bordered table-striped table-bottomless"
+                                               index="" indexligne='indexa' champ="addtableaa"
+                                               style="width:100%" align="center">
+                                            <thead>
+                                                <tr bgcolor="#EDEDED">
+                                                    <td align="center">Article</td>
+                                                    <td align="center">Quantité</td>
+                                                    <td align="center"></td>
+                                                </tr>
+                                            </thead>
                                             <tbody>
-                                                <tr class="" style="">
-                                                    <td align="center" style="width:111px; opacity: 1; position: relative; left: 0px;">
-                                                        <?php echo $this->Form->input('sup1', array('name' => 'data[lignef][' . $j . '][sup1]', 'id' => 'sup1' . $j, 'champ' => 'sup1' . $j, 'table' => 'lignef', 'index' => $j, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control')); ?>
-                                                        <?php echo $this->Form->input('id', array('value' => $lignefs->id, 'name' => 'data[lignef][' . $j . '][id]', 'id' => '', 'champ' => 'id' . $j, 'table' => 'lignef', 'index' => $j, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control')); ?>
-                                                        <?php
-                                                        if (!empty($lignefs['fournisseur_id'])) {
-                                                        ?>
-                                                            <div id="f1<?php echo $j ?>" index="<?php echo $j ?>" champ='f1' style="display:true">
-                                                                <?php echo $this->Form->control('fournisseur_id', array('label' => '', 'options' => $fournisseurs, 'value' => $lignefs->fournisseur_id, 'champ' => 'fournisseur_id' . $j, 'name' => 'data[lignef][' . $j . '][fournisseur_id]', 'id' => 'fournisseur_id' . $j, 'table' => 'lignef', 'index' => $j, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control select2')); ?>
-                                                            </div>
-
-                                                        <?php
-                                                        } else {
-                                                            echo $this->Form->control('nameF', array('champ' => 'nameF' . $j, 'type' => 'text', 'label' => '', 'value' => $lignefs->nameF, 'name' => 'data[lignef][' . $j . '][nameF]', 'id' => 'nameF' . $j, 'table' => 'lignef', 'index' => $j, 'class' => 'form-control select2 '));
-                                                        }
-                                                        ?>
+                                                <tr class="traaa" champ='traaa'>
+                                                    <td>
+                                                        <?= $this->Form->control("lignedemandeoffredeprixes.$index.article_id", [
+                                                            'options' => $articles,
+                                                            'label' => false,
+                                                            'empty' => 'Veuillez Choisir',
+                                                            'class' => 'form-control',
+                                                            'value' => $ligne->article_id
+                                                        ]) ?>
+                                                    </td>
+                                                    <td>
+                                                        <?= $this->Form->control("lignedemandeoffredeprixes.$index.qte", [
+                                                            'label' => false,
+                                                            'class' => 'form-control',
+                                                            'value' => $ligne->qte
+                                                        ]) ?>
                                                     </td>
                                                     <td align="center">
-                                                        <i index="<?php echo $j ?>" id="" class="fa fa-times supLigneFournisseur " style="color: #c9302c;font-size: 22px;"></i>
-
+                                                        <i indexligne="<?= $index ?>" class="fa fa-times supor2"
+                                                           style="color: #c9302c;font-size: 22px;">
+                                                        </i>
                                                     </td>
                                                 </tr>
-                                            <?php endforeach; ?>
-
-
-
-
-
-
-                                            <tr class="tr" style="display: none !important">
-
-
-                                                <td align="center">
-                                                    <?php echo $this->Form->input('sup1', array('name' => '', 'id' => '', 'champ' => 'sup1', 'table' => 'lignef', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control'));
-                                                    ?>
-
-                                                    <!-- <div id="" champ='f1' class="col-md-12">
-                                                        <div style="display: flex !important"> -->
-                                                            <?php echo $this->Form->control('a', array('label' => false, 'options' =>  $fournisseurs, 'name' => '', 'id' => 'id', 'champ' => 'fournisseur_id','class'=>'form-control ', 'table' => 'lignef', 'empty' => 'Veuillez Choisir !!')); ?>
-
-                                                            <!-- <span title="ajout fournisseur"> <a href="javascript:;" class="btn btn-primary b2" champ="b2" id="" index=""><i class='fa fa fa-plus'></i></a></span> -->
-
-
-                                                        <!-- </div>
-                                                    </div> -->
-                                                    <div id="" champ='f2' style="display: none !important" class="col-md-12">
-                                                        <div style="display: flex !important">
-                                                            <input table="lignef" type='text' id='id' name='' champ='fournisseur_idd' class='form-control ' class='input'>
-                                                            <span title="ajout fournisseur"> <a href="javascript:;" class="btn btn-primary b21" champ="b21" id="" index=""><i class='fa fa fa-minus'></i></a></span>
-                                                        </div>
-                                                    </div>
-
-                                                <td align="center">
-                                                    <i index="0" id="" class="fa fa-times supLigneFournisseur" style="color: #c9302c;font-size: 22px;"></i>
-                                                </td>
-                                            </tr>
-                                            <input type="hidden" value="<?php echo $j ?>" id="index1">
                                             </tbody>
-                                    </table><br>
+                                        </table>
+                                        <input type="hidden" value="-1" class="" champ="indexa" />
+                                    </div>
                                 </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+
+                    <!-- Template row for adding new fournisseurs (Hidden for JS cloning) -->
+                    <tr class="tra" champ="tra" style="display:none;">
+                        <td align="left">
+                            <?= $this->Form->hidden('lignedemandeoffredeprixes.__INDEX__.id', ['value' => '']) ?>
+                            <div style="margin-top:10px">
+                                <?= $this->Form->control('lignedemandeoffredeprixes.__INDEX__.fournisseur_id', [
+                                    'options' => $fournisseurs,
+                                    'label' => false,
+                                    'empty' => 'Veuillez choisir',
+                                    'class' => 'form-control'
+                                ]) ?>
                             </div>
-                        </div>
-                    </div>
+                        </td>
+                        <td align="center">
+                            <i index="" class="fa fa-times supor"
+                               style="color: #c9302c;font-size: 22px;">
+                            </i>
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <input type="hidden" value="-1" id="index" />
+        </div>
+    </div>
+</div>
+
+</section>
 
 
-                </section>
+
+
+
 
 
 
