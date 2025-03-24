@@ -219,42 +219,6 @@
 
 </section>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                 <div align="center" id="enr3">
                 <?= $this->Form->button('Enregistrer', ['type' => 'submit', 'id' => 'enr3', 'class' => 'btn btn-success']) ?>
             </div>
@@ -280,3 +244,1022 @@
       $('.select2').select2();
      })
 </script>
+
+
+<?php $this->start('scriptBottom'); ?>
+<script>
+    $(function() {
+        $(".ajouterligne1ligne").on('click', function() {
+            table = $(this).attr('table'); //alert(table+" table");
+            index = $(this).attr('indexligneligne');
+
+            //alert(index)
+            //i = $(this).attr('indexligne');
+            //alert(i)
+
+            itd = $(this).attr('index');
+            itd1 = $(this).attr('indexligne');
+
+            $('#tdcompp').show();
+            $('#tdcompp' + itd + '-' + itd1).show();
+
+            //alert(index+" indexligneligne") ;      
+            tr = $(this).attr('tr'); //alert(tr+" tr") ;    
+            //alert(tr)
+            ind = Number($('#' + index).val()) + 1; //alert(ind+" ind");
+            $('#' + index).val(ind);
+
+            $ttr = $('#' + table).find('.' + tr).clone(true); //alert(tr)
+            //     $ttr = $('#traaligne1-0' ).find('.traaaligne').clone(true);console.log($ttr);
+            $ttr.attr('class', '');
+            i = 0; //alert(i)
+            tabb = []; //alert(tabb)
+            vc = 0;
+            tabd = [];
+            //  alert( $ttr.find())
+            $ttr.find('input,control,select,div,td,textarea,a,tr,table,i').each(function() {
+
+
+                tab = $(this).attr('table'); //alert(tab+"tab")
+                champ = $(this).attr('champ'); // alert(champ+"champ")
+                tableligneligne = $(this).attr('tableligneligne'); //alert(tableligneligne+"tableligneligne")
+                tableligne = $(this).attr('tableligne'); //alert(tableligne+"tableligne")
+                index = $(this).attr('index'); //alert(index)
+                indexligne = $(this).attr('indexligne');
+                //alert(indexligne+"indexligne")
+                indexligneligne = $(this).attr('indexligneligne');
+                if (champ == 'article_idd') {
+                    //              alert(index+'index');
+                    //              alert(ind+'indexligne');
+                }
+                //alert('index'+index);alert('tableligne'+tableligne)
+                $(this).attr('indexligneligne', ind);
+                $(this).attr('id', champ + index + '-' + indexligne + '-' + ind);
+                $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + indexligne + '][' + tableligneligne + '][' + ind + '][' + champ + ']');
+                $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + indexligne + '][' + tableligneligne + '][' + ind + '][' + champ + ']');
+                $(this).removeClass('anc');
+                if ($(this).is('select')) {
+
+                    tabb[i] = champ + index + '-' + indexligne + '-' + ind;
+                    // alert(tabb[i]);
+                    i = Number(i) + 1;
+
+                }
+
+                // alert($(this).attr('class'));
+
+                //  $(this).val('');
+            })
+            index = $(this).attr('index'); //alert(index);
+            indexligne = $(this).attr('indexligne'); //alert(indexligne);
+            ///  alert(indexligne)
+            $ttr.find('i').each(function() {
+                $(this).attr('index', index);
+            });
+            $ttr.find('i').each(function() {
+
+                $(this).attr('indexligne', indexligne);
+                $(this).attr('indexligneligne', ind);
+                //alert(indexligne);
+            });
+
+            //   $("#article_idd" +index+'-'+indexligne+'-'+ ind).data('select2').destroy();
+
+            $ttr.attr('style', '');
+            $('#' + table).append($ttr);
+            $('#' + index).val(ind);
+            $('#' + table).find('tr:last').show();
+
+            index = $(this).attr('index'); //alert(index+'index');
+            indexligne = Number($('#indexa' + index).val()); //alert(indexligne+'indexligne');
+            //$("#article_idd" +index+'-'+indexligne+'-'+ ind).select2("destroy");
+            //            $('input[type=button]').click(function () {
+            //
+            //   
+            //    var noOfDivs = $('.tooltest0').length;
+            //    var clonedDiv = $('.tooltest0').first().clone(true);
+            //    clonedDiv.insertBefore("#tool-placeholder");
+            //    clonedDiv.attr('id', 'tooltest' + noOfDivs);
+            //    
+            //
+            //    $('.toollist').select2({ //apply select2 to my element
+            //        placeholder: "Search your Tool",
+            //        allowClear: true
+            //    });
+            //
+            //
+            //
+            //});
+            //  alert(ind+"ind")
+            //         window.setTimeout(function(){
+            //  $('select').select2('destroy');
+            //}, 3000);
+
+            $ttr.find('i').each(function() {
+                $(this).attr('indexligneligne', ind);
+            });
+            index = Number($('#index').val()); //alert(index+'index');
+            indexligne = Number($('#indexa' + index).val());
+
+            $("#article_idd" + index + '-' + indexligne + '-' + ind).select2({
+                width: '100%' // need to override the changed default
+            })
+
+
+            $("#unite_id" + index + '-' + indexligne + '-' + ind).select2({
+                width: '100%' // need to override the changed default
+            })
+
+            $ttr.attr('style', '');
+            $('#' + table).append($ttr);
+            //           $("#article_idd"+index+'-'+indexligne+'-'+ ind).select2('destroy');      
+            //                $("#article_idd" +index+'-'+indexligne+'-'+ ind).select2({
+            //            width: '100%' // need to override the changed default
+            //        }); 
+            // $('#' + indexligne).val(ind);  
+            // alert($ttr);
+            // $('#' + table).find('tr:last').show();
+            for (j = 0; j <= i; j++) {
+                // uniform_select(tabb[j]);
+                // uniform_select(tabd[j]);      
+            }
+
+        });
+
+
+
+
+
+
+
+
+
+
+
+
+        $(".ajouterligne1").on('click', function() {
+            table = $(this).attr('table');
+            index = $(this).attr('indexligne');
+
+            itd = $(this).attr('index'); //alert(itd);
+
+            $('#tdcomp').show();
+            $('#tdcomp' + itd).show();
+            tr = $(this).attr('tr'); //alert(tr) ;
+            ind = Number($('#' + index).val()) + 1; //alert(ind);
+            $('#' + index).val(ind);
+            $ttr = $('#' + table).find('.' + tr).clone(true); //console.log($ttr);
+            $ttr.attr('class', '');
+            i = 0;
+            tabb = [];
+            vc = 0;
+            tabd = [];
+            $ttr.find('a,input,control,select,div,td,textarea,tr,table,i').each(function() {
+                //alert($ttr.find('a'));
+                tab = $(this).attr('table'); //alert(tab);
+                champ = $(this).attr('champ'); // console.log(champ);
+                tableligne = $(this).attr('tableligne'); //alert(tableligne);
+                tableligneligne = $(this).attr('tableligneligne'); //alert(tableligneligne);
+                index = $(this).attr('index'); //alert('index'+index);
+                indexligne = $(this).attr('indexligne');
+                indexligneligne = $(this).attr('indexligneligne');
+                /// console.log(indexligneligne);
+                if (champ == 'article_id') {
+                    //              alert(index+'index');
+                    //              alert(ind+'indexligne');
+
+                    //alert(champ)
+                    //alert('index'+index);alert('tableligne'+tableligne)
+                    //alert(index+'inddexx')
+                    //alert(ind+'inddds')
+                    $(this).attr('indexligne', ind); // alert( $(this).attr('indexligne'));
+                    $(this).attr('index', index); //alert( $(this).attr('index'));
+                    $(this).attr('id', champ + index + '-' + ind); //alert( $(this).attr('id'));
+                    $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).removeClass('anc');
+                }
+                if (champ == 'qte') {
+                    //              alert(index+'index');
+                    //              alert(ind+'indexligne');
+
+                    // alert(champ)
+                    //alert('index'+index);alert('tableligne'+tableligne)
+
+                    $(this).attr('indexligne', ind);
+                    $(this).attr('index', index); //alert( $(this).attr('index'));
+                    $(this).attr('id', champ + index + '-' + ind); //alert( $(this).attr('id'));
+                    $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).removeClass('anc');
+                }
+
+                if (champ == 'art_id') {
+                    //              alert(index+'index');
+                    //              alert(ind+'indexligne');
+
+
+                    //alert('index'+index);alert('tableligne'+tableligne)
+
+                    $(this).attr('indexligne', ind);
+                    $(this).attr('index', index); //alert( $(this).attr('index'));
+                    $(this).attr('id', champ + index + '-' + ind); //alert( $(this).attr('id'));
+                    $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).removeClass('anc');
+                }
+
+
+
+
+
+                if (champ == 'coeff') {
+                    //              alert(index+'index');
+                    //              alert(ind+'indexligne');
+
+                    //    alert(champ)
+                    //alert('index'+index);alert('tableligne'+tableligne)
+
+                    $(this).attr('indexligne', ind); // alert( $(this).attr('indexligne'));
+                    $(this).attr('index', index); //alert( $(this).attr('index'));
+                    $(this).attr('id', champ + index + '-' + ind); //alert( $(this).attr('id'));
+                    $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).removeClass('anc');
+                }
+                if (champ == 'unite_id') {
+
+                    $(this).attr('indexligne', ind); // alert( $(this).attr('indexligne'));
+                    $(this).attr('index', index); //alert( $(this).attr('index'));
+                    $(this).attr('id', champ + index + '-' + ind); //alert( $(this).attr('id'));
+                    $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).removeClass('anc');
+                }
+                if (champ == 'article_idt') {
+                    //              alert(index+'index');
+                    //              alert(ind+'indexligne');
+
+                    //    alert(champ)
+                    //alert('index'+index);alert('tableligne'+tableligne)
+
+                    $(this).attr('indexligne', ind); // alert( $(this).attr('indexligne'));
+                    $(this).attr('index', index); //alert( $(this).attr('index'));
+                    $(this).attr('id', champ + index + '-' + ind); //alert( $(this).attr('id'));
+                    $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).removeClass('anc');
+                }
+                if (champ == 'unite_idt') {
+
+                    $(this).attr('indexligne', ind); // alert( $(this).attr('indexligne'));
+                    $(this).attr('index', index); //alert( $(this).attr('index'));
+                    $(this).attr('id', champ + index + '-' + ind); //alert( $(this).attr('id'));
+                    $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).removeClass('anc');
+                }
+                if (champ == 'supp2') {
+                    //              alert(index+'index');
+                    //              alert(ind+'indexligne');
+
+                    //    alert(champ)
+                    //alert('index'+index);alert('tableligne'+tableligne)
+
+                    $(this).attr('indexligne', ind); // alert( $(this).attr('indexligne'));
+                    $(this).attr('index', index); //alert( $(this).attr('index'));
+                    $(this).attr('id', champ + index + '-' + ind); //alert( $(this).attr('id'));
+                    $(this).attr('name', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[' + tab + '][' + index + '][' + tableligne + '][' + ind + '][' + champ + ']');
+                    $(this).removeClass('anc');
+                }
+
+
+
+                if ($(this).is('select')) {
+                    tabb[i] = champ + index + '-' + ind;
+                    // alert(tabb[i]);
+                    i = Number(i) + 1;
+                }
+
+                if ($(this).hasClass('ajouterligne1ligne')) {
+                    tabletypeligne = $(this).attr('tabletypeligne'); //alert(tabletypeligne+"tabletypeligne")
+                    indexlignetypeligne = $(this).attr('indexlignetype'); //alert(indexlignetypeligne+"tabletypeligne")
+                    trtypeligne = $(this).attr('trtypeligne'); //alert(trtypeligne+"trtypeligne")
+                    // tabletype='addtablea' index ='' indexlignetype='indexa' trtype="tra"
+                    $(this).attr('table', tabletypeligne + index + '-' + ind);
+                    $(this).attr('indexligneligne', indexligneligne + index + '-' + ind);
+                    $(this).attr('tr', trtypeligne + index + '-' + ind);
+
+                }
+
+
+                ///////////////
+                if ($(this).hasClass('indexaligne1')) {
+                    indextype = $(this).attr('indextype');
+                    $(this).attr('id', indextypeligne + index + '-' + ind);
+                }
+                if ($(this).hasClass('traaligne')) {
+                    $(this).attr('id', 'traaligne' + index + '-' + ind);
+                    // $(this).attryle','display:none;');
+                }
+                // alert(champ+"champ");
+                if ($(this).hasClass('traaaligne')) {
+                    //  alert(afefef)
+                    $(this).attr('id', 'traaaligne' + index + '-' + ind);
+                    $(this).attr('style', 'display:none;');
+                }
+
+
+            })
+            $ttr.find('i').each(function() {
+                $(this).attr('indexligne', ind);
+            });
+            $ttr.attr('style', '');
+
+
+
+
+            $('#' + table).append($ttr);
+
+
+
+            for (j = 0; j <= i; j++) {
+
+            }
+            $ttr = $('#' + table).find('.traaligne').clone(true); //console.log($ttr);
+            $ttr.attr('class', '');
+            i = 0;
+            tabb = [];
+            vc = 0;
+            tabd = [];
+            $ttr.find('input,control,select,div,td,textarea,tr,a,table,i').each(function() {
+                tab = $(this).attr('table'); //alert(tab+"rabb")
+                champ = $(this).attr('champ'); //console.log(champ); 
+                index = $(this).attr('index'); //console.lfog(champ);
+                $(this).attr('index', ind);
+                $(this).attr('id', champ + ind);
+                $(this).attr('name', 'data[' + tab + '][' + ind + '][' + champ + ']');
+                $(this).attr('data-bv-field', 'data[' + tab + '][' + ind + '][' + champ + ']');
+                if (champ == 'article_id') {
+                    //   $(this).attr('indexligne', 0);
+                    $(this).attr('indexligneligne', 0);
+                    $(this).attr('indexligne', ind);
+                    $(this).attr('index', index);
+                    // alert(champ+'champ')
+                    // alert(index+'index')
+                    //alert(ind+'ind')
+                    $(this).attr('id', champ + index + '-' + ind + '-0');
+                    tabb[i] = champ + index + '-' + ind + '-0';
+                    i = Number(i) + 1;
+                    // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+                    $(this).attr('name', ' data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+                }
+                if (champ == 'addtableaaligne') {
+                    $(this).attr('indexligneligne', 0);
+                    $(this).attr('indexligne', 0);
+                    $(this).attr('index', ind);
+                    $(this).attr('id', champ + index + '-' + ind);
+                    tabb[i] = champ + index + '-' + ind + '-0';
+                    i = Number(i) + 1;
+                }
+
+
+                if (champ == 'qte' || champ == 'art_id') {
+                    $(this).attr('indexligneligne', 0);
+                    $(this).attr('indexligne', ind); //alert($(this).attr('indexligne'));
+                    $(this).attr('index', index);
+
+                    // alert(index+'index')
+                    //alert(ind+'ind')
+
+                    $(this).attr('id', champ + index + '-' + ind + '-0');
+                    tabb[i] = champ + index + '-' + ind + '-0';
+                    i = Number(i) + 1;
+                    // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+                    $(this).attr('name', ' data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']'); //alert($(this).attr('name'));
+                    $(this).attr('data-bv-field', 'data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+                }
+                if (champ == 'coeff') {
+                    $(this).attr('indexligneligne', 0);
+                    $(this).attr('indexligne', ind); //alert($(this).attr('indexligne'));
+                    $(this).attr('index', index);
+                    // alert(champ+'champ')
+                    // alert(index+'index')
+                    //alert(ind+'ind')
+
+                    $(this).attr('id', champ + index + '-' + ind + '-0');
+                    tabb[i] = champ + index + '-' + ind + '-0';
+                    i = Number(i) + 1;
+                    // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+                    $(this).attr('name', ' data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']'); //alert($(this).attr('name'));
+                    $(this).attr('data-bv-field', 'data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+                }
+                if (champ == 'unite_id') {
+                    $(this).attr('indexligneligne', 0);
+                    $(this).attr('indexligne', ind); //alert($(this).attr('indexligne'));
+                    $(this).attr('index', index);
+                    // alert(champ+'champ')
+                    // alert(index+'index')
+                    //alert(ind+'ind')
+
+                    $(this).attr('id', champ + index + '-' + ind + '-0');
+                    tabb[i] = champ + index + '-' + ind + '-0';
+                    i = Number(i) + 1;
+                    // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+                    $(this).attr('name', ' data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']'); //alert($(this).attr('name'));
+                    $(this).attr('data-bv-field', 'data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+                }
+                if (champ == 'article_idd') {
+                    $(this).attr('indexligneligne', 0);
+                    $(this).attr('indexligne', ind); //alert($(this).attr('indexligne'));
+                    $(this).attr('index', index);
+                    // alert(champ+'champ')
+                    // alert(index+'index')
+                    //alert(ind+'ind')
+
+                    $(this).attr('id', champ + index + '-' + ind + '-0');
+                    tabb[i] = champ + index + '-' + ind + '-0';
+                    i = Number(i) + 1;
+                    // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+                    $(this).attr('name', ' data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']'); //alert($(this).attr('name'));
+                    $(this).attr('data-bv-field', 'data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+                }
+                if (champ == 'unite_idd') {
+                    $(this).attr('indexligneligne', 0);
+                    $(this).attr('indexligne', ind); //alert($(this).attr('indexligne'));
+                    $(this).attr('index', index);
+                    // alert(champ+'champ')
+                    // alert(index+'index')
+                    //alert(ind+'ind')
+
+                    $(this).attr('id', champ + index + '-' + ind + '-0');
+                    tabb[i] = champ + index + '-' + ind + '-0';
+                    i = Number(i) + 1;
+                    // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+                    $(this).attr('name', ' data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']'); //alert($(this).attr('name'));
+                    $(this).attr('data-bv-field', 'data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+                }
+
+                if ($(this).hasClass('supor2')) {
+                    //alert('afefefef')
+                    // tabletype='addtablea' index ='' indexlignetype='indexa' trtype="tra"
+                    $(this).attr('indexligne', ind);
+                    $(this).attr('index', index);
+                }
+
+
+
+
+
+
+                if (champ == 'supp3') {
+                    $(this).attr('indexligneligne', 0);
+                    $(this).attr('indexligne', ind);
+                    $(this).attr('index', index);
+                    //  alert( $(this).attr('index'));
+                    //   alert( $(this).attr('indexligne'));
+                    //     alert( $(this).attr('indexligneligne'));
+
+
+                    // alert(champ+'champ')
+                    // alert(index+'index')
+                    //alert(ind+'ind')
+
+                    $(this).attr('id', champ + index + '-' + ind + '-0');
+                    tabb[i] = champ + index + '-' + ind + '-0';
+                    i = Number(i) + 1;
+                    // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+                    $(this).attr('name', ' data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[Ofsfligne][' + index + '][Phaseofsf][' + ind + '][Phaseofsfligne][0][' + champ + ']');
+                }
+                if ($(this).hasClass('supor3')) {
+                    //alert('ind')
+                    //alert('afefefef')
+                    // tabletype='addtablea' index ='' indexlignetype='indexa' trtype="tra"
+                    $(this).attr('indexligneligne', 0);
+                    $(this).attr('indexligne', ind);
+                    $(this).attr('index', index);
+                }
+
+                //            $(this).removeClass('anc');
+                //            if ($(this).is('select')) {
+                //                tabb[i] = champ + ind;
+                //                // alert(tabb[i]);
+                //                i = Number(i) + 1;
+                //            }
+                //alert($(this).hasClass('ajouterligne1ligne'))
+                /////////////////////////////////////////
+                if ($(this).hasClass('ajouterligne1ligne')) {
+                    tabletypeligne = $(this).attr('tabletypeligne'); //alert(tabletypeligne+"tabletypeligne")
+                    indexlignetypeligne = $(this).attr('indexlignetypeligne'); //alert(indexlignetypeligne+"tabletypeligne")
+
+                    trtypeligne = $(this).attr('trtypeligne'); //alert(trtypeligne+"trtypeligne")
+                    // tabletype='addtablea' index ='' indexlignetype='indexa' trtype="tra"
+                    $(this).attr('table', tabletypeligne + index + '-' + ind);
+                    $(this).attr('indexligneligne', indexlignetypeligne + index + '-' + ind);
+                    $(this).attr('tr', trtypeligne + index + '-' + ind);
+
+                }
+
+                if (champ == 'indexaligne') {
+                    // if ($(this).hasClass('indexaligne')) {
+                    indextypeligne = $(this).attr('indexligneligne');
+                    //alert(indextypeligne+'jjjjjjj')
+                    $(this).attr('id', champ + index + '-' + ind);
+                }
+                //alert(champ)
+                if ($(this).hasClass('traaligne')) {
+                    $(this).attr('id', 'traaligne' + index + '-' + ind);
+                    // $(this).attr('style','display:none;');
+                }
+                // alert($(this).hasClass)
+                if ($(this).hasClass('traaaligne')) {
+
+                    $(this).attr('id', 'traaaligne' + index + '-' + ind);
+                    $(this).attr('class', 'traaaligne' + index + '-' + ind);
+                    // $("#traaaligne"+index+'-'+ind).parent().hide();
+                    //  $("#traaaligne" +index+'-'+ind).parent().hide();
+                    $(this).attr('style', "display:none;important");
+                }
+                /////////////////////////////////
+
+                /////////////////
+                //              if ($(this).hasClass('traaa')) {
+                //                
+                //                 $(this).attr('class','traaa'+ind);
+                //                 $(this).attr('id','traaa'+ind);
+                //             }
+                //  $(this).val('');
+            })
+            $ttr.find('i').each(function() {
+                $(this).attr('index', ind);
+            });
+            $ttr.attr('style', '');
+            $('#' + table).append($ttr);
+            $('#' + index).val(ind);
+            index = $(this).attr('index'); //alert(index)
+            indexligne = $(this).attr('indexligne');
+            $('#' + table).find('tr:last').show();
+            // alert(index)
+            //  alert(ind)
+            //   console.log("#article_id" +index+'-'+'0')
+            //           $('select').select2({
+            //            width: '100%' // need to override the changed default
+            //        });addClass('sirine');
+
+            $("#article_idt" + index + '-' + ind).
+            select2({
+                width: '100%' // need to override the changed default
+            });
+
+
+            $("#unite_idt" + index + '-' + ind).
+            select2({
+                width: '100%' // need to override the changed default
+            });
+            sup3(index, ind)
+            //  $("#article_idd" +index+'-'+ind+'-0').
+            //                select2({
+            //            width: '100%' // need to override the changed default
+            //        });
+            // for (j = 0; j <= i; j++) {
+            //  uniform_select(tabb[j]);
+            //     }
+            // alert('#date_debut'+ind);
+            //                 $('#date_debut'+ind).datetimepicker({
+            //        timepicker: false,
+            //        datepicker:true,
+            //        mask:'39/19/9999',
+            //        format:'d/m/Y'});
+            //        for (k 
+            //        = 0; k <= vc; k++) {
+            //            // alert(tabd[k])
+            //            $('#' + tabd[k]).datetimepicker({
+            //                timepicker: false,
+            //                datepicker: true,
+            //                mask: '39/19/9999',
+            //                format: 'd/m/Y'});
+            //        }
+        });
+
+        $(".ajouterlignematriceee").on('click', function() {
+            //alert();
+            table = $(this).attr('table'); //id table
+            index = $(this).attr('index') || 0; // id max compteur
+            tr = $(this).attr('tr'); //class class type
+            ind = Number($('#' + index).val()) + 1;
+            $('#' + index).val(ind);
+            $ttr = $('#' + table).find('.' + tr).clone(true); //console.log($ttr);
+            $ttr.attr('class', '');
+            i = 0;
+            tabb = [];
+            vc = 0;
+            tabd = [];
+            $ttr.find('input,select,div,td,textarea,tr,a,table,i').each(function() {
+                tab = $(this).attr('table');
+                champ = $(this).attr('champ'); //console.log(champ);
+
+                $(this).attr('index', ind);
+                $(this).attr('id', champ + ind);
+                $(this).attr('name', 'data[' + tab + '][' + ind + '][' + champ + ']');
+                $(this).attr('data-bv-field', 'data[' + tab + '][' + ind + '][' + champ + ']');
+                if (tab == 'Ligneinventaire' && champ == 'article_id') {
+                    $(this).attr('onchange', 'artcilecode(this.value,' + ind + ')');
+                }
+                $(this).removeClass('anc');
+                if ($(this).is('select')) {
+                    tabb[i] = champ + ind;
+                    // alert(tabb[i]);
+                    i = Number(i) + 1;
+                }
+                if ($(this).hasClass('ajouterligne1')) {
+                    tabletype = $(this).attr('tabletype');
+                    indexlignetype = $(this).attr('indexlignetype');
+
+                    trtype = $(this).attr('trtype');
+                    // tabletype='addtablea' index ='' indexlignetype='indexa' trtype="tra"
+                    $(this).attr('table', tabletype + ind);
+                    $(this).attr('indexligne', indexlignetype + ind);
+                    $(this).attr('tr', trtype + ind);
+
+                }
+
+                if ($(this).hasClass('indexa1')) {
+
+                    indextype = $(this).attr('indextype');
+                    $(this).attr('id', indextype + ind);
+                }
+                if ($(this).hasClass('traa')) {
+
+
+                    $(this).attr('id', 'traa' + ind);
+                    // $(this).attryle','display:none;');
+                }
+                if ($(this).hasClass('traaa')) {
+
+
+                    $(this).attr('id', 'traaa' + ind);
+                    $(this).attr('style', 'display:none;');
+                }
+
+                // alert($(this).attr('class')); tra
+                if ($(this).hasClass('date')) {
+                    tabd[vc] = champ + ind;
+                    //alert(tabd[vc]);
+                    vc = Number(vc) + 1;
+                }
+                //  $(this).val('');
+
+            })
+            $ttr.find('i').each(function() {
+                $(this).attr('index', ind);
+            });
+            $ttr.attr('style', '');
+            $('#' + table).append($ttr);
+            $('#' + index).val(ind);
+            $('#' + table).find('tr:last').show();
+            $("#article_id" + ind).select2({
+                width: '100%' // need to override the changed default
+            });
+            $("#unite_id" + ind).select2({
+                width: '100%' // need to override the changed default
+            });
+
+            //                $("#article_id" +ind+'0').select2({
+            //            width: '100%' // need to override the changed default
+            //        });
+            //    alert(index+'ggindex')
+            //        alert(ind+'ind')
+            //        console.log("#article_id" +ind+'-'+'0');
+            //       $("#article_id" +ind+'-'+'0').select2({
+            //            width: '100%' // need to override the changed default
+            //        });
+            for (j = 0; j <= i; j++) {
+                //  uniform_select(tabb[j]);
+            }
+
+            // alert('#date_debut'+ind);
+            //                 $('#date_debut'+ind).datetimepicker({
+            //        timepicker: false,
+            //        datepicker:true,
+            //        mask:'39/19/9999',
+            //        format:'d/m/Y'});
+            //        for (k = 0; k <= vc; k++) {
+            //            // alert(tabd[k])
+            //            $('#' + tabd[k]).datetimepicker({
+            //                timepicker: false,
+            //                datepicker: true,
+            //                mask: '39/19/9999',
+            //                format: 'd/m/Y'});
+            //        }
+            // ajouter  desueimme ligne
+
+            $ttr = $('#' + table).find('.traa').clone(true); //console.log($ttr);
+            $ttr.attr('class', '');
+            i = 0;
+            tabb = [];
+            vc = 0;
+            tabd = [];
+            $ttr.find('input,select,div,td,textarea,tr,a,table,i').each(function() {
+                tab = $(this).attr('table');
+                champ = $(this).attr('champ'); //console.log(champ);
+                $(this).attr('index', ind);
+                $(this).attr('id', champ + ind);
+                $(this).attr('name', 'data[' + tab + '][' + ind + '][' + champ + ']');
+                $(this).attr('data-bv-field', 'data[' + tab + '][' + ind + '][' + champ + ']');
+                ////article_id
+                if (champ == 'article_id') {
+
+                    $(this).attr('indexligne', 0);
+                    $(this).attr('index', ind);
+                    $(this).attr('id', champ + ind + '-' + '0');
+                    tabb[i] = champ + ind + '-' + '0';
+                    i = Number(i) + 1;
+                    // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+                    $(this).attr('name', ' data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+
+                }
+
+
+                if (champ == 'qte') {
+
+                    $(this).attr('indexligne', 0);
+                    $(this).attr('index', ind);
+                    $(this).attr('id', champ + ind + '-' + '0');
+                    tabb[i] = champ + ind + '-' + '0';
+                    i = Number(i) + 1;
+                    // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+                    $(this).attr('name', ' data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+                }
+                if (champ == 'art_id') {
+                    //              alert(index+'index');
+                    //              alert(ind+'indexligne');
+
+                    //alert('index'+index);alert('tableligne'+tableligne)
+                    $(this).attr('indexligne', 0); // alert( $(this).attr('indexligne'));
+                    $(this).attr('index', ind); //alert( $(this).attr('index'));
+                    $(this).attr('id', champ + ind + '-0'); //alert( $(this).attr('id'));
+                    tabb[i] = champ + ind + '-' + '0';
+                    i = Number(i) + 1;
+                    $(this).attr('name', 'data[' + tab + '][' + ind + '][Phaseofsf][0][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[' + tab + '][' + ind + '][Phaseofsf][0][' + champ + ']');
+                    $(this).removeClass('anc');
+                }
+
+                if (champ == 'coeff') {
+
+                    $(this).attr('indexligne', 0);
+                    $(this).attr('index', ind);
+                    $(this).attr('id', champ + ind + '-' + '0');
+                    tabb[i] = champ + ind + '-' + '0';
+                    i = Number(i) + 1;
+                    // data[Ligneordrefab][0][Phaseordrefabrication][1][personnel_id]
+                    $(this).attr('name', ' data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+                }
+
+
+                if (champ == 'phaseproduction_id') {
+                    $(this).attr('indexligne', 0);
+                    $(this).attr('index', ind);
+                    $(this).attr('id', champ + ind + '-' + '0');
+                    tabb[i] = champ + ind + '-' + '0';
+                    i = Number(i) + 1;
+                    $(this).attr('name', ' data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+                }
+                if (champ == 'supp') {
+                    $(this).attr('indexligne', 0);
+                    $(this).attr('index', ind);
+                    $(this).attr('id', champ + ind + '-' + '0');
+                    tabb[i] = champ + ind + '-' + '0';
+                    i = Number(i) + 1;
+                    $(this).attr('name', ' data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+                    $(this).attr('data-bv-field', 'data[Ofsfligne][' + ind + '][Phaseofsf][0][' + champ + ']');
+                }
+                if (tab == 'Ligneinventaire' && champ == 'article_id') {
+                    $(this).attr('onchange', 'artcilecode(this.value,' + ind + ')');
+                }
+                //            $(this).removeClass('anc');
+                //            if ($(this).is('select')) {
+                //                tabb[i] = champ + ind;
+                //                // alert(tabb[i]);
+                //                i = Number(i) + 1;
+                //            }
+                if ($(this).hasClass('ajouterligne1')) {
+                    tabletype = $(this).attr('tabletype');
+                    indexlignetype = $(this).attr('indexlignetype');
+                    trtype = $(this).attr('trtype');
+                    // tabletype='addtablea' index ='' indexlignetype='indexa' trtype="tra"
+                    $(this).attr('table', tabletype + ind);
+                    $(this).attr('indexligne', indexlignetype + ind);
+                    $(this).attr('tr', trtype + ind);
+                }
+                if ($(this).hasClass('traa')) {
+                    $(this).attr('id', 'traa' + ind);
+                    // $(this).attr('style','display:none;');
+                }
+                if ($(this).hasClass('traaa')) {
+                    $(this).attr('id', 'traaa' + ind);
+                    $(this).attr('class', 'traaa' + ind);
+                    $(this).attr('style', 'display:none;');
+                }
+                if ($(this).hasClass('indexa1')) {
+
+                    indextype = $(this).attr('indextype');
+                    $(this).attr('id', indextype + ind);
+                }
+                //              if ($(this).hasClass('traaa')) {
+                //                
+                //                 $(this).attr('class','traaa'+ind);
+                //                 $(this).attr('id','traaa'+ind);
+                //             }
+
+                //  $(this).val('');
+
+            })
+            $ttr.find('i').each(function() {
+                $(this).attr('index', ind);
+
+            });
+            $ttr.attr('style', '');
+            $('#' + table).append($ttr);
+            $('#' + index).val(ind);
+            $('#' + table).find('tr:last').show();
+            // alert(ind)
+            $("#article_id" + ind).select2({
+                width: '100%' // need to override the changed default
+            });
+            //$('#' + table).find('tr:last .traa').attr('style', 'display:none');
+            for (j = 0; j <= i; j++) {
+                // uniform_select(tabb[j]);
+
+            }
+
+           
+
+
+            $('.supor').on('click', function () {
+    index = $(this).attr('index');//alert(index);
+    indexligne = $(this).attr('indexligne');//alert(indexligne);
+    //ind = $(this).attr('index');//alert(ind+'ind')
+    //            if (ind == index) {
+    $(this).parent().parent().hide();
+    $('#sup' + index).val(1);
+
+    $("#traa" + index).parent().hide();
+    //$("#tra" +index).parent().hide();
+    $("#traaa" + index).parent().hide();
+    $("#afef" + index).parent().hide();
+    //            }
+
+  })
+
+
+
+
+
+  $('.supor2').on('click', function () {
+    // alert('hechem')
+    index = $(this).attr('index');
+    /// alert('index '+index);
+    indexligne = $(this).attr('indexligne');
+    //alert('indexligne '+indexligne);
+    $('.supor2').each(function () {
+      id = $(this).attr('index');
+      // console.log('id'+ind)
+      ind = $(this).attr('indexligne');
+      /// console.log('ind'+ind)
+      if (ind == indexligne) {
+        if (id == index) {
+          $(this).parent().parent().hide();
+          $('#supp2' + index + '-' + indexligne).val(1);
+          //alert($('#supp2'+index+'-'+ind).val());
+          indexligneligne = $('#indexaligne' + index + '-' + indexligne).val();
+          //alert('indexligneligne '+indexligneligne)
+          for (j = 0; j <= indexligneligne; j++) {
+            //    alert();
+
+
+            $('#supp3' + index + '-' + ind + '-' + j).val(1);
+          $("#traaaligne" + id + '-' + ind).parent().hide();
+            $("#traaligne" + id).parent().hide();
+
+            /// alert();
+
+
+
+            //     alert()
+            // $("#addtableaa" +index).parent().hide();
+            //  $("#addtableaa" +index).parent().hide();
+
+
+          }
+          //$("#traaligne"+index+'-'+ind).parent().hide(); 
+
+
+
+
+
+
+          //$("#afefligne"+index).parent().hide();
+
+
+
+
+
+
+          //     alert()
+          //$("#addtableaa" +index).parent().hide();
+          //$("#addtableaa" +index).parent().hide();
+
+
+
+
+
+
+
+
+
+        }
+      }
+    })
+  });
+
+        });
+
+        //Initialize Select2 Elements
+        $('.select2').select2()
+        //Datemask dd/mm/yyyy
+        $('#datemask').inputmask('dd/mm/yyyy', {
+            'placeholder': 'dd/mm/yyyy'
+        })
+        //Datemask2 mm/dd/yyyy
+        $('#datemask2').inputmask('mm/dd/yyyy', {
+            'placeholder': 'mm/dd/yyyy'
+        })
+        //Money Euro
+        $('[data-mask]').inputmask()
+        //Date range picker
+        $('#reservation').daterangepicker()
+        //Date range picker with time picker
+        $('#reservationtime').daterangepicker({
+            timePicker: true,
+            timePickerIncrement: 30,
+            format: ' MM/DD/YYYY h:mm A'
+        })
+        //Date range as a button
+        $('#daterange-btn').daterangepicker({
+                ranges: {
+                    'Today': [moment(), moment()],
+                    'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+                    'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+                    'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+                    'This Month': [moment().startOf('month'), moment().endOf('month')],
+                    'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+                },
+                startDate: moment().subtract(29, 'days'),
+                endDate: moment()
+            },
+            function(start, end) {
+                $('#daterange-btn span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+            }
+        )
+        //Date picker
+        $('#datepicker').datepicker({
+            autoclose: true
+        })
+        //iCheck for checkbox and radio inputs
+        $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+            checkboxClass: 'icheckbox_minimal-blue',
+            radioClass: 'iradio_minimal-blue'
+        })
+        //Red color scheme for iCheck
+        $('input[type="checkbox"].minimal-red, input[type="radio"].minimal-red').iCheck({
+            checkboxClass: 'icheckbox_minimal-red',
+            radioClass: 'iradio_minimal-red'
+        })
+        //Flat red color scheme for iCheck
+        $('input[type="checkbox"].flat-red, input[type="radio"].flat-red').iCheck({
+            checkboxClass: 'icheckbox_flat-green',
+            radioClass: 'iradio_flat-green'
+        })
+        //Colorpicker
+        $('.my-colorpicker1').colorpicker()
+        //color picker with addon
+        $('.my-colorpicker2').colorpicker()
+        //Timepicker
+        $('.timepicker').timepicker({
+            showInputs: false
+        })
+    })
+</script>
+
+
+
+
+<?php $this->end(); ?>
