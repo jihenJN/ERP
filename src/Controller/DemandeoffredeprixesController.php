@@ -95,7 +95,7 @@ class DemandeoffredeprixesController extends AppController
      * 
      * 
      */
-    public function view($typeof = null, $id = null)
+  /*  public function view($typeof = null, $id = null)
     {
 
         $this->loadModel('Fournisseurs');
@@ -124,7 +124,7 @@ class DemandeoffredeprixesController extends AppController
         $machines = $this->fetchTable('Machines')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
 
         $this->set(compact('ligneas', 'lignefs', 'demandeoffredeprix', 'articles', 'fournisseurs', 'typeof','machines','services'));
-    }
+    }*/
 
     /**
      * Add method
@@ -424,7 +424,7 @@ class DemandeoffredeprixesController extends AppController
 
 
 
-    public function edit($typeof = null, $id = null)
+    public function view($typeof = null, $id = null)
 {
     $this->loadModel('Fournisseurs');
     $this->loadModel('Articles');
