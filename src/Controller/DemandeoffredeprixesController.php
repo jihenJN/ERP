@@ -348,6 +348,12 @@ class DemandeoffredeprixesController extends AppController
         ]);
       
         $demandeoffredeprix->typeoffredeprix = $typeof;
+
+        if ($this->request->is(['post', 'put', 'patch'])) {
+      // Update the main entity
+        $demandeoffredeprix = $this->Demandeoffredeprixes->patchEntity($demandeoffredeprix, $this->request->getData());
+        debug( $demandeoffredeprix);die;
+        }
     
         $services = $this->fetchTable('Services')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);
         $machines = $this->fetchTable('Machines')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);

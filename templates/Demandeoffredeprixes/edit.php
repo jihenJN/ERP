@@ -23,6 +23,7 @@
 </section>
 
 <!-- Main content -->
+ <!-- Main content -->
 <section class="content">
     <div class="box">
 
@@ -82,143 +83,239 @@
                 </div>
 
                 <!-- /.box-body -->
-
-
-
-
-                <section class="content-header">
-                    <h1 class="box-title"><?php echo __('Les fournisseurs'); ?></h1>
-                </section>
-
-                <section class="content" style="width: 99%">
-
-<div class="tab-content" id="fichart">
-
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title"><?= __('Fournisseurs') ?></h3>
-            <a class="btn btn-primary ajouterlignematriceee" table="addtablea" index="index" tr="tra"
-               style="float: right; position: relative; top: -25px;">
-                <i class="fa fa-plus-circle"></i>
-            </a>
-        </div>
-        <div class="panel-body">
-            <table class="table table-bordered table-striped table-bottomless" id="addtablea"
-                   style="width:100%" align="center">
-                <thead>
-                    <tr bgcolor="#EDEDED">
-                        <td align="center">Fournisseur</td>
-                        <td align="center"></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Loop through existing 'lignedemandeoffredeprixes' -->
-                    <?php foreach ($demandeoffredeprix->lignedemandeoffredeprixes as $index => $ligne) : ?>
-                        <tr champ="tra" class="tra">
-                            <td align="left">
-                                <?= $this->Form->hidden("lignedemandeoffredeprixes.$index.id", ['value' => $ligne->id]) ?>
-                                <div style="margin-top:10px">
-                                    <?= $this->Form->control("lignedemandeoffredeprixes.$index.fournisseur_id", [
-                                        'options' => $fournisseurs,
-                                        'label' => false,
-                                        'empty' => 'Veuillez choisir',
-                                        'class' => 'form-control',
-                                        'value' => $ligne->fournisseur_id
-                                    ]) ?>
+   /////////////
+    <div id="fiche" class="col-md-12 ">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">
+                                        <?php echo __('Fournisseurs'); ?>
+                                    </h3>
+                                    <a class="btn btn-primary ajouterlignematriceee " table='addtablea' index='index' tr="tra" style="
+                                       float: right; 
+                                       position: relative;
+                                       top: -25px;
+                                       "><i class="fa fa-plus-circle"></i> </a>
                                 </div>
-                            </td>
-                            <td align="center">
-                                <i index="<?= $index ?>" class="fa fa-times supor"
-                                   style="color: #c9302c; font-size: 22px;">
-                                </i>
-                            </td>
-                        </tr>
+                                <div class="panel-body">
+                                    <table class="table table-bordered table-striped table-bottomless" id="addtablea" style="width:100%" align="center">
+                                        <thead>
+                                            <tr bgcolor="#EDEDED">
+                                                <td width="" align="center">fournisseur</td>
+                                                <td width="" align="center"></td>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr champ="tra" class="tra" style="display:none;">
+                                                <td align="left">
+                                                    <?php echo $this->Form->input('sup', array('name' => '', 'id' => '', 'champ' => 'sup', 'table' => 'Ofsfligne', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => 'hidden', 'class' => 'form-control')); ?>
+                                                    <div style="margin-top:10px">
+                                                    
+                                                        <?php echo $this->Form->control('fournisseur_id', array('empty' => 'Veuillez choisir', 'options' =>  $fournisseurs, 'label' => '', 'id' => 'fournisseur_id', 'name' => '', 'table' => 'Ofsfligne', 'champ' => 'fournisseur_id', 'index' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                                    </div>
+                                                   
+                                                </td>
 
-                        <tr class="traa" champ='traa'>
-                            <td width='30%'></td>
-                            <td champ="afef" class="afef" colspan="3">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h3 class="panel-title"><?= __('Article') ?></h3>
-                                        <a class="btn btn-primary ajouterligne1" tabletype='addtableaa'
-                                           indexlignetype='indexa' trtype="traaa"
-                                           style="float: right; position: relative; top: -25px;">
-                                            <i class="fa fa-plus-circle"></i>
-                                        </a>
-                                    </div>
-                                    <div class="panel-body">
-                                        <table class="table table-bordered table-striped table-bottomless"
-                                               index="" indexligne='indexa' champ="addtableaa"
-                                               style="width:100%" align="center">
-                                            <thead>
-                                                <tr bgcolor="#EDEDED">
-                                                    <td align="center">Article</td>
-                                                    <td align="center">Quantité</td>
-                                                    <td align="center"></td>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr class="traaa" champ='traaa'>
-                                                    <td>
-                                                        <?= $this->Form->control("lignedemandeoffredeprixes.$index.article_id", [
-                                                            'options' => $articles,
-                                                            'label' => false,
-                                                            'empty' => 'Veuillez Choisir',
-                                                            'class' => 'form-control',
-                                                            'value' => $ligne->article_id
-                                                        ]) ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $this->Form->control("lignedemandeoffredeprixes.$index.qte", [
-                                                            'label' => false,
-                                                            'class' => 'form-control',
-                                                            'value' => $ligne->qte
-                                                        ]) ?>
+
+                                                <td align="center">
+                                                    <i index="" class="fa fa-times supor"
+                                                        style="color: #c9302c;font-size: 22px;">
+                                                </td>
+                                            </tr>
+
+
+                                            <tr class="traa" champ='traa' style="display:none">
+                                                <td width='30%'></td>
+                                                <td champ="afef" class="afef" colspan="3" id="" index="">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading">
+                                                            <h3 class="panel-title">
+                                                                <?php echo __('Article'); ?>
+                                                            </h3>
+                                                            <a class="btn btn-primary ajouterligne1 " tabletype='addtableaa' indexlignetype='indexa' trtype="traaa" style="
+                                                           float: right; 
+                                                           position: relative;
+                                                           top: -25px;
+                                                           "><i class="fa fa-plus-circle"></i> </a>
+                                                        </div>
+                                                        <div class="panel-body">
+                                                            <table class="table table-bordered table-striped table-bottomless" index="" indexligne='indexa' champ="addtableaa" id="" style="width:100%" align="center">
+                                                                <thead>
+                                                                    <tr bgcolor="#EDEDED">
+                                                                        <td align="center">Composant</td>
+                                                                        <td align="center">Qte</td>
+                                                                        <td align="center">Unite</td>
+                                                                        <td align="center" id="tdcompp" hidden>
+                                                                            Coefficient</td>
+
+                                                                        <td align="center"></td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+
+                                                                <table
+                                                                class="table table-bordered table-striped table-bottomless"
+                                                                index="" indexligne='indexa' champ="addtableaa" id=""
+                                                                style="width:100%" align="center">
+                                                                <thead>
+                                                                    <tr bgcolor="#EDEDED">
+                                                                        <td align="center">Article</td>
+                                                                        <td align="center">Qte</td>
+
+
+                                                                        <td align="center"></td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="traaa" style="display:none;" id="traaa"
+                                                                        champ='traaa' index="">
+                                                                        <td>
+                                                                            <?php echo $this->Form->input('supp2', array('name' => '', 'type' => 'hidden', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'supp2', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control')); ?>
+                                                                            <div style="margin-top:5px">
+                                                                                <?php echo $this->Form->control('art_id', array('name' => '', 'label' => '', 'options' => $articles, 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'art_id', 'id' => 'art_id', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => '', 'empty' => 'Veuillez Choisir !!', "style" => "width:100% ; height:32px",));
+                                                                                ?>
+                                                                            </div>
+                                                                        </td>
+                                                                        <td>
+                                                                            <?php echo $this->Form->input('qte', array('name' => '', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'qte', 'id' => 'qte', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
+                                                                            ?>
+                                                                        </td>
+
+
+                                                                        <td align="center">
+                                                                            <i indexligne="" index=""
+                                                                                class="fa fa-times supor2"
+                                                                                style="color: #c9302c;font-size: 22px;">
+                                                                        </td>
+                                                                    </tr>
+
+                                                                </tbody>
+                                                            </table>
+
+                                                           
+                                                            <input type="hidden" value="-1" class="" id="" champ="indexa" />
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                            
+                                            <?php
+                                            //    debug($dat)
+                                            //    echo 
+                                            $i = -1;
+                                            foreach ($dat as $fech) {
+                                                $i++;
+                                                //debug($fech);
+                                            ?>
+                                                <tr>
+
+                                                    <td align="left">
+                                                        <?php
+                                                        echo $this->Form->input('sup', array('name' => 'data[Ofsfligne][' . $i . '][sup]', 'id' => 'sup' . $i, 'champ' => 'sup', 'table' => 'Ofsfligne', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'type' => 'hidden', 'after' => '</div>', 'class' => 'form-control'));
+                                                        echo $this->Form->input('article_id', array('value' => $fech['article_id'], 'style' => 'width:250px', 'label' => '', 'id' => 'article_id' . $i, 'label' => '', 'name' => 'data[Ofsfligne][' . $i . '][article_id]', 'table' => 'Ofsfligne', 'champ' => 'article_id', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control  select2', 'empty' => 'Veuillez choisir'));
+                                                        ?>
                                                     </td>
                                                     <td align="center">
-                                                        <i indexligne="<?= $index ?>" class="fa fa-times supor2"
-                                                           style="color: #c9302c;font-size: 22px;">
-                                                        </i>
+                                                        <?php
+                                                        echo $this->Form->input('qte', array('value' => $fech['qte'], 'id' => 'qte' . $i, 'label' => '', 'name' => 'data[Ofsfligne][' . $i . '][qte]', 'table' => 'Ofsfligne', 'champ' => 'qte', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control comp'));
+                                                        ?>
+                                                    </td>
+
+                                                    <td>
+                                                        <select name="<?php echo "data[Ofsfligne][" . $i . "][unite_id]" ?>" width="200px" id="<?php echo 'unite_id' . $i ?>" style="width:200px" table="ligner" index="<?php echo $i ?>" champ="unite_id" class="js-example-responsive select2 ">
+                                                            <option value="" selected="selected" disabled>Veuillez choisir
+                                                                !!</option>
+
+                                                            <?php foreach ($unit as $u) {
+                                                            ?>
+                                                                <option <?php if ($fech['unite_id'] == $u->id) { ?> selected="selected" <?php } ?> value="<?php echo $u->id; ?>">
+                                                                    <?php echo $u->name ?>
+                                                                </option>
+                                                            <?php }
+
+
+                                                            ?>
+                                                        </select>
+                                                    </td>
+                                                    <td align="center" <?php if (empty($fech['Ligne'])) { ?> hidden <?php } ?> id="tdcomp<?php echo $i ?>" index="<?php echo $i ?>" champ="tdcomp" table="Ofsfligne" name="data[Ofsfligne][<?php echo $i ?>][tdcomp]">
+                                                        <?php
+                                                        echo $this->Form->input('coeff', array('value' => $fech['coeff'], 'id' => 'coeff' . $i, 'label' => '', 'name' => 'data[Ofsfligne][' . $i . '][coeff]', 'table' => 'Ofsfligne', 'champ' => 'coeff', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
+                                                        ?>
+                                                    </td>
+                                                    <td align="center"><i index="<?php echo $i; ?>" class="fa fa-times supor" style="color: #c9302c;font-size: 22px;"></td>
+
+                                                </tr>
+
+                                                <tr index="<?php echo $i; ?>" class="tr" align="centre">
+                                                    <td width='30%'></td>
+                                                    <td champ="afef" class="afef" id="afef<?php echo $i; ?>" colspan="3" index="<?php echo $i; ?>">
+                                                        <div class="panel panel-default" width="50%">
+                                                            <div class="panel-heading">
+                                                                <h3 class="panel-title">
+                                                                    <?php echo __('Composant'); ?>
+                                                                </h3>
+                                                                <a class="btn btn-primary ajouterligne1 " table='addtableaa<?php echo $i; ?>' index='<?php echo $i; ?>' indexligne='indexa<?php echo $i; ?>' tr="traa<?php echo $i; ?>" style="
+                                                                   float: right; 
+                                                                   position: relative;
+                                                                   top: -25px;
+                                                                   "><i class="fa fa-plus-circle"></i></a>
+                                                            </div>
+                                                            <div class="panel-body">
+                                                                <table class="table table-bordered table-striped table-bottomless" id="addtableaa<?php echo $i; ?>" style="width:100%" align="center">
+                                                                    <thead>
+                                                                        <tr bgcolor="#EDEDED">
+                                                                            <td align="center">Composant</td>
+                                                                            <td align="center">Qte</td>
+                                                                            <td align="center">Unite</td>
+                                                                            <td align="center" hidden id='tdcompp'>
+                                                                                Coefficient</td>
+
+                                                                            <td></td>
+                                                                        </tr>
+                                                                    <tbody>
+                                                                        <tr class="traa<?php echo $i; ?>" style="display:none;" d="traa<?php echo $i; ?>">
+                                                                            <td>
+                                                                                <?php
+                                                                                echo $this->Form->input('supp2', array('label' => '', 'type' => 'hidden', 'div' => 'form-group', 'name' => '', 'indexligne' => '0', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'index' => $i, 'id' => 'supp', 'champ' => 'supp2', 'indextype' => '', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
+                                                                                echo $this->Form->input('article_id', array('name' => '', 'label' => '', 'indexligne' => '0', 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'article_idt', 'id' => 'article_idt', 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control ', 'empty' => 'Veuillez Choisir !!'));
+                                                                                ?>
+                                                                            </td>
+                                                                            <td>
+                                                                                <?php
+                                                                                echo $this->Form->input('qte', array('name' => '', 'label' => '', 'indexligne' => '0', 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'qte', 'id' => 'qte', 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control '));
+                                                                                ?>
+                                                                            </td>
+                                                                            <td>
+                                                                                <?php echo $this->Form->input('unite_id', array('name' => '', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'unite_idt', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => '', 'empty' => 'Veuillez Choisir !!', 'class' => 'form-control'));
+                                                                                ?>
+                                                                            </td>
+
+                                                                            <td hidden champ='tdcompp' index='' indexligne='' table='Ofsfligne' tableligne='Phaseofsf'>
+                                                                                <?php
+                                                                                echo $this->Form->input('coeff', array('name' => '', 'label' => '', 'indexligne' => '0', 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'coeff', 'id' => 'coeff', 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control '));
+                                                                                ?>
+                                                                            </td>
+                                                                            <td align="center">
+                                                                                <i indexligne="0" index="<?php echo $i; ?>" class="fa fa-times supor2" style="color: #c9302c;font-size: 22px;">
+                                                                            </td>
+
+
+                                                                        </tr>
+                                                                       
+                                                                    
+                                                                        
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
                                                     </td>
                                                 </tr>
-                                            </tbody>
-                                        </table>
-                                        <input type="hidden" value="-1" class="" champ="indexa" />
-                                    </div>
+                                            <?php } ?>
+                                            <input type="hidden" value="<?php echo $i ?>" id="index" />
+                                        </tbody>
+                                    </table>
                                 </div>
-                            </td>
-                        </tr>
-                    <?php endforeach; ?>
-
-                    <!-- Template row for adding new fournisseurs (Hidden for JS cloning) -->
-                    <tr class="tra" champ="tra" style="display:none;">
-                        <td align="left">
-                            <?= $this->Form->hidden('lignedemandeoffredeprixes.__INDEX__.id', ['value' => '']) ?>
-                            <div style="margin-top:10px">
-                                <?= $this->Form->control('lignedemandeoffredeprixes.__INDEX__.fournisseur_id', [
-                                    'options' => $fournisseurs,
-                                    'label' => false,
-                                    'empty' => 'Veuillez choisir',
-                                    'class' => 'form-control'
-                                ]) ?>
                             </div>
-                        </td>
-                        <td align="center">
-                            <i index="" class="fa fa-times supor"
-                               style="color: #c9302c;font-size: 22px;">
-                            </i>
-                        </td>
-                    </tr>
-
-                </tbody>
-            </table>
-            <input type="hidden" value="-1" id="index" />
-        </div>
-    </div>
-</div>
-
-</section>
-
+                        </div>
                 <div align="center" id="enr3">
                 <?= $this->Form->button('Enregistrer', ['type' => 'submit', 'id' => 'enr3', 'class' => 'btn btn-success']) ?>
             </div>
