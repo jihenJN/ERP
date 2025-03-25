@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Controller;
@@ -17,7 +18,7 @@ class DevisController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
-    {   
+    {
         $this->paginate = [
             'contain' => ['Clients'],
         ];
@@ -49,29 +50,29 @@ class DevisController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
-    {  
+    {
         $this->loadModel('Clients');
         $devi = $this->Devis->newEmptyEntity();
-        $devi['numero'] = $this->Devis->getNextNumero(); 
+        $devi['numero'] = $this->Devis->getNextNumero();
 
         if ($this->request->is('post')) {
             $devi = $this->Devis->patchEntity($devi, $this->request->getData());
             if ($this->Devis->save($devi)) {
-                $this->Flash->success(__('The devi has been saved.'));
+              //  $this->Flash->success(__('The devi has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The devi could not be saved. Please, try again.'));
+          //  $this->Flash->error(__('The devi could not be saved. Please, try again.'));
         }
-     
-       
+
+
         $clients = $this->fetchTable('Clients')->find('list', [
             'keyField' => 'id',
             'valueField' => function ($row) {
                 return $row->Code . '  ' . $row->Raison_Sociale; // Concatenate Raison_Sociale and code
             }
         ]);
-     
+
         $this->set(compact('devi', 'clients'));
     }
 
@@ -85,18 +86,24 @@ class DevisController extends AppController
     public function edit($id = null)
     {
         $devi = $this->Devis->get($id, [
-            'contain' => [],
+            'contain' => ['Clients'],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $devi = $this->Devis->patchEntity($devi, $this->request->getData());
             if ($this->Devis->save($devi)) {
-                $this->Flash->success(__('The devi has been saved.'));
+                //  $this->Flash->success(__('The devi has been saved.'));
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The devi could not be saved. Please, try again.'));
+            // $this->Flash->error(__('The devi could not be saved. Please, try again.'));
         }
-        $clients = $this->Devis->Clients->find('list', ['limit' => 200])->all();
+
+        $clients = $this->fetchTable('Clients')->find('list', [
+            'keyField' => 'id',
+            'valueField' => function ($row) {
+                return $row->Code . '  ' . $row->Raison_Sociale; // Concatenate Raison_Sociale and code
+            }
+        ]);
         $this->set(compact('devi', 'clients'));
     }
 
@@ -112,9 +119,9 @@ class DevisController extends AppController
         $this->request->allowMethod(['post', 'delete']);
         $devi = $this->Devis->get($id);
         if ($this->Devis->delete($devi)) {
-            $this->Flash->success(__('The devi has been deleted.'));
+         //   $this->Flash->success(__('The devi has been deleted.'));
         } else {
-            $this->Flash->error(__('The devi could not be deleted. Please, try again.'));
+          //  $this->Flash->error(__('The devi could not be deleted. Please, try again.'));
         }
 
         return $this->redirect(['action' => 'index']);
