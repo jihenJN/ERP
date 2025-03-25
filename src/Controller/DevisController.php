@@ -49,7 +49,8 @@ class DevisController extends AppController
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
     public function add()
-    {
+    {  
+        $this->loadModel('Clients');
         $devi = $this->Devis->newEmptyEntity();
         if ($this->request->is('post')) {
             $devi = $this->Devis->patchEntity($devi, $this->request->getData());
@@ -60,7 +61,15 @@ class DevisController extends AppController
             }
             $this->Flash->error(__('The devi could not be saved. Please, try again.'));
         }
-        $clients = $this->Devis->Clients->find('list', ['limit' => 200])->all();
+     
+       
+        $clients = $this->fetchTable('Clients')->find('list', [
+            'keyField' => 'id',
+            'valueField' => function ($row) {
+                return $row->Code . '  ' . $row->Raison_Sociale; // Concatenate Raison_Sociale and code
+            }
+        ]);
+     
         $this->set(compact('devi', 'clients'));
     }
 
