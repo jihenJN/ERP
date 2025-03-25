@@ -17,11 +17,12 @@ class DevisController extends AppController
      * @return \Cake\Http\Response|null|void Renders view
      */
     public function index()
-    {
+    {   
         $this->paginate = [
             'contain' => ['Clients'],
         ];
         $devis = $this->paginate($this->Devis);
+        debug($devis);
 
         $this->set(compact('devis'));
     }

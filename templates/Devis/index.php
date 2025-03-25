@@ -1,52 +1,141 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var iterable<\App\Model\Entity\Devi> $devis
  */
 ?>
-<div class="devis index content">
-    <?= $this->Html->link(__('New Devi'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Devis') ?></h3>
-    <div class="table-responsive">
-        <table>
-            <thead>
-                <tr>
-                    <th><?= $this->Paginator->sort('id') ?></th>
-                    <th><?= $this->Paginator->sort('numero') ?></th>
-                    <th><?= $this->Paginator->sort('date') ?></th>
-                    <th><?= $this->Paginator->sort('client_id') ?></th>
-                    <th><?= $this->Paginator->sort('total_remise') ?></th>
-                    <th><?= $this->Paginator->sort('total_ht') ?></th>
-                    <th class="actions"><?= __('Actions') ?></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($devis as $devi): ?>
-                <tr>
-                    <td><?= $this->Number->format($devi->id) ?></td>
-                    <td><?= h($devi->numero) ?></td>
-                    <td><?= h($devi->date) ?></td>
-                    <td><?= $devi->has('client') ? $this->Html->link($devi->client->name, ['controller' => 'Clients', 'action' => 'view', $devi->client->id]) : '' ?></td>
-                    <td><?= $this->Number->format($devi->total_remise) ?></td>
-                    <td><?= $this->Number->format($devi->total_ht) ?></td>
-                    <td class="actions">
-                        <?= $this->Html->link(__('View'), ['action' => 'view', $devi->id]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit', $devi->id]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $devi->id], ['confirm' => __('Are you sure you want to delete # {0}?', $devi->id)]) ?>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+
+<?php
+$add = "";
+$edit = "";
+$delete = "";
+$view = "";
+$session = $this->request->getSession();
+$abrv = $session->read('abrvv');
+$lien = $session->read('lien_parametrage' . $abrv);
+foreach ($lien as $k => $liens) {
+    if (@$liens['lien'] == 'societes') {
+
+        $add = $liens['ajout'];
+        $edit = $liens['modif'];
+        $delete = $liens['supp'];
+    }
+}
+?>
+
+<!-- Add Button if Permission Exists -->
+<?php if ($add == 1) { ?>
+    <div class="pull-left" style="margin-left:25px;margin-top: 20px">
+        <?php echo $this->Html->link(__('Ajouter'), ['action' => 'Add'], ['class' => 'btn btn-success btn-sm']) ?>
     </div>
-    <div class="paginator">
-        <ul class="pagination">
-            <?= $this->Paginator->first('<< ' . __('first')) ?>
-            <?= $this->Paginator->prev('< ' . __('previous')) ?>
-            <?= $this->Paginator->numbers() ?>
-            <?= $this->Paginator->next(__('next') . ' >') ?>
-            <?= $this->Paginator->last(__('last') . ' >>') ?>
-        </ul>
-        <p><?= $this->Paginator->counter(__('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')) ?></p>
+<?php } ?>
+
+<br><br><br>
+
+<h1>Devis</h1>
+
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="box">
+                <div class="box-body">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th width="15%" align="center"><?= __('Numéro') ?></th>
+                                <th width="25%" align="center"><?= __('Date') ?></th>
+                                <th width="20%" align="center"><?= __('Client') ?></th>
+                                <th width="10%" align="center"><?= __('Total Remise') ?></th>
+                                <th width="10%" align="center"><?= __('Total Ht') ?></th>
+                                <th width="30%" scope="col" class="actions text-center"><?= __('Actions') ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($devis as $i => $devi): ?>
+                                <tr>
+                                    <td><?= h($devi->numero) ?>
+                                        <?php echo $this->Form->control('id', ['index' => $i, 'id' => 'id' . $i, 'value' => $devi->id, 'label' => '', 'type' => 'hidden', 'champ' => 'id', 'class' => 'form-control']); ?>
+                                    </td>
+                                    <td><?= h($devi->date) ?>
+                                        <?php echo $this->Form->control('id', ['index' => $i, 'id' => 'id' . $i, 'value' => $devi->id, 'label' => '', 'type' => 'hidden', 'champ' => 'id', 'class' => 'form-control']); ?>
+                                    </td>
+                                    <td><?=h($devi->client->Raison_Sociale)?></td>
+                                    <td><?= $this->Number->format($devi->total_remise) ?></td>
+                                    <td><?= $this->Number->format($devi->total_ht) ?></td>
+                                    
+                                    <td class="actions text-center">
+                                        <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $devi->id), array('escape' => false)); ?>
+                                        <?php if ($edit == 1) {
+                                            echo $this->Html->link("<button class='btn btn-xs btn-warning'><i class='fa fa-edit'></i></button>", array('action' => 'edit', $devi->id), array('escape' => false));
+                                        } ?>
+                                        <?php if ($delete == 1) { ?>
+                                            <?php echo $this->Form->postLink("<button class='btn btn-xs btn-danger'><i class='fa fa-trash-o'></i></button>", array('action' => 'delete',  $devi->id), array('escape' => false, null), __('Veuillez vraiment supprimer cette enregistrement # {0}?',  $devi->id)); ?>
+                                        <?php } ?>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
     </div>
-</div>
+</section>
+
+<!-- Include CSS for DataTables -->
+<?php echo $this->Html->css('AdminLTE./bower_components/datatables.net-bs/css/dataTables.bootstrap.min', ['block' => 'css']); ?>
+
+<!-- Include DataTables Scripts -->
+<?php echo $this->Html->script('AdminLTE./bower_components/datatables.net/js/jquery.dataTables.min', ['block' => 'script']); ?>
+<?php echo $this->Html->script('AdminLTE./bower_components/datatables.net-bs/js/dataTables.bootstrap.min', ['block' => 'script']); ?>
+
+<!-- Initialize DataTables -->
+<?php $this->start('scriptBottom'); ?>
+<script>
+    $(function() {
+        $('#example1').DataTable();
+        $('#example2').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false
+        })
+    })
+</script>
+<?php $this->end(); ?>
+
+<!-- JavaScript for Delete Action -->
+<script type="text/javascript">
+    $(function() {
+        $('.verifiertypecontact').on('click', function() {
+            let ind = $(this).attr('index');
+            let id = $('#id' + ind).val();
+
+            $.ajax({
+                method: "GET",
+                url: "<?= $this->Url->build(['controller' => 'Typecontacts', 'action' => 'veriftypecontactsup']) ?>",
+                dataType: "json",
+                data: {
+                    id: id
+                },
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content')
+                },
+                success: function(data, status, settings) {
+                    if (data.Comptes != 0) {
+                        alert('existe dans un document');
+                    } else {
+                        if (confirm('Voulez-vous supprimer cet enregistrement')) {
+                            document.location = wr + "Typecontacts/delete/" + id;
+                        }
+                    }
+                }
+            });
+        });
+    });
+</script>
