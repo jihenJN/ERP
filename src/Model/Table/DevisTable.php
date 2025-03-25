@@ -97,4 +97,16 @@ class DevisTable extends Table
 
         return $rules;
     }
+
+
+    public function getNextNumero()
+    {
+        $num = $this->find()
+            ->select(["num" => 'MAX(Devis.numero)'])
+            ->first();
+
+        $n = $num->num ?? 0; // Handle null case
+        $in = intval($n) + 1;
+        return str_pad("$in", 5, "0", STR_PAD_LEFT);
+    }
 }

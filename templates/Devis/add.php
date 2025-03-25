@@ -56,7 +56,7 @@
                 <div class="box-body">
                     <div style=" margin: 0 auto;  margin-left: 20px; margin-right: 20px; position: static; ">
                         <div class="col-xs-6">
-                            <?php echo $this->Form->control('numero', ['label' => 'Numéro']); ?>
+                            <?php echo $this->Form->control('numero', ['label' => 'Numéro','readOnly' => true]); ?>
                         </div>
                         <div class="col-xs-6">
                             <?php echo $this->Form->control('date', ['label' => 'Date']); ?>

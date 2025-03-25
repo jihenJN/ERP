@@ -52,6 +52,8 @@ class DevisController extends AppController
     {  
         $this->loadModel('Clients');
         $devi = $this->Devis->newEmptyEntity();
+        $devi['numero'] = $this->Devis->getNextNumero(); 
+
         if ($this->request->is('post')) {
             $devi = $this->Devis->patchEntity($devi, $this->request->getData());
             if ($this->Devis->save($devi)) {
