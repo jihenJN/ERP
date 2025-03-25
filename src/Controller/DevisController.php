@@ -57,8 +57,36 @@ class DevisController extends AppController
 
         if ($this->request->is('post')) {
             $devi = $this->Devis->patchEntity($devi, $this->request->getData());
+
             if ($this->Devis->save($devi)) {
               //  $this->Flash->success(__('The devi has been saved.'));
+
+              if (isset($this->request->getData('data')['ligner']) && (!empty($this->request->getData('data')['ligner']))) {
+                foreach ($this->request->getData('data')['ligner'] as $j => $p) {
+                    //debug($p['prix']);die;
+                    //die;
+    
+                    if ($p['sup'] != 1) {
+                        $L_devi = $this->fetchTable('Lignedevis')->newEmptyEntity();
+                        $data['devis_id'] = $devi->id;
+                        $data['article_id'] = $p['article_id'];
+                        $data['prix'] = $p['prix'];
+                        $data['remise'] = $p['remise'];
+                        $data['ht'] = $p['ht'];
+                      
+                      
+                        $lignedevi = $this->fetchTable('Lignedevis')->patchEntity($L_devi, $data);
+                      
+                        $this->fetchTable('Lignedevis')->save($lignedevi);
+    
+                    }
+                }
+            }
+    
+
+
+
+
 
                 return $this->redirect(['action' => 'index']);
             }
@@ -66,6 +94,8 @@ class DevisController extends AppController
         }
 
 
+
+        
         $clients = $this->fetchTable('Clients')->find('list', [
             'keyField' => 'id',
             'valueField' => function ($row) {
@@ -73,7 +103,11 @@ class DevisController extends AppController
             }
         ]);
 
-        $this->set(compact('devi', 'clients'));
+        $articles = $this->fetchTable('Articles')->find('all');
+
+
+
+        $this->set(compact('devi', 'clients','articles'));
     }
 
     /**
@@ -127,7 +161,7 @@ class DevisController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
-    public function getarticles()
+ /*   public function getarticles()
     {
         $ids = $this->request->getQuery('id');
         $ind = $this->request->getQuery('ind');
@@ -144,5 +178,25 @@ class DevisController extends AppController
 
         echo json_encode(['select' => $select]);
         exit;
+    }-*/
+
+
+    public function getarticles()
+    {
+        $ind = $this->request->getQuery('ind');
+    
+        $query = $this->fetchTable('Articles')->find('all');
+        debug ('**************', $query);
+    
+        $select = "
+        <select name='data[ligner][$ind][article_id]' id='article_id$ind' table='ligner' champ='article_id' class='form-control select2 article_id'>
+            <option value='' selected>Veuillez choisir !!</option>";
+        foreach ($query as $q) {
+            $select .= "<option value='" . $q->id . "'>" . $q->Code . ' ' . $q->Dsignation . "</option>";
+        }
+        $select .= "</select>";
+    
+        echo json_encode(['select' => $select]);
+        exit;
     }
-}
+    }
