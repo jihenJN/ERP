@@ -23,7 +23,7 @@ class DevisController extends AppController
             'contain' => ['Clients'],
         ];
         $devis = $this->paginate($this->Devis);
-        debug($devis);
+       
 
         $this->set(compact('devis'));
     }
@@ -125,5 +125,24 @@ class DevisController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    public function getarticles()
+    {
+        $ids = $this->request->getQuery('id');
+        $ind = $this->request->getQuery('ind');
+
+        $query = $this->fetchTable('Articles')->find('all')->where(['sousfamille1_id' => $ids]);
+
+        $select = "
+        <select name='data[ligner][$ind][article_id]' id='article_id$ind' table='ligner' champ='article_id' class='form-control select2 article_id' onchange='getUnites(this.value, $ind)'>
+            <option value='' selected>Veuillez choisir !!</option>";
+        foreach ($query as $q) {
+            $select .= "<option value='" . $q->id . "'>" . $q->Code . ' ' . $q->Dsignation . "</option>";
+        }
+        $select .= "</select>";
+
+        echo json_encode(['select' => $select]);
+        exit;
     }
 }

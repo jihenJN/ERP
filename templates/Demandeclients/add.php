@@ -293,7 +293,6 @@
 
 
 
-
                 </div>
 
                 <div align="center">
@@ -513,6 +512,7 @@
 
         })
     });
+    
     $(".ajouterligne_w").on("click", function() {
         // alert('alll');
         table = $(this).attr("table");
