@@ -339,20 +339,28 @@ class DemandeoffredeprixesController extends AppController
 
     public function edit($typeof = null, $id = null)
     {
+        
+        $this->loadModel('Lignedemandeoffredeprixes');
+
         $this->loadModel('Fournisseurs');
         $this->loadModel('Articles');
-        $this->loadModel('Lignedemandeoffredeprixes');
+        $fournisseur = $this->fetchTable('Fournisseurs')->find('all', [])
+            ->where(["Fournisseurs.demandeoffredeprix_id =" . $id]);
+        $fichearticle2s = $this->fetchTable('Articles')->find('all', [])
+            ->where(["Articles.article_id =" . $id]);
     
-      $demandeoffredeprix = $this->Demandeoffredeprixes->get($id, [
+   /*   $demandeoffredeprix = $this->Demandeoffredeprixes->get($id, [
             'contain' => ['Lignedemandeoffredeprixes' => ['Articles', 'Fournisseurs']]
         ]);
       
         $demandeoffredeprix->typeoffredeprix = $typeof;
+        debug( $demandeoffredeprix);die;*/
+
 
         if ($this->request->is(['post', 'put', 'patch'])) {
       // Update the main entity
         $demandeoffredeprix = $this->Demandeoffredeprixes->patchEntity($demandeoffredeprix, $this->request->getData());
-        debug( $demandeoffredeprix);die;
+       
         }
     
         $services = $this->fetchTable('Services')->find('list', ['keyfield' => 'id', 'valueField' => 'name']);

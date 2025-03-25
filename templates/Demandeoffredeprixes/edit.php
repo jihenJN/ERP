@@ -129,7 +129,7 @@
                                                     <div class="panel panel-default">
                                                         <div class="panel-heading">
                                                             <h3 class="panel-title">
-                                                                <?php echo __('Article'); ?>
+                                                                <?php echo __('Articles'); ?>
                                                             </h3>
                                                             <a class="btn btn-primary ajouterligne1 " tabletype='addtableaa' indexlignetype='indexa' trtype="traaa" style="
                                                            float: right; 
@@ -141,12 +141,8 @@
                                                             <table class="table table-bordered table-striped table-bottomless" index="" indexligne='indexa' champ="addtableaa" id="" style="width:100%" align="center">
                                                                 <thead>
                                                                     <tr bgcolor="#EDEDED">
-                                                                        <td align="center">Composant</td>
+                                                                        <td align="center">Article</td>
                                                                         <td align="center">Qte</td>
-                                                                        <td align="center">Unite</td>
-                                                                        <td align="center" id="tdcompp" hidden>
-                                                                            Coefficient</td>
-
                                                                         <td align="center"></td>
                                                                     </tr>
                                                                 </thead>
@@ -160,8 +156,6 @@
                                                                     <tr bgcolor="#EDEDED">
                                                                         <td align="center">Article</td>
                                                                         <td align="center">Qte</td>
-
-
                                                                         <td align="center"></td>
                                                                     </tr>
                                                                 </thead>
@@ -199,47 +193,22 @@
                                             </tr>
                                             
                                             <?php
-                                            //    debug($dat)
-                                            //    echo 
+                                               debug($dat);
+                                           // echo 
                                             $i = -1;
                                             foreach ($dat as $fech) {
                                                 $i++;
-                                                //debug($fech);
+                                                debug($fech);
                                             ?>
                                                 <tr>
 
                                                     <td align="left">
                                                         <?php
                                                         echo $this->Form->input('sup', array('name' => 'data[Ofsfligne][' . $i . '][sup]', 'id' => 'sup' . $i, 'champ' => 'sup', 'table' => 'Ofsfligne', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'type' => 'hidden', 'after' => '</div>', 'class' => 'form-control'));
-                                                        echo $this->Form->input('article_id', array('value' => $fech['article_id'], 'style' => 'width:250px', 'label' => '', 'id' => 'article_id' . $i, 'label' => '', 'name' => 'data[Ofsfligne][' . $i . '][article_id]', 'table' => 'Ofsfligne', 'champ' => 'article_id', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control  select2', 'empty' => 'Veuillez choisir'));
-                                                        ?>
-                                                    </td>
-                                                    <td align="center">
-                                                        <?php
-                                                        echo $this->Form->input('qte', array('value' => $fech['qte'], 'id' => 'qte' . $i, 'label' => '', 'name' => 'data[Ofsfligne][' . $i . '][qte]', 'table' => 'Ofsfligne', 'champ' => 'qte', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control comp'));
-                                                        ?>
-                                                    </td>
-
-                                                    <td>
-                                                        <select name="<?php echo "data[Ofsfligne][" . $i . "][unite_id]" ?>" width="200px" id="<?php echo 'unite_id' . $i ?>" style="width:200px" table="ligner" index="<?php echo $i ?>" champ="unite_id" class="js-example-responsive select2 ">
-                                                            <option value="" selected="selected" disabled>Veuillez choisir
-                                                                !!</option>
-
-                                                            <?php foreach ($unit as $u) {
-                                                            ?>
-                                                                <option <?php if ($fech['unite_id'] == $u->id) { ?> selected="selected" <?php } ?> value="<?php echo $u->id; ?>">
-                                                                    <?php echo $u->name ?>
-                                                                </option>
-                                                            <?php }
-
-
-                                                            ?>
-                                                        </select>
-                                                    </td>
-                                                    <td align="center" <?php if (empty($fech['Ligne'])) { ?> hidden <?php } ?> id="tdcomp<?php echo $i ?>" index="<?php echo $i ?>" champ="tdcomp" table="Ofsfligne" name="data[Ofsfligne][<?php echo $i ?>][tdcomp]">
-                                                        <?php
-                                                        echo $this->Form->input('coeff', array('value' => $fech['coeff'], 'id' => 'coeff' . $i, 'label' => '', 'name' => 'data[Ofsfligne][' . $i . '][coeff]', 'table' => 'Ofsfligne', 'champ' => 'coeff', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
-                                                        ?>
+                                                        echo $this->Form->input('fournisseur_id', array('value' => $fech['fournisseur_id'], 'style' => 'width:250px', 'label' => '', 'id' => 'fournisseur_id' . $i, 'label' => '', 'name' => 'data[Ofsfligne][' . $i . '][fournisseur_id]', 'table' => 'Ofsfligne', 'champ' => 'fournisseur_id', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control  select2', 'empty' => 'Veuillez choisir'));
+                                                        echo $this->Form->control('fournisseur_id', array('value' => $fech['fournisseur_id'], 'empty' => 'Veuillez choisir', 'options' =>  $fournisseurs, 'label' => '', 'id' => 'fournisseur_id' . $i, 'name' => 'data[Ofsfligne][' . $i . '][fournisseur_id]', 'table' => 'Ofsfligne', 'champ' => 'fournisseur_id', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
+                                                       ?>
+                                                        
                                                     </td>
                                                     <td align="center"><i index="<?php echo $i; ?>" class="fa fa-times supor" style="color: #c9302c;font-size: 22px;"></td>
 
@@ -251,7 +220,7 @@
                                                         <div class="panel panel-default" width="50%">
                                                             <div class="panel-heading">
                                                                 <h3 class="panel-title">
-                                                                    <?php echo __('Composant'); ?>
+                                                                    <?php echo __('Articles'); ?>
                                                                 </h3>
                                                                 <a class="btn btn-primary ajouterligne1 " table='addtableaa<?php echo $i; ?>' index='<?php echo $i; ?>' indexligne='indexa<?php echo $i; ?>' tr="traa<?php echo $i; ?>" style="
                                                                    float: right; 
@@ -263,12 +232,8 @@
                                                                 <table class="table table-bordered table-striped table-bottomless" id="addtableaa<?php echo $i; ?>" style="width:100%" align="center">
                                                                     <thead>
                                                                         <tr bgcolor="#EDEDED">
-                                                                            <td align="center">Composant</td>
+                                                                            <td align="center"> Nom Article</td>
                                                                             <td align="center">Qte</td>
-                                                                            <td align="center">Unite</td>
-                                                                            <td align="center" hidden id='tdcompp'>
-                                                                                Coefficient</td>
-
                                                                             <td></td>
                                                                         </tr>
                                                                     <tbody>
@@ -276,7 +241,7 @@
                                                                             <td>
                                                                                 <?php
                                                                                 echo $this->Form->input('supp2', array('label' => '', 'type' => 'hidden', 'div' => 'form-group', 'name' => '', 'indexligne' => '0', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'index' => $i, 'id' => 'supp', 'champ' => 'supp2', 'indextype' => '', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control'));
-                                                                                echo $this->Form->input('article_id', array('name' => '', 'label' => '', 'indexligne' => '0', 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'article_idt', 'id' => 'article_idt', 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control ', 'empty' => 'Veuillez Choisir !!'));
+                                                                                echo $this->Form->input('art_id', array('name' => '', 'label' => '', 'indexligne' => '0', 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'art_id', 'id' => 'art_id', 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control ', 'empty' => 'Veuillez Choisir !!'));
                                                                                 ?>
                                                                             </td>
                                                                             <td>
@@ -284,16 +249,7 @@
                                                                                 echo $this->Form->input('qte', array('name' => '', 'label' => '', 'indexligne' => '0', 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'qte', 'id' => 'qte', 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control '));
                                                                                 ?>
                                                                             </td>
-                                                                            <td>
-                                                                                <?php echo $this->Form->input('unite_id', array('name' => '', 'label' => '', 'indexligne' => '', 'index' => '', 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'unite_idt', 'id' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => '', 'empty' => 'Veuillez Choisir !!', 'class' => 'form-control'));
-                                                                                ?>
-                                                                            </td>
-
-                                                                            <td hidden champ='tdcompp' index='' indexligne='' table='Ofsfligne' tableligne='Phaseofsf'>
-                                                                                <?php
-                                                                                echo $this->Form->input('coeff', array('name' => '', 'label' => '', 'indexligne' => '0', 'index' => $i, 'table' => 'Ofsfligne', 'tableligne' => 'Phaseofsf', 'champ' => 'coeff', 'id' => 'coeff', 'indextype' => '', 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control '));
-                                                                                ?>
-                                                                            </td>
+                                                                           
                                                                             <td align="center">
                                                                                 <i indexligne="0" index="<?php echo $i; ?>" class="fa fa-times supor2" style="color: #c9302c;font-size: 22px;">
                                                                             </td>
