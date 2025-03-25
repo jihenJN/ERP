@@ -68,7 +68,7 @@ class LignedevisTable extends Table
             ->notEmptyString('prix');
 
         $validator
-            ->decimal('remise')
+            ->numeric('remise')
             ->notEmptyString('remise');
 
         $validator
@@ -83,6 +83,10 @@ class LignedevisTable extends Table
         $validator
             ->integer('devis_id')
             ->notEmptyString('devis_id');
+
+        $validator
+            ->numeric('qte')
+            ->notEmptyString('qte');
 
         return $validator;
     }

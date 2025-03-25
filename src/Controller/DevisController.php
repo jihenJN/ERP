@@ -70,6 +70,7 @@ class DevisController extends AppController
                         $L_devi = $this->fetchTable('Lignedevis')->newEmptyEntity();
                         $data['devis_id'] = $devi->id;
                         $data['article_id'] = $p['article_id'];
+                        $data['qte'] = $p['qte'];
                         $data['prix'] = $p['prix'];
                         $data['remise'] = $p['remise'];
                         $data['ht'] = $p['ht'];

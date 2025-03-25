@@ -86,7 +86,7 @@
 
                                                     <td align="center" style="width: 12%; font-size: 16px;"><strong>Article</strong></td>
                                                     <td align="center" style="width: 14%;font-size: 16px;"><strong>Prix Unitaire</strong></td>
-                                                    <!--td align="center" style="width: 8%;font-size: 16px;"><strong>Qte</strong></td-->
+                                                    <td align="center" style="width: 8%;font-size: 16px;"><strong>Qte</strong></td>
                                                     <!--td align="center" style="width: 14%;font-size: 16px;"><strong>Prix Brute</strong></td-->
                                                     <td align="center" style="width: 15%;font-size: 16px;"><strong>Remise</strong></td>
                                                     <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix HT</strong></td>
@@ -95,19 +95,14 @@
                                             </thead>
                                             <tbody>
                                                 <tr class="tr afef" style="display: none;">
-                                                    <!--td align="center" table="ligner">
-                                                        <input type="hidden" id="" champ="sup" name="" table="ligner" index="" class="form-control ">
-
-                                                        <input table="ligner" champ="numboite" type="text" class="form-control " index>
-                                                    </td-->
-
+                                                 
                                                     <td align="center" table="ligner">
                                                         <input type="hidden" id="" champ="sup" name="" table="ligner" index="" class="form-control ">
                                                         <div champ="divart" id="divart<?= $index ?>">
                                                             <select table="ligner" index champ="article_id" class="form-control js-example-responsive   ">
                                                                 <option value="" selected="selected" disabled>Veuillez
                                                                     choisir !!</option>
-                                                                <?php foreach ($articles as $id => $article) {
+                                                                <?php   foreach ($articles as $id => $article) {
                                                                 ?>
                                                                     <option value="<?php echo $article->id; ?>">
                                                                         <?php echo $article->Code . ' ' . $article->Dsignation ?>
@@ -121,7 +116,11 @@
                                                     <td align="center" table="ligner">
                                                         <input table="ligner" champ="prix" type="text" class="form-control " index>
                                                     </td>
-                                                    	
+
+                                                    <td align="center" table="ligner">
+                                                        <input table="ligner" champ="qte" type="text" class="form-control " index>
+                                                    </td>
+
 
                                                     <td align="center" table="ligner">
                                                         <input table="ligner" champ="ht" type="text" class="form-control " index>
@@ -130,12 +129,9 @@
                                                     <td align="center" table="ligner">
                                                         <input table="ligner" champ="remise" type="text" class="form-control " index>
                                                     </td>
-                                             
 
-                                                    <!--td align="center" table="ligner">
-                                                            <input table="ligner" champ="qte" type="text" class="form-control " index>
-                                                        </td-->
 
+               
 
 
                                                 </tr>

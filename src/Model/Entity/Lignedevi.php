@@ -10,10 +10,11 @@ use Cake\ORM\Entity;
  *
  * @property int $id
  * @property string $prix
- * @property string $remise
+ * @property float $remise
  * @property string $ht
  * @property int $article_id
  * @property int $devis_id
+ * @property float $qte
  *
  * @property \App\Model\Entity\Article $article
  * @property \App\Model\Entity\Devi $devi
@@ -35,6 +36,7 @@ class Lignedevi extends Entity
         'ht' => true,
         'article_id' => true,
         'devis_id' => true,
+        'qte' => true,
         'article' => true,
         'devi' => true,
     ];
