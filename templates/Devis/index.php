@@ -48,6 +48,7 @@ foreach ($lien as $k => $liens) {
                                 <th width="20%" align="center"><?= __('Client') ?></th>
                                 <th width="10%" align="center"><?= __('Total Remise') ?></th>
                                 <th width="10%" align="center"><?= __('Total Ht') ?></th>
+                                <th width="10%" align="center"><?= __('Total Brute') ?></th>
                                 <th width="30%" scope="col" class="actions text-center"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
@@ -63,6 +64,7 @@ foreach ($lien as $k => $liens) {
                                     <td><?=h($devi->client->Raison_Sociale)?></td>
                                     <td><?= $this->Number->format($devi->total_remise) ?></td>
                                     <td><?= $this->Number->format($devi->total_ht) ?></td>
+                                    <td><?= $this->Number->format($devi->total_brute) ?></td>
                                     
                                     <td class="actions text-center">
                                         <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $devi->id), array('escape' => false)); ?>

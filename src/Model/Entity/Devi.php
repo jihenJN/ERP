@@ -12,8 +12,9 @@ use Cake\ORM\Entity;
  * @property string $numero
  * @property \Cake\I18n\FrozenTime $date
  * @property int $client_id
- * @property string $total_remise
- * @property string $total_ht
+ * @property float $total_remise
+ * @property float $total_ht
+ * @property float $total_brute
  *
  * @property \App\Model\Entity\Client $client
  */
@@ -34,6 +35,7 @@ class Devi extends Entity
         'client_id' => true,
         'total_remise' => true,
         'total_ht' => true,
+        'total_brute' => true,
         'client' => true,
     ];
 }

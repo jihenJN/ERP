@@ -73,12 +73,17 @@ class DevisTable extends Table
             ->notEmptyString('client_id');
 
         $validator
-            ->decimal('total_remise')
+            ->numeric('total_remise')
             ->notEmptyString('total_remise');
 
         $validator
-            ->decimal('total_ht')
+            ->numeric('total_ht')
             ->notEmptyString('total_ht');
+
+        $validator
+            ->numeric('total_brute')
+            ->requirePresence('total_brute', 'create')
+            ->notEmptyString('total_brute');
 
         return $validator;
     }
@@ -97,7 +102,6 @@ class DevisTable extends Table
 
         return $rules;
     }
-
 
     public function getNextNumero()
     {

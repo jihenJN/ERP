@@ -21,10 +21,11 @@ class DevisFixture extends TestFixture
             [
                 'id' => 1,
                 'numero' => 'Lorem ipsum dolor sit amet',
-                'date' => '2025-03-25 08:29:44',
+                'date' => '2025-03-25 10:05:23',
                 'client_id' => 1,
-                'total_remise' => 1.5,
-                'total_ht' => 1.5,
+                'total_remise' => 1,
+                'total_ht' => 1,
+                'total_brute' => 1,
             ],
         ];
         parent::init();

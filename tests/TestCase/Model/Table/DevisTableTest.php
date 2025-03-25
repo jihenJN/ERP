@@ -73,4 +73,15 @@ class DevisTableTest extends TestCase
     {
         $this->markTestIncomplete('Not implemented yet.');
     }
+
+    /**
+     * Test getNextNumero method
+     *
+     * @return void
+     * @uses \App\Model\Table\DevisTable::getNextNumero()
+     */
+    public function testGetNextNumero(): void
+    {
+        $this->markTestIncomplete('Not implemented yet.');
+    }
 }

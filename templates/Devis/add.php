@@ -80,6 +80,9 @@
                         <div class="col-xs-6">
                             <?php echo $this->Form->control('total_ht', ['label' => 'Total HT']); ?>
                         </div>
+                        <div class="col-xs-6">
+                            <?php echo $this->Form->control('total_brute', ['label' => 'Total Brute']); ?>
+                        </div>
                     </div>
                     <button type="submit" class="pull-right btn btn-success" id="testde" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
                     <?php echo $this->Form->end(); ?>
