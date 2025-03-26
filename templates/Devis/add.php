@@ -32,6 +32,7 @@
                         <div class="col-xs-6">
                             <?php echo $this->Form->control('date', ['label' => 'Date']); ?>
                         </div>
+                        <br>
                         <div class="col-xs-6">
                             <?= $this->Form->control('client_id', [
                                 'label' => 'Client',
@@ -74,7 +75,7 @@
                                                 <td align="center" style="width: 8%;font-size: 16px;">
                                                     <strong>Qte</strong>
                                                 </td>
-                                                <!--td align="center" style="width: 14%;font-size: 16px;"><strong>Prix Brute</strong></td-->
+                                               
                                                 <td align="center" style="width: 15%;font-size: 16px;">
                                                     <strong>Remise %</strong>
                                                 </td>
@@ -85,6 +86,9 @@
                                         </thead>
                                         <?php $index = 0; ?>
                                         <tbody>
+
+
+                                        
                                             <tr class="tr afef" style="display: none;">
 
                                                 <td align="center" table="ligner">
@@ -144,32 +148,32 @@
                     </div>
                     <br>
                     <!-- Totals Section (Still Inside Box-Body to Ensure It Works) -->
-                    <div class="row" style ="text-align: right";>
-                    <div class="col-xs-12">
+                    <div class="row" style="text-align: right" ;>
+                        <div class="col-xs-12">
                             <div class="form-inline">
 
-                                <label  style="text-align: end;">Total Brute</label>
+                                <label style="text-align: end;">Total Brute</label>
                                 <?php echo $this->Form->control('total_brute', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
                             </div>
                         </div>
                         <br>
                         <div class="col-xs-12">
                             <div class="form-inline">
-                                <label  style="text-align: end;">Total Remise</label>
+                                <label style="text-align: end;">Total Remise</label>
                                 <?php echo $this->Form->control('total_remise', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
                             </div>
                         </div>
                         <br>
                         <div class="col-xs-12">
                             <div class="form-inline">
-                                
+
                                 <label style="text-align: end;">Total HT</label>
                                 <?php echo $this->Form->control('total_ht', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
                             </div>
                         </div>
-                      
-                       
-                       
+
+
+
                     </div>
 
                 </div>
@@ -454,58 +458,58 @@
 
     // This function calculates the total remise for all articles
     function updateTotalRemise() {
-    let totalRemise = 0;
+        let totalRemise = 0;
 
-    // Iterate through each row (article)
-    $("tr").each(function() {
-        let prix = $(this).find("[champ='prix']").val(); // Get Prix Unitaire
-        let qte = $(this).find("[champ='qte']").val(); // Get Quantité
-        let remisePercentage = $(this).find("[champ='remise']").val(); // Get Remise Percentage
+        // Iterate through each row (article)
+        $("tr").each(function() {
+            let prix = $(this).find("[champ='prix']").val(); // Get Prix Unitaire
+            let qte = $(this).find("[champ='qte']").val(); // Get Quantité
+            let remisePercentage = $(this).find("[champ='remise']").val(); // Get Remise Percentage
 
-        // Only calculate remise if Prix, Qte, and Remise Percentage are valid
-        if (prix && qte && remisePercentage && !isNaN(prix) && !isNaN(qte) && !isNaN(remisePercentage)) {
-            prix = parseFloat(prix); // Convert to float
-            qte = parseFloat(qte); // Convert to float
-            remisePercentage = parseFloat(remisePercentage); // Convert to float
+            // Only calculate remise if Prix, Qte, and Remise Percentage are valid
+            if (prix && qte && remisePercentage && !isNaN(prix) && !isNaN(qte) && !isNaN(remisePercentage)) {
+                prix = parseFloat(prix); // Convert to float
+                qte = parseFloat(qte); // Convert to float
+                remisePercentage = parseFloat(remisePercentage); // Convert to float
 
-            // Calculate original price (before discount)
-            let prixSansRemise = prix * qte;
+                // Calculate original price (before discount)
+                let prixSansRemise = prix * qte;
 
-            // Calculate discounted price (after applying the remise)
-            let prixAvecRemise = prix * qte * (1 - remisePercentage / 100);
+                // Calculate discounted price (after applying the remise)
+                let prixAvecRemise = prix * qte * (1 - remisePercentage / 100);
 
-            // Calculate remise for this article (difference between original price and discounted price)
-            let remiseForArticle = prixSansRemise - prixAvecRemise;
+                // Calculate remise for this article (difference between original price and discounted price)
+                let remiseForArticle = prixSansRemise - prixAvecRemise;
 
-            // Add this remise to the total remise
-            totalRemise += remiseForArticle;
-        }
-    });
+                // Add this remise to the total remise
+                totalRemise += remiseForArticle;
+            }
+        });
 
-    // Update the "total_remise" field in the form
-    $("input[name='total_remise']").val(totalRemise.toFixed(2)); // Format to 2 decimal places
-}
+        // Update the "total_remise" field in the form
+        $("input[name='total_remise']").val(totalRemise.toFixed(2)); // Format to 2 decimal places
+    }
 
 
     // Function to calculate the HT price after applying the discount for each row
     function updateHTPriceAndTotal() {
         let totalHT = 0;
-        
+
         $("tr").each(function() {
             let prixUnitaire = $(this).find("[champ='prix']").val();
             let qte = $(this).find("[champ='qte']").val();
-            let remisePercentage = $(this).find("[champ='remise']").val()||0;
+            let remisePercentage = $(this).find("[champ='remise']").val() || 0;
 
             // Only calculate if Prix Unitaire, Quantité, and Remise are valid numbers
             if (prixUnitaire && qte && remisePercentage) {
                 prixUnitaire = parseFloat(prixUnitaire); // Convert to float
                 qte = parseFloat(qte); // Convert to float
                 remisePercentage = parseFloat(remisePercentage); // Convert to float, default to 0 if remise is not provided
-               let htPriceAfterDiscount= prixUnitaire * qte * (1 - remisePercentage / 100);
+                let htPriceAfterDiscount = prixUnitaire * qte * (1 - remisePercentage / 100);
                 $(this).find("[champ='ht']").val(htPriceAfterDiscount.toFixed(2));
                 // Add to the total HT
                 totalHT += htPriceAfterDiscount;
-               
+
             }
         });
 

@@ -54,61 +54,35 @@ class DevisController extends AppController
         $this->loadModel('Clients');
         $devi = $this->Devis->newEmptyEntity();
         $devi['numero'] = $this->Devis->getNextNumero();
-
         if ($this->request->is('post')) {
             $devi = $this->Devis->patchEntity($devi, $this->request->getData());
-
             if ($this->Devis->save($devi)) {
-              //  $this->Flash->success(__('The devi has been saved.'));
-
-              if (isset($this->request->getData('data')['ligner']) && (!empty($this->request->getData('data')['ligner']))) {
-                foreach ($this->request->getData('data')['ligner'] as $j => $p) {
-                    //debug($p['prix']);die;
-                    //die;
-    
-                    if ($p['sup'] != 1) {
-                        $L_devi = $this->fetchTable('Lignedevis')->newEmptyEntity();
-                        $data['devis_id'] = $devi->id;
-                        $data['article_id'] = $p['article_id'];
-                        $data['qte'] = $p['qte'];
-                        $data['prix'] = $p['prix'];
-                        $data['remise'] = $p['remise'];
-                        $data['ht'] = $p['ht'];
-                      
-                      
-                        $lignedevi = $this->fetchTable('Lignedevis')->patchEntity($L_devi, $data);
-                      
-                        $this->fetchTable('Lignedevis')->save($lignedevi);
-    
+                if (isset($this->request->getData('data')['ligner']) && (!empty($this->request->getData('data')['ligner']))) {
+                    foreach ($this->request->getData('data')['ligner'] as $j => $p) {
+                        if ($p['sup'] != 1) {
+                            $L_devi = $this->fetchTable('Lignedevis')->newEmptyEntity();
+                            $data['devis_id'] = $devi->id;
+                            $data['article_id'] = $p['article_id'];
+                            $data['qte'] = $p['qte'];
+                            $data['prix'] = $p['prix'];
+                            $data['remise'] = $p['remise'];
+                            $data['ht'] = $p['ht'];
+                            $lignedevi = $this->fetchTable('Lignedevis')->patchEntity($L_devi, $data);
+                            $this->fetchTable('Lignedevis')->save($lignedevi);
+                        }
                     }
                 }
-            }
-    
-
-
-
-
-
                 return $this->redirect(['action' => 'index']);
             }
-          //  $this->Flash->error(__('The devi could not be saved. Please, try again.'));
         }
-
-
-
-        
         $clients = $this->fetchTable('Clients')->find('list', [
             'keyField' => 'id',
             'valueField' => function ($row) {
                 return $row->Code . '  ' . $row->Raison_Sociale; // Concatenate Raison_Sociale and code
             }
         ]);
-
         $articles = $this->fetchTable('Articles')->find('all');
-
-
-
-        $this->set(compact('devi', 'clients','articles'));
+        $this->set(compact('devi', 'clients', 'articles'));
     }
 
     /**
@@ -126,20 +100,55 @@ class DevisController extends AppController
         if ($this->request->is(['patch', 'post', 'put'])) {
             $devi = $this->Devis->patchEntity($devi, $this->request->getData());
             if ($this->Devis->save($devi)) {
-                //  $this->Flash->success(__('The devi has been saved.'));
+                if (isset($this->request->getData('data')['ligner']) && (!empty($this->request->getData('data')['ligner']))) {
+                    foreach ($this->request->getData('data')['ligner'] as $j => $p) {
+                        if ($p['sup'] != 1) {
+                            $L_devi = $this->fetchTable('Lignedevis')->newEmptyEntity();
+                            $data['devis_id'] = $devi->id;
+                            $data['article_id'] = $p['article_id'];
+                            $data['qte'] = $p['qte'];
+                            $data['prix'] = $p['prix'];
+                            $data['remise'] = $p['remise'];
+                            $data['ht'] = $p['ht'];
+
+                            if (isset($p['id']) && (!empty($p['id']))) {
+
+                                $L_devi = $this->fetchTable('Lignedevis')->get($p['id'], [
+                                    'contain' => []
+                                ]);
+                            } else {
+                                $L_devi = $this->fetchTable('Lignedevis')->newEmptyEntity();
+                            }
+
+                            $lignedevis = $this->fetchTable('Lignedevis')->patchEntity($L_devi, $data);
+                            $this->fetchTable('Lignedevis')->save($lignedevis);
+                        } else if ($p['sup'] == 1 && !empty($p['id'])) {
+
+                            $lignedevis = $this->fetchTable('Lignedevis')->get($p['id'], [
+                                'contain' => []
+                            ]);
+                            $this->fetchTable('Lignedevis')->delete($lignedevis);
+                        }
+                    }
+                }
 
                 return $this->redirect(['action' => 'index']);
             }
             // $this->Flash->error(__('The devi could not be saved. Please, try again.'));
         }
 
+        debug($devi->id);
+        if (!empty($devi->id)) {
+            $lignedevis = $this->fetchTable('Lignedevis')->find('all')->where(['Lignedevis.devis_id'=>$devi->id])->toArray();
+        }
+       debug($lignedevis);
         $clients = $this->fetchTable('Clients')->find('list', [
             'keyField' => 'id',
             'valueField' => function ($row) {
                 return $row->Code . '  ' . $row->Raison_Sociale; // Concatenate Raison_Sociale and code
             }
         ]);
-        $this->set(compact('devi', 'clients'));
+        $this->set(compact('devi', 'clients','lignedevis'));
     }
 
     /**
