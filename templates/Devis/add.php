@@ -127,7 +127,7 @@
 
 
                                                     <td align="center" table="ligner">
-                                                        <input table="ligner" champ="ht" type="text" class="form-control " index>
+                                                        <input table="ligner" champ="ht" type="text" class="form-control " readonly=true  index>
                                                     </td>
 
                                                   
@@ -403,6 +403,7 @@
     ajouter(table, index);
     updateTotalBrute();
     updateTotalRemise();
+    updateHTPriceAndTotal();
 });
 
 
@@ -456,10 +457,48 @@ function updateTotalRemise() {
     $("input[name='total_remise']").val(totalRemise.toFixed(2));  // Format to 2 decimal places
 }
 
+
+// Function to calculate the HT price after applying the discount for each row
+function updateHTPriceAndTotal() {
+    let totalHT = 0;
+
+  
+    $("tr").each(function() {
+     
+        let prixUnitaire = $(this).find("[champ='prix']").val();  
+        let qte = $(this).find("[champ='qte']").val(); 
+        let remise = $(this).find("[champ='remise']").val(); 
+
+        // Only calculate if Prix Unitaire, Quantité, and Remise are valid numbers
+        if (prixUnitaire && qte) {
+            prixUnitaire = parseFloat(prixUnitaire);  // Convert to float
+            qte = parseFloat(qte);    // Convert to float
+            remise = parseFloat(remise) || 0;  // Convert to float, default to 0 if remise is not provided
+
+           
+            let totalBeforeDiscount = prixUnitaire * qte;
+
+           
+            let htPriceAfterDiscount = totalBeforeDiscount - remise;
+
+            // Update the HT price after discount field for this row
+            $(this).find("[champ='ht']").val(htPriceAfterDiscount.toFixed(2)); 
+
+            // Add to the total HT
+            totalHT += htPriceAfterDiscount;
+        }
+    });
+
+    // Update the Total HT field
+    $("input[name='total_ht']").val(totalHT.toFixed(2));  
+}
+
 // Delegate the "input" event to ensure it applies to dynamically added rows
 $(document).on("input", "[table='ligner'] [champ='prix'], [table='ligner'] [champ='qte'], [table='ligner'] [champ='remise']", function() {
-    updateTotalBrute();
-    updateTotalRemise(); // Recalculate total brute whenever price or quantity is changed
+    updateTotalBrute();// Recalculate total brute whenever price or quantity is changed
+    updateTotalRemise(); 
+    updateHTPriceAndTotal(); 
+
 });
 
 
