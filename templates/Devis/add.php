@@ -22,16 +22,10 @@
 <section class="content">
     <div class="row">
         <div class="col-md-12">
-            <!-- general form elements -->
-            <div class="box ">
-
-                <!-- /.box-header -->
-                <!-- form start -->
+            <div class="box">
                 <?php echo $this->Form->create($devi, ['role' => 'form']); ?>
                 <div class="box-body">
-
-
-                    <div style=" margin: 0 auto;  margin-left: 20px; margin-right: 20px; position: static; ">
+                    <div class="row" style=" margin: 0 auto;  margin-left: 20px; margin-right: 20px; position: static; ">
                         <div class="col-xs-6">
                             <?php echo $this->Form->control('numero', ['label' => 'Numéro', 'readOnly' => true]); ?>
                         </div>
@@ -49,112 +43,141 @@
 
 
                         </div>
-                        <div class="col-xs-6">
-                            <?php echo $this->Form->control('total_remise', ['label' => 'Total Remise', 'readonly' => true]); ?>
-                        </div>
-                        <div class="col-xs-6">
-                            <?php echo $this->Form->control('total_ht', ['label' => 'Total HT', 'readonly' => true]); ?>
-                        </div>
-                        <div class="col-xs-6">
-                            <?php echo $this->Form->control('total_brute', ['label' => 'Total Brute', 'readonly' => true]); ?>
-                        </div>
                     </div>
-                    //////
-
                     <br>
-
-                    <section class="content" style="width: 99%">
-                        <div class="row">
-                            <div class="box box-primary">
-                                <div class="box-header with-border">
-                                    <a class="btn btn-primary ajouterligne_w btn  btnajoutlignecommande" table="addtable" index="index" style="
+                    <div class="row">
+                        <div class="box box-primary">
+                            <div class="box-header with-border">
+                                <a class="btn btn-primary ajouterligne_w btn  btnajoutlignecommande"
+                                    table="addtable" index="index" style="
                                        float: right;
                                        margin-bottom: 5px;
                                         border-color:#3C386E!important;background-color:#3C386E!important;">
-                                        <i class="fa fa-plus-circle "></i>
-                                    </a>
+                                    <i class="fa fa-plus-circle "></i>
+                                </a>
+
+                            </div>
+                            <div class="panel-body">
+                                <div class="table-responsive ls-table">
+                                    <table border="1px" class="table table-bordered table-striped table-bottomless"
+                                        id="addtable">
+
+                                        <thead>
+                                            <tr>
+
+
+                                                <td align="center" style="width: 12%; font-size: 16px;">
+                                                    <strong>Article</strong>
+                                                </td>
+                                                <td align="center" style="width: 14%;font-size: 16px;"><strong>Prix
+                                                        Unitaire</strong></td>
+                                                <td align="center" style="width: 8%;font-size: 16px;">
+                                                    <strong>Qte</strong>
+                                                </td>
+                                                <!--td align="center" style="width: 14%;font-size: 16px;"><strong>Prix Brute</strong></td-->
+                                                <td align="center" style="width: 15%;font-size: 16px;">
+                                                    <strong>Remise %</strong>
+                                                </td>
+                                                <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
+                                                        HT</strong></td>
+                                                <td align="center" style="width:2%;"></td>
+                                            </tr>
+                                        </thead>
+                                        <?php $index = 0; ?>
+                                        <tbody>
+                                            <tr class="tr afef" style="display: none;">
+
+                                                <td align="center" table="ligner">
+                                                    <input type="hidden" id="" champ="sup" name="" table="ligner"
+                                                        index="" class="form-control ">
+                                                    <div champ="divart" id="divart<?= $index ?>">
+                                                        <select table="ligner" index champ="article_id"
+                                                            class="form-control js-example-responsive   ">
+                                                            <option value="" selected="selected" disabled>Veuillez
+                                                                choisir !!</option>
+                                                            <?php foreach ($articles as $id => $article) {
+                                                            ?>
+                                                                <option value="<?php echo $article->id; ?>">
+                                                                    <?php echo $article->Code . ' ' . $article->Dsignation ?>
+                                                                </option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+
+                                                </td>
+
+                                                <td align="center" table="ligner">
+                                                    <input table="ligner" champ="prix" type="text"
+                                                        class="form-control " index>
+                                                </td>
+
+                                                <td align="center" table="ligner">
+                                                    <input table="ligner" champ="qte" type="text"
+                                                        class="form-control " index>
+                                                </td>
+
+                                                <td align="center" table="ligner">
+                                                    <input table="ligner" champ="remise" type="text"
+                                                        class="form-control " index>
+                                                </td>
+
+
+                                                <td align="center" table="ligner">
+                                                    <input table="ligner" champ="ht" type="text"
+                                                        class="form-control " readonly=true index>
+                                                </td>
+
+
+
+                                            </tr>
+                                            <input type="hidden" value="-1" id="index">
+                                        </tbody>
+
+                                    </table>
+                                    <br />
 
                                 </div>
-                                <div class="panel-body">
-                                    <div class="table-responsive ls-table">
-                                        <table border="1px" class="table table-bordered table-striped table-bottomless" id="addtable">
-
-                                            <thead>
-                                                <tr>
 
 
-                                                    <td align="center" style="width: 12%; font-size: 16px;"><strong>Article</strong></td>
-                                                    <td align="center" style="width: 14%;font-size: 16px;"><strong>Prix Unitaire</strong></td>
-                                                    <td align="center" style="width: 8%;font-size: 16px;"><strong>Qte</strong></td>
-                                                    <!--td align="center" style="width: 14%;font-size: 16px;"><strong>Prix Brute</strong></td-->
-                                                    <td align="center" style="width: 15%;font-size: 16px;"><strong>Remise %</strong></td>
-                                                    <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix HT</strong></td>
-                                                    <td align="center" style="width:2%;"></td>
-                                                </tr>
-                                            </thead>
-                                            <?php $index = 0; ?>
-                                            <tbody>
-                                                <tr class="tr afef" style="display: none;">
-
-                                                    <td align="center" table="ligner">
-                                                        <input type="hidden" id="" champ="sup" name="" table="ligner" index="" class="form-control ">
-                                                        <div champ="divart" id="divart<?= $index ?>">
-                                                            <select table="ligner" index champ="article_id" class="form-control js-example-responsive   ">
-                                                                <option value="" selected="selected" disabled>Veuillez
-                                                                    choisir !!</option>
-                                                                <?php foreach ($articles as $id => $article) {
-                                                                ?>
-                                                                    <option value="<?php echo $article->id; ?>">
-                                                                        <?php echo $article->Code . ' ' . $article->Dsignation ?>
-                                                                    </option>
-                                                                <?php } ?>
-                                                            </select>
-                                                        </div>
-
-                                                    </td>
-
-                                                    <td align="center" table="ligner">
-                                                        <input table="ligner" champ="prix" type="text" class="form-control " index>
-                                                    </td>
-
-                                                    <td align="center" table="ligner">
-                                                        <input table="ligner" champ="qte" type="text" class="form-control " index>
-                                                    </td>
-
-                                                    <td align="center" table="ligner">
-                                                        <input table="ligner" champ="remise" type="text" class="form-control " index>
-                                                    </td>
-
-
-                                                    <td align="center" table="ligner">
-                                                        <input table="ligner" champ="ht" type="text" class="form-control " readonly=true  index>
-                                                    </td>
-
-                                                  
-
-                                                </tr>
-                                                <input type="hidden" value="-1" id="index">
-                                            </tbody>
-
-                                        </table>
-                                        <br />
-
-                                    </div>
-
-
-                                </div>
                             </div>
                         </div>
+                    </div>
+                    <br>
+                    <!-- Totals Section (Still Inside Box-Body to Ensure It Works) -->
+                    <div class="row" style ="text-align: right";>
+                    <div class="col-xs-12">
+                            <div class="form-inline">
 
-
-                    </section>
-
-
-
+                                <label  style="text-align: end;">Total Brute</label>
+                                <?php echo $this->Form->control('total_brute', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-xs-12">
+                            <div class="form-inline">
+                                <label  style="text-align: end;">Total Remise</label>
+                                <?php echo $this->Form->control('total_remise', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-xs-12">
+                            <div class="form-inline">
+                                
+                                <label style="text-align: end;">Total HT</label>
+                                <?php echo $this->Form->control('total_ht', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
+                            </div>
+                        </div>
+                      
+                       
+                       
+                    </div>
 
                 </div>
-</section>
 
+            </div>
+        </div>
+    </div>
+</section>
 
 
 
@@ -382,71 +405,82 @@
         })
     });
     $(".ajouterligne_w").on("click", function() {
-    // Get table and index
-    var table = $(this).attr("table");
-    var index = $(this).attr("index");
-    var ind = $("#index").val();
-    var supp = $("#sup" + ind).val();
+        // Get table and index
+        var table = $(this).attr("table");
+        var index = $(this).attr("index");
+        var ind = $("#index").val();
+        var supp = $("#sup" + ind).val();
 
- //   var remise = $("#remise").val();
+        //   var remise = $("#remise").val();
 
-    // Check if required fields are filled
-    if (
-        (!$("#article_id" + ind).val() || !$("#qte" + ind).val()) &&
-        ind != -1 &&
-        supp != 1
-    ) {
-        return false; // Do not proceed if fields are not valid
-    }
-
-    // Add a new row and update total brute
-    ajouter(table, index);
-    updateTotalBrute();
-    updateTotalRemise();
-    updateHTPriceAndTotal();
-});
-
-
-
-// Function to update total brute value
-function updateTotalBrute() {
-    var totalBrute = 0;
-
-    // Iterate through each row to calculate the total
-    $("tr").each(function() {
-        var prix = $(this).find("[champ='prix']").val();
-        var qte = $(this).find("[champ='qte']").val();
-
-        // Only calculate if both values are numbers
-        if (prix && qte) {
-            prix = parseFloat(prix);
-            qte = parseFloat(qte);
-            totalBrute += prix * qte;
+        // Check if required fields are filled
+        if (
+            (!$("#article_id" + ind).val() || !$("#qte" + ind).val()) &&
+            ind != -1 &&
+            supp != 1
+        ) {
+            return false; // Do not proceed if fields are not valid
         }
+
+        // Add a new row and update total brute
+        ajouter(table, index);
+        updateTotalBrute();
+        updateTotalRemise();
+        updateHTPriceAndTotal();
     });
 
-    // Update the total_brute field with the calculated total
-    $("input[name='total_brute']").val(totalBrute.toFixed(2));
-}
 
-// This function calculates the total remise for all articles
-function updateTotalRemise() {
+
+    // Function to update total brute value
+    function updateTotalBrute() {
+        var totalBrute = 0;
+
+        // Iterate through each row to calculate the total
+        $("tr").each(function() {
+            var prix = $(this).find("[champ='prix']").val();
+            var qte = $(this).find("[champ='qte']").val();
+
+            // Only calculate if both values are numbers
+            if (prix && qte) {
+                prix = parseFloat(prix);
+                qte = parseFloat(qte);
+                totalBrute += prix * qte;
+            }
+        });
+
+        // Update the total_brute field with the calculated total
+        $("input[name='total_brute']").val(totalBrute.toFixed(2));
+    }
+
+    // This function calculates the total remise for all articles
+    function updateTotalRemise() {
     let totalRemise = 0;
 
     // Iterate through each row (article)
     $("tr").each(function() {
-        let prix = $(this).find("[champ='prix']").val();    // Get Prix Unitaire
-        let qte = $(this).find("[champ='qte']").val();      // Get Quantité
-        let remisePercentage = $(this).find("[champ='remise']").val();  // Get Remise Percentage
+        let prix = $(this).find("[champ='prix']").val(); // Get Prix Unitaire
+        let qte = $(this).find("[champ='qte']").val(); // Get Quantité
+        let remisePercentage = $(this).find("[champ='remise']").val(); // Get Remise Percentage
 
         // Only calculate remise if Prix, Qte, and Remise Percentage are valid
-        if (prix && qte && remisePercentage) {
-            prix = parseFloat(prix);        // Convert to float
-            qte = parseFloat(qte);          // Convert to float
-            remisePercentage = parseFloat(remisePercentage);  // Convert to float
+        if (prix && qte && remisePercentage && !isNaN(prix) && !isNaN(qte) && !isNaN(remisePercentage)) {
+            prix = parseFloat(prix); // Convert to float
+            qte = parseFloat(qte); // Convert to float
+            remisePercentage = parseFloat(remisePercentage); // Convert to float
 
-            // Calculate remise for this article
-            let remiseForArticle = prix * qte * (remisePercentage / 100);
+            // Calculate original price (before discount)
+            let prixSansRemise = prix * qte;
+
+            // Calculate discounted price (after applying the remise)
+            let prixAvecRemise = prix * qte * (1 - remisePercentage / 100);
+
+            // Calculate remise for this article (difference between original price and discounted price)
+            let remiseForArticle = prixSansRemise - prixAvecRemise;
+
+            console.log('prixSansRemise',prixSansRemise);
+            console.log('prixAvecRemise',prixAvecRemise);
+            console.log('remiseForArticle',remiseForArticle);
+
 
             // Add this remise to the total remise
             totalRemise += remiseForArticle;
@@ -454,133 +488,154 @@ function updateTotalRemise() {
     });
 
     // Update the "total_remise" field in the form
-    $("input[name='total_remise']").val(totalRemise.toFixed(2));  // Format to 2 decimal places
+    $("input[name='total_remise']").val(totalRemise.toFixed(2)); // Format to 2 decimal places
 }
 
 
-// Function to calculate the HT price after applying the discount for each row
-function updateHTPriceAndTotal() {
-    let totalHT = 0;
+    // Function to calculate the HT price after applying the discount for each row
+    function updateHTPriceAndTotal() {
+        let totalHT = 0;
 
-  
-    $("tr").each(function() {
-     
-        let prixUnitaire = $(this).find("[champ='prix']").val();  
-        let qte = $(this).find("[champ='qte']").val(); 
-        let remise = $(this).find("[champ='remise']").val(); 
 
-        // Only calculate if Prix Unitaire, Quantité, and Remise are valid numbers
-        if (prixUnitaire && qte) {
-            prixUnitaire = parseFloat(prixUnitaire);  // Convert to float
-            qte = parseFloat(qte);    // Convert to float
-            remise = parseFloat(remise) || 0;  // Convert to float, default to 0 if remise is not provided
+        $("tr").each(function() {
 
-           
-            let totalBeforeDiscount = prixUnitaire * qte;
+            let prixUnitaire = $(this).find("[champ='prix']").val();
+            let qte = $(this).find("[champ='qte']").val();
+            let remise = $(this).find("[champ='remise']").val();
 
-           
-            let htPriceAfterDiscount = totalBeforeDiscount - remise;
+            // Only calculate if Prix Unitaire, Quantité, and Remise are valid numbers
+            if (prixUnitaire && qte) {
+                prixUnitaire = parseFloat(prixUnitaire); // Convert to float
+                qte = parseFloat(qte); // Convert to float
+                remise = parseFloat(remise) || 0; // Convert to float, default to 0 if remise is not provided
 
-            // Update the HT price after discount field for this row
-            $(this).find("[champ='ht']").val(htPriceAfterDiscount.toFixed(2)); 
 
-            // Add to the total HT
-            totalHT += htPriceAfterDiscount;
-        }
+                let totalBeforeDiscount = prixUnitaire * qte;
+
+
+                let htPriceAfterDiscount = totalBeforeDiscount - remise;
+
+                // Update the HT price after discount field for this row
+                $(this).find("[champ='ht']").val(htPriceAfterDiscount.toFixed(2));
+
+                // Add to the total HT
+                totalHT += htPriceAfterDiscount;
+            }
+        });
+
+        // Update the Total HT field
+        $("input[name='total_ht']").val(totalHT.toFixed(2));
+    }
+
+    // Delegate the "input" event to ensure it applies to dynamically added rows
+    $(document).on("input", "[table='ligner'] [champ='prix'], [table='ligner'] [champ='qte'], [table='ligner'] [champ='remise']", function() {
+        updateTotalBrute(); // Recalculate total brute whenever price or quantity is changed
+        updateTotalRemise();
+        updateHTPriceAndTotal();
+
     });
 
-    // Update the Total HT field
-    $("input[name='total_ht']").val(totalHT.toFixed(2));  
-}
 
-// Delegate the "input" event to ensure it applies to dynamically added rows
-$(document).on("input", "[table='ligner'] [champ='prix'], [table='ligner'] [champ='qte'], [table='ligner'] [champ='remise']", function() {
-    updateTotalBrute();// Recalculate total brute whenever price or quantity is changed
-    updateTotalRemise(); 
-    updateHTPriceAndTotal(); 
+    // Function to add a new row to the table
+    function ajouter(table, index) {
+        var ind = Number($("#" + index).val()) + 1; // Get new index by incrementing
+        var $ttr = $("#" + table).find(".tr").first().clone(true); // Clone the first row (hidden template)
+        $ttr.attr("class", ""); // Remove any class from the cloned row
 
-});
+        var tabb = [];
+        var i = 0;
 
+        // Iterate over each element inside the row and update attributes
+        $ttr.find("input, select, textarea, tr, td, div, ul, li").each(function() {
+            var tab = $(this).attr("table");
+            var champ = $(this).attr("champ");
 
-// Function to add a new row to the table
-function ajouter(table, index) {
-    var ind = Number($("#" + index).val()) + 1;  // Get new index by incrementing
-    var $ttr = $("#" + table).find(".tr").first().clone(true); // Clone the first row (hidden template)
-    $ttr.attr("class", ""); // Remove any class from the cloned row
+            // Set new index and id for the cloned row
+            $(this).attr("index", ind);
+            $(this).attr("id", champ + ind);
 
-    var tabb = [];
-    var i = 0;
+            if (champ === "marchandisetype_id") {
+                $(this).attr("name", "data[" + tab + "][" + ind + "][" + champ + "][]");
+                $(this).attr("data-bv-field", "data[" + tab + "][" + ind + "][" + champ + "]");
+            } else {
+                $(this).attr("name", "data[" + tab + "][" + ind + "][" + champ + "]");
+                $(this).attr("data-bv-field", "data[" + tab + "][" + ind + "][" + champ + "]");
+            }
 
-    // Iterate over each element inside the row and update attributes
-    $ttr.find("input, select, textarea, tr, td, div, ul, li").each(function() {
-        var tab = $(this).attr("table");
-        var champ = $(this).attr("champ");
+            // Reset values for inputs
+            $(this).val("");
 
-        // Set new index and id for the cloned row
-        $(this).attr("index", ind);
-        $(this).attr("id", champ + ind);
+            // Special handling for radio buttons
+            if ($(this).attr("type") === "radio") {
+                $(this).attr("name", "data[" + champ + "]");
+                $(this).val(ind);
+            }
 
-        if (champ === "marchandisetype_id") {
-            $(this).attr("name", "data[" + tab + "][" + ind + "][" + champ + "][]");
-            $(this).attr("data-bv-field", "data[" + tab + "][" + ind + "][" + champ + "]");
-        } else {
-            $(this).attr("name", "data[" + tab + "][" + ind + "][" + champ + "]");
-            $(this).attr("data-bv-field", "data[" + tab + "][" + ind + "][" + champ + "]");
-        }
+            // Handle specific fields like date
+            if (champ === "datedebut" || champ === "datefin") {
+                $(this).attr("onblur", "nbrjour(" + ind + ")");
+            }
 
-        // Reset values for inputs
-        $(this).val("");
+            $(this).removeClass("anc");
 
-        // Special handling for radio buttons
-        if ($(this).attr("type") === "radio") {
-            $(this).attr("name", "data[" + champ + "]");
-            $(this).val(ind);
-        }
+            if ($(this).is("select", "multiple")) {
+                tabb[i] = champ + ind;
+                i++;
+            }
+        });
 
-        // Handle specific fields like date
-        if (champ === "datedebut" || champ === "datefin") {
-            $(this).attr("onblur", "nbrjour(" + ind + ")");
-        }
+        // Handle icons and set their index
+        $ttr.find("i").each(function() {
+            $(this).attr("index", ind);
+        });
 
-        $(this).removeClass("anc");
+        // Append the new row to the table
+        $("#" + table).append($ttr);
+        $("#" + index).val(ind);
 
-        if ($(this).is("select", "multiple")) {
-            tabb[i] = champ + ind;
-            i++;
-        }
-    });
+        // Make the new row visible
+        $("#" + table).find("tr:last").show();
 
-    // Handle icons and set their index
-    $ttr.find("i").each(function() {
-        $(this).attr("index", ind);
-    });
+        // Reinitialize select2 for new elements
+        $("#charge_id" + ind).select2({
+            width: "100%"
+        });
+        $("#article" + ind).select2({
+            width: "100%"
+        });
+        $("#famille_id" + ind).select2("open");
+        $("#client_id" + ind).select2({
+            width: "100%"
+        });
+        $("#fr_id" + ind).select2({
+            width: "100%"
+        });
+        $("#banque_id" + ind).select2({
+            width: "100%"
+        });
+        $("#typeexon_id" + ind).select2({
+            width: "100%"
+        });
+        $("#gouvernorat_id" + ind).select2({
+            width: "75%"
+        });
+        $("#ligneplan_id" + ind).select2({
+            width: "75%"
+        });
+        $("#nature_id" + ind).select2({
+            width: "75%"
+        });
+        $("#taxe_id" + ind).select2({
+            width: "75%"
+        });
+        $("#champ_id" + ind).select2({
+            width: "75%"
+        });
 
-    // Append the new row to the table
-    $("#" + table).append($ttr);
-    $("#" + index).val(ind);
-
-    // Make the new row visible
-    $("#" + table).find("tr:last").show();
-
-    // Reinitialize select2 for new elements
-    $("#charge_id" + ind).select2({ width: "100%" });
-    $("#article" + ind).select2({ width: "100%" });
-    $("#famille_id" + ind).select2("open");
-    $("#client_id" + ind).select2({ width: "100%" });
-    $("#fr_id" + ind).select2({ width: "100%" });
-    $("#banque_id" + ind).select2({ width: "100%" });
-    $("#typeexon_id" + ind).select2({ width: "100%" });
-    $("#gouvernorat_id" + ind).select2({ width: "75%" });
-    $("#ligneplan_id" + ind).select2({ width: "75%" });
-    $("#nature_id" + ind).select2({ width: "75%" });
-    $("#taxe_id" + ind).select2({ width: "75%" });
-    $("#champ_id" + ind).select2({ width: "75%" });
-
-    // Mark the row as inserted
-    $("#inserted" + ind).val(1);
-    $("#auto" + ind).val(1);
-}
-
+        // Mark the row as inserted
+        $("#inserted" + ind).val(1);
+        $("#auto" + ind).val(1);
+    }
 </script>
 <?php $this->end(); ?>
 
