@@ -87,8 +87,42 @@
 
                                         <tbody>
                                             <?php foreach ($lignedevis as $i => $res) : ?>
-                                                <!--td> <?php echo $res->prix; ?> </td--->
+                                                
                                                 <tr>
+                                                
+                                                <td align="center">
+                                                                <?php echo $this->Form->input('sup', array('name' => "data[ligner][" . $i . "][sup]", 'id' => 'sup' . $i, 'champ' => 'sup', 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => '', 'class' => 'form-control', 'type' => 'hidden')); ?>
+                                                                <?php
+                                                                echo $this->Form->input('id', array(
+                                                                    'champ' => 'id',
+                                                                    'label' => '',
+                                                                    'name' => 'data[ligner][' . $i . '][id]',
+                                                                    'value' => $res->article_id,
+                                                                    'type' => 'hidden',
+                                                                    'id' => '',
+                                                                    'table' => 'ligner',
+                                                                    'index' => '',
+                                                                    'div' => 'form-group',
+                                                                    'between' => '<div class="col-sm-12">',
+                                                                    'after' => '</div>',
+                                                                    'class' => 'form-control'
+                                                                ));
+                                                                ?>
+                                                                <div champ="divart"  index="<?= $i ?>" id="divart<?=  $i ?>">
+                                                                  
+                                                                    <select  name="<?php echo "data[ligner][" . $i . "][article_id]" ?>" id="<?php echo 'article_id' . $i ?>" table="ligner" index="<?php echo $i ?>" champ="article_id" class="form-control articleidbl1 Testdep single">
+                                                                        <option disabled="true" disabled>Veuillez choisir !!</option>
+                                                                        <?php foreach ($articles as $id => $article) {
+                                                                        ?>
+                                                                            <option <?php if ($res->article_id == $article->id) { ?> selected="selected" <?php } ?> value="<?php echo $article->id; ?>"><?php echo $article->Code . ' ' . $article->Dsignation ?></option>
+                                                                        <?php } ?>
+                                                                    </select>
+
+                                                                </div>
+
+
+
+                                                            </td>
                                                     <td align="center">
                                                         <?php echo $this->Form->input('prix', array('label' => '', 'value' => $res->prix, 'name' => 'data[ligner][' . $i . '][prix]', 'type' => 'text', 'id' => 'prix' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control ', 'index')); ?>
                                                     </td>

@@ -148,7 +148,9 @@ class DevisController extends AppController
                 return $row->Code . '  ' . $row->Raison_Sociale; // Concatenate Raison_Sociale and code
             }
         ]);
-        $this->set(compact('devi', 'clients','lignedevis'));
+        $articles = $this->fetchTable('Articles')->find('all');
+
+        $this->set(compact('devi', 'clients','lignedevis','articles'));
     }
 
     /**
