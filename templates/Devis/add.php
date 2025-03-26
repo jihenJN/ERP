@@ -87,7 +87,7 @@
                                                     <td align="center" style="width: 14%;font-size: 16px;"><strong>Prix Unitaire</strong></td>
                                                     <td align="center" style="width: 8%;font-size: 16px;"><strong>Qte</strong></td>
                                                     <!--td align="center" style="width: 14%;font-size: 16px;"><strong>Prix Brute</strong></td-->
-                                                    <td align="center" style="width: 15%;font-size: 16px;"><strong>Remise</strong></td>
+                                                    <td align="center" style="width: 15%;font-size: 16px;"><strong>Remise %</strong></td>
                                                     <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix HT</strong></td>
                                                     <td align="center" style="width:2%;"></td>
                                                 </tr>
@@ -121,18 +121,16 @@
                                                         <input table="ligner" champ="qte" type="text" class="form-control " index>
                                                     </td>
 
-
-                                                    <td align="center" table="ligner">
-                                                        <input table="ligner" champ="ht" type="text" class="form-control " index>
-                                                    </td>
-
                                                     <td align="center" table="ligner">
                                                         <input table="ligner" champ="remise" type="text" class="form-control " index>
                                                     </td>
 
 
+                                                    <td align="center" table="ligner">
+                                                        <input table="ligner" champ="ht" type="text" class="form-control " index>
+                                                    </td>
 
-
+                                                  
 
                                                 </tr>
                                                 <input type="hidden" value="-1" id="index">
@@ -390,7 +388,7 @@
     var ind = $("#index").val();
     var supp = $("#sup" + ind).val();
 
-    var remise = $("#remise").val();
+ //   var remise = $("#remise").val();
 
     // Check if required fields are filled
     if (
@@ -404,12 +402,10 @@
     // Add a new row and update total brute
     ajouter(table, index);
     updateTotalBrute();
+    updateTotalRemise();
 });
 
-// Delegate the "input" event to ensure it applies to dynamically added rows
-$(document).on("input", "[table='ligner'] [champ='prix'], [table='ligner'] [champ='qte']", function() {
-    updateTotalBrute(); // Recalculate total brute whenever price or quantity is changed
-});
+
 
 // Function to update total brute value
 function updateTotalBrute() {
@@ -431,6 +427,41 @@ function updateTotalBrute() {
     // Update the total_brute field with the calculated total
     $("input[name='total_brute']").val(totalBrute.toFixed(2));
 }
+
+// This function calculates the total remise for all articles
+function updateTotalRemise() {
+    let totalRemise = 0;
+
+    // Iterate through each row (article)
+    $("tr").each(function() {
+        let prix = $(this).find("[champ='prix']").val();    // Get Prix Unitaire
+        let qte = $(this).find("[champ='qte']").val();      // Get Quantité
+        let remisePercentage = $(this).find("[champ='remise']").val();  // Get Remise Percentage
+
+        // Only calculate remise if Prix, Qte, and Remise Percentage are valid
+        if (prix && qte && remisePercentage) {
+            prix = parseFloat(prix);        // Convert to float
+            qte = parseFloat(qte);          // Convert to float
+            remisePercentage = parseFloat(remisePercentage);  // Convert to float
+
+            // Calculate remise for this article
+            let remiseForArticle = prix * qte * (remisePercentage / 100);
+
+            // Add this remise to the total remise
+            totalRemise += remiseForArticle;
+        }
+    });
+
+    // Update the "total_remise" field in the form
+    $("input[name='total_remise']").val(totalRemise.toFixed(2));  // Format to 2 decimal places
+}
+
+// Delegate the "input" event to ensure it applies to dynamically added rows
+$(document).on("input", "[table='ligner'] [champ='prix'], [table='ligner'] [champ='qte'], [table='ligner'] [champ='remise']", function() {
+    updateTotalBrute();
+    updateTotalRemise(); // Recalculate total brute whenever price or quantity is changed
+});
+
 
 // Function to add a new row to the table
 function ajouter(table, index) {
