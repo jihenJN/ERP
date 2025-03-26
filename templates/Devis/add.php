@@ -477,11 +477,6 @@
             // Calculate remise for this article (difference between original price and discounted price)
             let remiseForArticle = prixSansRemise - prixAvecRemise;
 
-            console.log('prixSansRemise',prixSansRemise);
-            console.log('prixAvecRemise',prixAvecRemise);
-            console.log('remiseForArticle',remiseForArticle);
-
-
             // Add this remise to the total remise
             totalRemise += remiseForArticle;
         }
@@ -495,31 +490,22 @@
     // Function to calculate the HT price after applying the discount for each row
     function updateHTPriceAndTotal() {
         let totalHT = 0;
-
-
+        
         $("tr").each(function() {
-
             let prixUnitaire = $(this).find("[champ='prix']").val();
             let qte = $(this).find("[champ='qte']").val();
-            let remise = $(this).find("[champ='remise']").val();
+            let remisePercentage = $(this).find("[champ='remise']").val()||0;
 
             // Only calculate if Prix Unitaire, Quantité, and Remise are valid numbers
-            if (prixUnitaire && qte) {
+            if (prixUnitaire && qte && remisePercentage) {
                 prixUnitaire = parseFloat(prixUnitaire); // Convert to float
                 qte = parseFloat(qte); // Convert to float
-                remise = parseFloat(remise) || 0; // Convert to float, default to 0 if remise is not provided
-
-
-                let totalBeforeDiscount = prixUnitaire * qte;
-
-
-                let htPriceAfterDiscount = totalBeforeDiscount - remise;
-
-                // Update the HT price after discount field for this row
+                remisePercentage = parseFloat(remisePercentage); // Convert to float, default to 0 if remise is not provided
+               let htPriceAfterDiscount= prixUnitaire * qte * (1 - remisePercentage / 100);
                 $(this).find("[champ='ht']").val(htPriceAfterDiscount.toFixed(2));
-
                 // Add to the total HT
                 totalHT += htPriceAfterDiscount;
+               
             }
         });
 
