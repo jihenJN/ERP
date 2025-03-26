@@ -50,16 +50,16 @@
 
                         </div>
                         <div class="col-xs-6">
-                            <?php echo $this->Form->control('total_remise', ['label' => 'Total Remise']); ?>
+                            <?php echo $this->Form->control('total_remise', ['label' => 'Total Remise', 'readonly' => true]); ?>
                         </div>
                         <div class="col-xs-6">
-                            <?php echo $this->Form->control('total_ht', ['label' => 'Total HT']); ?>
+                            <?php echo $this->Form->control('total_ht', ['label' => 'Total HT', 'readonly' => true]); ?>
                         </div>
                         <div class="col-xs-6">
-                            <?php echo $this->Form->control('total_brute', ['label' => 'Total Brute']); ?>
+                            <?php echo $this->Form->control('total_brute', ['label' => 'Total Brute', 'readonly' => true]); ?>
                         </div>
                     </div>
-                       //////
+                    //////
 
                     <br>
 
@@ -92,17 +92,17 @@
                                                     <td align="center" style="width:2%;"></td>
                                                 </tr>
                                             </thead>
-                                            <?php $index =0;?>
+                                            <?php $index = 0; ?>
                                             <tbody>
                                                 <tr class="tr afef" style="display: none;">
-                                                 
+
                                                     <td align="center" table="ligner">
                                                         <input type="hidden" id="" champ="sup" name="" table="ligner" index="" class="form-control ">
                                                         <div champ="divart" id="divart<?= $index ?>">
                                                             <select table="ligner" index champ="article_id" class="form-control js-example-responsive   ">
                                                                 <option value="" selected="selected" disabled>Veuillez
                                                                     choisir !!</option>
-                                                                <?php   foreach ($articles as $id => $article) {
+                                                                <?php foreach ($articles as $id => $article) {
                                                                 ?>
                                                                     <option value="<?php echo $article->id; ?>">
                                                                         <?php echo $article->Code . ' ' . $article->Dsignation ?>
@@ -131,7 +131,7 @@
                                                     </td>
 
 
-               
+
 
 
                                                 </tr>
@@ -383,145 +383,134 @@
 
         })
     });
-
     $(".ajouterligne_w").on("click", function() {
-        // alert('alll');
-        table = $(this).attr("table");
-        // alert(table);
-        index = $(this).attr("index");
-        ind = $("#index").val();
-        supp = $("#sup" + ind).val();
+    // Get table and index
+    var table = $(this).attr("table");
+    var index = $(this).attr("index");
+    var ind = $("#index").val();
+    var supp = $("#sup" + ind).val();
 
-        // i=Number(ind)+1;
+    var remise = $("#remise").val();
 
-        remise = $("#remise").val(); //alert(remise);
-        if (
-            (!$("#article_id" + ind).val() || !$("#qte" + ind).val()) &&
-            ind != -1 &&
-            supp != 1
-        ) {
-            // alert("veuillez choisir l'article et la quantité");
-            return false;
+    // Check if required fields are filled
+    if (
+        (!$("#article_id" + ind).val() || !$("#qte" + ind).val()) &&
+        ind != -1 &&
+        supp != 1
+    ) {
+        return false; // Do not proceed if fields are not valid
+    }
+
+    // Add a new row and update total brute
+    ajouter(table, index);
+    updateTotalBrute();
+});
+
+// Delegate the "input" event to ensure it applies to dynamically added rows
+$(document).on("input", "[table='ligner'] [champ='prix'], [table='ligner'] [champ='qte']", function() {
+    updateTotalBrute(); // Recalculate total brute whenever price or quantity is changed
+});
+
+// Function to update total brute value
+function updateTotalBrute() {
+    var totalBrute = 0;
+
+    // Iterate through each row to calculate the total
+    $("tr").each(function() {
+        var prix = $(this).find("[champ='prix']").val();
+        var qte = $(this).find("[champ='qte']").val();
+
+        // Only calculate if both values are numbers
+        if (prix && qte) {
+            prix = parseFloat(prix);
+            qte = parseFloat(qte);
+            totalBrute += prix * qte;
         }
-
-        ajouter(table, index);
-
     });
 
-    function ajouter(table, index) {
-        //alert("hh");
-        //  alert(index);
-        ind = Number($("#" + index).val()) + 1;
-        $ttr = $("#" + table)
-            .find(".tr")
-            .clone(true);
-        $ttr.attr("class", "");
-        i = 0;
-        tabb = [];
-        $ttr.find("input,select,textarea,tr,td,div,ul,li").each(function() {
-            //alert()
-            tab = $(this).attr("table"); //alert(tab)
-            champ = $(this).attr("champ");
-            $(this).attr("index", ind);
-            $(this).attr("id", champ + ind); //alert(champ);
-            if (champ == "marchandisetype_id") {
-                //alert(champ)
-                $(this).attr("name", "data[" + tab + "][" + ind + "][" + champ + "][]");
-                $(this).attr(
-                    "data-bv-field",
-                    "data[" + tab + "][" + ind + "][" + champ + "]"
-                );
-            } else {
-                $(this).attr("name", "data[" + tab + "][" + ind + "][" + champ + "]");
-                $(this).attr(
-                    "data-bv-field",
-                    "data[" + tab + "][" + ind + "][" + champ + "]"
-                );
-            }
-            $type = $(this).attr("type");
-            $(this).val("");
-            if ($type == "radio") {
-                $(this).attr("name", "data[" + champ + "]");
-                //$(this).attr('value',ind);
-                $(this).val(ind);
-            }
-            if (champ == "datedebut" || champ == "datefin") {
-                $(this).attr("onblur", "nbrjour(" + ind + ")");
-            }
-            $(this).removeClass("anc");
-            if ($(this).is("select", "multiple")) {
-                //alert(champ);
-                //alert(ind);
-                tabb[i] = champ + ind; //alert(tabb[i]);
-                i = Number(i) + 1;
-            }
-            // $(this).val('');
-        });
-        $ttr.find("i").each(function() {
-            $(this).attr("index", ind);
-        });
-        $("#" + table).append($ttr);
-        $("#" + index).val(ind);
+    // Update the total_brute field with the calculated total
+    $("input[name='total_brute']").val(totalBrute.toFixed(2));
+}
 
-        $("#" + table)
-            .find("tr:last")
-            .show();
-        // $("#article_id" + ind).select2({
-        //   width: "100%", // need to override the changed default
-        // });
-        $("#charge_id" + ind).select2({
-            width: "100%", // need to override the changed default
-        });
-        $("#article" + ind).select2({
-            width: "100%", // need to override the changed default
-        });
-        // $("#article_id" + ind).select2({
-        //     width: "100%", // need to override the changed default
-        // });
-        $("#famille_id" + ind).select2("open");
-        $("#client_id" + ind).select2({
-            width: "100%", // need to override the changed default
-        });
-        $("#fr_id" + ind).select2({
-            width: "100%", // need to override the changed default
-        });
-        $("#banque_id" + ind).select2({
-            width: "100%", // need to override the changed default
-        });
-        $("#typeexon_id" + ind).select2({
-            width: "100%", // need to override the changed default
-        });
+// Function to add a new row to the table
+function ajouter(table, index) {
+    var ind = Number($("#" + index).val()) + 1;  // Get new index by incrementing
+    var $ttr = $("#" + table).find(".tr").first().clone(true); // Clone the first row (hidden template)
+    $ttr.attr("class", ""); // Remove any class from the cloned row
 
-        $("#gouvernorat_id" + ind).select2({
-            width: "75%", // need to override the changed default
-        });
-        $("#ligneplan_id" + ind).select2({
-            width: "75%", // need to override the changed default
-        });
-        $("#nature_id" + ind).select2({
-            width: "75%", // need to override the changed default
-        });
-        $("#taxe_id" + ind).select2({
-            width: "75%", // need to override the changed default
-        });
+    var tabb = [];
+    var i = 0;
 
-        $("#champ_id" + ind).select2({
-            width: "75%", // need to override the changed default
-        });
+    // Iterate over each element inside the row and update attributes
+    $ttr.find("input, select, textarea, tr, td, div, ul, li").each(function() {
+        var tab = $(this).attr("table");
+        var champ = $(this).attr("champ");
 
-        //indd = Number($("#" + index).val()) ;
-        //alert(indd);
-        $("#inserted" + ind).val(1);
+        // Set new index and id for the cloned row
+        $(this).attr("index", ind);
+        $(this).attr("id", champ + ind);
 
-        $("#auto" + ind).val(1);
-
-        for (j = 0; j <= i; j++) {
-            // alert(tabb[j]);
-            //  $('marchandisetype_id1').attr('class','select2');
-            //  uniform_select(tabb[j]); jareb
-            //$('#'+tabb[j]).select2({ });
+        if (champ === "marchandisetype_id") {
+            $(this).attr("name", "data[" + tab + "][" + ind + "][" + champ + "][]");
+            $(this).attr("data-bv-field", "data[" + tab + "][" + ind + "][" + champ + "]");
+        } else {
+            $(this).attr("name", "data[" + tab + "][" + ind + "][" + champ + "]");
+            $(this).attr("data-bv-field", "data[" + tab + "][" + ind + "][" + champ + "]");
         }
-    }
+
+        // Reset values for inputs
+        $(this).val("");
+
+        // Special handling for radio buttons
+        if ($(this).attr("type") === "radio") {
+            $(this).attr("name", "data[" + champ + "]");
+            $(this).val(ind);
+        }
+
+        // Handle specific fields like date
+        if (champ === "datedebut" || champ === "datefin") {
+            $(this).attr("onblur", "nbrjour(" + ind + ")");
+        }
+
+        $(this).removeClass("anc");
+
+        if ($(this).is("select", "multiple")) {
+            tabb[i] = champ + ind;
+            i++;
+        }
+    });
+
+    // Handle icons and set their index
+    $ttr.find("i").each(function() {
+        $(this).attr("index", ind);
+    });
+
+    // Append the new row to the table
+    $("#" + table).append($ttr);
+    $("#" + index).val(ind);
+
+    // Make the new row visible
+    $("#" + table).find("tr:last").show();
+
+    // Reinitialize select2 for new elements
+    $("#charge_id" + ind).select2({ width: "100%" });
+    $("#article" + ind).select2({ width: "100%" });
+    $("#famille_id" + ind).select2("open");
+    $("#client_id" + ind).select2({ width: "100%" });
+    $("#fr_id" + ind).select2({ width: "100%" });
+    $("#banque_id" + ind).select2({ width: "100%" });
+    $("#typeexon_id" + ind).select2({ width: "100%" });
+    $("#gouvernorat_id" + ind).select2({ width: "75%" });
+    $("#ligneplan_id" + ind).select2({ width: "75%" });
+    $("#nature_id" + ind).select2({ width: "75%" });
+    $("#taxe_id" + ind).select2({ width: "75%" });
+    $("#champ_id" + ind).select2({ width: "75%" });
+
+    // Mark the row as inserted
+    $("#inserted" + ind).val(1);
+    $("#auto" + ind).val(1);
+}
+
 </script>
 <?php $this->end(); ?>
 
