@@ -86,11 +86,7 @@
                                         </thead>
                                         <?php $index = 0; ?>
                                         <tbody>
-
-
-                                        
                                             <tr class="tr afef" style="display: none;">
-
                                                 <td align="center" table="ligner">
                                                     <input type="hidden" id="" champ="sup" name="" table="ligner"
                                                         index="" class="form-control ">

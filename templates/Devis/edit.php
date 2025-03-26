@@ -87,42 +87,42 @@
 
                                         <tbody>
                                             <?php foreach ($lignedevis as $i => $res) : ?>
-                                                
+
                                                 <tr>
-                                                
-                                                <td align="center">
-                                                                <?php echo $this->Form->input('sup', array('name' => "data[ligner][" . $i . "][sup]", 'id' => 'sup' . $i, 'champ' => 'sup', 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => '', 'class' => 'form-control', 'type' => 'hidden')); ?>
-                                                                <?php
-                                                                echo $this->Form->input('id', array(
-                                                                    'champ' => 'id',
-                                                                    'label' => '',
-                                                                    'name' => 'data[ligner][' . $i . '][id]',
-                                                                    'value' => $res->article_id,
-                                                                    'type' => 'hidden',
-                                                                    'id' => '',
-                                                                    'table' => 'ligner',
-                                                                    'index' => '',
-                                                                    'div' => 'form-group',
-                                                                    'between' => '<div class="col-sm-12">',
-                                                                    'after' => '</div>',
-                                                                    'class' => 'form-control'
-                                                                ));
+
+                                                    <td align="center">
+                                                        <?php echo $this->Form->input('sup', array('name' => "data[ligner][" . $i . "][sup]", 'id' => 'sup' . $i, 'champ' => 'sup', 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => '', 'class' => 'form-control', 'type' => 'hidden')); ?>
+                                                        <?php
+                                                        echo $this->Form->input('id', array(
+                                                            'champ' => 'id',
+                                                            'label' => '',
+                                                            'name' => 'data[ligner][' . $i . '][id]',
+                                                            'value' => $res->article_id,
+                                                            'type' => 'hidden',
+                                                            'id' => '',
+                                                            'table' => 'ligner',
+                                                            'index' => '',
+                                                            'div' => 'form-group',
+                                                            'between' => '<div class="col-sm-12">',
+                                                            'after' => '</div>',
+                                                            'class' => 'form-control'
+                                                        ));
+                                                        ?>
+                                                        <div champ="divart" index="<?= $i ?>" id="divart<?= $i ?>">
+
+                                                            <select name="<?php echo "data[ligner][" . $i . "][article_id]" ?>" id="<?php echo 'article_id' . $i ?>" table="ligner" index="<?php echo $i ?>" champ="article_id" class="form-control articleidbl1 Testdep single">
+                                                                <option disabled="true" disabled>Veuillez choisir !!</option>
+                                                                <?php foreach ($articles as $id => $article) {
                                                                 ?>
-                                                                <div champ="divart"  index="<?= $i ?>" id="divart<?=  $i ?>">
-                                                                  
-                                                                    <select  name="<?php echo "data[ligner][" . $i . "][article_id]" ?>" id="<?php echo 'article_id' . $i ?>" table="ligner" index="<?php echo $i ?>" champ="article_id" class="form-control articleidbl1 Testdep single">
-                                                                        <option disabled="true" disabled>Veuillez choisir !!</option>
-                                                                        <?php foreach ($articles as $id => $article) {
-                                                                        ?>
-                                                                            <option <?php if ($res->article_id == $article->id) { ?> selected="selected" <?php } ?> value="<?php echo $article->id; ?>"><?php echo $article->Code . ' ' . $article->Dsignation ?></option>
-                                                                        <?php } ?>
-                                                                    </select>
+                                                                    <option <?php if ($res->article_id == $article->id) { ?> selected="selected" <?php } ?> value="<?php echo $article->id; ?>"><?php echo $article->Code . ' ' . $article->Dsignation ?></option>
+                                                                <?php } ?>
+                                                            </select>
 
-                                                                </div>
+                                                        </div>
 
 
 
-                                                            </td>
+                                                    </td>
                                                     <td align="center">
                                                         <?php echo $this->Form->input('prix', array('label' => '', 'value' => $res->prix, 'name' => 'data[ligner][' . $i . '][prix]', 'type' => 'text', 'id' => 'prix' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control ', 'index')); ?>
                                                     </td>
@@ -136,9 +136,43 @@
                                                         <?php echo $this->Form->input('ht', array('label' => '', 'value' => $res->ht, 'name' => 'data[ligner][' . $i . '][ht]', 'type' => 'text', 'id' => 'ht' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control ', 'index')); ?>
                                                     </td>
                                                 </tr>
-
-
                                             <?php endforeach; ?>
+                                            <tr class="tr afef" style="display: none;">
+                                                <td align="center" table="ligner">
+                                                    <input type="hidden" id="" champ="sup" name="" table="ligner"
+                                                        index="" class="form-control ">
+                                                    <div champ="divart" id="divart<?= $index ?>">
+                                                        <select table="ligner" index champ="article_id"
+                                                            class="form-control js-example-responsive   ">
+                                                            <option value="" selected="selected" disabled>Veuillez
+                                                                choisir !!</option>
+                                                            <?php foreach ($articles as $id => $article) {
+                                                            ?>
+                                                                <option value="<?php echo $article->id; ?>">
+                                                                    <?php echo $article->Code . ' ' . $article->Dsignation ?>
+                                                                </option>
+                                                            <?php } ?>
+                                                        </select>
+                                                    </div>
+
+                                                </td>
+                                                <td align="center" table="ligner">
+                                                    <input table="ligner" champ="prix" type="text"
+                                                        class="form-control " index>
+                                                </td>
+                                                <td align="center" table="ligner">
+                                                    <input table="ligner" champ="qte" type="text"
+                                                        class="form-control " index>
+                                                </td>
+                                                <td align="center" table="ligner">
+                                                    <input table="ligner" champ="remise" type="text"
+                                                        class="form-control " index>
+                                                </td>
+                                                <td align="center" table="ligner">
+                                                    <input table="ligner" champ="ht" type="text"
+                                                        class="form-control " readonly=true index>
+                                                </td>
+                                            </tr>
                                             <input type="hidden" value="-1" id="index">
                                         </tbody>
 

@@ -137,11 +137,11 @@ class DevisController extends AppController
             // $this->Flash->error(__('The devi could not be saved. Please, try again.'));
         }
 
-        debug($devi->id);
+   
         if (!empty($devi->id)) {
             $lignedevis = $this->fetchTable('Lignedevis')->find('all')->where(['Lignedevis.devis_id'=>$devi->id])->toArray();
         }
-       debug($lignedevis);
+      
         $clients = $this->fetchTable('Clients')->find('list', [
             'keyField' => 'id',
             'valueField' => function ($row) {
