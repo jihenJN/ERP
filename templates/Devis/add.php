@@ -59,8 +59,7 @@
                             <?php echo $this->Form->control('total_brute', ['label' => 'Total Brute']); ?>
                         </div>
                     </div>
-
-                    //////////////////////
+                       //////
 
                     <br>
 
@@ -93,6 +92,7 @@
                                                     <td align="center" style="width:2%;"></td>
                                                 </tr>
                                             </thead>
+                                            <?php $index =0;?>
                                             <tbody>
                                                 <tr class="tr afef" style="display: none;">
                                                  
