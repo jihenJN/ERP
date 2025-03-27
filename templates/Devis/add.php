@@ -86,7 +86,7 @@
                                         </thead>
                                         <?php $index = 0; ?>
                                         <tbody>
-                                            <tr class="tr afef" style="display: none;">
+                                            <tr class="tr" style="display: none;">
                                                 <td align="center" table="ligner">
                                                     <input type="hidden" id="" champ="sup" name="" table="ligner"
                                                         index="" class="form-control ">
@@ -108,23 +108,23 @@
 
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="prix" type="text"
-                                                        class="form-control " index>
+                                                        class="form-control number" index>
                                                 </td>
 
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="qte" type="text"
-                                                        class="form-control " index>
+                                                        class="form-control number" index>
                                                 </td>
 
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="remise" type="text"
-                                                        class="form-control " index>
+                                                        class="form-control number" index>
                                                 </td>
 
 
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="ht" type="text"
-                                                        class="form-control " readonly=true index>
+                                                        class="form-control number" readonly=true index>
                                                 </td>
 
 
