@@ -227,4 +227,32 @@ class DevisController extends AppController
         echo json_encode(['select' => $select]);
         exit;
     }
+
+    public function getArticleDetails()
+    {
+         // $this->autoRender = false; // No view rendering
+      //  $this->request->allowMethod(['get']); // Allow only GET requests
+    
+        $articleId = $this->request->getQuery('id'); // Get ID from AJAX request
+        //debug($articleId);  // Debug the article ID
+        
+        // if (!$articleId) {
+        //     echo json_encode(['error' => 'Invalid article ID']);
+        //     return;
+        // }
+    
+        $article = $this->fetchTable('Articles')->find()
+        ->select(['id', 'prixachat']) // Fetch necessary data
+        ->where(['id' => $articleId])
+        ->first();
+        echo json_encode(['prixachat' => $article->prixachat]);
+        exit;
+        exit;
+    }
+    
+
+
+
+
+
     }

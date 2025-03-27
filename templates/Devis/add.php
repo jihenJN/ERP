@@ -75,7 +75,7 @@
                                                 <td align="center" style="width: 8%;font-size: 16px;">
                                                     <strong>Qte</strong>
                                                 </td>
-                                               
+
                                                 <td align="center" style="width: 15%;font-size: 16px;">
                                                     <strong>Remise %</strong>
                                                 </td>
@@ -108,7 +108,7 @@
 
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="prix" type="text"
-                                                        class="form-control number" index>
+                                                        class="form-control number" id="prix" index>
                                                 </td>
 
                                                 <td align="center" table="ligner">
@@ -256,11 +256,64 @@
             success: function(data) {
                 $('#divart' + index).html(data.select);
                 alert(data.select)
+                console.log(data)
             }
 
 
         });
     }
+
+
+    $(document).on('change', 'select[champ="article_id"]', function() {
+        alert("Hello");
+
+        var index = $(this).attr('index');
+        var articleId = $(this).val(); // Get the selected article ID
+
+        if (articleId) {
+            $.ajax({
+                method: "GET",
+                url: "<?= $this->Url->build(['controller' => 'Devis', 'action' => 'getArticleDetails']) ?>", // Correct URL for the getArticleDetails method
+                dataType: "json",
+                data: {
+                    id: articleId // Send the article ID to the server
+                },
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content') // Include CSRF token if needed
+                },
+                success: function(data) {
+
+                    // Log the entire response to the browser console
+                    alert(data)
+                    console.log("Response from server:", data);
+                    if (data.prixachat) {
+                        $('#prix' + index).val(data.prixachat);
+                        console.log(data.prixachat) ;                     
+                    } 
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    // If the AJAX request fails, log the response
+                    console.log("AJAX request failed: " + textStatus + ", " + errorThrown);
+                    console.log("Response Text: " + jqXHR.responseText);
+                  //  alert("AJAX request failed. Please try again.");
+                }
+            });
+        }
+    });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /*  function getUnites(id, index) {
           $.ajax({
@@ -624,66 +677,3 @@
     }
 </script>
 <?php $this->end(); ?>
-
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-    $(document).ready(function() {
-        $("#toggleAddType").click(function() {
-            let select = $("#type_contact_select");
-            let input = $("#new_type_contact");
-            let button = $("#toggleAddType");
-
-            if (input.is(":visible")) {
-                // Hide input and reset value
-                input.hide().val("");
-                select.prop("disabled", false);
-                button.removeClass("fa-times-circle btn-danger")
-                    .addClass("fa-plus-circle btn-primary");
-            } else {
-                // Show input and disable select
-                input.show().focus();
-                select.prop("disabled", true);
-                button.removeClass("fa-plus-circle btn-primary")
-                    .addClass("fa-times-circle btn-danger");
-
-                // Listen for Enter key to add new type
-                input.off("keydown").on("keydown", function(e) {
-                    if (e.key === "Enter") {
-                        e.preventDefault(); // Prevent form submission
-                        let newType = $(this).val().trim();
-
-                        if (newType !== "") {
-                            let newOption = $("<option>", {
-                                value: newType,
-                                text: newType,
-                                selected: true
-                            });
-
-                            select.append(newOption);
-                            input.hide();
-                            select.prop("disabled", false);
-                            button.removeClass("fa-times-circle btn-danger")
-                                .addClass("fa-plus-circle btn-primary");
-                        }
-                    }
-                });
-            }
-        });
-
-        // Ensure input is correctly submitted
-        $("form").submit(function() {
-            let input = $("#new_type_contact");
-            let select = $("#type_contact_select");
-
-            if (input.is(":visible") && input.val().trim() !== "") {
-                select.append($("<option>", {
-                    value: input.val().trim(),
-                    text: input.val().trim(),
-                    selected: true
-                }));
-                input.hide();
-            }
-        });
-    });
-</script>
