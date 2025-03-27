@@ -65,8 +65,6 @@
 
                                         <thead>
                                             <tr>
-
-
                                                 <td align="center" style="width: 12%; font-size: 16px;">
                                                     <strong>Article</strong>
                                                 </td>
@@ -82,6 +80,8 @@
                                                 <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
                                                         HT</strong></td>
                                                 <td align="center" style="width:2%;"></td>
+
+
                                             </tr>
                                         </thead>
                                         <?php $index = 0; ?>
@@ -135,6 +135,11 @@
                                                     <td align="center">
                                                         <?php echo $this->Form->input('ht', array('label' => '', 'value' => $res->ht, 'name' => 'data[ligner][' . $i . '][ht]', 'type' => 'text', 'id' => 'ht' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index', 'readOnly' => true)); ?>
                                                     </td>
+
+                                                    <td align="center" table="ligner">
+                                                        <i id="" class="fa fa-times getmontant pourcentescompte supLigne0ch" style="color: #c9302c;font-size: 22px;" table="ligner" name=""></i>
+                                                        <input type='hidden' table="ligner" champ="suptest" class="form-control" index name='' id="">
+                                                    </td>
                                                 </tr>
                                             <?php endforeach; ?>
                                             <tr class="tr" style="display: none;">
@@ -172,8 +177,12 @@
                                                     <input table="ligner" champ="ht" type="text"
                                                         class="form-control " readonly=true index>
                                                 </td>
+                                                <td align="center" table="ligner">
+                                                    <i id="" class="fa fa-times getmontant pourcentescompte supLigne0ch" style="color: #c9302c;font-size: 22px;" table="ligner" name=""></i>
+                                                    <input type='hidden' table="ligner" champ="suptest" class="form-control" index name='' id="">
+                                                </td>
                                             </tr>
-                                            <input type="text" value="<?php echo $i ;?>" id="index" style="display: none;">
+                                            <input type="text" value="<?php echo $i; ?>" id="index" style="display: none;">
                                         </tbody>
 
                                     </table>

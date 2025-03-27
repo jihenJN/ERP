@@ -108,7 +108,7 @@
 
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="prix" type="text"
-                                                        class="form-control number" id="prix" readonly="true" index >
+                                                        class="form-control number" id="prix" readonly="true" index>
                                                 </td>
 
                                                 <td align="center" table="ligner">
@@ -127,7 +127,10 @@
                                                         class="form-control number" readonly=true index>
                                                 </td>
 
-
+                                                <td align="center" table="ligner">
+                                                    <i id="" class="fa fa-times getmontant pourcentescompte supLigne0ch" style="color: #c9302c;font-size: 22px;" table="ligner" name=""></i>
+                                                    <input type='hidden' table="ligner" champ="suptest" class="form-control" index name='' id="">
+                                                </td>
 
                                             </tr>
                                             <input type="hidden" value="-1" id="index">
@@ -217,9 +220,9 @@
 
     $('.select2').select2()
 
-  
 
-   
+
+
     $(document).on('change', 'select[champ="article_id"]', function() {
         var index = $(this).attr('index');
         var articleId = $(this).val();
@@ -238,8 +241,8 @@
                     console.log("Response from server:", data);
                     if (data.prixachat) {
                         $('#prix' + index).val(data.prixachat);
-                        console.log(data.prixachat) ;                     
-                    } 
+                        console.log(data.prixachat);
+                    }
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log("AJAX request failed: " + textStatus + ", " + errorThrown);
@@ -251,7 +254,7 @@
 
 
 
- 
+
 
     $("#testformulaire").on("mouseover", function() {
         let code = $("#code").val();
@@ -356,6 +359,7 @@
 
     $(function() {
         $('.supLigne0ch').on('click', function() {
+            console.log("hello");
             nbligne = $('#nbligne').val($('#nbligne').val() - 1);
             indd = Number($('#index').val());
             index = $(this).attr('index');
@@ -375,6 +379,10 @@
             $('#suptest' + i).val('1');
             $(this).parent().parent().hide();
 
+            // Recalculate totals after deletion
+            updateTotalBrute();
+            updateTotalRemise();
+            updateHTPriceAndTotal();
 
         })
     });
@@ -410,7 +418,7 @@
         var totalBrute = 0;
 
         // Iterate through each row to calculate the total
-        $("tr").each(function() {
+        $("tr:visible").each(function() { // Only count visible rows
             var prix = $(this).find("[champ='prix']").val();
             var qte = $(this).find("[champ='qte']").val();
 
@@ -431,7 +439,7 @@
         let totalRemise = 0;
 
         // Iterate through each row (article)
-        $("tr").each(function() {
+        $("tr:visible").each(function() { // Only count visible rows
             let prix = $(this).find("[champ='prix']").val(); // Get Prix Unitaire
             let qte = $(this).find("[champ='qte']").val(); // Get Quantité
             let remisePercentage = $(this).find("[champ='remise']").val(); // Get Remise Percentage
@@ -465,7 +473,7 @@
     function updateHTPriceAndTotal() {
         let totalHT = 0;
 
-        $("tr").each(function() {
+        $("tr:visible").each(function() { // Only count visible rows
             let prixUnitaire = $(this).find("[champ='prix']").val();
             let qte = $(this).find("[champ='qte']").val();
             let remisePercentage = $(this).find("[champ='remise']").val() || 0;
