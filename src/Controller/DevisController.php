@@ -99,10 +99,18 @@ class DevisController extends AppController
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
             $devi = $this->Devis->patchEntity($devi, $this->request->getData());
+
             if ($this->Devis->save($devi)) {
                 if (isset($this->request->getData('data')['ligner']) && (!empty($this->request->getData('data')['ligner']))) {
+                   
+                   
                     foreach ($this->request->getData('data')['ligner'] as $j => $p) {
+                  
+                       
+
                         if ($p['sup'] != 1) {
+                          
+
                             $L_devi = $this->fetchTable('Lignedevis')->newEmptyEntity();
                             $data['devis_id'] = $devi->id;
                             $data['article_id'] = $p['article_id'];
@@ -110,14 +118,21 @@ class DevisController extends AppController
                             $data['prix'] = $p['prix'];
                             $data['remise'] = $p['remise'];
                             $data['ht'] = $p['ht'];
+                      
+                            
+                          
 
                             if (isset($p['id']) && (!empty($p['id']))) {
+                               
 
                                 $L_devi = $this->fetchTable('Lignedevis')->get($p['id'], [
                                     'contain' => []
                                 ]);
+
+                              
                             } else {
                                 $L_devi = $this->fetchTable('Lignedevis')->newEmptyEntity();
+                             //   debug($L_devi);die;
                             }
 
                             $lignedevis = $this->fetchTable('Lignedevis')->patchEntity($L_devi, $data);
@@ -127,6 +142,7 @@ class DevisController extends AppController
                             $lignedevis = $this->fetchTable('Lignedevis')->get($p['id'], [
                                 'contain' => []
                             ]);
+
                             $this->fetchTable('Lignedevis')->delete($lignedevis);
                         }
                     }

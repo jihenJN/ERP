@@ -84,7 +84,7 @@
                                                 <td align="center" style="width:2%;"></td>
                                             </tr>
                                         </thead>
-
+                                        <?php $index = 0; ?>
                                         <tbody>
                                             <?php foreach ($lignedevis as $i => $res) : ?>
 
@@ -124,7 +124,7 @@
 
                                                     </td>
                                                     <td align="center">
-                                                        <?php echo $this->Form->input('prix', array('label' => '', 'value' => $res->prix, 'name' => 'data[ligner][' . $i . '][prix]', 'type' => 'text', 'id' => 'prix' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control ', 'index')); ?>
+                                                        <?php echo $this->Form->input('prix', array('label' => '', 'value' => $res->prix, 'name' => 'data[ligner][' . $i . '][prix]', 'type' => 'text', 'id' => 'prix' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index')); ?>
                                                     </td>
                                                     <td align="center">
                                                         <?php echo $this->Form->input('qte', array('label' => '', 'value' => $res->qte, 'name' => 'data[ligner][' . $i . '][qte]', 'type' => 'text', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control ', 'index')); ?>
@@ -173,7 +173,7 @@
                                                         class="form-control " readonly=true index>
                                                 </td>
                                             </tr>
-                                            <input type="hidden" value="-1" id="index">
+                                            <input type="text" value="<?php echo $i ;?>" id="index">
                                         </tbody>
 
                                     </table>
