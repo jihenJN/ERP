@@ -243,6 +243,10 @@
                         $('#prix' + index).val(data.prixachat);
                         console.log(data.prixachat);
                     }
+
+                    updateTotalBrute();
+                    updateTotalRemise();
+                    updateHTPriceAndTotal();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log("AJAX request failed: " + textStatus + ", " + errorThrown);

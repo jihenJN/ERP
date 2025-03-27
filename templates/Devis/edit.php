@@ -86,7 +86,7 @@
                                         </thead>
                                         <?php $index = 0; ?>
                                         <tbody>
-                                            <?php foreach ($lignedevis as $i => $res) : ?>
+                                            <?php foreach ($lignedevis as $i => $res) : debug($lignedevis);?>
 
                                                 <tr>
 
@@ -124,7 +124,7 @@
 
                                                     </td>
                                                     <td align="center">
-                                                        <?php echo $this->Form->input('prix', array('label' => '', 'value' => $res->prix, 'name' => 'data[ligner][' . $i . '][prix]', 'type' => 'text', 'id' => 'prix' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index')); ?>
+                                                        <?php echo $this->Form->input('prix', array('label' => '', 'value' => $res->prix, 'name' => 'data[ligner][' . $i . '][prix]', 'type' => 'text', 'id' => 'prix' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index','readOnly' => true)); ?>
                                                     </td>
                                                     <td align="center">
                                                         <?php echo $this->Form->input('qte', array('label' => '', 'value' => $res->qte, 'name' => 'data[ligner][' . $i . '][qte]', 'type' => 'text', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index')); ?>
@@ -163,7 +163,7 @@
                                                 </td>
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="prix" type="text"
-                                                        class="form-control " index>
+                                                        class="form-control " readonly=true index>
                                                 </td>
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="qte" type="text"
@@ -269,6 +269,38 @@
 
     $('.select2').select2()
 
+    $(document).on('change', 'select[champ="article_id"]', function() {
+        var index = $(this).attr('index');
+        var articleId = $(this).val();
+        if (articleId) {
+            $.ajax({
+                method: "GET",
+                url: "<?= $this->Url->build(['controller' => 'Devis', 'action' => 'getArticleDetails']) ?>", // Correct URL for the getArticleDetails method
+                dataType: "json",
+                data: {
+                    id: articleId // Send the article ID to the server
+                },
+                headers: {
+                    'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content') // Include CSRF token if needed
+                },
+                success: function(data) {
+                    console.log("Response from server:", data);
+                    if (data.prixachat) {
+                        $('#prix' + index).val(data.prixachat);
+                        console.log(data.prixachat);
+                    }
+                    // Trigger update after article price is fetched
+                    updateTotals();
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    console.log("AJAX request failed: " + textStatus + ", " + errorThrown);
+                    console.log("Response Text: " + jqXHR.responseText);
+                }
+            });
+        }
+    });
+
+
     $(function() {
         /*  $('.familles').on('change', function() {
               const index = $(this).attr('index');
@@ -292,7 +324,7 @@
 
 
     });
-
+/*
     function getArticles(index) {
         console.log(index);
         $.ajax({
@@ -312,7 +344,8 @@
 
 
         });
-    }
+    }*/
+    
 
     /*  function getUnites(id, index) {
           $.ajax({
@@ -452,6 +485,7 @@
             $('#sup' + i).val('1');
             $('#suptest' + i).val('1');
             $(this).parent().parent().hide();
+            updateTotals();
 
 
         })
@@ -476,9 +510,7 @@
 
         // Add a new row and update total brute
         ajouter(table, index);
-        updateTotalBrute();
-        updateTotalRemise();
-        updateHTPriceAndTotal();
+        updateTotals();
     });
 
 
@@ -488,7 +520,7 @@
         var totalBrute = 0;
 
         // Iterate through each row to calculate the total
-        $("tr").each(function() {
+        $("table").find("tr").each(function() {
             var prix = $(this).find("[champ='prix']").val();
             var qte = $(this).find("[champ='qte']").val();
 
@@ -509,7 +541,7 @@
         let totalRemise = 0;
 
         // Iterate through each row (article)
-        $("tr").each(function() {
+        $("table").find("tr").each(function() {
             let prix = $(this).find("[champ='prix']").val(); // Get Prix Unitaire
             let qte = $(this).find("[champ='qte']").val(); // Get Quantité
             let remisePercentage = $(this).find("[champ='remise']").val(); // Get Remise Percentage
@@ -543,7 +575,7 @@
     function updateHTPriceAndTotal() {
         let totalHT = 0;
 
-        $("tr").each(function() {
+        $("table").find("tr").each(function() {
             let prixUnitaire = $(this).find("[champ='prix']").val();
             let qte = $(this).find("[champ='qte']").val();
             let remisePercentage = $(this).find("[champ='remise']").val() || 0;
@@ -567,12 +599,20 @@
 
     // Delegate the "input" event to ensure it applies to dynamically added rows
     $(document).on("input", "[table='ligner'] [champ='prix'], [table='ligner'] [champ='qte'], [table='ligner'] [champ='remise']", function() {
-        updateTotalBrute(); // Recalculate total brute whenever price or quantity is changed
-        updateTotalRemise();
-        updateHTPriceAndTotal();
+        updateTotals();
 
     });
 
+    
+   
+        // Recalculate function
+function updateTotals() {
+    updateTotalBrute();
+    updateHTPriceAndTotal();
+    updateTotalRemise();
+}
+
+    
 
     // Function to add a new row to the table
     function ajouter(table, index) {

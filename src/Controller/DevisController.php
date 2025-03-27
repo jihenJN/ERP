@@ -107,11 +107,7 @@ class DevisController extends AppController
                    
                     foreach ($this->request->getData('data')['ligner'] as $j => $p) {
                   
-                       
-
                         if ($p['sup'] != 1) {
-                          
-
                             $L_devi = $this->fetchTable('Lignedevis')->newEmptyEntity();
                             $data['devis_id'] = $devi->id;
                             $data['article_id'] = $p['article_id'];
@@ -120,8 +116,6 @@ class DevisController extends AppController
                             $data['remise'] = $p['remise'];
                             $data['ht'] = $p['ht'];
                       
-                            
-                          
 
                             if (isset($p['id']) && (!empty($p['id']))) {
                                
