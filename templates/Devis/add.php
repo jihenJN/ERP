@@ -108,7 +108,7 @@
 
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="prix" type="text"
-                                                        class="form-control number" id="prix" index>
+                                                        class="form-control number" id="prix" readonly="true" index >
                                                 </td>
 
                                                 <td align="center" table="ligner">
@@ -217,59 +217,12 @@
 
     $('.select2').select2()
 
-    $(function() {
-        /*  $('.familles').on('change', function() {
-              const index = $(this).attr('index');
-              const id = $('#famille_id' + index).val();
+  
 
-              $.ajax({
-                  method: "GET",
-                  url: "<?= $this->Url->build(['controller' => 'Demandeclients', 'action' => 'getsousfam']) ?>",
-                  dataType: "json",
-                  data: {
-                      id: id,
-                      ind: index
-                  },
-                  success: function(data) {
-                      $('#divsous' + index).html(data.select);
-                      // alert(data.select);
-                  }
-              });
-          });*/
-
-
-
-    });
-
-    function getArticles(index) {
-        console.log(index);
-        $.ajax({
-            method: "GET",
-            url: "<?= $this->Url->build(['controller' => 'Devis', 'action' => 'getarticles']) ?>",
-            dataType: "json",
-            data: {
-
-
-                ind: index
-            },
-
-            success: function(data) {
-                $('#divart' + index).html(data.select);
-                alert(data.select)
-                console.log(data)
-            }
-
-
-        });
-    }
-
-
+   
     $(document).on('change', 'select[champ="article_id"]', function() {
-        alert("Hello");
-
         var index = $(this).attr('index');
-        var articleId = $(this).val(); // Get the selected article ID
-
+        var articleId = $(this).val();
         if (articleId) {
             $.ajax({
                 method: "GET",
@@ -282,9 +235,6 @@
                     'X-CSRF-Token': $('meta[name="csrfToken"]').attr('content') // Include CSRF token if needed
                 },
                 success: function(data) {
-
-                    // Log the entire response to the browser console
-                    alert(data)
                     console.log("Response from server:", data);
                     if (data.prixachat) {
                         $('#prix' + index).val(data.prixachat);
@@ -292,10 +242,8 @@
                     } 
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
-                    // If the AJAX request fails, log the response
                     console.log("AJAX request failed: " + textStatus + ", " + errorThrown);
                     console.log("Response Text: " + jqXHR.responseText);
-                  //  alert("AJAX request failed. Please try again.");
                 }
             });
         }
@@ -303,34 +251,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-    /*  function getUnites(id, index) {
-          $.ajax({
-              method: "GET",
-              url: "<?= $this->Url->build(['controller' => 'Demandeclients', 'action' => 'getunites']) ?>",
-              dataType: "json",
-              data: {
-                  id: id,
-                  ind: index
-              },
-              success: function(data) {
-                  $('#divunite' + index).html(data.select);
-                  // alert(data.select);
-              }
-          });
-      }*/
-
+ 
 
     $("#testformulaire").on("mouseover", function() {
         let code = $("#code").val();

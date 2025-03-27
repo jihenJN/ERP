@@ -21,10 +21,11 @@ class DevisController extends AppController
     {
         $this->paginate = [
             'contain' => ['Clients'],
+            'order' => ['Devis.created' => 'DESC'],
         ];
         $devis = $this->paginate($this->Devis);
-       
 
+    
         $this->set(compact('devis'));
     }
 
@@ -189,70 +190,17 @@ class DevisController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
- /*   public function getarticles()
-    {
-        $ids = $this->request->getQuery('id');
-        $ind = $this->request->getQuery('ind');
-
-        $query = $this->fetchTable('Articles')->find('all')->where(['sousfamille1_id' => $ids]);
-
-        $select = "
-        <select name='data[ligner][$ind][article_id]' id='article_id$ind' table='ligner' champ='article_id' class='form-control select2 article_id' onchange='getUnites(this.value, $ind)'>
-            <option value='' selected>Veuillez choisir !!</option>";
-        foreach ($query as $q) {
-            $select .= "<option value='" . $q->id . "'>" . $q->Code . ' ' . $q->Dsignation . "</option>";
-        }
-        $select .= "</select>";
-
-        echo json_encode(['select' => $select]);
-        exit;
-    }-*/
-
-
-    public function getarticles()
-    {
-        $ind = $this->request->getQuery('ind');
-    
-        $query = $this->fetchTable('Articles')->find('all');
-        debug ('**************', $query);
-    
-        $select = "
-        <select name='data[ligner][$ind][article_id]' id='article_id$ind' table='ligner' champ='article_id' class='form-control select2 article_id'>
-            <option value='' selected>Veuillez choisir !!</option>";
-        foreach ($query as $q) {
-            $select .= "<option value='" . $q->id . "'>" . $q->Code . ' ' . $q->Dsignation . "</option>";
-        }
-        $select .= "</select>";
-    
-        echo json_encode(['select' => $select]);
-        exit;
-    }
-
     public function getArticleDetails()
     {
-         // $this->autoRender = false; // No view rendering
-      //  $this->request->allowMethod(['get']); // Allow only GET requests
-    
         $articleId = $this->request->getQuery('id'); // Get ID from AJAX request
-        //debug($articleId);  // Debug the article ID
-        
-        // if (!$articleId) {
-        //     echo json_encode(['error' => 'Invalid article ID']);
-        //     return;
-        // }
-    
         $article = $this->fetchTable('Articles')->find()
         ->select(['id', 'prixachat']) // Fetch necessary data
         ->where(['id' => $articleId])
         ->first();
         echo json_encode(['prixachat' => $article->prixachat]);
         exit;
-        exit;
+       
     }
     
-
-
-
-
 
     }
