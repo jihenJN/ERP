@@ -97,7 +97,7 @@
                                                             'champ' => 'id',
                                                             'label' => '',
                                                             'name' => 'data[ligner][' . $i . '][id]',
-                                                            'value' => $res->article_id,
+                                                            'value' => $res->id,
                                                             'type' => 'hidden',
                                                             'id' => '',
                                                             'table' => 'ligner',
