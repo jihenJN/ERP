@@ -581,26 +581,12 @@
         $("input[name='total_ht']").val(totalHT.toFixed(2));
     }
 
-
-
-
-
-
-
-
     $(document).ready(function() {
-        updateTotalBrute();
-        updateTotalRemise();
-        updateHTPriceAndTotal();
-
-
+        updateTotals();
     });
 
     $(document).on("input", "input[name*='[prix]'], input[name*='[qte]'], input[name*='[remise]']", function() {
-        updateTotalBrute();
-        updateTotalRemise();
-        updateHTPriceAndTotal();
-
+        updateTotals();
     });
 
     // Recalculate function
