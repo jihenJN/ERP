@@ -86,7 +86,7 @@
                                         </thead>
                                         <?php $index = 0; ?>
                                         <tbody>
-                                            <?php foreach ($lignedevis as $i => $res) : debug($lignedevis);?>
+                                            <?php foreach ($lignedevis as $i => $res) : ?>
 
                                                 <tr>
 
@@ -228,12 +228,14 @@
 
             </div>
         </div>
+        <button type="submit" class="pull-right btn btn-success" id="testde" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
     </div>
+    
 </section>
 
 
 
-<button type="submit" class="pull-right btn btn-success" id="testde" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
+
 <?php echo $this->Form->end(); ?>
 </div>
 
