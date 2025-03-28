@@ -177,10 +177,10 @@
                                                     <input table="ligner" champ="ht" type="text"
                                                         class="form-control " readonly=true index>
                                                 </td>
-                                                <!--td align="center" table="ligner">
+                                                <td align="center" table="ligner">
                                                     <i id="" class="fa fa-times supLigne0ch" style="color: #c9302c;font-size: 22px;" table="ligner" name=""></i>
                                                     <input type='hidden' table="ligner" champ="suptest" class="form-control" index name='' id="">
-                                                </td-->
+                                                </td>
                                             </tr>
                                             <input type="text" value="<?php echo $i; ?>" id="index" style="display: none;">
                                         </tbody>
