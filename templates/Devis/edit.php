@@ -124,7 +124,7 @@
 
                                                     </td>
                                                     <td align="center">
-                                                        <?php echo $this->Form->input('prix', array('label' => '', 'value' => $res->prix, 'name' => 'data[ligner][' . $i . '][prix]', 'type' => 'text', 'id' => 'prix' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index','readOnly' => true)); ?>
+                                                        <?php echo $this->Form->input('prix', array('label' => '', 'value' => $res->prix, 'name' => 'data[ligner][' . $i . '][prix]', 'type' => 'text', 'id' => 'prix' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index', 'readOnly' => true)); ?>
                                                     </td>
                                                     <td align="center">
                                                         <?php echo $this->Form->input('qte', array('label' => '', 'value' => $res->qte, 'name' => 'data[ligner][' . $i . '][qte]', 'type' => 'text', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index')); ?>
@@ -230,7 +230,7 @@
         </div>
         <button type="submit" class="pull-right btn btn-success" id="testde" style="margin-right:48%;margin-top: 20px;margin-bottom:20px;">Enregistrer</button>
     </div>
-    
+
 </section>
 
 
@@ -326,28 +326,28 @@
 
 
     });
-/*
-    function getArticles(index) {
-        console.log(index);
-        $.ajax({
-            method: "GET",
-            url: "<?= $this->Url->build(['controller' => 'Devis', 'action' => 'getarticles']) ?>",
-            dataType: "json",
-            data: {
+    /*
+        function getArticles(index) {
+            console.log(index);
+            $.ajax({
+                method: "GET",
+                url: "<?= $this->Url->build(['controller' => 'Devis', 'action' => 'getarticles']) ?>",
+                dataType: "json",
+                data: {
 
 
-                ind: index
-            },
+                    ind: index
+                },
 
-            success: function(data) {
-                $('#divart' + index).html(data.select);
-                alert(data.select)
-            }
+                success: function(data) {
+                    $('#divart' + index).html(data.select);
+                    alert(data.select)
+                }
 
 
-        });
-    }*/
-    
+            });
+        }*/
+
 
     /*  function getUnites(id, index) {
           $.ajax({
@@ -516,34 +516,43 @@
     });
 
 
-
-    // Function to update total brute value
     function updateTotalBrute() {
         var totalBrute = 0;
-
-        // Iterate through each row to calculate the total
-        $("table").find("tr").each(function() {
-            var prix = $(this).find("[champ='prix']").val();
-            var qte = $(this).find("[champ='qte']").val();
-
-            // Only calculate if both values are numbers
-            if (prix && qte) {
-                prix = parseFloat(prix);
-                qte = parseFloat(qte);
-                totalBrute += prix * qte;
-            }
+        $("tbody tr:visible").each(function(index) {
+            var row = $(this);
+            // Try different selectors
+            var prixField = row.find("input[name*='[prix]']");
+            var qteField = row.find("input[name*='[qte]']");
+            // Convert values safely
+            var prix = prixField.length && prixField.val().trim() !== "" ? parseFloat(prixField.val()) || 0 : 0;
+            var qte = qteField.length && qteField.val().trim() !== "" ? parseFloat(qteField.val()) || 0 : 0;
+            totalBrute += prix * qte;
         });
 
-        // Update the total_brute field with the calculated total
+        // Update total field
         $("input[name='total_brute']").val(totalBrute.toFixed(2));
     }
+
+
+    
+    // Run on page load
+    $(document).ready(function() {
+        updateTotalBrute();
+    });
+
+    // Update on input change
+    $(document).on("input", "input[name*='[prix]'], input[name*='[qte]']", function() {
+        updateTotalBrute();
+    });
+
+
 
     // This function calculates the total remise for all articles
     function updateTotalRemise() {
         let totalRemise = 0;
 
         // Iterate through each row (article)
-        $("table").find("tr").each(function() {
+        $("table").find("tbody tr").each(function() {
             let prix = $(this).find("[champ='prix']").val(); // Get Prix Unitaire
             let qte = $(this).find("[champ='qte']").val(); // Get Quantité
             let remisePercentage = $(this).find("[champ='remise']").val(); // Get Remise Percentage
@@ -577,7 +586,7 @@
     function updateHTPriceAndTotal() {
         let totalHT = 0;
 
-        $("table").find("tr").each(function() {
+        $("table").find("tbody tr").each(function() {
             let prixUnitaire = $(this).find("[champ='prix']").val();
             let qte = $(this).find("[champ='qte']").val();
             let remisePercentage = $(this).find("[champ='remise']").val() || 0;
@@ -599,22 +608,26 @@
         $("input[name='total_ht']").val(totalHT.toFixed(2));
     }
 
-    // Delegate the "input" event to ensure it applies to dynamically added rows
-    $(document).on("input", "[table='ligner'] [champ='prix'], [table='ligner'] [champ='qte'], [table='ligner'] [champ='remise']", function() {
-        updateTotals();
+    /*   // Delegate the "input" event to ensure it applies to dynamically added rows
+       $(document).on("input", "[table='ligner'] [champ='prix'], [table='ligner'] [champ='qte'], [table='ligner'] [champ='remise']", function() {
+           updateTotals();
 
+       });*/
+
+    // Update on input change
+    $(document).on("input", "input[name*='[prix]'], input[name*='[qte]']", function() {
+        updateTotalBrute();
     });
 
-    
-   
-        // Recalculate function
-function updateTotals() {
-    updateTotalBrute();
-    updateHTPriceAndTotal();
-    updateTotalRemise();
-}
 
-    
+    // Recalculate function
+    function updateTotals() {
+        updateTotalBrute();
+        updateHTPriceAndTotal();
+        updateTotalRemise();
+    }
+
+
 
     // Function to add a new row to the table
     function ajouter(table, index) {
