@@ -86,8 +86,8 @@
                                         </thead>
                                         <?php $index = 0; ?>
                                         <tbody>
-                                            <?php foreach ($lignedevis as $i => $res) : ?>
-
+                                            <?php foreach ($lignedevis as $i => $res):  echo $i;  ?>
+                                                
                                                 <tr>
 
                                                     <td align="center">
@@ -137,8 +137,9 @@
                                                     </td>
 
                                                     <td align="center" table="ligner">
-                                                        <i id="" class="fa fa-times getmontant pourcentescompte supLigne0ch" style="color: #c9302c;font-size: 22px;" table="ligner" name=""></i>
-                                                        <input type='hidden' table="ligner" champ="suptest" class="form-control" index name='' id="">
+                                                        <i id="" class="fa fa-times supLigne0ch" style="color: #c9302c;font-size: 22px;" table="ligner"   index="<?= $i ?>"  name=""></i>
+                                                        <h1>****<?= $i ?></h1>
+                                                        <input type='hidden' table="ligner" champ="suptest" class="form-control" name='' >
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -177,10 +178,10 @@
                                                     <input table="ligner" champ="ht" type="text"
                                                         class="form-control " readonly=true index>
                                                 </td>
-                                                <td align="center" table="ligner">
-                                                    <i id="" class="fa fa-times getmontant pourcentescompte supLigne0ch" style="color: #c9302c;font-size: 22px;" table="ligner" name=""></i>
+                                                <!--td align="center" table="ligner">
+                                                    <i id="" class="fa fa-times supLigne0ch" style="color: #c9302c;font-size: 22px;" table="ligner" name=""></i>
                                                     <input type='hidden' table="ligner" champ="suptest" class="form-control" index name='' id="">
-                                                </td>
+                                                </td-->
                                             </tr>
                                             <input type="text" value="<?php echo $i; ?>" id="index" style="display: none;">
                                         </tbody>
@@ -467,8 +468,9 @@
     });
 
 
-    $(function() {
+  /*  $(function() {
         $('.supLigne0ch').on('click', function() {
+            console.log("supp cliqued")  ;     
             nbligne = $('#nbligne').val($('#nbligne').val() - 1);
             indd = Number($('#index').val());
             index = $(this).attr('index');
@@ -481,9 +483,34 @@
             }
 
             i = $(this).attr('index');
-            //  alert(index);
-            //  qte = $('#qte' + index).val();
-            //          indexpre=Number(ind)+1;
+            console.log(i);
+
+            $('#sup' + i).val('1');
+            $('#suptest' + i).val('1');
+            $(this).parent().parent().hide();
+            updateTotals();
+
+
+        })
+    });*/
+
+       $(function() {
+        $('.supLigne0ch').on('click', function() {
+            console.log("supp cliqued")  ;     
+            nbligne = $('#nbligne').val($('#nbligne').val() - 1);
+            indd = Number($('#index').val());
+            index = $(this).attr('index');
+            artt = $('#article_id' + index).val();
+            for (j = 0; j <= indd; j++) {
+                art = $('#article_id' + j).val();
+                if (Number(art) == Number(artt)) {
+                    $('#trart' + j).hide();
+                }
+            }
+
+            i = $(this).attr('index');
+            console.log(i);
+
             $('#sup' + i).val('1');
             $('#suptest' + i).val('1');
             $(this).parent().parent().hide();
@@ -492,6 +519,10 @@
 
         })
     });
+
+
+    
+
     $(".ajouterligne_w").on("click", function() {
         // Get table and index
         var table = $(this).attr("table");
