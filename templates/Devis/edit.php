@@ -138,7 +138,6 @@
 
                                                     <td align="center" table="ligner">
                                                         <i id="" class="fa fa-times supLigne0ch" style="color: #c9302c;font-size: 22px;" table="ligner"   index="<?= $i ?>"  name=""></i>
-                                                        <h1>****<?= $i ?></h1>
                                                         <input type='hidden' table="ligner" champ="suptest" class="form-control" name='' >
                                                     </td>
                                                 </tr>
