@@ -69,7 +69,7 @@ foreach ($lien as $k => $liens) {
 
 
 
-            <div class="col-xs-2">
+            <div class="col-xs-3">
 
 
                 <label class="control-label" for="name">Nom Client
@@ -114,12 +114,7 @@ foreach ($lien as $k => $liens) {
 </div>
 
 
-
-
-
-
-<br><br><br>
-
+<br>
 <h1>Devis</h1>
 
 <section class="content">
