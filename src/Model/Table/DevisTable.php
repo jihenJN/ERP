@@ -85,6 +85,16 @@ class DevisTable extends Table
             ->requirePresence('total_brute', 'create')
             ->notEmptyString('total_brute');
 
+        $validator
+            ->numeric('total_tva')
+            ->requirePresence('total_tva', 'create')
+            ->notEmptyString('total_tva');
+
+        $validator
+            ->numeric('total_ttc')
+            ->requirePresence('total_ttc', 'create')
+            ->notEmptyString('total_ttc');
+
         return $validator;
     }
 

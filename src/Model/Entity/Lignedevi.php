@@ -34,6 +34,8 @@ class Lignedevi extends Entity
         'prix' => true,
         'remise' => true,
         'ht' => true,
+        'ttc' => true,
+        'tva' => true,
         'article_id' => true,
         'devis_id' => true,
         'qte' => true,

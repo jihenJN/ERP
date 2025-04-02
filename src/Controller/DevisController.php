@@ -23,7 +23,7 @@ class DevisController extends AppController
         $cond2 = '';
         $cond3 = '';
         $cond4 = '';
-        $cond5 = '';
+       
 
         $datedebut = $this->request->getQuery('datedebut');
         $datefin = $this->request->getQuery('datefin');

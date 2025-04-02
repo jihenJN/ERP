@@ -81,6 +81,12 @@
                                                 </td>
                                                 <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
                                                         HT</strong></td>
+                                                
+                                                <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
+                                                        TVA</strong></td>
+                                               
+                                                <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
+                                                        TTC</strong></td>
                                                 <td align="center" style="width:2%;"></td>
                                             </tr>
                                         </thead>
@@ -124,6 +130,14 @@
 
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="ht" type="text"
+                                                        class="form-control number" readonly=true index>
+                                                </td>
+                                                <td align="center" table="ligner">
+                                                    <input table="ligner" champ="tva" type="text"
+                                                        class="form-control number" readonly=true index>
+                                                </td>
+                                                <td align="center" table="ligner">
+                                                    <input table="ligner" champ="ttc" type="text"
                                                         class="form-control number" readonly=true index>
                                                 </td>
 
@@ -170,7 +184,21 @@
                                 <?php echo $this->Form->control('total_ht', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
                             </div>
                         </div>
+                        <br>
+                        <div class="col-xs-12">
+                            <div class="form-inline">
 
+                                <label style="text-align: end;">Total TVA</label>
+                                <?php echo $this->Form->control('total_tva', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="col-xs-12">
+                            <div class="form-inline">
+                                <label style="text-align: end;">Total TTC</label>
+                                <?php echo $this->Form->control('total_ttc', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
+                            </div>
+                        </div>
 
 
                     </div>

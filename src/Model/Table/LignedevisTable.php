@@ -77,6 +77,17 @@ class LignedevisTable extends Table
             ->notEmptyString('ht');
 
         $validator
+        ->decimal('tva')
+        ->requirePresence('tva', 'create')
+        ->notEmptyString('tva');
+
+        $validator
+        ->decimal('ttc')
+        ->requirePresence('ttc', 'create')
+        ->notEmptyString('ttc');
+
+
+        $validator
             ->integer('article_id')
             ->notEmptyString('article_id');
 

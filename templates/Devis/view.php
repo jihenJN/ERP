@@ -221,6 +221,22 @@
                             </div>
                         </div>
 
+                        <div class="col-xs-12">
+                            <div class="form-inline">
+
+                                <label style="text-align: end;">Total TVA</label>
+                                <?php echo $this->Form->control('total_tva', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
+                            </div>
+                        </div>
+                       
+                        <div class="col-xs-12">
+                            <div class="form-inline">
+
+                                <label style="text-align: end;">Total TTC</label>
+                                <?php echo $this->Form->control('total_ttc', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
+                            </div>
+                        </div>
+
 
 
                     </div>

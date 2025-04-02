@@ -79,6 +79,13 @@
                                                 </td>
                                                 <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
                                                         HT</strong></td>
+                                      
+                                                <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
+                                                        TVA</strong></td>
+                                             
+
+                                                <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
+                                                        TTC</strong></td>
                                                 <td align="center" style="width:2%;"></td>
 
 
@@ -135,6 +142,12 @@
                                                     <td align="center">
                                                         <?php echo $this->Form->input('ht', array('label' => '', 'value' => $res->ht, 'name' => 'data[ligner][' . $i . '][ht]', 'type' => 'text', 'id' => 'ht' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index', 'readOnly' => true)); ?>
                                                     </td>
+                                                    <td align="center">
+                                                        <?php echo $this->Form->input('tva', array('label' => '', 'value' => $res->tva, 'name' => 'data[ligner][' . $i . '][tva]', 'type' => 'text', 'id' => 'tva' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index', 'readOnly' => true)); ?>
+                                                    </td>
+                                                    <td align="center">
+                                                        <?php echo $this->Form->input('ttc', array('label' => '', 'value' => $res->ttc, 'name' => 'data[ligner][' . $i . '][ttc]', 'type' => 'text', 'id' => 'ttc' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index', 'readOnly' => true)); ?>
+                                                    </td>
 
                                                     <td align="center" table="ligner">
                                                         <i id="" class="fa fa-times supLigne0ch" style="color: #c9302c;font-size: 22px;" table="ligner"   index="<?= $i ?>"  name=""></i>
@@ -175,6 +188,14 @@
                                                 </td>
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="ht" type="text"
+                                                        class="form-control " readonly=true index>
+                                                </td>
+                                                <td align="center" table="ligner">
+                                                    <input table="ligner" champ="tva" type="text"
+                                                        class="form-control " readonly=true index>
+                                                </td>
+                                                <td align="center" table="ligner">
+                                                    <input table="ligner" champ="ttc" type="text"
                                                         class="form-control " readonly=true index>
                                                 </td>
                                                 <td align="center" table="ligner">
@@ -219,6 +240,26 @@
                                 <?php echo $this->Form->control('total_ht', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
                             </div>
                         </div>
+                        <br>
+                        <div class="col-xs-12">
+                            <div class="form-inline">
+
+                                <label style="text-align: end;">Total TVA</label>
+                                <?php echo $this->Form->control('total_tva', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
+                            </div>
+                        </div>
+
+
+                        <br>
+                        <div class="col-xs-12">
+                            <div class="form-inline">
+
+                                <label style="text-align: end;">Total TTC</label>
+                                <?php echo $this->Form->control('total_ttc', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
+                            </div>
+                        </div>
+
+
 
 
 

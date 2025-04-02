@@ -125,12 +125,14 @@ foreach ($lien as $k => $liens) {
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
-                                <th width="15%" align="center"><?= __('Numéro') ?></th>
-                                <th width="25%" align="center"><?= __('Date') ?></th>
+                                <th width="10%" align="center"><?= __('Numéro') ?></th>
+                                <th width="20%" align="center"><?= __('Date') ?></th>
                                 <th width="20%" align="center"><?= __('Client') ?></th>
                                 <th width="10%" align="center"><?= __('Total Remise') ?></th>
                                 <th width="10%" align="center"><?= __('Total Ht') ?></th>
                                 <th width="10%" align="center"><?= __('Total Brute') ?></th>
+                                <th width="10%" align="center"><?= __('Total TVA') ?></th>
+                                <th width="10%" align="center"><?= __('Total TTC') ?></th>
                                 <th width="30%" scope="col" class="actions text-center"><?= __('Actions') ?></th>
                             </tr>
                         </thead>
@@ -147,6 +149,8 @@ foreach ($lien as $k => $liens) {
                                     <td><?= $this->Number->format($devi->total_remise) ?></td>
                                     <td><?= $this->Number->format($devi->total_ht) ?></td>
                                     <td><?= $this->Number->format($devi->total_brute) ?></td>
+                                    <td><?= $this->Number->format($devi->total_tva) ?></td>
+                                    <td><?= $this->Number->format($devi->total_ttc) ?></td>
 
                                     <td class="actions text-center">
                                         <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $devi->id), array('escape' => false)); ?>

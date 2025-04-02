@@ -15,6 +15,8 @@ use Cake\ORM\Entity;
  * @property float $total_remise
  * @property float $total_ht
  * @property float $total_brute
+ * @property float $total_ttc
+ * @property float $total_tva
  *
  * @property \App\Model\Entity\Client $client
  */
@@ -36,6 +38,8 @@ class Devi extends Entity
         'total_remise' => true,
         'total_ht' => true,
         'total_brute' => true,
+        'total_tva' => true,
+        'total_ttc' => true,
         'client' => true,
     ];
 }
