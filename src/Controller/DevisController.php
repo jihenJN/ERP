@@ -19,14 +19,46 @@ class DevisController extends AppController
      */
     public function index()
     {
+
+        $cond2 = '';
+        $cond3 = '';
+        $cond4 = '';
+        $cond5 = '';
+
+        $datedebut = $this->request->getQuery('datedebut');
+        $datefin = $this->request->getQuery('datefin');
+        $client_id = $this->request->getQuery('client_id');
+        
+
+        if ($datedebut) {
+            $cond2 = "date(Devis.date)   >= '" . $datedebut . "' ";
+        }
+        if ($datefin) {
+            $cond3 = "date(Devis.date ) <=  '" . $datefin . "' ";
+        }
+
+       
+        if ($client_id) {
+            $cond4 = "Devis.client_id = '" . $client_id . "' ";
+        }
+      
+        
+       
+        $query = $this->Devis->find('all')->where([$cond2, $cond3, $cond4])
+
+
+        ->order(['Devis.id' => 'DESC']);
+
         $this->paginate = [
             'contain' => ['Clients'],
-            'order' => ['Devis.created' => 'DESC'],
+            'order' => ['Devis.id' => 'DESC'],
         ];
-        $devis = $this->paginate($this->Devis);
+        $devis = $this->paginate( $query);
+        $count = $query->count();
 
+        $clients = $this->Devis->Clients->find('all');
     
-        $this->set(compact('devis'));
+        $this->set(compact('devis', 'count','clients', 'datefin', 'client_id', 'datedebut'));
     }
 
     /**

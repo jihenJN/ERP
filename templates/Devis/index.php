@@ -31,6 +31,93 @@ foreach ($lien as $k => $liens) {
     </div>
 <?php } ?>
 
+<br><br>
+<section class="content-header">
+    <h1>
+        Recherche
+    </h1>
+</section>
+<div class="box">
+    <div class="box-header">
+    </div>
+
+    <div class="box-body">
+
+        <?php echo $this->Form->create($devis, ['id' => 'searchForm', 'type' => 'get']); ?>
+        <div class="row">
+
+
+            <div class="col-xs-3">
+                <label class="control-label" for="name">Date début Devis
+                </label>
+                <?php
+                echo $this->Form->input('datedebut', array('required' => 'off', 'label' => 'Date début', 'value' => $this->request->getQuery('datedebut'), 'id' => 'datedebut', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control ', 'type' => 'date'));
+                ?>
+            </div>
+
+
+            <div class="col-xs-3">
+                <label class="control-label" for="name">Date Fin Devis
+                </label>
+                <?php
+                echo $this->Form->input('datefin', array('required' => 'off', 'label' => 'Date fin', 'value' => $this->request->getQuery('datefin'), 'id' => 'datefin', 'div' => 'form-group', 'between' => '<div class="col-sm-10">', 'after' => '</div>', 'class' => 'form-control ', 'type' => 'date'));
+                ?>
+
+            </div>
+
+
+
+
+
+            <div class="col-xs-2">
+
+
+                <label class="control-label" for="name">Nom Client
+                </label>
+                <select class="form-control select2" id="client_id" name="client_id">
+                    <option value="" selected="selected" disabled>Veuillez choisir !!</option>
+                    <?php foreach ($clients as $id => $client) {
+                    ?>
+
+                        <option <?php if ($this->request->getQuery('client_id') == $client->id) echo 'selected="selected"' ?> value="<?php echo $client->id; ?>"><?php echo $client->Raison_Sociale ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+
+
+
+            <div class="col-xs-1">
+                <button type="submit" style="margin-top: 25px;" class="btn btn-default custom-width-button">
+                    <i class="fa fa-search"></i>
+                </button>
+
+            </div>
+            <?php if ($count != 0) { ?>
+                <div class="col-xs-1">
+
+                    <!-- <button onclick="openWindow(1000, 1000, wr+'factureclients/imprimelistefactureclient?datedebut=<?php echo @$datedebut; ?>&datefin=<?php echo @$datefin; ?>&client_id=<?php echo @$client_id; ?>&numdeb=<?php echo @$numdeb; ?>&numfin=<?php echo @$numfin; ?>&reglee=<?php echo @$reglee; ?>')" class="btn btn-primary" style="margin-top: 25px;">
+                            <i class="fa fa-print"></i>
+                        </button> -->
+                </div>
+            <?php } ?>
+
+            <div class="col-xs-1" style="text-align: center; margin-top: 25px;">
+                <?php echo $this->Html->link(__(''), ['action' => 'index'], ['class' => 'btn btn-default btn-large fa fa-remove', 'style' => 'width: 37px; height: 35px; display: flex; justify-content: center; align-items: center;']) ?>
+            </div>
+
+            <?php echo $this->Form->end(); ?>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+
+
+
 <br><br><br>
 
 <h1>Devis</h1>
@@ -61,11 +148,11 @@ foreach ($lien as $k => $liens) {
                                     <td><?= h($devi->date) ?>
                                         <?php echo $this->Form->control('id', ['index' => $i, 'id' => 'id' . $i, 'value' => $devi->id, 'label' => '', 'type' => 'hidden', 'champ' => 'id', 'class' => 'form-control']); ?>
                                     </td>
-                                    <td><?=h($devi->client->Raison_Sociale)?></td>
+                                    <td><?= h($devi->client->Raison_Sociale) ?></td>
                                     <td><?= $this->Number->format($devi->total_remise) ?></td>
                                     <td><?= $this->Number->format($devi->total_ht) ?></td>
                                     <td><?= $this->Number->format($devi->total_brute) ?></td>
-                                    
+
                                     <td class="actions text-center">
                                         <?php echo $this->Html->link("<button class='btn btn-xs btn-success'><i class='fa fa-search'></i></button>", array('action' => 'view', $devi->id), array('escape' => false)); ?>
                                         <?php if ($edit == 1) {
