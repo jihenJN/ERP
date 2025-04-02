@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Devi $devi
@@ -79,7 +80,7 @@
                             <?php echo $this->Form->control('numero', ['label' => 'Numéro', 'readOnly' => true]); ?>
                         </div>
                         <div class="col-xs-6">
-                            <?php echo $this->Form->control('date', ['label' => 'Date','readOnly' => true]); ?>
+                            <?php echo $this->Form->control('date', ['label' => 'Date', 'readOnly' => true]); ?>
                         </div>
                         <br>
                         <div class="col-xs-6">
@@ -99,7 +100,7 @@
                     <div class="row">
                         <div class="box box-primary">
                             <div class="box-header with-border">
-                                
+
 
                             </div>
                             <div class="panel-body">
@@ -123,7 +124,15 @@
                                                 </td>
                                                 <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
                                                         HT</strong></td>
-                                          
+
+                                                <td align="center" style="width: 15%;font-size: 16px;"><strong>taux
+                                                        TVA %</strong></td>
+
+                                                <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
+                                                        TTC</strong></td>
+
+
+
 
 
                                             </tr>
@@ -132,7 +141,7 @@
                                         <tbody>
                                             <?php foreach ($lignedevis as $i => $res) : ?>
 
-                                                <tr >
+                                                <tr>
 
                                                     <td align="center">
                                                         <?php echo $this->Form->input('sup', array('name' => "data[ligner][" . $i . "][sup]", 'id' => 'sup' . $i, 'champ' => 'sup', 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'type' => '', 'class' => 'form-control', 'type' => 'hidden')); ?>
@@ -168,21 +177,27 @@
 
                                                     </td>
                                                     <td align="center">
-                                                        <?php echo $this->Form->input('prix', array('label' => '', 'value' => $res->prix, 'name' => 'data[ligner][' . $i . '][prix]', 'type' => 'text', 'id' => 'prix' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index','readOnly' => true)); ?>
+                                                        <?php echo $this->Form->input('prix', array('label' => '', 'value' => $res->prix, 'name' => 'data[ligner][' . $i . '][prix]', 'type' => 'text', 'id' => 'prix' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index', 'readOnly' => true)); ?>
                                                     </td>
                                                     <td align="center">
-                                                        <?php echo $this->Form->input('qte', array('label' => '', 'value' => $res->qte, 'name' => 'data[ligner][' . $i . '][qte]', 'type' => 'text', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index','readOnly' => true)); ?>
+                                                        <?php echo $this->Form->input('qte', array('label' => '', 'value' => $res->qte, 'name' => 'data[ligner][' . $i . '][qte]', 'type' => 'text', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index', 'readOnly' => true)); ?>
                                                     </td>
                                                     <td align="center">
-                                                        <?php echo $this->Form->input('remise', array('label' => '', 'value' => $res->remise, 'name' => 'data[ligner][' . $i . '][remise]', 'type' => 'text', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index','readOnly' => true)); ?>
+                                                        <?php echo $this->Form->input('remise', array('label' => '', 'value' => $res->remise, 'name' => 'data[ligner][' . $i . '][remise]', 'type' => 'text', 'id' => 'qte' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index', 'readOnly' => true)); ?>
                                                     </td>
                                                     <td align="center">
                                                         <?php echo $this->Form->input('ht', array('label' => '', 'value' => $res->ht, 'name' => 'data[ligner][' . $i . '][ht]', 'type' => 'text', 'id' => 'ht' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index', 'readOnly' => true)); ?>
                                                     </td>
+                                                    <td align="center">
+                                                        <?php echo $this->Form->input('tva', array('label' => '', 'value' => $res->tva, 'name' => 'data[ligner][' . $i . '][tva]', 'type' => 'text', 'id' => 'tva' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index', 'readOnly' => true)); ?>
+                                                    </td>
+                                                    <td align="center">
+                                                        <?php echo $this->Form->input('ttc', array('label' => '', 'value' => $res->ttc, 'name' => 'data[ligner][' . $i . '][ttc]', 'type' => 'text', 'id' => 'ttc' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index', 'readOnly' => true)); ?>
+                                                    </td>
 
                                                 </tr>
                                             <?php endforeach; ?>
-                                           
+
                                             <input type="text" value="<?php echo $i; ?>" id="index" style="display: none;">
                                         </tbody>
 
@@ -228,7 +243,7 @@
                                 <?php echo $this->Form->control('total_tva', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
                             </div>
                         </div>
-                       
+
                         <div class="col-xs-12">
                             <div class="form-inline">
 
@@ -263,4 +278,3 @@
 </div>
 <!-- /.row -->
 </section>
-
