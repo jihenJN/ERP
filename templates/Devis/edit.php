@@ -79,10 +79,10 @@
                                                 </td>
                                                 <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
                                                         HT</strong></td>
-                                      
+
                                                 <td align="center" style="width: 15%;font-size: 16px;"><strong>taux
                                                         TVA %</strong></td>
-                                             
+
 
                                                 <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
                                                         TTC</strong></td>
@@ -94,7 +94,7 @@
                                         <?php $index = 0; ?>
                                         <tbody>
                                             <?php foreach ($lignedevis as $i => $res):   ?>
-                                                
+
                                                 <tr>
 
                                                     <td align="center">
@@ -150,8 +150,8 @@
                                                     </td>
 
                                                     <td align="center" table="ligner">
-                                                        <i id="" class="fa fa-times supLigne0ch" style="color: #c9302c;font-size: 22px;" table="ligner"   index="<?= $i ?>"  name=""></i>
-                                                        <input type='hidden' table="ligner" champ="suptest" class="form-control" name='' >
+                                                        <i id="" class="fa fa-times supLigne0ch" style="color: #c9302c;font-size: 22px;" table="ligner" index="<?= $i ?>" name=""></i>
+                                                        <input type='hidden' table="ligner" champ="suptest" class="form-control" name=''>
                                                     </td>
                                                 </tr>
                                             <?php endforeach; ?>
@@ -192,7 +192,7 @@
                                                 </td>
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="tva" type="text"
-                                                        class="form-control "  index>
+                                                        class="form-control " index>
                                                 </td>
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="ttc" type="text"
@@ -200,7 +200,7 @@
                                                 </td>
                                                 <td align="center" table="ligner">
                                                     <i id="" class="fa fa-times supLigne0ch" style="color: #c9302c;font-size: 22px;" table="ligner" name=""></i>
-                                                    <input type='hidden' table="ligner" champ="suptest" class="form-control" index name='' id="" >
+                                                    <input type='hidden' table="ligner" champ="suptest" class="form-control" index name='' id="">
                                                 </td>
                                             </tr>
                                             <input type="text" value="<?php echo $i; ?>" id="index" style="display: none;">
@@ -508,9 +508,9 @@
     });
 
 
-       $(function() {
+    $(function() {
         $('.supLigne0ch').on('click', function() {
-            console.log("supp cliqued")  ;     
+            console.log("supp cliqued");
             nbligne = $('#nbligne').val($('#nbligne').val() - 1);
             indd = Number($('#index').val());
             index = $(this).attr('index');
@@ -535,7 +535,7 @@
     });
 
 
-    
+
 
     $(".ajouterligne_w").on("click", function() {
         // Get table and index
@@ -561,146 +561,66 @@
     });
 
 
-    function updateTotalBrute() {
-        var totalBrute = 0;
-        $("tbody tr:visible").each(function(index) {
-            var row = $(this);
-            var prixField = row.find("input[name*='[prix]']");
-            var qteField = row.find("input[name*='[qte]']");
-            var prix = prixField.length && prixField.val().trim() !== "" ? parseFloat(prixField.val()) || 0 : 0;
-            var qte = qteField.length && qteField.val().trim() !== "" ? parseFloat(qteField.val()) || 0 : 0;
-            totalBrute += prix * qte;
+    function getRowValues(row) {
+        return {
+            prix: parseFloat(row.find("input[name*='[prix]']").val()) || 0,
+            qte: parseFloat(row.find("input[name*='[qte]']").val()) || 0,
+            remise: parseFloat(row.find("input[name*='[remise]']").val()) || 0,
+            tva: parseFloat(row.find("input[name*='[tva]']").val()) / 100 || 0
+        };
+    }
+
+    function updateTotals() {
+        let totalBrute = 0,
+            totalRemise = 0,
+            totalHT = 0,
+            totalTva = 0,
+            totalTtc = 0;
+
+        $("tbody tr:visible").each(function() {
+            let row = $(this);
+            let {
+                prix,
+                qte,
+                remise,
+                tva
+            } = getRowValues(row);
+
+            let prixSansRemise = prix * qte;
+            let remiseValue = prixSansRemise * (remise / 100);
+            let htPrice = prixSansRemise - remiseValue;
+            let tvaValue = htPrice * tva;
+            let ttcPrice = htPrice + tvaValue;
+
+            totalBrute += prixSansRemise;
+            totalRemise += remiseValue;
+            totalHT += htPrice;
+            totalTva += tvaValue;
+            totalTtc += ttcPrice;
+
+            row.find("input[name*='[ht]']").val(htPrice.toFixed(2));
+            row.find("input[name*='[ttc]']").val(ttcPrice.toFixed(2));
         });
+
         $("input[name='total_brute']").val(totalBrute.toFixed(2));
-    }
-
-    function updateTotalRemise() {
-        var totalRemise = 0;
-        $("tbody tr:visible").each(function(index) {
-            var row = $(this);
-            var prixField = row.find("input[name*='[prix]']");
-            var qteField = row.find("input[name*='[qte]']");
-            var remiseField = row.find("input[name*='[remise]']");
-            var prix = prixField.length && prixField.val().trim() !== "" ? parseFloat(prixField.val()) || 0 : 0;
-            var qte = qteField.length && qteField.val().trim() !== "" ? parseFloat(qteField.val()) || 0 : 0;
-            var remise = remiseField.length && remiseField.val().trim() !== "" ? parseFloat(remiseField.val()) || 0 : 0;
-            if (prix && qte && remise && !isNaN(prix) && !isNaN(qte) && !isNaN(remise)) {
-                let prixSansRemise = prix * qte;
-                let prixAvecRemise = prix * qte * (1 - remise / 100);
-                let remiseForArticle = prixSansRemise - prixAvecRemise;
-                totalRemise += remiseForArticle;
-            }
-        });
         $("input[name='total_remise']").val(totalRemise.toFixed(2));
-    }
-
-
-    // Function to calculate the HT price after applying the discount for each row
-    function updateHTPriceAndTotal() {
-        var totalHT = 0;
-
-        $("tbody tr:visible").each(function(index) { // Only count visible rows
-            var row = $(this);
-            var prixField = row.find("input[name*='[prix]']");
-            var qteField = row.find("input[name*='[qte]']");
-            var remiseField = row.find("input[name*='[remise]']");
-            var htField = row.find("input[name*='[ht]']");
-
-            var prix = prixField.length && prixField.val().trim() !== "" ? parseFloat(prixField.val()) || 0 : 0;
-            var qte = qteField.length && qteField.val().trim() !== "" ? parseFloat(qteField.val()) || 0 : 0;
-            var remise = remiseField.length && remiseField.val().trim() !== "" ? parseFloat(remiseField.val()) || 0 : 0;
-
-
-            var prixAvecRemise = prix * qte * (1 - remise / 100);
-            // Update the HT field
-            if (htField.length) {
-                htField.val(prixAvecRemise.toFixed(2));
-            }
-        
-            totalHT += prixAvecRemise;
-
-
-        });
-
-        // Update the Total HT field
         $("input[name='total_ht']").val(totalHT.toFixed(2));
+        $("input[name='total_tva']").val(totalTva.toFixed(2));
+        $("input[name='total_ttc']").val(totalTtc.toFixed(2));
     }
-
-
-   
-    // Function to calculate total TVA and total TTC
-    function updateTotalTvaAndTtc() {
-        let totalTva = 0;
-        let totalTtc = 0;
-        //const tauxTva = 0.19; 
-
-        // Iterate through each row (article)
-        $("tbody tr:visible").each(function(index) { // Only count visible rows
-            var row = $(this);
-            var prixField = row.find("input[name*='[prix]']");
-            var qteField = row.find("input[name*='[qte]']");
-            var remiseField = row.find("input[name*='[remise]']");
-            var htField = row.find("input[name*='[ht]']");
-            var tvaField = row.find("input[name*='[tva]']");
-            var ttcField = row.find("input[name*='[ttc]']");
-
-            var prix = prixField.length && prixField.val().trim() !== "" ? parseFloat(prixField.val()) || 0 : 0;
-            var qte = qteField.length && qteField.val().trim() !== "" ? parseFloat(qteField.val()) || 0 : 0;
-            var remise = remiseField.length && remiseField.val().trim() !== "" ? parseFloat(remiseField.val()) || 0 : 0;
-            var Tva = tvaField.length && tvaField.val().trim() !== "" ? parseFloat(tvaField.val()) || 0 : 0;
-            var tauxTva = parseFloat(Tva)/100;
-        
-
-            // Only calculate if Prix Unitaire, Quantité, and Remise are valid numbers
-            if (prix && qte) {
-                prix = parseFloat(prix); // Convert to float
-                qte = parseFloat(qte); // Convert to float
-                remise = parseFloat(remise); // Convert to float, default to 0 if remise is not provided
-
-                // Calculate HT after applying the discount
-                let htPriceAfterDiscount = prix * qte * (1 - remise / 100);
-
-                // Calculate the TVA for this article (19% of HT price)
-                let tvaForArticle = htPriceAfterDiscount * tauxTva;
-              
-
-                // Calculate the TTC for this article (HT + TVA)
-                let ttcForArticle = htPriceAfterDiscount + tvaForArticle;
-                ttcField.val(ttcForArticle.toFixed(2));
-                
-
-
-                // Add to the total TVA and total TTC
-                totalTva += tvaForArticle;
-                totalTtc += ttcForArticle;
-            }
-        });
-
-        // Update the "total_tva" and "total_ttc" fields in the form
-        $("input[name='total_tva']").val(totalTva.toFixed(2)); // Format to 2 decimal places
-        $("input[name='total_ttc']").val(totalTtc.toFixed(2)); //_
-    }
-
-
 
 
     $(document).ready(function() {
         updateTotals();
     });
 
+    // Trigger recalculations when an input field changes
+
     $(document).on("input", "input[name*='[prix]'], input[name*='[qte]'], input[name*='[remise]'], input[name*='[tva]']", function() {
         updateTotals();
     });
 
-    // Recalculate function
-    function updateTotals() {
-        updateTotalBrute();
-        updateTotalRemise();
-        updateHTPriceAndTotal();
-        updateTotalTvaAndTtc();
-    }
-
-
+  
 
     // Function to add a new row to the table
     function ajouter(table, index) {

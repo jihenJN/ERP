@@ -273,10 +273,7 @@
                         console.log(data.prixachat);
                     }
 
-                    updateTotalBrute();
-                    updateTotalRemise();
-                    updateHTPriceAndTotal();
-                    updateTotalTvaAndTtc();
+                    updateTotals();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log("AJAX request failed: " + textStatus + ", " + errorThrown);
@@ -414,11 +411,7 @@
             $(this).parent().parent().hide();
 
             // Recalculate totals after deletion
-            updateTotalBrute();
-            updateTotalRemise();
-            updateHTPriceAndTotal();
-            updateTotalTvaAndTtc();
-
+            updateTotals();
         })
     });
     $(".ajouterligne_w").on("click", function() {
@@ -441,147 +434,58 @@
 
         // Add a new row and update total brute
         ajouter(table, index);
-        updateTotalBrute();
-        updateTotalRemise();
-        updateHTPriceAndTotal();
-        updateTotalTvaAndTtc();
+        updateTotals();
 
     });
 
 
 
-    // Function to update total brute value
-    function updateTotalBrute() {
-        var totalBrute = 0;
-
-        // Iterate through each row to calculate the total
-        $("tr:visible").each(function() { // Only count visible rows
-            var prix = $(this).find("[champ='prix']").val();
-            var qte = $(this).find("[champ='qte']").val();
-
-            // Only calculate if both values are numbers
-            if (prix && qte) {
-                prix = parseFloat(prix);
-                qte = parseFloat(qte);
-                totalBrute += prix * qte;
-            }
-        });
-
-        // Update the total_brute field with the calculated total
-        $("input[name='total_brute']").val(totalBrute.toFixed(2));
-    }
-
-    // This function calculates the total remise for all articles
-    function updateTotalRemise() {
-        let totalRemise = 0;
-
-        // Iterate through each row (article)
-        $("tr:visible").each(function() { // Only count visible rows
-            let prix = $(this).find("[champ='prix']").val(); // Get Prix Unitaire
-            let qte = $(this).find("[champ='qte']").val(); // Get Quantité
-            let remisePercentage = $(this).find("[champ='remise']").val(); // Get Remise Percentage
-
-            // Only calculate remise if Prix, Qte, and Remise Percentage are valid
-            if (prix && qte && remisePercentage && !isNaN(prix) && !isNaN(qte) && !isNaN(remisePercentage)) {
-                prix = parseFloat(prix); // Convert to float
-                qte = parseFloat(qte); // Convert to float
-                remisePercentage = parseFloat(remisePercentage); // Convert to float
-
-                // Calculate original price (before discount)
-                let prixSansRemise = prix * qte;
-
-                // Calculate discounted price (after applying the remise)
-                let prixAvecRemise = prix * qte * (1 - remisePercentage / 100);
-
-                // Calculate remise for this article (difference between original price and discounted price)
-                let remiseForArticle = prixSansRemise - prixAvecRemise;
-
-                // Add this remise to the total remise
-                totalRemise += remiseForArticle;
-            }
-        });
-
-        // Update the "total_remise" field in the form
-        $("input[name='total_remise']").val(totalRemise.toFixed(2)); // Format to 2 decimal places
-    }
 
 
-    // Function to calculate the HT price after applying the discount for each row
-    function updateHTPriceAndTotal() {
-        let totalHT = 0;
+    function getRowValues(row) {
+    return {
+        prix: parseFloat(row.find("[champ='prix']").val()) || 0,
+        qte: parseFloat(row.find("[champ='qte']").val()) || 0,
+        remise: parseFloat(row.find("[champ='remise']").val()) || 0,
+        tva: parseFloat(row.find("[champ='tva']").val()) / 100 || 0
+    };
+}
 
-        $("tr:visible").each(function() { // Only count visible rows
-            let prixUnitaire = $(this).find("[champ='prix']").val();
-            let qte = $(this).find("[champ='qte']").val();
-            let remisePercentage = $(this).find("[champ='remise']").val() || 0;
+function updateTotals() {
+    let totalBrute = 0, totalRemise = 0, totalHT = 0, totalTva = 0, totalTtc = 0;
 
-            // Only calculate if Prix Unitaire, Quantité, and Remise are valid numbers
-            if (prixUnitaire && qte && remisePercentage) {
-                prixUnitaire = parseFloat(prixUnitaire); // Convert to float
-                qte = parseFloat(qte); // Convert to float
-                remisePercentage = parseFloat(remisePercentage); // Convert to float, default to 0 if remise is not provided
-                let htPriceAfterDiscount = prixUnitaire * qte * (1 - remisePercentage / 100);
-                $(this).find("[champ='ht']").val(htPriceAfterDiscount.toFixed(2));
-                // Add to the total HT
-                totalHT += htPriceAfterDiscount;
+    $("tr:visible").each(function() {
+        let row = $(this);
+        let { prix, qte, remise, tva } = getRowValues(row);
 
-            }
-        });
+        let prixSansRemise = prix * qte;
+        let remiseValue = prixSansRemise * (remise / 100);
+        let htPrice = prixSansRemise - remiseValue;
+        let tvaValue = htPrice * tva;
+        let ttcPrice = htPrice + tvaValue;
 
-        // Update the Total HT field
-        $("input[name='total_ht']").val(totalHT.toFixed(2));
-    }
+        totalBrute += prixSansRemise;
+        totalRemise += remiseValue;
+        totalHT += htPrice;
+        totalTva += tvaValue;
+        totalTtc += ttcPrice;
 
+        row.find("[champ='ht']").val(htPrice.toFixed(2));
+        row.find("[champ='ttc']").val(ttcPrice.toFixed(2));
+    });
 
-    // Function to calculate total TVA and total TTC
-    function updateTotalTvaAndTtc() {
-        let totalTva = 0;
-        let totalTtc = 0;
-        //const tauxTva = 0.19; 
-
-        // Iterate through each row (article)
-        $("tr:visible").each(function() { // Only count visible rows
-            let prixUnitaire = $(this).find("[champ='prix']").val();
-            let qte = $(this).find("[champ='qte']").val();
-            let remisePercentage = $(this).find("[champ='remise']").val() || 0;
-            const tauxTva =  parseFloat($(this).find("[champ='tva']").val())/100 || 0;
-
-            // Only calculate if Prix Unitaire, Quantité, and Remise are valid numbers
-            if (prixUnitaire && qte) {
-                prixUnitaire = parseFloat(prixUnitaire); // Convert to float
-                qte = parseFloat(qte); // Convert to float
-                remisePercentage = parseFloat(remisePercentage); // Convert to float, default to 0 if remise is not provided
-
-                // Calculate HT after applying the discount
-                let htPriceAfterDiscount = prixUnitaire * qte * (1 - remisePercentage / 100);
-
-                // Calculate the TVA for this article (19% of HT price)
-                let tvaForArticle = htPriceAfterDiscount * tauxTva;
-              
-
-                // Calculate the TTC for this article (HT + TVA)
-                let ttcForArticle = htPriceAfterDiscount + tvaForArticle;
-                $(this).find("[champ='ttc']").val(ttcForArticle.toFixed(2));
-                
+    $("input[name='total_brute']").val(totalBrute.toFixed(2));
+    $("input[name='total_remise']").val(totalRemise.toFixed(2));
+    $("input[name='total_ht']").val(totalHT.toFixed(2));
+    $("input[name='total_tva']").val(totalTva.toFixed(2));
+    $("input[name='total_ttc']").val(totalTtc.toFixed(2));
+}
 
 
-                // Add to the total TVA and total TTC
-                totalTva += tvaForArticle;
-                totalTtc += ttcForArticle;
-            }
-        });
-
-        // Update the "total_tva" and "total_ttc" fields in the form
-        $("input[name='total_tva']").val(totalTva.toFixed(2)); // Format to 2 decimal places
-        $("input[name='total_ttc']").val(totalTtc.toFixed(2)); //_
-    }
-
+   
     // Delegate the "input" event to ensure it applies to dynamically added rows
     $(document).on("input", "[table='ligner'] [champ='prix'], [table='ligner'] [champ='qte'], [table='ligner'] [champ='remise'],[table='ligner'] [champ='tva']", function() {
-        updateTotalBrute(); // Recalculate total brute whenever price or quantity is changed
-        updateTotalRemise();
-        updateHTPriceAndTotal();
-        updateTotalTvaAndTtc();
+        updateTotals();
 
 
     });
