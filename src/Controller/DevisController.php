@@ -46,19 +46,23 @@ class DevisController extends AppController
        
         $query = $this->Devis->find('all')->where([$cond2, $cond3, $cond4])
 
-
-        ->order(['Devis.id' => 'DESC']);
+        ->order(['Devis.id' => 'DESC'])
+        ->contain(['Clients', 'Lignedevis.Articles']);
 
         $this->paginate = [
-            'contain' => ['Clients'],
+            'contain' => ['Clients', 'Lignedevis.Articles'],
             'order' => ['Devis.id' => 'DESC'],
         ];
         $devis = $this->paginate( $query);
         $count = $query->count();
 
         $clients = $this->Devis->Clients->find('all');
-    
-        $this->set(compact('devis', 'count','clients', 'datefin', 'client_id', 'datedebut'));
+
+        $lignedevis = $this->fetchTable('Lignedevis')->find('all')->toArray(); 
+     
+        debug($lignedevis);
+        
+        $this->set(compact('devis', 'count','clients', 'datefin', 'client_id', 'datedebut','lignedevis'));
     }
 
     /**

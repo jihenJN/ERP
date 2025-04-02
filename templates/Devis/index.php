@@ -128,6 +128,7 @@ foreach ($lien as $k => $liens) {
                                 <th width="10%" align="center"><?= __('Numéro') ?></th>
                                 <th width="20%" align="center"><?= __('Date') ?></th>
                                 <th width="20%" align="center"><?= __('Client') ?></th>
+                                <th width="20%" align="center"><?= __('Articles') ?></th>
                                 <th width="10%" align="center"><?= __('Total Remise') ?></th>
                                 <th width="10%" align="center"><?= __('Total Ht') ?></th>
                                 <th width="10%" align="center"><?= __('Total Brute') ?></th>
@@ -146,6 +147,17 @@ foreach ($lien as $k => $liens) {
                                         <?php echo $this->Form->control('id', ['index' => $i, 'id' => 'id' . $i, 'value' => $devi->id, 'label' => '', 'type' => 'hidden', 'champ' => 'id', 'class' => 'form-control']); ?>
                                     </td>
                                     <td><?= h($devi->client->Raison_Sociale) ?></td>
+                                    <td>
+                                        <!-- Loop through Lignedevis (line items) associated with the Devis -->
+                                        <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                                            <?php foreach ($devi->lignedevis as $ligne): ?>
+                                                <span style="background-color: #3c8dbc; color: white; padding: 5px 10px; border-radius: 10px; font-size: 16px;">
+                                                    <?= h($ligne->article->Dsignation) ?>
+                                                </span>
+                                            <?php endforeach; ?>
+                                        </div>
+                                        <br>
+                                    </td>
                                     <td><?= $this->Number->format($devi->total_remise) ?></td>
                                     <td><?= $this->Number->format($devi->total_ht) ?></td>
                                     <td><?= $this->Number->format($devi->total_brute) ?></td>

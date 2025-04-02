@@ -47,6 +47,11 @@ class DevisTable extends Table
             'foreignKey' => 'client_id',
             'joinType' => 'INNER',
         ]);
+
+        // Define a "hasMany" relationship with Lignedevis
+        $this->hasMany('Lignedevis', [
+            'foreignKey' => 'devis_id',  // The foreign key in the Lignedevis table
+        ]);
     }
 
     /**
