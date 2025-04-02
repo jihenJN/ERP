@@ -80,8 +80,8 @@
                                                 <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
                                                         HT</strong></td>
                                       
-                                                <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
-                                                        TVA</strong></td>
+                                                <td align="center" style="width: 15%;font-size: 16px;"><strong>taux
+                                                        TVA %</strong></td>
                                              
 
                                                 <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
@@ -143,7 +143,7 @@
                                                         <?php echo $this->Form->input('ht', array('label' => '', 'value' => $res->ht, 'name' => 'data[ligner][' . $i . '][ht]', 'type' => 'text', 'id' => 'ht' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index', 'readOnly' => true)); ?>
                                                     </td>
                                                     <td align="center">
-                                                        <?php echo $this->Form->input('tva', array('label' => '', 'value' => $res->tva, 'name' => 'data[ligner][' . $i . '][tva]', 'type' => 'text', 'id' => 'tva' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index', 'readOnly' => true)); ?>
+                                                        <?php echo $this->Form->input('tva', array('label' => '', 'value' => $res->tva, 'name' => 'data[ligner][' . $i . '][tva]', 'type' => 'text', 'id' => 'tva' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index')); ?>
                                                     </td>
                                                     <td align="center">
                                                         <?php echo $this->Form->input('ttc', array('label' => '', 'value' => $res->ttc, 'name' => 'data[ligner][' . $i . '][ttc]', 'type' => 'text', 'id' => 'ttc' . $i, 'table' => 'ligner', 'index' => $i, 'div' => 'form-group', 'between' => '<div class="col-sm-12">', 'after' => '</div>', 'class' => 'form-control number', 'index', 'readOnly' => true)); ?>
@@ -192,7 +192,7 @@
                                                 </td>
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="tva" type="text"
-                                                        class="form-control " readonly=true index>
+                                                        class="form-control "  index>
                                                 </td>
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="ttc" type="text"
@@ -244,7 +244,7 @@
                         <div class="col-xs-12">
                             <div class="form-inline">
 
-                                <label style="text-align: end;">Total TVA</label>
+                                <label style="text-align: end;"> Total TVA</label>
                                 <?php echo $this->Form->control('total_tva', ['label' => false, 'readonly' => true, 'class' => 'form-control']); ?>
                             </div>
                         </div>
@@ -626,11 +626,69 @@
         $("input[name='total_ht']").val(totalHT.toFixed(2));
     }
 
+
+   
+    // Function to calculate total TVA and total TTC
+    function updateTotalTvaAndTtc() {
+        let totalTva = 0;
+        let totalTtc = 0;
+        //const tauxTva = 0.19; 
+
+        // Iterate through each row (article)
+        $("tbody tr:visible").each(function(index) { // Only count visible rows
+            var row = $(this);
+            var prixField = row.find("input[name*='[prix]']");
+            var qteField = row.find("input[name*='[qte]']");
+            var remiseField = row.find("input[name*='[remise]']");
+            var htField = row.find("input[name*='[ht]']");
+            var tvaField = row.find("input[name*='[tva]']");
+            var ttcField = row.find("input[name*='[ttc]']");
+
+            var prix = prixField.length && prixField.val().trim() !== "" ? parseFloat(prixField.val()) || 0 : 0;
+            var qte = qteField.length && qteField.val().trim() !== "" ? parseFloat(qteField.val()) || 0 : 0;
+            var remise = remiseField.length && remiseField.val().trim() !== "" ? parseFloat(remiseField.val()) || 0 : 0;
+            var Tva = tvaField.length && tvaField.val().trim() !== "" ? parseFloat(tvaField.val()) || 0 : 0;
+            var tauxTva = parseFloat(Tva)/100;
+        
+
+            // Only calculate if Prix Unitaire, Quantité, and Remise are valid numbers
+            if (prix && qte) {
+                prix = parseFloat(prix); // Convert to float
+                qte = parseFloat(qte); // Convert to float
+                remise = parseFloat(remise); // Convert to float, default to 0 if remise is not provided
+
+                // Calculate HT after applying the discount
+                let htPriceAfterDiscount = prix * qte * (1 - remise / 100);
+
+                // Calculate the TVA for this article (19% of HT price)
+                let tvaForArticle = htPriceAfterDiscount * tauxTva;
+              
+
+                // Calculate the TTC for this article (HT + TVA)
+                let ttcForArticle = htPriceAfterDiscount + tvaForArticle;
+                ttcField.val(ttcForArticle.toFixed(2));
+                
+
+
+                // Add to the total TVA and total TTC
+                totalTva += tvaForArticle;
+                totalTtc += ttcForArticle;
+            }
+        });
+
+        // Update the "total_tva" and "total_ttc" fields in the form
+        $("input[name='total_tva']").val(totalTva.toFixed(2)); // Format to 2 decimal places
+        $("input[name='total_ttc']").val(totalTtc.toFixed(2)); //_
+    }
+
+
+
+
     $(document).ready(function() {
         updateTotals();
     });
 
-    $(document).on("input", "input[name*='[prix]'], input[name*='[qte]'], input[name*='[remise]']", function() {
+    $(document).on("input", "input[name*='[prix]'], input[name*='[qte]'], input[name*='[remise]'], input[name*='[tva]']", function() {
         updateTotals();
     });
 
@@ -639,6 +697,7 @@
         updateTotalBrute();
         updateTotalRemise();
         updateHTPriceAndTotal();
+        updateTotalTvaAndTtc();
     }
 
 
