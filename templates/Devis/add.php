@@ -82,8 +82,8 @@
                                                 <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
                                                         HT</strong></td>
                                                 
-                                                <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
-                                                        TVA</strong></td>
+                                                <td align="center" style="width: 15%;font-size: 16px;"><strong>
+                                                        taux TVA %</strong></td>
                                                
                                                 <td align="center" style="width: 15%;font-size: 16px;"><strong>Prix
                                                         TTC</strong></td>
@@ -134,7 +134,7 @@
                                                 </td>
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="tva" type="text"
-                                                        class="form-control number" readonly=true index>
+                                                        class="form-control number"  index>
                                                 </td>
                                                 <td align="center" table="ligner">
                                                     <input table="ligner" champ="ttc" type="text"
@@ -276,6 +276,7 @@
                     updateTotalBrute();
                     updateTotalRemise();
                     updateHTPriceAndTotal();
+                    updateTotalTvaAndTtc();
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
                     console.log("AJAX request failed: " + textStatus + ", " + errorThrown);
@@ -416,6 +417,7 @@
             updateTotalBrute();
             updateTotalRemise();
             updateHTPriceAndTotal();
+            updateTotalTvaAndTtc();
 
         })
     });
@@ -442,6 +444,8 @@
         updateTotalBrute();
         updateTotalRemise();
         updateHTPriceAndTotal();
+        updateTotalTvaAndTtc();
+
     });
 
 
@@ -528,11 +532,57 @@
         $("input[name='total_ht']").val(totalHT.toFixed(2));
     }
 
+
+    // Function to calculate total TVA and total TTC
+    function updateTotalTvaAndTtc() {
+        let totalTva = 0;
+        let totalTtc = 0;
+        //const tauxTva = 0.19; 
+
+        // Iterate through each row (article)
+        $("tr:visible").each(function() { // Only count visible rows
+            let prixUnitaire = $(this).find("[champ='prix']").val();
+            let qte = $(this).find("[champ='qte']").val();
+            let remisePercentage = $(this).find("[champ='remise']").val() || 0;
+            const tauxTva =  parseFloat($(this).find("[champ='tva']").val())/100 || 0;
+
+            // Only calculate if Prix Unitaire, Quantité, and Remise are valid numbers
+            if (prixUnitaire && qte) {
+                prixUnitaire = parseFloat(prixUnitaire); // Convert to float
+                qte = parseFloat(qte); // Convert to float
+                remisePercentage = parseFloat(remisePercentage); // Convert to float, default to 0 if remise is not provided
+
+                // Calculate HT after applying the discount
+                let htPriceAfterDiscount = prixUnitaire * qte * (1 - remisePercentage / 100);
+
+                // Calculate the TVA for this article (19% of HT price)
+                let tvaForArticle = htPriceAfterDiscount * tauxTva;
+              
+
+                // Calculate the TTC for this article (HT + TVA)
+                let ttcForArticle = htPriceAfterDiscount + tvaForArticle;
+                $(this).find("[champ='ttc']").val(ttcForArticle.toFixed(2));
+                
+
+
+                // Add to the total TVA and total TTC
+                totalTva += tvaForArticle;
+                totalTtc += ttcForArticle;
+            }
+        });
+
+        // Update the "total_tva" and "total_ttc" fields in the form
+        $("input[name='total_tva']").val(totalTva.toFixed(2)); // Format to 2 decimal places
+        $("input[name='total_ttc']").val(totalTtc.toFixed(2)); //_
+    }
+
     // Delegate the "input" event to ensure it applies to dynamically added rows
-    $(document).on("input", "[table='ligner'] [champ='prix'], [table='ligner'] [champ='qte'], [table='ligner'] [champ='remise']", function() {
+    $(document).on("input", "[table='ligner'] [champ='prix'], [table='ligner'] [champ='qte'], [table='ligner'] [champ='remise'],[table='ligner'] [champ='tva']", function() {
         updateTotalBrute(); // Recalculate total brute whenever price or quantity is changed
         updateTotalRemise();
         updateHTPriceAndTotal();
+        updateTotalTvaAndTtc();
+
 
     });
 

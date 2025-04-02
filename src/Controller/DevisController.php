@@ -176,6 +176,8 @@ class DevisController extends AppController
                             $data['prix'] = $p['prix'];
                             $data['remise'] = $p['remise'];
                             $data['ht'] = $p['ht'];
+                            $data['tva'] = $p['tva'];
+                            $data['ttc'] = $p['ttc'];
                             $lignedevi = $this->fetchTable('Lignedevis')->patchEntity($L_devi, $data);
                             $this->fetchTable('Lignedevis')->save($lignedevi);
                         }
@@ -223,7 +225,8 @@ class DevisController extends AppController
                             $data['prix'] = $p['prix'];
                             $data['remise'] = $p['remise'];
                             $data['ht'] = $p['ht'];
-                      
+                            $data['ttc'] = $p['ttc'];
+                            $data['tva'] = $p['tva'];
 
                             if (isset($p['id']) && (!empty($p['id']))) {
                                
