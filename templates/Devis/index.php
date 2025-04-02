@@ -5,7 +5,8 @@
  * @var iterable<\App\Model\Entity\Devi> $devis
  */
 ?>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js" type="text/javascript"></script>
+<?php echo $this->Html->css('select2'); ?>
 <?php
 $add = "";
 $edit = "";
@@ -47,7 +48,7 @@ foreach ($lien as $k => $liens) {
         <div class="row">
 
 
-            <div class="col-xs-3">
+            <div class="col-xs-6">
                 <label class="control-label" for="name">Date début Devis
                 </label>
                 <?php
@@ -56,7 +57,7 @@ foreach ($lien as $k => $liens) {
             </div>
 
 
-            <div class="col-xs-3">
+            <div class="col-xs-6">
                 <label class="control-label" for="name">Date Fin Devis
                 </label>
                 <?php
@@ -69,7 +70,7 @@ foreach ($lien as $k => $liens) {
 
 
 
-            <div class="col-xs-3">
+            <div class="col-xs-4">
 
 
                 <label class="control-label" for="name">Nom Client
@@ -83,6 +84,28 @@ foreach ($lien as $k => $liens) {
                     <?php } ?>
                 </select>
             </div>
+
+            
+
+            <div class="col-xs-4">
+    <label class="control-label" for="article_id">Nom Article</label>
+    <select class="form-control select2" id="article_id" name="article_id[]" multiple="multiple">
+        <option value="" disabled>Veuillez choisir !!</option>
+        <?php 
+        $selectedArticles = (array) $this->request->getQuery('article_id'); // Ensure it's always an array
+        foreach ($articles as $article): 
+        ?>
+            <option 
+                value="<?= $article->id ?>" 
+                <?= in_array($article->id, $selectedArticles) ? 'selected="selected"' : '' ?>
+            >
+                <?= $article->Dsignation ?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+</div>
+
+
 
 
 
@@ -239,3 +262,4 @@ foreach ($lien as $k => $liens) {
         });
     });
 </script>
+

@@ -23,11 +23,14 @@ class DevisController extends AppController
         $cond2 = '';
         $cond3 = '';
         $cond4 = '';
-       
+        $cond5 = '';
 
         $datedebut = $this->request->getQuery('datedebut');
         $datefin = $this->request->getQuery('datefin');
         $client_id = $this->request->getQuery('client_id');
+        // Assuming article_id[] contains the selected article IDs
+        $selectedArticleIds = $this->request->getQuery('article_id') ?: [];
+
         
 
         if ($datedebut) {
@@ -41,13 +44,25 @@ class DevisController extends AppController
         if ($client_id) {
             $cond4 = "Devis.client_id = '" . $client_id . "' ";
         }
-      
-        
-       
-        $query = $this->Devis->find('all')->where([$cond2, $cond3, $cond4])
 
+   
+        if (!empty($selectedArticleIds)) {
+            // Use a subquery to filter by article IDs
+            $cond5 = [
+                'Devis.id IN' => $this->Devis->find()
+                    ->matching('Lignedevis', function ($q) use ($selectedArticleIds) {
+                        return $q->where(['Lignedevis.article_id IN' => $selectedArticleIds]);
+                    })
+                    ->extract('id')
+                    ->toArray()
+            ];
+        }
+
+        $query = $this->Devis->find('all')->where([$cond2, $cond3, $cond4,$cond5])
         ->order(['Devis.id' => 'DESC'])
         ->contain(['Clients', 'Lignedevis.Articles']);
+
+        
 
         $this->paginate = [
             'contain' => ['Clients', 'Lignedevis.Articles'],
@@ -58,11 +73,12 @@ class DevisController extends AppController
 
         $clients = $this->Devis->Clients->find('all');
 
-        $lignedevis = $this->fetchTable('Lignedevis')->find('all')->toArray(); 
+        $articles = $this->fetchTable('Articles')->find('all')->toArray(); 
      
-        debug($lignedevis);
+   
+      
         
-        $this->set(compact('devis', 'count','clients', 'datefin', 'client_id', 'datedebut','lignedevis'));
+        $this->set(compact('devis', 'count','clients', 'datefin', 'client_id', 'datedebut','articles'));
     }
 
     /**
